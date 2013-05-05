@@ -1,5 +1,6 @@
 package com._500bottles.object.user;
 
-public enum Sex {
-
+public enum Sex
+{
+	MALE, FEMALE
 }

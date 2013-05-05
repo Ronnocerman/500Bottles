@@ -1,5 +1,8 @@
 package com._500bottles.exception.wine;
 
-public class WineException {
+import com._500bottles.exception.NSFWException;
+
+public class WineException extends NSFWException
+{
 
 }

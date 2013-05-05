@@ -1,5 +1,6 @@
 package com._500bottles.exception.user;
 
-public class InvalidEmailException {
+public class InvalidEmailException extends UserException
+{
 
 }

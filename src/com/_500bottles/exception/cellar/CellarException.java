@@ -1,5 +1,8 @@
 package com._500bottles.exception.cellar;
 
-public class CellarException {
+import com._500bottles.exception.NSFWException;
+
+public class CellarException extends NSFWException
+{
 
 }

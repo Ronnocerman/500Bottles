@@ -1,12 +1,12 @@
-package com._500bottles.manager;
+package com._500bottles.da.internal;
 
-public class CellarManager
+public class CellarDAO
 {
 	public void addCellarItem()
 	{
 	}
 
-	public void removeCellarItem()
+	public void deleteCellarItem()
 	{
 	}
 
@@ -15,10 +15,6 @@ public class CellarManager
 	}
 
 	public void getCellarItem()
-	{
-	}
-
-	public void getCellar()
 	{
 	}
 }

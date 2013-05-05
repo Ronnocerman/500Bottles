@@ -1,5 +1,8 @@
 package com._500bottles.exception.winebook;
 
-public class WinebookException {
+import com._500bottles.exception.NSFWException;
+
+public class WinebookException extends NSFWException
+{
 
 }
