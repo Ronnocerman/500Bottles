@@ -1,5 +1,6 @@
 package com._500bottles.action;
 
-public class WineWizardAction {
+public class WineWizardAction
+{
 
 }
