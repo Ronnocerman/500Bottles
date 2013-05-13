@@ -3,10 +3,10 @@ package com._500bottles.config;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
 
-import com._500bottles.util.json.JSONException;
-import com._500bottles.util.json.JSONObject;
-import com._500bottles.util.json.JSONTokener;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 public class Config
 {
@@ -22,12 +22,8 @@ public class Config
 			jsonConfigLocation = internalConfigFileLocation;
 		try
 		{
-			JSONTokener tokener = new JSONTokener(new FileInputStream(new File(
-					jsonConfigLocation)));
-			json = new JSONObject(tokener);
-		} catch (JSONException e)
-		{
-			e.printStackTrace();
+			json = (JSONObject) JSONValue.parse(new InputStreamReader(
+					new FileInputStream(new File(jsonConfigLocation))));
 		} catch (FileNotFoundException e)
 		{
 			System.err.println("CONFIG FILE NOT FOUND: "
@@ -37,6 +33,6 @@ public class Config
 
 	public static String getProperty(String property)
 	{
-		return json.getString(property);
+		return json.get(property).toString();
 	}
 }
