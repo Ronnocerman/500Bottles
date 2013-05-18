@@ -21,7 +21,7 @@ public class Photo
 	 */
 	public Photo(long photoId, String filename)
 	{
-		this.setPhotoId(photoId);
+		this.setId(photoId);
 		this.setFilename(filename);
 	}
 
@@ -29,7 +29,7 @@ public class Photo
 	 * 
 	 * @return
 	 */
-	public long getPhotoId()
+	public long getId()
 	{
 		return photoId;
 	}
@@ -38,7 +38,7 @@ public class Photo
 	 * 
 	 * @param photoId
 	 */
-	public void setPhotoId(long photoId)
+	public void setId(long photoId)
 	{
 		this.photoId = photoId;
 	}
