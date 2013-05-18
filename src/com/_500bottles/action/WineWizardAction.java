@@ -4,5 +4,6 @@ public class WineWizardAction
 {
 	public void getSuggestion()
 	{
+
 	}
 }
