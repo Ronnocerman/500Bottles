@@ -1,13 +1,23 @@
 package com._500bottles.da.internal;
 
+import java.text.ParsePosition;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- *
+ * Abstract Data Access Object. This object is extended by all DAO objects to
+ * provide easy interfaces to insert, delete, update and select rows from the
+ * database.
  */
 public abstract class DAO
 {
+	/**
+	 * Date format string for storing dates in the database.
+	 */
+	private static final String sqlDateFormat = "yyyy-MM-dd HH:mm:ss";
+
 	/**
 	 * Inserts a record into the specified table.
 	 * @param table		The table into which to insert the record.
@@ -19,12 +29,14 @@ public abstract class DAO
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public int insert(String table, String columns, String values)
+	public static int insert(String table, String columns, String values)
 		throws SQLException, ClassNotFoundException
 	{
 		String sql = "INSERT INTO " + table + " ";
 		sql += columns + " ";
 		sql += "VALUES " + values + ";";
+
+		System.out.println(sql);
 
 		return Database.modQuery(sql);
 	}
@@ -39,7 +51,7 @@ public abstract class DAO
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public int delete(String table, String where)
+	public static int delete(String table, String where)
 		throws ClassNotFoundException, SQLException
 	{
 		String sql = "DELETE FROM " + table + " WHERE " + where + ";";
@@ -57,7 +69,7 @@ public abstract class DAO
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public int update(String table, String set, String where)
+	public static int update(String table, String set, String where)
 		throws ClassNotFoundException, SQLException
 	{
 		String sql = "UPDATE " + table + " " + set + " " + where + ";";
@@ -75,12 +87,45 @@ public abstract class DAO
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public ResultSet select(String table, String select, String where)
+	public static ResultSet select(String table, String select, String where)
 			throws ClassNotFoundException, SQLException
 	{
 		String sql = "SELECT " + select + " FROM " + table;
 		sql += " WHERE " + where + ";";
 
 		return Database.readQuery(sql);
+	}
+
+	public static ResultSet select(String table, String select)
+		throws ClassNotFoundException, SQLException
+	{
+		String sql = "SELECT " + select + " FROM " + table + ";";
+
+		return Database.readQuery(sql);
+	}
+
+	/**
+	 * Formats the specified Date object for storage in the SQL database.
+	 * @param date  The Date object to format as a string.
+	 * @return	The Date formatted as a String object.
+	 */
+	protected static String formatDate(Date date)
+	{
+		SimpleDateFormat sdf = new SimpleDateFormat(sqlDateFormat);
+
+		return sdf.format(date);
+	}
+
+	/**
+	 * Parses the specified date string and returns a Date object.
+	 * @param dateString 	The String object to parse as a date.
+	 * @return		The Date formatted as a String.
+	 */
+	protected static Date parseDate(String dateString)
+	{
+		SimpleDateFormat sdf = new SimpleDateFormat(sqlDateFormat);
+		ParsePosition pp = new ParsePosition(0);
+
+		return sdf.parse(dateString, pp);
 	}
 }
