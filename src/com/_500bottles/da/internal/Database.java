@@ -5,82 +5,123 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import com._500bottles.config.Config;
 
+/**
+ * Class to interface directly with database via JDBC drivers. Can conduct
+ * queries that both modify and read information from the database.
+ */
 public class Database
 {
-	private static String dbHost = "jdbc:mysql://localhost/database?";
-	private static String dbUser = "root";
-	private static String dbPass = "admin";
-	private static PreparedStatement preparedStatement = null;
-	private static ResultSet resultSet = null;
-
-	public static ResultSet readQuery(String q) throws SQLException,
-			ClassNotFoundException
+	/**
+	 * Conducts a query of the database the does not modify the contents of
+	 * the database.
+	 * @param q	Query to execute.
+	 * @return      ResultSet object of query result.
+	 * @throws SQLException
+	 */
+	public static ResultSet readQuery(String q) throws SQLException
 	{
-		try
-		{
+		PreparedStatement p;
+		ResultSet r;
+
+		try {
 			Connection conn = connect();
-			preparedStatement = conn.prepareStatement(q);
-			resultSet = preparedStatement.executeQuery(q);
+
+			p = conn.prepareStatement(q);
+			r = p.executeQuery(q);
+
 			disconnect(conn);
-			return resultSet;
-		} catch (SQLException e)
-		{
+
+		} catch (SQLException e) {
 			throw e;
 		}
+
+		return r;
 	}
 
-	public static int modQuery(String q) throws SQLException,
-			ClassNotFoundException
+	/**
+	 * Conducts a query of the database that may modify database records.
+	 * @param q	Query to execute.
+	 * @return	Numeric result of database query.
+	 * @throws SQLException
+	 */
+	public static int modQuery(String q) throws SQLException
 	{
+		PreparedStatement p;
 		int i;
-		try
-		{
+
+		try {
 			Connection conn = connect();
-			preparedStatement = conn.prepareStatement(q);
-			i = preparedStatement.executeUpdate(q);
+
+			p = conn.prepareStatement(q);
+			i = p.executeUpdate(q);
+
 			disconnect(conn);
-			return i;
-		} catch (SQLException e)
-		{
+
+
+		} catch (SQLException e) {
 			throw e;
 		}
+
+		return i;
 	}
 
-	public static Connection connect() throws ClassNotFoundException,
-			SQLException
+	/**
+	 * Connects to the database and returns the Connection object.
+	 * @return	Database Connection object.
+	 * @throws SQLException
+	 */
+	public static Connection connect() throws SQLException
 	{
-		try
-		{
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection connect = DriverManager.getConnection(dbHost, dbUser,
-					dbPass);
-			return connect;
-		} catch (SQLException e)
-		{
-			throw e;
-		} catch (ClassNotFoundException e)
-		{
+		String dbUsername, dbPassword, connectionUrl;
+
+		Connection connection;
+
+		dbUsername = Config.getProperty("databaseUsername");
+		dbPassword = Config.getProperty("databasePassword");
+		connectionUrl = getConnectionUrl();
+
+		try {
+			connection = DriverManager.getConnection(connectionUrl, dbUsername, dbPassword);
+		} catch (SQLException e) {
 			throw e;
 		}
+
+		return connection;
 	}
 
-	public static void disconnect(Connection conn) throws SQLException
+	/**
+	 * Disconnects a database connection.
+	 * @param connection	Connection object to disconnect.
+	 * @throws SQLException
+	 */
+	public static void disconnect(Connection connection) throws SQLException
 	{
-		try
-		{
-			if (preparedStatement != null)
-			{
-				preparedStatement.close();
-			}
-			if (conn != null)
-			{
-				conn.close();
-			}
-		} catch (SQLException e)
-		{
+		if (connection == null) return;
+
+		try {
+			connection.close();
+		} catch (SQLException e) {
 			throw e;
 		}
 	}
 
+	/**
+	 * Builds the JDBC connection URL using configuration information.
+	 * @return	JDBC Connection URL
+	 */
+	private static String getConnectionUrl()
+	{
+		String dbPort, dbHost, dbName, connectionUrl;
+
+		dbPort = Config.getProperty("databasePort");
+		dbHost = Config.getProperty("databaseHost");
+		dbName = Config.getProperty("databaseName");
+
+		connectionUrl = "jdbc:mysql://" + dbHost + ":"
+			+ dbPort + "/" + dbName + "?";
+
+		return connectionUrl;
+	}
 }
