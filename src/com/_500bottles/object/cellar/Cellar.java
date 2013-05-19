@@ -36,4 +36,28 @@ public class Cellar
 		return collection.remove(c);
 	}
 
+	public boolean removebyId(long id)
+	{
+		for (int i = 0; !collection.isEmpty(); i++)
+		{
+			if (collection.elementAt(i).getCellarItemId() == id)
+			{
+				return remove(collection.elementAt(i));
+			}
+		}
+		return false;
+	}
+
+	public CellarItem getById(long id)
+	{
+		for (int i = 0; !collection.isEmpty(); i++)
+		{
+			if (collection.elementAt(i).getCellarItemId() == id)
+			{
+				return collection.get(i);
+			}
+		}
+		return null;
+	}
+
 }

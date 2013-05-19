@@ -1,13 +1,20 @@
 package com._500bottles.object.cellar;
 
+import com._500bottles.object.wine.Wine;
+
 public class CellarItem
 {
-	private int cellarItemId;
+	private long cellarItemId;
 	private int quantity;
 	private String notes;
 	private long wineId;
 
-	public int getCellarItemId()
+	public CellarItem(Wine w)
+	{
+		wineId = w.getId();
+	}
+
+	public long getCellarItemId()
 	{
 		return cellarItemId;
 	}
@@ -51,7 +58,7 @@ public class CellarItem
 	public boolean equals(Object o)
 	{
 		CellarItem c = (CellarItem) o;
-		return new String(Integer.toString(this.getCellarItemId()))
-				.equals(new String(Integer.toString(c.getCellarItemId())));
+		return new String(Long.toString(this.getCellarItemId()))
+				.equals(new String(Long.toString(c.getCellarItemId())));
 	}
 }
