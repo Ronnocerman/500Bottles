@@ -1,3 +1,9 @@
 {
-   "item1": "Is Eclipse"
+    "databasePort": "8889",
+    "databaseHost": "localhost",
+    "databaseName": "500bottles",
+    "databaseUsername": "500bottles",
+    "databasePassword": "password",
+
+    "winebookTableName": "WinebookEntries"
 }
