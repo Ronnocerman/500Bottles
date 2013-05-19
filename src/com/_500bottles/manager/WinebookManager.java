@@ -1,20 +1,22 @@
 package com._500bottles.manager;
 
+import com._500bottles.object.winebook.Entry;
+
 public class WinebookManager
 {
-	public void addEntry()
+	public void addEntry(Entry e)
 	{
 	}
 
-	public void editEntry()
+	public void editEntry(long EntryID)
 	{
 	}
 
-	public void removeEntry()
+	public void removeEntry(Entry e)
 	{
 	}
 
-	public void getEntry()
+	public Entry getEntry()
 	{
 	}
 }
