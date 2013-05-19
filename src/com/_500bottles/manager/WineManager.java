@@ -1,44 +1,41 @@
 package com._500bottles.manager;
 
+import com._500bottles.object.wine.Wine;
+
 public class WineManager
 {
-	public void getWine()
+	public Wine getWine(long id)
 	{
 	}
 
-	public void addCustomWine()
+	public void addCustomWine(Wine w)
 	{
 	}
 
-	public void editCustomWine()
+	public void editCustomWine(Wine w)
 	{
 	}
 
-	public void deleteCustomWine()
+	public void deleteCustomWine(Wine w)
 	{
 	}
 
-	public void setRating()
+	public void setRating(int rating)
 	{
 	}
 
-	public void addTastingNotes()
+	/*
+	 * public void addTastingNotes(String notes) { }
+	 * 
+	 * public void editTastingNotes() { }
+	 * 
+	 * public void deleteTastingNotes() { }
+	 */
+	public void setFavorite(Wine w)
 	{
 	}
 
-	public void editTastingNotes()
-	{
-	}
-
-	public void deleteTastingNotes()
-	{
-	}
-
-	public void setFavorite()
-	{
-	}
-
-	public void getFavorite()
+	public boolean isFavorite(long id)
 	{
 	}
 }
