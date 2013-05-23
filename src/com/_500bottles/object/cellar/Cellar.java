@@ -5,6 +5,8 @@ import java.util.Vector;
 public class Cellar
 {
 	private Vector<CellarItem> collection;
+	private long cellarId;
+	private long userId;
 
 	public Cellar()
 	{
@@ -58,6 +60,26 @@ public class Cellar
 			}
 		}
 		return null;
+	}
+
+	public long getCellarId()
+	{
+		return cellarId;
+	}
+
+	public void setCellarId(long cellarId)
+	{
+		this.cellarId = cellarId;
+	}
+
+	public long getUserId()
+	{
+		return userId;
+	}
+
+	public void setUserId(long userId)
+	{
+		this.userId = userId;
 	}
 
 }
