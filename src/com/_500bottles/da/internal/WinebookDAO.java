@@ -16,6 +16,8 @@ import org.json.simple.JSONValue;
 
 public class WinebookDAO extends DAO
 {
+	private final static String WINEBOOK_TABLE =
+		Config.getProperty("winebookTableName");
 
 	public static Entry addEntry(Entry entry) throws Exception
 	{
@@ -26,8 +28,6 @@ public class WinebookDAO extends DAO
 			dateLastEdited,
 			winesJSON,
 			photosJSON;
-
-		table = Config.getProperty("winebookTableName");
 
 		columns = "(`userID`, `title`, `dateCreated`,";
 		columns += "`dateLastEdited`, `textContent`,";
@@ -49,7 +49,7 @@ public class WinebookDAO extends DAO
 		values += "'" + photosJSON + "')";
 
 		try {
-			int i = insert(table, columns, values);
+			int i = insert(WINEBOOK_TABLE, columns, values);
 		// TODO: Better exception handling.
 		} catch (Exception e) {
 			throw e;
@@ -60,35 +60,47 @@ public class WinebookDAO extends DAO
 		return entry;
 	}
 
-	public static void deleteEntry(Entry entry)
+	public static void deleteEntry(Entry entry) throws SQLException
 	{
+		delete(WINEBOOK_TABLE, "WHERE entryId=" + entry.getEntryId());
 	}
 
-	public static void editEntry(Entry entry)
+	public static void editEntry(Entry entry) throws SQLException
 	{
+		long entryId = entry.getEntryId();
+		String sql = "";
+
+		sql += "userID=" + entry.getEntryId();
+		sql += ",title=" + entry.getTitle();
+		sql += ",dateCreated=" + formatDate(entry.getDateCreated());
+		sql += ",dateLastEdited=" + formatDate(entry.getDateLastEdited());
+		sql += ",textContent=" + entry.getContent();
+		sql += ",winesJSON=" + entry.getWineIdsAsJSONArray();
+		sql += ",photosJSON=" + entry.getPhotoIdsAsJSONArray();
+
+		update(WINEBOOK_TABLE, sql, "entryId=" + entryId);
 	}
 
-	public static void getEntry(Entry entry)
+	public static Entry getEntry(Entry entry)
 	{
+		long entryId = entry.getEntryId();
+		return getEntry(entryId);
 	}
 
-	public static void getEntry(long entryId)
+	public static Entry getEntry(long entryId)
 	{
-		String	table;
-
 		ResultSet r;
-
-		table = Config.getProperty("winebookTableName");
+		Entry entry = null;
 
 		try {
-			r = select(table, "*");
-			createEntry(r);
+			r = select(WINEBOOK_TABLE, "*");
+			entry = createEntry(r);
 
 		} catch (Exception e) {
 			// TODO: handle query exceptions.
 		}
 
-
+		return entry;
 	}
 
 	private static Entry createEntry(ResultSet r) throws SQLException

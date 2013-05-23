@@ -61,7 +61,7 @@ public abstract class DAO
 	 * @throws SQLException
 	 */
 	public static int delete(String table, String where)
-		throws ClassNotFoundException, SQLException
+		throws SQLException
 	{
 		String sql = "DELETE FROM " + table + " WHERE " + where + ";";
 
@@ -79,9 +79,9 @@ public abstract class DAO
 	 * @throws SQLException
 	 */
 	public static int update(String table, String set, String where)
-		throws ClassNotFoundException, SQLException
+		throws SQLException
 	{
-		String sql = "UPDATE " + table + " " + set + " " + where + ";";
+		String sql = "UPDATE " + table + " SET " + set + " " + where + ";";
 
 		return Database.modQuery(sql);
 	}
