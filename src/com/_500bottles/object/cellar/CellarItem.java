@@ -19,7 +19,7 @@ public class CellarItem
 		return cellarItemId;
 	}
 
-	public void setCellarItemId(int cellarItemId)
+	public void setCellarItemId(long cellarItemId)
 	{
 		this.cellarItemId = cellarItemId;
 	}
