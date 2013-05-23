@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com._500bottles.config.Config;
+import com.mysql.jdbc.Statement;
 
 /**
  * Class to interface directly with database via JDBC drivers. Can conduct
@@ -13,6 +14,9 @@ import com._500bottles.config.Config;
  */
 public class Database
 {
+	/* ID from last auto-increment insert operation. */
+	private static long lastInsertId = 0;
+
 	/**
 	 * Conducts a query of the database the does not modify the contents of
 	 * the database.
@@ -55,10 +59,9 @@ public class Database
 			Connection conn = connect();
 
 			p = conn.prepareStatement(q);
-			i = p.executeUpdate(q);
-
+			i = p.executeUpdate(q, Statement.RETURN_GENERATED_KEYS);
+			setLastInsertId(p.getGeneratedKeys());
 			disconnect(conn);
-
 
 		} catch (SQLException e) {
 			throw e;
@@ -108,6 +111,15 @@ public class Database
 	}
 
 	/**
+	 * Returns the ID of the last auto-increment insertion operation.
+	 * @return	Last auto-increment id.
+	 */
+	public static long getLastInsertId()
+	{
+		return lastInsertId;
+	}
+
+	/**
 	 * Builds the JDBC connection URL using configuration information.
 	 * @return	JDBC Connection URL
 	 */
@@ -123,5 +135,18 @@ public class Database
 			+ dbPort + "/" + dbName + "?";
 
 		return connectionUrl;
+	}
+
+	/**
+	 * Sets the static lastInsertId variable for later retrieval.
+	 * @param r	ResultSet containing last insert id.
+	 * @throws SQLException
+	 */
+	private static void setLastInsertId(ResultSet r) throws SQLException
+	{
+		if (!r.next())
+			return;
+
+		lastInsertId = r.getLong(1);
 	}
 }
