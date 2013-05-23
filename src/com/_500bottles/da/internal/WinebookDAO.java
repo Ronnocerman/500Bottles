@@ -17,7 +17,7 @@ import org.json.simple.JSONValue;
 public class WinebookDAO extends DAO
 {
 
-	public static void addEntry(Entry entry) throws Exception
+	public static Entry addEntry(Entry entry) throws Exception
 	{
 		String 	table,
 			columns,
@@ -50,11 +50,14 @@ public class WinebookDAO extends DAO
 
 		try {
 			int i = insert(table, columns, values);
-			System.out.print("This is what we got: " + i);
 		// TODO: Better exception handling.
 		} catch (Exception e) {
 			throw e;
 		}
+
+		entry.setEntryId(getLastInsertId());
+
+		return entry;
 	}
 
 	public static void deleteEntry(Entry entry)

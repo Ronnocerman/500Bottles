@@ -42,6 +42,15 @@ public abstract class DAO
 	}
 
 	/**
+	 * Returns the ID of the last auto-increment insertion operation.
+	 * @return	Last auto-increment id.
+	 */
+	public static long getLastInsertId()
+	{
+		return Database.getLastInsertId();
+	}
+
+	/**
 	 * Deletes a record from the specified table using the passed WHERE
 	 * statement.
 	 * @param table		The table to delete the record from.
