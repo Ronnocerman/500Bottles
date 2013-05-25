@@ -58,7 +58,7 @@ public class CellarItem
 	public boolean equals(Object o)
 	{
 		CellarItem c = (CellarItem) o;
-		return new String(Long.toString(this.getCellarItemId()))
-				.equals(new String(Long.toString(c.getCellarItemId())));
+		return new String(Long.toString(this.getId()))
+				.equals(new String(Long.toString(c.getId())));
 	}
 }
