@@ -18,5 +18,6 @@ public class WinebookManager
 
 	public Entry getEntry()
 	{
+		return null;
 	}
 }
