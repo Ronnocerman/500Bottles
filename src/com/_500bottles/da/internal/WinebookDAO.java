@@ -1,34 +1,28 @@
 package com._500bottles.da.internal;
 
-import com._500bottles.config.Config;
 import java.sql.ResultSet;
-
-import com._500bottles.object.winebook.Photo;
-import com._500bottles.object.wine.Wine;
-import org.json.simple.JSONArray;
-import com._500bottles.object.winebook.Entry;
-
-import java.util.Vector;
-
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Vector;
+
+import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
+
+import com._500bottles.config.Config;
+import com._500bottles.object.wine.Wine;
+import com._500bottles.object.winebook.Entry;
+import com._500bottles.object.winebook.Photo;
 
 public class WinebookDAO extends DAO
 {
-	private final static String WINEBOOK_TABLE =
-		Config.getProperty("winebookTableName");
+	private final static String WINEBOOK_TABLE = Config
+			.getProperty("winebookTableName");
 
 	public static Entry addEntry(Entry entry) throws Exception
 	{
-		String 	table,
-			columns,
-			values,
-			dateCreated,
-			dateLastEdited,
-			winesJSON,
-			photosJSON;
+		String table, columns, values, dateCreated, dateLastEdited, winesJSON, photosJSON;
 
+		// TODO: Maybe delete userID if not needed
 		columns = "(`userID`, `title`, `dateCreated`,";
 		columns += "`dateLastEdited`, `textContent`,";
 		columns += "`winesJSON`, `photosJSON`)";
@@ -40,7 +34,7 @@ public class WinebookDAO extends DAO
 		winesJSON = entry.getWineIdsAsJSONArray().toJSONString();
 
 		// TODO: get user id from session manager or via user object.
-		values  = "('" + "0" + "',";
+		values = "('" + "0" + "',";
 		values += "'" + entry.getTitle() + "',";
 		values += "'" + dateCreated + "',";
 		values += "'" + dateLastEdited + "',";
@@ -48,10 +42,12 @@ public class WinebookDAO extends DAO
 		values += "'" + winesJSON + "',";
 		values += "'" + photosJSON + "')";
 
-		try {
+		try
+		{
 			int i = insert(WINEBOOK_TABLE, columns, values);
-		// TODO: Better exception handling.
-		} catch (Exception e) {
+			// TODO: Better exception handling.
+		} catch (Exception e)
+		{
 			throw e;
 		}
 
@@ -70,8 +66,8 @@ public class WinebookDAO extends DAO
 		long entryId = entry.getEntryId();
 		String sql = "";
 
-		sql += "userID=" + entry.getEntryId();
-		sql += ",title=" + entry.getTitle();
+		// sql += "entryID=" + entry.getEntryId();
+		sql += "title=" + entry.getTitle();
 		sql += ",dateCreated=" + formatDate(entry.getDateCreated());
 		sql += ",dateLastEdited=" + formatDate(entry.getDateLastEdited());
 		sql += ",textContent=" + entry.getContent();
@@ -92,11 +88,13 @@ public class WinebookDAO extends DAO
 		ResultSet r;
 		Entry entry = null;
 
-		try {
+		try
+		{
 			r = select(WINEBOOK_TABLE, "*");
 			entry = createEntry(r);
 
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			// TODO: handle query exceptions.
 		}
 
@@ -109,13 +107,9 @@ public class WinebookDAO extends DAO
 
 		long userId, entryId;
 
-		String 	title,
-			textContent,
-			winesJSON,
-			photosJSON;
+		String title, textContent, winesJSON, photosJSON;
 
-		Date 	dateCreated,
-			dateLastEdited;
+		Date dateCreated, dateLastEdited;
 
 		JSONArray wineIds, photosIds;
 
@@ -138,14 +132,14 @@ public class WinebookDAO extends DAO
 		photosIds = (JSONArray) JSONValue.parse(photosJSON);
 
 		// TODO: Create the wine and photo objects to add to the entry.
-		wines = new Vector<Wine>(); //(wineIds);
-		photos = new Vector<Photo>(); //(photosIds);
+		wines = new Vector<Wine>(); // (wineIds);
+		photos = new Vector<Photo>(); // (photosIds);
 
 		dateCreated = r.getDate("dateCreated");
 		dateLastEdited = r.getDate("dateLastEdited");
 
-		entry = new Entry(entryId, title, textContent, photos,
-				wines, dateCreated, dateLastEdited);
+		entry = new Entry(entryId, title, textContent, photos, wines,
+				dateCreated, dateLastEdited);
 
 		return entry;
 	}

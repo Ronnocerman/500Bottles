@@ -10,25 +10,33 @@ import com._500bottles.object.wine.Wine;
 
 public class CellarDAO extends DAO
 {
-	public CellarItem addCellarItem(CellarItem item) throws Exception
+
+	private final static String CELLARITEM_TABLE = Config
+			.getProperty("cellarItemTableName");
+
+	private final static String CELLAR_TABLE = Config
+			.getProperty("cellarTableName");
+
+	public static CellarItem addCellarItem(CellarItem item) throws Exception
 	{
 
-		String table, columns, values;
+		String columns, values; // no need for a String table since i have those
+								// final ones
 
-		table = Config.getProperty("cellarItemTableName");
+		// table = Config.getProperty("cellarItemTableName");
 
-		columns = "( `cellarItemID`, `wineID`,";
+		columns = "( `wineID`,";
 		columns += "`quantity`,";
 		columns += "`notes`)";
 
-		values = "('" + item.getCellarItemId() + "',";
-		values += "'" + item.getWineId() + "',";
+		// values = "('" + item.getCellarItemId() + "',";
+		values = "('" + item.getWineId() + "',";
 		values += "'" + item.getQuantity() + "',";
 		values += "'" + item.getNotes() + "')";
 
 		try
 		{
-			int i = insert(table, columns, values);
+			int i = insert(CELLARITEM_TABLE, columns, values);
 			System.out.print("This is what we got: " + i);
 			// TODO: Better exception handling.
 		} catch (Exception e)
@@ -41,60 +49,78 @@ public class CellarDAO extends DAO
 		return item;
 	}
 
-	public void addCellar(Cellar cellar) throws Exception
+	public static Cellar addCellar(Cellar cellar) throws Exception
 	{
-		String table, columns, values;
+		String columns, values, cellarItemsJSON;
 
-		table = Config.getProperty("cellarTableName");
+		// table = Config.getProperty("cellarTableName");
 
-		columns = "( `cellarID`, `userID`)";
+		columns = "( `cellarItemsJSON`)";
 
-		values = "('" + cellar.getCellarId() + "',";
-		values += "'" + "0" + "')";
+		cellarItemsJSON = cellar.getCellarItemIdsAsJSONArray().toJSONString();
+
+		values = "('" + cellarItemsJSON + "')";
+		// values += "'" + "0" + "')";
 
 		try
 		{
-			int i = insert(table, columns, values);
+			int i = insert(CELLAR_TABLE, columns, values);
 			System.out.print("This is what we got: " + i);
 			// TODO: Better exception handling.
 		} catch (Exception e)
 		{
 			throw e;
 		}
+
+		cellar.setCellarId(getLastInsertId());
+		return cellar;
 	}
 
-	public void deleteCellarItem()
+	public void deleteCellarItem(CellarItem item) throws SQLException
 	{
+		delete(CELLARITEM_TABLE, "WHERE cellarItemId=" + item.getId());
 	}
 
-	public void deleteCellar()
+	public void deleteCellar(Cellar cellar) throws SQLException
 	{
-
+		delete(CELLAR_TABLE, "WHERE cellarId=" + cellar.getCellarId());
 	}
 
-	public void editCellarItem()
+	public void editCellarItem(CellarItem item) throws SQLException
 	{
+		long cellarItemId = item.getId();
+		String sql = "";
+
+		sql += "wineID=" + item.getWineId();
+		sql += ",quantity=" + item.getQuantity();
+		sql += ",notes=" + item.getNotes();
+
+		update(CELLARITEM_TABLE, sql, "cellarItemId=" + cellarItemId);
 	}
 
-	public void editCellar()
+	public void editCellar(Cellar cellar) throws SQLException
 	{
+		long cellarId = cellar.getCellarId();
+		String sql = "";
 
+		// sql += "cellarID=" + cellar.getCellarId();
+		sql += "cellarItemsJSON=" + cellar.getCellarItemIdsAsJSONArray();
+
+		update(CELLAR_TABLE, sql, "cellarId=" + cellarId);
 	}
 
 	public void getCellarItem(long cellarItemId)
 	{
 
-		String table;
+		// String table;
 
 		ResultSet r;
-
-		table = Config.getProperty("cellarItemTableName");
 
 		try
 		{
 			String where = "cellarItemId = ";
 			where += cellarItemId;
-			r = select(table, "*", where);
+			r = select(CELLARITEM_TABLE, "*", where);
 			createCellarItem(r);
 
 		} catch (Exception e)
@@ -106,6 +132,23 @@ public class CellarDAO extends DAO
 
 	public void getCellar(long cellarId)
 	{
+
+		// String table;
+
+		ResultSet r;
+
+		try
+		{
+			String where = "cellarId = ";
+			where += cellarId;
+			r = select(CELLAR_TABLE, "*", where);
+			createCellar(r);
+
+		} catch (Exception e)
+		{
+			// TODO: handle query exceptions.
+		}
+
 	}
 
 	public CellarItem createCellarItem(ResultSet r) throws SQLException

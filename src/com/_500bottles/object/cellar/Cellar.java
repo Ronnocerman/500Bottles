@@ -2,6 +2,8 @@ package com._500bottles.object.cellar;
 
 import java.util.Vector;
 
+import org.json.simple.JSONArray;
+
 public class Cellar
 {
 	private Vector<CellarItem> collection;
@@ -42,7 +44,7 @@ public class Cellar
 	{
 		for (int i = 0; !collection.isEmpty(); i++)
 		{
-			if (collection.elementAt(i).getCellarItemId() == id)
+			if (collection.elementAt(i).getId() == id)
 			{
 				return remove(collection.elementAt(i));
 			}
@@ -54,7 +56,7 @@ public class Cellar
 	{
 		for (int i = 0; !collection.isEmpty(); i++)
 		{
-			if (collection.elementAt(i).getCellarItemId() == id)
+			if (collection.elementAt(i).getId() == id)
 			{
 				return collection.get(i);
 			}
@@ -80,6 +82,16 @@ public class Cellar
 	public void setUserId(long userId)
 	{
 		this.userId = userId;
+	}
+
+	public JSONArray getCellarItemIdsAsJSONArray()
+	{
+		JSONArray jsonArray = new JSONArray();
+
+		for (int i = 0; i < collection.size(); i++)
+			jsonArray.add(collection.get(i).getId());
+
+		return jsonArray;
 	}
 
 }
