@@ -2,6 +2,7 @@
     <wb-module deploy-name="500Bottles">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/tests"/>
         <property name="context-root" value="500Bottles"/>
         <property name="java-output-path" value="/500Bottles/build/classes"/>
     </wb-module>

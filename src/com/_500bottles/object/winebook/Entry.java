@@ -3,6 +3,7 @@ package com._500bottles.object.winebook;
 import java.util.Date;
 import java.util.Vector;
 import com._500bottles.object.wine.Wine;
+import org.json.simple.JSONArray;
 
 /**
  * Winebook Entry object representing an individual entry in the user's
@@ -37,10 +38,11 @@ public class Entry {
 	 * @param dateCreated	Date entry was created.
 	 * @param dateLastEdited		Date of last entry edit.
 	 */
-	public Entry(long entryId, String content,
+	public Entry(long entryId, String title, String content,
 				 Date dateCreated, Date dateLastEdited)
 	{
 		this.entryId = entryId;
+		this.title = title;
 		this.content = content;
 		this.photos = new Vector<Photo>();
 		this.wines = new Vector<Wine>();
@@ -57,10 +59,11 @@ public class Entry {
 	 * @param dateCreated	Date entry created.
 	 * @param dateLastEdited		Date of last entry edit.
 	 */
-	public Entry(long entryId, String content, Vector<Photo> photos,
+	public Entry(long entryId, String title, String content, Vector<Photo> photos,
 				 Vector<Wine> wines, Date dateCreated, Date dateLastEdited)
 	{
 		this.entryId = entryId;
+		this.title = title;
 		this.content = content;
 		this.photos = photos;
 		this.wines = wines;
@@ -86,6 +89,24 @@ public class Entry {
 	}
 
 	/**
+	 * Returns the date this entry was created.
+	 * @return	Date object for the date this entry was created.
+	 */
+	public Date getDateCreated()
+	{
+		return dateCreated;
+	}
+
+	/**
+	 * Returns the date this entry was last edited.
+	 * @return	Date object for the date this entry was last edited.
+	 */
+	public Date getDateLastEdited()
+	{
+		return dateLastEdited;
+	}
+
+	/**
 	 * Returns this entry's textual content.
 	 * @return	This entries textual content.
 	 */
@@ -95,12 +116,44 @@ public class Entry {
 	}
 
 	/**
-	 * Returns array of this Entry's Photo objects.
+	 * Returns array of this entry's Photo objects.
 	 * @return	Array of Photo objects.
 	 */
 	public Photo[] getArrayOfPhotos()
 	{
 		return (Photo[]) photos.toArray();
+	}
+
+	/**
+	 * Returns this entry's collection of Photo objects as a
+	 * JSONArray object which contains only the IDs of the associated
+	 * Photo objects. For use in database storage.
+	 * @return	JSONArray object of this entry's photos.
+	 */
+	public JSONArray getPhotoIdsAsJSONArray()
+	{
+		JSONArray jsonArray = new JSONArray();
+
+		for (int i = 0; i < photos.size(); i++)
+			jsonArray.add(photos.get(i).getId());
+
+		return jsonArray;
+	}
+
+	/**
+	 * Returns this entry's collection of Wine objects as a JSONArray object
+	 * which contains only the IDs of the associated Wine objects. For use
+	 * in database storage.
+	 * @return	JSONArray object of this entry's photos.
+	 */
+	public JSONArray getWineIdsAsJSONArray()
+	{
+		JSONArray jsonArray = new JSONArray();
+
+		for (int i = 0; i < photos.size(); i++)
+			jsonArray.add(photos.get(i).getId());
+
+		return jsonArray;
 	}
 
 	/**
@@ -154,6 +207,15 @@ public class Entry {
 	{
 		if (!photos.contains(photo))
 			photos.add(photo);
+	}
+
+	/**
+	 * Adds photos to this entry from a JSONArray object. All existing photos
+	 * associated with this entry object will be removed (if present).
+	 * @param photos	JSONArray object of Photo objects.
+	 */
+	public void addPhotos(JSONArray photos)
+	{
 	}
 
 	/**
