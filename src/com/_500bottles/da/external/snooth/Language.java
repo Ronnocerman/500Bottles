@@ -23,6 +23,11 @@ public class Language
 		this.language = DEFAULT_LANGUAGE;
 	}
 
+	public Language (String language) throws InvalidLanguage
+	{
+		this.setLanguage(language);
+	}
+
 	public void setLanguage(String language) throws InvalidLanguage
 	{
 		if (this.languages == null)

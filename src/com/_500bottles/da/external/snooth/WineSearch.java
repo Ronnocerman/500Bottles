@@ -27,7 +27,7 @@ public class WineSearch
 
 	private final static int DEFAULT_NUM_RESULTS = 10;
 
-	private final static int DEFAULT_AVAIL = 0;
+	private final static boolean DEFAULT_AVAIL = false;
 
 	private final static ProductType DEFAULT_PRODUCT_TYPE =
 		new ProductType();
@@ -160,8 +160,11 @@ public class WineSearch
 		if (this.getNumberOfResults() != DEFAULT_NUM_RESULTS)
 			url += "&n=" + this.getNumberOfResults();
 
-		if (this.getAvailable() != DEFAULT_AVAIL)
-			url += "&a=" + this.getAvailable();
+		if (this.getAvailable() != DEFAULT_AVAIL) {
+			if (this.getAvailable())
+				url += "&a=1";
+		}
+
 
 		if (!this.getProductType().equals(DEFAULT_PRODUCT_TYPE))
 			url += "&t=" + this.getProductType().toString();
@@ -182,7 +185,7 @@ public class WineSearch
 			url += "&lat=" + this.getLatitude();
 
 		if (this.getLongitude() != DEFAULT_LONGITUDE)
-			url += "&lat=" + this.getLatitude();
+			url += "&lng=" + this.getLongitude();
 
 		if (this.getSort() != DEFAULT_SORT)
 			url += "&s=" + this.getSort().toString();
@@ -250,14 +253,19 @@ public class WineSearch
 		this.n = n;
 	}
 
-	public int getAvailable()
+	public boolean getAvailable()
 	{
-		return a;
+		if (a > 0)
+			return true;
+		return false;
 	}
 
-	public void setAvailable(int a)
+	public void setAvailable(boolean a)
 	{
-		this.a = a;
+		if (a)
+			this.a = 1;
+		else
+			this.a = 0;
 	}
 
 	public ProductType getProductType()

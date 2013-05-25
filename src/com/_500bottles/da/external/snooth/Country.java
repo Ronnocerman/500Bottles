@@ -23,6 +23,11 @@ public class Country
 		this.country = DEFAULT_COUNTRY;
 	}
 
+	public Country (String country) throws InvalidCountry
+	{
+		this.setCountry(country);
+	}
+
 	public void setCountry(String country) throws InvalidCountry
 	{
 		if (this.countries == null)

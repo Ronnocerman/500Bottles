@@ -21,8 +21,8 @@ public abstract class OrderedSort extends Sort
 
 	protected OrderedSort(String sort, String order) throws InvalidSort
 	{
-		this.setOrder(order);
 		this.setSort(sort);
+		this.setOrder(order);
 	}
 
 	private void setOrder(String order) throws InvalidSort
