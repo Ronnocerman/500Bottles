@@ -26,7 +26,7 @@ public class CellarManager
 
 	public void editCellarItem(CellarItem ci)
 	{
-		CellarItem x = c.getById(ci.getCellarItemId());
+		CellarItem x = c.getById(ci.getId());
 		if (!(x.getNotes().equals(ci.getNotes())))
 			x.setNotes(ci.getNotes());
 		if (!(x.getQuantity() == ci.getQuantity()))
