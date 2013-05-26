@@ -1,0 +1,59 @@
+<!-- 500bottles.com add a new winebook entry page || Last updated: 23 May 2013 -->
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>500bottles.com &raquo; new entry</title>
+
+		<!-- Loads typefaces for use in CSS pages -->
+		<link href='http://fonts.googleapis.com/css?family=Signika:300,400' rel='stylesheet' type='text/css'>
+
+		<!-- Loads CSS files for use on page -->
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="stylesheet" type="text/css" href="css/inputfields.css" />
+	</head>
+
+	<body>
+		<div id="header">
+      <div class="content">
+        <a href="winewizard.html">Wine Wizard</a> • 
+        <a href="cellar.html">Cellar</a> • 
+        <a href="winebook.html">Winebook</a>
+      </div>
+      
+      <div class="minor">
+		<a href="createaccount.html">register</a> • 
+		<a href="login.html">log in</a>
+      </div>
+    </div>
+	
+		<center>
+		<!--	Header image	-->
+		<a href="home.html"><img src="images/500bottles.png" width="100%"></a>
+		</center>
+		
+		<center>
+		<p>
+			<!--	Form for inputting a new Winebook entry	-->
+			<form>
+			
+			<!--	Text input for title, body, location, and tags	-->
+			<input type="text" value="" name="title" placeholder="title" class="winebook-title"><br><br>
+			<textarea name="body" wrap="physical" class="winebook-entry" 
+			placeholder="today I made some liver and fava beans, so I decided to crack open a nice chianti to go with it..."></textarea><br><br>
+			<input type="text" value="" name="location" placeholder="location" class="winebook-title"><br><br>
+			<input type="text" value="" name="tags" placeholder="tags" class="winebook-title"><br><br>
+			
+			<!--	Submit and cancel buttons	-->
+			<input type="image" src="images/buttonSubmit.png">
+			<a href="winebook.html"><img src="images/buttonCancel.png"></a>
+			</form>
+		</p>
+		</center>
+		
+		<!-- <footer>
+			<a href="aboutus.html"><img src="images/nsfwinewhite.png" width="8%" align="right"></a><br>
+			presented by 
+		</footer> -->
+	</body>
+</html>

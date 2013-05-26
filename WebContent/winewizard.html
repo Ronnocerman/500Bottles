@@ -1,0 +1,113 @@
+<!-- 500bottles.com wine wizard page || Last updated: 23 May 2013 -->
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>500bottles.com &raquo; wine wizard</title>
+
+		<!-- Loads typefaces for use in CSS pages -->
+		<link href='http://fonts.googleapis.com/css?family=Signika:300,400' rel='stylesheet' 
+		type='text/css'>
+
+		<!-- Loads CSS files for use on page -->
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="stylesheet" type="text/css" href="css/inputfields.css" />
+	</head>
+
+	<body>
+		<div id="header">
+      <div class="content">
+        <a href="winewizard.html">Wine Wizard</a> • 
+        <a href="cellar.html">Cellar</a> • 
+        <a href="winebook.html">Winebook</a>
+      </div>
+      
+      <div class="minor">
+		<a href="createaccount.html">register</a> • 
+		<a href="login.html">log in</a>
+      </div>
+    </div>
+	
+		<center>
+		<!--	Header image	-->
+		<a href="home.html"><img src="images/500bottles.png" width="100%"></a>
+		</center>
+				
+		<center>
+		<p>
+			<form>
+			<input type="search" value="" placeholder="search" name="search" class="search"><br>
+			
+			<table class="search-table"><tr><td>
+			<!--	Checkbox options  -->
+			<input type="checkbox" name="red" value="" align="left">Red<br>
+			<input type="checkbox" name="white" value="" align="left">White<br>
+			<input type="checkbox" name="rose" value="">Rosé<br>
+			<input type="checkbox" name="champagneAndSparkling" value="">Champagne & Sparkling<br>
+			<input type="checkbox" name="sake" value="">Saké<br>
+			<input type="checkbox" name="other" value="">Dessert, Sherry, & Port<br>
+			</td></tr></table>
+			
+			<table class="search-table"><tr><td>
+			<img src="images/buttonAdd.png">
+			</td></tr></table>
+			
+			<!--	Drop-down menu of grape varietals	-->
+			<select name="varietal" class="select-varietal">
+				<option>grape varietal/type</option>
+				<option>Albarino</option>
+				<option>Barbera</option>
+				<option>Bordeaux</option>
+				<option>Cabernet Franc</option>
+				<option>Cabernet Sauvignon</option>
+				<option>Carmenere</option>
+				<option>Chardonnay</option>
+				<option>Chenin Blanc</option>
+				<option>Dolcetto</option>
+				<option>Gamay</option>
+				<option>Gewurztraminer</option>
+				<option>Grenache</option>
+				<option>Gruner Veltliner</option>
+				<option>Junmai</option>
+				<option>Junmai-Daiginjo</option>
+				<option>Junmai-Ginjo</option>
+				<option>Madeira</option>
+				<option>Malbec</option>
+				<option>Merlot</option>
+				<option>Mourvedre</option>
+				<option>Muscat</option>
+				<option>Nebbiolo</option>
+				<option>Nero d'Avola</option>
+				<option>Non-vintage</option>
+				<option>Riesling</option>
+				<option>Rhône</option>
+				<option>Rosé</option>
+				<option>Sangiovese</option>
+				<option>Sauvignon Blanc</option>
+				<option>Semillon</option>
+				<option>Sherry</option>
+				<option>Syrah/Shiraz</option>
+				<option>Tempranillo</option>
+				<option>Torrontes</option>
+				<option>Petite Sirah</option>
+				<option>Pinot Blanc</option>
+				<option>Pinot Gris/Grigio</option>
+				<option>Primivito</option>
+				<option>Port</option>
+				<option>Voignier</option>
+				<option>Zinfandel</option>
+				<option>Other</option>
+			</select><br>			
+			<input type="text" placeholder="vintage" class="other-search"><br>
+			<input type="text" placeholder="region" class="other-search"><br>
+			<input type="text" placeholder="winery" class="other-search"><br><br>
+			<input type="image" src="images/buttonSearch.png">			
+			</form>
+		</p>
+		</center>
+		
+		<!-- <table class="footer"><tr><td>
+			<a href="aboutus.html"><img src="images/nsfwinewhite.png" width="6%" align="right"></a><br>
+		</tr></td></table> -->
+	</body>
+</html>
