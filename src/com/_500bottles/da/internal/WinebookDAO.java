@@ -122,7 +122,6 @@ public class WinebookDAO extends DAO
 
 		userId = r.getLong("userId");
 		entryId = r.getLong("entryId");
-
 		title = r.getString("title");
 		textContent = r.getString("textContent");
 		winesJSON = r.getString("winesJSON");
