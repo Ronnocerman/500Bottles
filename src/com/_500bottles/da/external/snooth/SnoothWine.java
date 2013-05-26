@@ -316,4 +316,21 @@ public class SnoothWine {
 	{
 		this.num_reviews = (int) num_reviews;
 	}
+
+	public Wine toWineObject()
+	{
+		Wine w = new Wine();
+
+		w.setName(this.getName());
+		//w.setDescription();
+		//w.setGeoLocation();
+		//w.setType();
+		//w.setYear();
+		//w.setAppellation();
+		//w.setVarietal();
+		//w.setVineyard();
+		//w.setRating();
+
+		return w;
+	}
 }
