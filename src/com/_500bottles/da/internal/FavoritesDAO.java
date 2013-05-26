@@ -18,6 +18,7 @@ public class FavoritesDAO
 		columns = "(`userID`, ";
 		columns += "`wineID`)";
 
+		// Get userId from session manager
 		values = "('" + "0" + "',";
 		values += "'" + favorite.getWineId() + "'";
 		try
@@ -69,7 +70,7 @@ public class FavoritesDAO
 		return favorite;
 	}
 
-	public Favorites createFavorites(ResultSet r) throws SQLException // maybe
+	private static Favorites createFavorites(ResultSet r) throws SQLException // maybe
 	{
 		Favorites f;
 

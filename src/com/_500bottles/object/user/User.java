@@ -1,7 +1,12 @@
 package com._500bottles.object.user;
 
+import java.util.Date;
+
 public class User extends ApplicationUser
 {
+	private static long userId;
+	private static Date registrationDate;
+	private static Date lastLogin;
 
 	@Override
 	public void setEmail(String email)
@@ -33,7 +38,7 @@ public class User extends ApplicationUser
 	}
 
 	@Override
-	public void setDateOfBirth(long Dob)
+	public void setDOB(long Dob)
 	{
 		// TODO Auto-generated method stub
 		dateOfBirth = Dob;
@@ -58,6 +63,21 @@ public class User extends ApplicationUser
 	{
 		// TODO Auto-generated method stub
 		height = tall;
+	}
+
+	public void setRegistrationDate(Date registrationDate)
+	{
+		User.registrationDate = registrationDate;
+	}
+
+	public void setLastLogin(Date lastLogin)
+	{
+		User.lastLogin = lastLogin;
+	}
+
+	public void setUserId(long userId)
+	{
+		User.userId = userId;
 	}
 
 	@Override
@@ -121,6 +141,21 @@ public class User extends ApplicationUser
 	{
 		// TODO Auto-generated method stub
 		return dateOfBirth;
+	}
+
+	public Date getRegistrationDate()
+	{
+		return registrationDate;
+	}
+
+	public Date getLastLogin()
+	{
+		return lastLogin;
+	}
+
+	public long getUserId()
+	{
+		return userId;
 	}
 
 }
