@@ -23,7 +23,7 @@ public abstract class ApplicationUser
 
 	abstract void setLastName(String Last);
 
-	abstract void setDateOfBirth(long Dob);
+	abstract void setDOB(long Dob);
 
 	abstract void setSex(Sex s);
 

@@ -25,7 +25,8 @@ public class CellarDAO extends DAO
 
 		// table = Config.getProperty("cellarItemTableName");
 
-		columns = "( `wineID`,";
+		columns = "( `cellarID`,";
+		columns += "`wineID`,";
 		columns += "`quantity`,";
 		columns += "`notes`)";
 
@@ -103,6 +104,7 @@ public class CellarDAO extends DAO
 		long cellarId = cellar.getCellarId();
 		String sql = "";
 
+		// Get UserId from session manager
 		// sql += "cellarID=" + cellar.getCellarId();
 		sql += "cellarItemsJSON=" + cellar.getCellarItemIdsAsJSONArray();
 
