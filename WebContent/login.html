@@ -12,6 +12,13 @@
 		<!-- Loads CSS files for use on page -->
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
 		<link rel="stylesheet" type="text/css" href="css/inputfields.css" />
+		
+		<!-- Load JQuery Libraries -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	
+		<!-- Load My Script Library -->
+		<script src="javascript/script.js"></script>
+		
 	</head>
 
 	<body>
@@ -22,10 +29,11 @@
         <a href="winebook.html">Winebook</a>
       </div>
       
-      <div class="minor">
+      <div id="reglog" class="minor">
 		<a href="createaccount.html">register</a> • 
 		<a href="login.html">log in</a>
       </div>
+
     </div>
 	
 		<center>
@@ -36,14 +44,16 @@
 		<center>
 		<p>
 			<!--	input username & password	-->
-			<form>
-			<input type="email" value="" name="email" required="1" placeholder="email address" 
+			<form id="login" action="login.jsp" method="post">
+
+			<input id="email" type="email" value="" name="email" required="1" placeholder="email address" 
 			class="text-label" autocomplete="off"><br><br>
 			
-			<input type="password" value="" name="password" required="1" placeholder="password" 
+			<input id="password" type="password" value="" name="password" required="1" placeholder="password" 
 			class="text-label" autocomplete="off"><br><br>
 			
-			<input type="image" src="images/buttonLogIn.png">
+			<input id="submit" type="image" value="submit" src="images/buttonLogIn.png">
+			
 			</form>
 		</p>
 		
