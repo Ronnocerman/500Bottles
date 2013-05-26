@@ -30,14 +30,13 @@ public class WineSearch
 
 	private final static boolean DEFAULT_AVAIL = false;
 
-	private final static ProductType DEFAULT_PRODUCT_TYPE =
-		new ProductType();
+	private final static ProductType DEFAULT_PRODUCT_TYPE = null;
 
-	private final static Color DEFAULT_COLOR = new Color();
+	private final static Color DEFAULT_COLOR = null;
 
 	private final static int DEFAULT_STORE_ID = 0;
 
-	private final static Country DEFAULT_COUNTRY = new Country();
+	private final static Country DEFAULT_COUNTRY = null;
 
 	private final static int DEFAULT_ZIPCODE = 0;
 
@@ -55,7 +54,7 @@ public class WineSearch
 
 	private final static double DEFAULT_MAX_RATING = 0;
 
-	private final static Language DEFAULT_LANGUAGE = new Language();
+	private final static Language DEFAULT_LANGUAGE = null;
 
 	/* Search query. */
 	private String q;
@@ -145,8 +144,8 @@ public class WineSearch
 
 	public WineSearch(WineQuery query) throws InvalidWineSearch
 	{
-
-
+		this.setQuery(query.getTextQuery());
+		// TODO: Match the rest of the queries.
 	}
 
 	public String toString()
@@ -173,16 +172,16 @@ public class WineSearch
 		}
 
 
-		if (!this.getProductType().equals(DEFAULT_PRODUCT_TYPE))
+		if (this.getProductType() != DEFAULT_PRODUCT_TYPE)
 			url += "&t=" + this.getProductType().toString();
 
-		if (!this.getColor().equals(DEFAULT_COLOR))
+		if (this.getColor() != DEFAULT_COLOR)
 			url += "&color=" + this.getColor().toString();
 
 		if (this.getStoreId() != DEFAULT_STORE_ID)
 			url += "&m=" + this.getStoreId();
 
-		if (!this.getCountry().equals(DEFAULT_COUNTRY))
+		if (this.getCountry() != DEFAULT_COUNTRY)
 			url += "&c=" + this.getCountry().toString();
 
 		if (this.getZipCode() != DEFAULT_ZIPCODE)
@@ -209,7 +208,7 @@ public class WineSearch
 		if (this.getMaxRating() != DEFAULT_MAX_RATING)
 			url += "&xr=" + this.getMaxRating();
 
-		if (!this.getLanguage().equals(DEFAULT_LANGUAGE))
+		if (this.getLanguage() != DEFAULT_LANGUAGE)
 			url += "&lang=" + this.getLanguage().toString();
 
 		return url;

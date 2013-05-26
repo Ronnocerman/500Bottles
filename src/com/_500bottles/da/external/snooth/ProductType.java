@@ -49,6 +49,9 @@ public class ProductType {
 
 	public boolean equals(ProductType t)
 	{
+		if (t == null)
+			return false;
+
 		if (t.toString() == this.toString())
 			return true;
 		return false;
