@@ -54,7 +54,7 @@ public class Cellar
 
 	public CellarItem getById(long id)
 	{
-		for (int i = 0; !collection.isEmpty(); i++)
+		for (int i = 0; i < collection.size(); i++)
 		{
 			if (collection.elementAt(i).getId() == id)
 			{
