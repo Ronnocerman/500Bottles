@@ -3,6 +3,7 @@ package com._500bottles.da.external.snooth;
 import com._500bottles.config.Config;
 import com._500bottles.da.external.snooth.exception.InvalidWineSearch;
 import com._500bottles.da.external.snooth.sort.Sort;
+import com._500bottles.object.wine.WineQuery;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -140,6 +141,12 @@ public class WineSearch
 		this.setMinRating(DEFAULT_MIN_RATING);
 		this.setMaxRating(DEFAULT_MAX_RATING);
 		this.setLanguage(DEFAULT_LANGUAGE);
+	}
+
+	public WineSearch(WineQuery query) throws InvalidWineSearch
+	{
+
+
 	}
 
 	public String toString()

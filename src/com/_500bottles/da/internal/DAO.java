@@ -97,7 +97,7 @@ public abstract class DAO
 	 * @throws SQLException
 	 */
 	public static ResultSet select(String table, String select, String where)
-			throws ClassNotFoundException, SQLException
+			throws SQLException
 	{
 		String sql = "SELECT " + select + " FROM " + table;
 		sql += " WHERE " + where + ";";
@@ -106,7 +106,7 @@ public abstract class DAO
 	}
 
 	public static ResultSet select(String table, String select)
-		throws ClassNotFoundException, SQLException
+		throws SQLException
 	{
 		String sql = "SELECT " + select + " FROM " + table + ";";
 

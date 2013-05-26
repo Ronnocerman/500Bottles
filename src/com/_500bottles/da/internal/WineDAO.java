@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com._500bottles.config.Config;
+import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Wine;
 
 public class WineDAO extends DAO
@@ -55,14 +56,18 @@ public class WineDAO extends DAO
 
 	}
 
-	public static void deleteWine(Wine wine) throws SQLException
+	public static void deleteWine(Wine wine) throws DAException
 	{
-		delete(WINE_TABLE, "WHERE wineId=" + wine.getId());
+		try {
+			delete(WINE_TABLE, "WHERE wineId=" + wine.getId());
+		} catch (SQLException e) {
+			throw new DAException(e.getMessage(), e);
+		}
+
 	}
 
 	public static void editWine(Wine wine) throws SQLException
 	{
-
 		long wineId = wine.getId();
 		String sql = "";
 
@@ -80,25 +85,26 @@ public class WineDAO extends DAO
 		update(WINE_TABLE, sql, "wineId=" + wineId);
 	}
 
-	public static Wine getWine(Wine wine)
+	public static Wine getWine(Wine wine) throws DAException
 	{
-		long wineId = wine.getId();
-		return getWine(wineId);
+		if (wine == null)
+			throw new DAException("Specified Wine object is null.");
+
+		return getWine(wine.getId());
 	}
 
-	public static Wine getWine(long wineId)
+	public static Wine getWine(long wineId) throws DAException
 	{
 		ResultSet r;
-		Wine wine = null;
+		Wine wine;
 
 		try
 		{
 			r = select(WINE_TABLE, "*");
 			wine = createWine(r);
 
-		} catch (Exception e)
-		{
-			// TODO: handle query exceptions.
+		} catch (SQLException e) {
+			throw new DAException(e.getMessage(), e.getCause());
 		}
 
 		return wine;
