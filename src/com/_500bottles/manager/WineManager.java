@@ -6,6 +6,7 @@ public class WineManager
 {
 	public Wine getWine(long id)
 	{
+		return null;
 	}
 
 	public void addCustomWine(Wine w)
@@ -37,5 +38,7 @@ public class WineManager
 
 	public boolean isFavorite(long id)
 	{
+		// TODO
+		return false;
 	}
 }
