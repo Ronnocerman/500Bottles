@@ -1,0 +1,93 @@
+<!-- 500bottles.com user dashboard page || Last updated: 23 May 2013 -->
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<!--Load the AJAX API-->
+    	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    	<script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Type');
+        data.addColumn('number', 'Bottles');
+        data.addRows([
+          ['Red', 300],
+          ['White', 100],
+          ['Rosé', 12],
+          ['Dessert', 30],
+          ['Other', 16]
+        ]);
+
+        // Set chart options
+        var options = {
+        		'width': 400,
+            'height': 300,
+            colors: ['#c70000', '#dadada', '#e9b5b5', '#600404', '#454545']
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    	</script>			
+	
+		<title>500bottles.com &raquo; your dashboard</title>
+		
+		<!-- Loads typefaces for use in CSS pages -->
+		<link href='http://fonts.googleapis.com/css?family=Signika:300,400' rel='stylesheet' type='text/css'>
+
+		<!-- Loads CSS files for use on page -->
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/inputfields.css">
+	</head>
+
+	<body>
+		<div id="header">
+      <div class="content">
+        <a href="winewizard.html">Wine Wizard</a> • 
+        <a href="cellar.html">Cellar</a> • 
+        <a href="winebook.html">Winebook</a>
+      </div>
+      
+      <div class="minor">
+		<a href="createaccount.html">register</a> • 
+		<a href="login.html">log in</a>
+      </div>
+    </div>
+	
+		<center>
+		<!--	Header image	-->
+		<a href="home.html"><img src="images/500bottles.png" width="100%"></a>
+		</center>
+		
+		<h2>Great to see you again, hannibal@gmail.com!</h2>
+		
+		<!--	Change this to get the most popular wine by rating (refreshed every night)
+      		and display it where it says blahblahblah Chianti 2009	-->
+		<div class="wineoftheday" align="center">
+		<h1>Most Popular Wine of the Day:</h1>
+		Castello di Volpaia Chianti Classico<br>
+		2009
+		</div>
+		
+		<!--	Change this to take in shit from the JS forms	-->
+		<div class="piechart">
+			<h1>Your Cellar consists of:</h1>
+									
+			<!--Div that will hold the pie chart-->
+    		<div id="chart_div"></div>
+    	</div>
+	</body>
+</html>

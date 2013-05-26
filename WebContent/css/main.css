@@ -1,0 +1,164 @@
+body{
+	background-color: #fff3a0;
+	/*
+	* Couldn't figure out how to get this to link from the folder itself, so if 
+	* someone could figure out how to get it to do the thing from the folder 
+	* that'd be great.
+	*/
+	background-image: url(file:///home/elisa/Documents/NSFW/images/bgtest1.png);
+	background-repeat: repeat;
+	font-family: 'Signika';
+	font-size: 24px;
+	font-weight: lighter;
+	color: #222222;
+	padding-bottom:12%;
+}
+
+a{
+	color: #C34349;
+	text-decoration: underline;
+}
+
+a:hover{
+	color: #DE97AC;
+	text-decoration: underline;
+}
+
+a:visited{
+	color: #C34349;
+	text-decoration: none;
+}
+
+.footer{
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	padding: 10px;
+	font-size: 14px;
+	color: #DDDDDD;
+	font-family: 'Signika';
+	font-weight: lighter;
+	background-color: #620408;
+	z-index: 5;
+}
+
+div#header{
+	position: fixed !important;
+	position: absolute;
+	z-index: 4;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 70px;
+	color: #fff;
+	background-color: rgba(80, 0, 10, .55) !important;
+	background-color: #620408;
+}
+
+div#header div.content, div#header-dark div.content{
+	position: relative;
+	margin: 0 auto;
+	text-align: center;
+	top: 20px;
+	height: 70px;
+	font-size: 36px;
+	color:#fff;
+}
+
+div#header div.minor{
+	position: relative;
+	text-align: right;
+	font-size: 14px;
+	right: 7px;
+	top: -23%;
+	color: #fff;	
+}
+
+div#header a{
+	color: #fff;
+	text-decoration: none;
+	font-family: 'Signika';	
+}
+
+div#header a:hover{
+	color: #333;
+	text-decoration: none;	
+}
+
+.search-table{
+	text-align: left;
+	padding: 5px;
+	width: 420px;
+	color: #222222;
+	font-size: 24px;
+}
+
+.home{
+	border-width: 0px;
+	text-align: justify;
+	padding: 4px;
+	font-size: 26px;
+	width: 70%;
+	font-family: 'Signika';
+	font-size: 24px;
+	font-weight: lighter;
+	color: #222222;
+}
+
+h1{
+	font-weight: bold;
+	font-family: 'Signika';
+	color: #800f14;	
+	font-size: 36px;
+}
+
+h3{
+	font-weight: bold;
+	font-family: 'Signika';
+	color: #800f14;
+	font-size: 16px;	
+}
+
+h2{
+	font-weight: bold;
+	font-family: 'Signika';
+	font-size: 38px;
+	color: #222;
+}
+
+.homeside{
+	background-color: #fffee1;
+	border-width: 0px;
+	text-align: center;
+	padding: 4px;
+	font-size: 24px;
+	width: 25%;
+	font-family: 'Signika';
+	font-size: 24px;
+	font-weight: lighter;
+	color: #222222;
+	position: absolute;
+	top: 60%;
+	left: 72%;
+}
+
+.piechart{
+	top: 73%;
+	left: 5%;
+	position: absolute;
+	border-width: 0px;
+	padding: 4px;
+}
+
+.wineoftheday{
+	left: 5%;
+	position: absolute;
+	border-width: 0px;
+	padding: 4px;
+	width: 400px;	
+}
+
+.floatRight{
+	float: right;	
+}
