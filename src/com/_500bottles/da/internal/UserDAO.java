@@ -6,6 +6,7 @@ import java.util.Date;
 
 import com._500bottles.config.Config;
 import com._500bottles.exception.da.DAException;
+import com._500bottles.object.user.ApplicationUser;
 import com._500bottles.object.user.Sex;
 import com._500bottles.object.user.User;
 
@@ -14,8 +15,12 @@ public class UserDAO
 	private final static String USER_TABLE = Config
 			.getProperty("UserAccountTableName");
 
-	public static User addUser(User user) throws Exception
+	public static ApplicationUser addUser(ApplicationUser user)
+			throws DAException
 	{
+		// TODO instanceof ApplicationUser to check if User or Admin
+		// TODO Check if user exists, then throw a DAException with a proper
+		// message, if so.
 		String columns, values, registrationDate, lastLogin;
 		columns = "(`userEmail`, `userPass`,";
 		columns += "`registrationDate`, `lastLogin`,";
@@ -31,18 +36,19 @@ public class UserDAO
 		values += "'" + lastLogin + "',";
 		values += "'" + user.getFirstName() + "',";
 		values += "'" + user.getLastName() + "',";
+		values += "'" + user.getSex() + "')";
 		values += "'" + user.getDOB() + "',";
 		values += "'" + user.getHeight() + "',";
 		values += "'" + user.getWeight() + "',";
-		values += "'" + user.getSex() + "')";
+
+		// Check if user exists
 
 		try
 		{
-			int i = DAO.insert(USER_TABLE, columns, values);
-			// TODO: Better exception handling.
-		} catch (Exception e)
+			DAO.insert(USER_TABLE, columns, values);
+		} catch (SQLException e)
 		{
-			throw e;
+			throw new DAException(e.getMessage(), e);
 		}
 
 		user.setUserId(Database.getLastInsertId());
@@ -50,12 +56,18 @@ public class UserDAO
 		return user;
 	}
 
-	public static void deleteUser(User user) throws SQLException
+	public static void deleteUser(ApplicationUser user) throws DAException
 	{
-		DAO.delete(USER_TABLE, "WHERE userId=" + user.getUserId());
+		try
+		{
+			DAO.delete(USER_TABLE, "WHERE userId=" + user.getUserId());
+		} catch (SQLException e)
+		{
+			throw new DAException(e.getMessage(), e);
+		}
 	}
 
-	public static void editUser(User user) throws SQLException
+	public static void editUser(ApplicationUser user) throws DAException
 	{
 		long userId = user.getUserId();
 		String sql = "";
@@ -72,29 +84,45 @@ public class UserDAO
 		sql += ",height=" + user.getHeight();
 		sql += ",weight=" + user.getWeight();
 
-		DAO.update(USER_TABLE, sql, "userId=" + userId);
+		try
+		{
+			DAO.update(USER_TABLE, sql, "userId=" + userId);
+		} catch (SQLException e)
+		{
+			throw new DAException("User not found", e);
+		}
 	}
 
-	public static User getUser(long userId) throws DAException
+	public static ApplicationUser getUser(long userId) throws DAException
 	{
 		ResultSet r;
-		User user = null;
-
+		ApplicationUser user = null;
 		try
 		{
 			r = DAO.select(USER_TABLE, "*");
-			user = createUser(r);
-
-		} catch (Exception e)
+		} catch (SQLException e)
 		{
-			// TODO: handle query exceptions.
+			throw new DAException(e.getMessage(), e);
+		}
+		try
+		{
+			user = createUser(r);
+		} catch (SQLException e)
+		{
+			throw new DAException(e.getMessage(), e);
 		}
 
 		return user;
-
 	}
 
-	private static User createUser(ResultSet r) throws SQLException
+	// TODO:Implement this
+	public static ApplicationUser getUserByEmail(String email)
+	{
+		ApplicationUser user = null;
+		return user;
+	}
+
+	private static ApplicationUser createUser(ResultSet r) throws SQLException
 	{
 		User user;
 
