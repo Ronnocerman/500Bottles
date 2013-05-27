@@ -6,25 +6,25 @@ import com._500bottles.object.wine.Wine;
 
 public class CellarManager
 {
-	private Cellar c;
+	private static Cellar c;
 
-	public CellarManager()
+	static
 	{
-		// Construct based on logged in user
+		// Initialize CellarManager
 	}
 
-	public void addWine(Wine w)
+	public static void addWine(Wine w)
 	{
 		CellarItem ci = new CellarItem(w);
 		c.add(ci);
 	}
 
-	public boolean removeCellarItem(CellarItem ci)
+	public static boolean removeCellarItem(CellarItem ci)
 	{
 		return c.remove(ci);
 	}
 
-	public void editCellarItem(CellarItem ci)
+	public static void editCellarItem(CellarItem ci)
 	{
 		CellarItem x = c.getById(ci.getId());
 		if (!(x.getNotes().equals(ci.getNotes())))
@@ -33,12 +33,12 @@ public class CellarManager
 			x.setQuantity(ci.getQuantity());
 	}
 
-	public CellarItem getCellarItem(long id)
+	public static CellarItem getCellarItem(long id)
 	{
 		return c.getById(id);
 	}
 
-	public Cellar getCellar()
+	public static Cellar getCellar()
 	{
 		return c;
 	}
