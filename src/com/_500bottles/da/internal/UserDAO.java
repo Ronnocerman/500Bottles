@@ -45,8 +45,8 @@ public class UserDAO
 		boolean exist = true;
 		String where = "";
 		where += "userEmail=" + user.getEmail();
-		// Check if useremail exists
 
+		// Check if useremail exists
 		try
 		{
 			DAO.select(USER_TABLE, "*", where);
@@ -64,7 +64,8 @@ public class UserDAO
 				throw new DAException(e.getMessage(), e);
 			}
 		} else
-			throw new DAException("User already exists");
+			throw new DAException("User with email:" + user.getEmail()
+					+ " already exists");
 
 		user.setUserId(Database.getLastInsertId());
 
