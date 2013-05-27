@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import com._500bottles.config.Config;
+import com._500bottles.exception.da.DAException;
 import com._500bottles.object.user.Sex;
 import com._500bottles.object.user.User;
 
@@ -49,7 +50,7 @@ public class UserDAO
 		return user;
 	}
 
-	public void deleteUser(User user) throws SQLException
+	public static void deleteUser(User user) throws SQLException
 	{
 		DAO.delete(USER_TABLE, "WHERE userId=" + user.getUserId());
 	}
@@ -74,7 +75,7 @@ public class UserDAO
 		DAO.update(USER_TABLE, sql, "userId=" + userId);
 	}
 
-	public static User getUser(long userId)
+	public static User getUser(long userId) throws DAException
 	{
 		ResultSet r;
 		User user = null;
