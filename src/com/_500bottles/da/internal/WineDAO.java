@@ -17,7 +17,6 @@ import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 
 public class WineDAO extends DAO
 {
-
 	private final static String WINE_TABLE = Config.getProperty("wineTableName");
 
 	public static Wine addWine(Wine wine) throws Exception
@@ -91,15 +90,20 @@ public class WineDAO extends DAO
 		String sql = "";
 
 		// sql += "entryID=" + entry.getEntryId();
-		sql += "name=" + wine.getName();
+		sql += "vineyardId=" + wine.getVineyard().getId();
+		sql += ",varietalId=" + wine.getVarietal().getId();
+		sql += ",appellation=" + wine.getAppellation().getLocation();
+		sql += ",wineName=" + wine.getName();
+		sql += ",wineType=" + wine.getType();
+		sql += ",vintage=" + wine.getYear();
 		sql += ",description=" + wine.getDescription();
-		sql += ",geoLocation=" + wine.getGeoLocation();
-		sql += ",type=" + wine.getType();
-		sql += ",year=" + wine.getYear();
-		sql += ",appellation=" + wine.getAppellation();
-		sql += ",varietal=" + wine.getVarietal().getId();
-		sql += ",vineyard=" + wine.getVineyard().getId();
+		sql += ",priceMin=" + wine.getPriceMin();
+		sql += ",priceMax=" + wine.getPriceMin();
 		sql += ",rating=" + wine.getRating();
+		sql += ",longitude=" + wine.getGeoLocation().getLon();
+		sql += ",latitude=" + wine.getGeoLocation().getLat();
+		sql += ",winecomId=" + wine.getWinecomId();
+		sql += ",snoothId=" + wine.getSnoothId();
 
 		update(WINE_TABLE, sql, "wineId=" + wineId);
 		Database.disconnect();
@@ -161,8 +165,8 @@ public class WineDAO extends DAO
 	{
 		Wine wine;
 
-		long wineId, year, varId, vineId;
-		int rating;
+		long wineId, year, varId, vineId, priceMin, priceMax, winecomId;
+		double rating;
 		float lon, lat;
 
 		String name, description, typeString, appellationString, snoothId;
@@ -219,8 +223,10 @@ public class WineDAO extends DAO
 
 		wine = new Wine();
 
+		// Set all properties of Wine
 		wine.setName(name);
 		wine.setId(wineId);
+
 		wine.setSnoothId(snoothId);
 		wine.setDescription(description);
 		//wine.setYear(year);
