@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 
 import com._500bottles.config.Config;
+import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.winebook.Entry;
 import com._500bottles.object.winebook.Photo;
@@ -77,13 +78,13 @@ public class WinebookDAO extends DAO
 		update(WINEBOOK_TABLE, sql, "entryId=" + entryId);
 	}
 
-	public static Entry getEntry(Entry entry)
+	public static Entry getEntry(Entry entry) throws DAException
 	{
 		long entryId = entry.getEntryId();
 		return getEntry(entryId);
 	}
 
-	public static Entry getEntry(long entryId)
+	public static Entry getEntry(long entryId) throws DAException
 	{
 		ResultSet r;
 		Entry entry = null;
