@@ -5,22 +5,22 @@ public class GeoLocation
 	private static float lat;
 	private static float lon;
 
-	public static float getLat()
+	public float getLat()
 	{
 		return lat;
 	}
 
-	public static void setLat(float lat)
+	public void setLat(float lat)
 	{
 		GeoLocation.lat = lat;
 	}
 
-	public static float getLon()
+	public float getLon()
 	{
 		return lon;
 	}
 
-	public static void setLon(float lon)
+	public void setLon(float lon)
 	{
 		GeoLocation.lon = lon;
 	}

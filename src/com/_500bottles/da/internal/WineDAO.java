@@ -15,7 +15,8 @@ import com._500bottles.object.wine.WineType;
 public class WineDAO extends DAO
 {
 
-	private final static String WINE_TABLE = Config.getProperty("wineName");
+	private final static String WINE_TABLE = Config
+			.getProperty("wineTableName");
 
 	public static Wine addWine(Wine wine) throws Exception
 	{
@@ -28,24 +29,30 @@ public class WineDAO extends DAO
 
 		String columns, values;
 
-		columns = "(`name`, `description`, `longitude`, `latitude`,";
-		columns += "`type`, `year`,";
-		columns += "`appellation`, `varietal`,";
-		columns += "`vineyard`, `rating`)";
+		columns = "(`vineyardId`, `varietalId`, `appellation`";
+		columns += "`wineName`, `wineType`,";
+		columns += "`vintage`, `description`,";
+		columns += "`priceMin`, `priceMax`,";
+		columns += "`rating`, `longitude`,";
+		columns += "`latitude`, `winecomId`,";
+		columns += "`snoothId`)";
 
 		// TODO: get user id from session manager or via user object.
 		// TODO: getGeoLocation and getAppellation
-		values = "('" + wine.getName() + "',";
-		values += "'" + wine.getDescription() + "',";
-		values += "'" + wine.getGeoLocation().getLon() + "',";
-		values += "'" + wine.getGeoLocation().getLat() + "',";
+		values = "('" + wine.getVineyard().getId() + "',";
+		values += "'" + wine.getVarietal().getId() + "',";
+		values += "'" + wine.getAppellation().getLocation() + "',";
+		values += "'" + wine.getName() + "',";
 		values += "'" + wine.getType() + "',";
 		values += "'" + wine.getYear() + "',";
-		values += "'" + wine.getAppellation() + "',";
-		values += "'" + wine.getVarietal().getId() + "',";
-		values += "'" + wine.getVineyard().getId() + "',";
-		values += "'" + wine.getAppellation() + "',";
-		values += "'" + wine.getRating() + "')";
+		values += "'" + wine.getDescription() + "',";
+		values += "'" + wine.getPriceMin() + "',";
+		values += "'" + wine.getPriceMax() + "',";
+		values += "'" + wine.getRating() + "'";
+		values += "'" + wine.getGeoLocation().getLon() + "',";
+		values += "'" + wine.getGeoLocation().getLat() + "',";
+		values += "'" + wine.getWinecomId() + "',";
+		values += "'" + wine.getSnoothId() + "',)";
 
 		try
 		{
@@ -80,15 +87,20 @@ public class WineDAO extends DAO
 		String sql = "";
 
 		// sql += "entryID=" + entry.getEntryId();
-		sql += "name=" + wine.getName();
+		sql += "vineyardId=" + wine.getVineyard().getId();
+		sql += ",varietalId=" + wine.getVarietal().getId();
+		sql += ",appellation=" + wine.getAppellation().getLocation();
+		sql += ",wineName=" + wine.getName();
+		sql += ",wineType=" + wine.getType();
+		sql += ",vintage=" + wine.getYear();
 		sql += ",description=" + wine.getDescription();
-		sql += ",geoLocation=" + wine.getGeoLocation();
-		sql += ",type=" + wine.getType();
-		sql += ",year=" + wine.getYear();
-		sql += ",appellation=" + wine.getAppellation();
-		sql += ",varietal=" + wine.getVarietal().getId();
-		sql += ",vineyard=" + wine.getVineyard().getId();
+		sql += ",priceMin=" + wine.getPriceMin();
+		sql += ",priceMax=" + wine.getPriceMin();
 		sql += ",rating=" + wine.getRating();
+		sql += ",longitude=" + wine.getGeoLocation().getLon();
+		sql += ",latitude=" + wine.getGeoLocation().getLat();
+		sql += ",winecomId=" + wine.getWinecomId();
+		sql += ",snoothId=" + wine.getSnoothId();
 
 		update(WINE_TABLE, sql, "wineId=" + wineId);
 	}
@@ -123,11 +135,11 @@ public class WineDAO extends DAO
 	{
 		Wine wine;
 
-		long wineId, year, varId, vineId;
-		int rating;
+		long wineId, year, varId, vineId, priceMin, priceMax, winecomId;
+		double rating;
 		float lon, lat;
 
-		String name, description, typeString, appellationString;
+		String name, description, typeString, appellationString, snoothId;
 		WineType type;
 		GeoLocation geoLocation;
 		Appellation appellation;
@@ -146,39 +158,50 @@ public class WineDAO extends DAO
 		 * wine.getVineyard().getId(); sql += ",rating=" + wine.getRating();
 		 */
 
-		name = r.getString("name");
-		wineId = r.getLong("wineId");
-		year = r.getLong("year");
-		typeString = r.getString("type");
+		// Get double from ResultSet
+		rating = r.getDouble("rating");
 
+		// Get longs from ResultSet
+		wineId = r.getLong("wineId");
+		year = r.getLong("vintage");
+		priceMin = r.getLong("priceMin");
+		priceMax = r.getLong("priceMax");
+		winecomId = r.getLong("winecomId");
+		varId = r.getLong("varietalId");
+		vineId = r.getLong("vineyardId");
+
+		// Get floats from ResultSet
+		lon = r.getFloat("longitude");
+		lat = r.getFloat("latitude");
+
+		// Get strings from ResultSet
+		name = r.getString("wineName");
+		typeString = r.getString("wineType");
+		snoothId = r.getString("snoothId");
+		description = r.getString("description");
+		appellationString = r.getString("appellation");
+
+		// Create objects to set the Wine object
 		type = new WineType();
 		type.setWineType(typeString);
 
-		appellationString = r.getString("appellation");
 		appellation = new Appellation();
 		appellation.setLocation(appellationString);
-
-		lon = r.getFloat("longitude");
-		lat = r.getFloat("latitude");
 
 		geoLocation = new GeoLocation();
 		geoLocation.setLat(lat);
 		geoLocation.setLon(lon);
 
-		varId = r.getLong("varietal");
 		varietal = new Varietal();
 		varietal.setId(varId);
 
-		vineId = r.getLong("vineyard");
 		vineyard = new Vineyard();
 		vineyard.setId(vineId);
 
-		rating = r.getInt("rating");
-
-		description = r.getString("description");
-
+		// Create Wine object
 		wine = new Wine();
 
+		// Set all properties of Wine
 		wine.setName(name);
 		wine.setId(wineId);
 		wine.setYear(year);
@@ -188,6 +211,11 @@ public class WineDAO extends DAO
 		wine.setAppellation(appellation);
 		wine.setVarietal(varietal);
 		wine.setVineyard(vineyard);
+		wine.setPriceMin(priceMin);
+		wine.setPriceMax(priceMax);
+		wine.setWinecomId(winecomId);
+		wine.setSnoothId(snoothId);
+		wine.setDescription(description);
 
 		return wine;
 	}

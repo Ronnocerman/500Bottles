@@ -13,7 +13,11 @@ public class Wine
 	private Appellation appellation;
 	private Varietal varietal;
 	private Vineyard vineyard;
-	private int rating;
+	private double rating;
+	private long priceMin;
+	private long priceMax;
+	private long winecomId;
+	private String snoothId;
 
 	public long getId()
 	{
@@ -105,13 +109,53 @@ public class Wine
 		this.vineyard = vineyard;
 	}
 
-	public int getRating()
+	public double getRating()
 	{
 		return rating;
 	}
 
-	public void setRating(int rating)
+	public void setRating(double rating)
 	{
 		this.rating = rating;
+	}
+
+	public long getPriceMin()
+	{
+		return priceMin;
+	}
+
+	public void setPriceMin(long priceMin)
+	{
+		this.priceMin = priceMin;
+	}
+
+	public long getPriceMax()
+	{
+		return priceMax;
+	}
+
+	public void setPriceMax(long priceMax)
+	{
+		this.priceMax = priceMax;
+	}
+
+	public long getWinecomId()
+	{
+		return winecomId;
+	}
+
+	public void setWinecomId(long winecomId)
+	{
+		this.winecomId = winecomId;
+	}
+
+	public String getSnoothId()
+	{
+		return snoothId;
+	}
+
+	public void setSnoothId(String snoothId)
+	{
+		this.snoothId = snoothId;
 	}
 }
