@@ -31,10 +31,10 @@ public class UserDAO
 		values += "'" + lastLogin + "',";
 		values += "'" + user.getFirstName() + "',";
 		values += "'" + user.getLastName() + "',";
+		values += "'" + user.getSex() + "',";
 		values += "'" + user.getDOB() + "',";
 		values += "'" + user.getHeight() + "',";
-		values += "'" + user.getWeight() + "',";
-		values += "'" + user.getSex() + "')";
+		values += "'" + user.getWeight() + "')";
 
 		try
 		{
