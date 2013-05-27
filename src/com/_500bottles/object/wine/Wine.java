@@ -5,6 +5,7 @@ import com._500bottles.object.geolocation.GeoLocation;
 public class Wine
 {
 	private long id;
+	private String snoothId;
 	private String name;
 	private String description;
 	private GeoLocation geoLocation;
@@ -15,6 +16,21 @@ public class Wine
 	private Vineyard vineyard;
 	private int rating;
 
+	public Wine()
+	{
+		this.setId(0);
+		this.setSnoothId("");
+		this.setName("");
+		this.setDescription("");
+		this.setGeoLocation(new GeoLocation());
+		this.setType(new WineType());
+		this.setYear(0);
+		this.setAppellation(new Appellation());
+		this.setVarietal(new Varietal());
+		this.setVineyard(new Vineyard());
+		this.setRating(0);
+	}
+
 	public long getId()
 	{
 		return id;
@@ -23,6 +39,16 @@ public class Wine
 	public void setId(long id)
 	{
 		this.id = id;
+	}
+
+	public String getSnoothId()
+	{
+		return snoothId;
+	}
+
+	public void setSnoothId(String snoothId)
+	{
+		this.snoothId = snoothId;
 	}
 
 	public String getName()
@@ -113,5 +139,16 @@ public class Wine
 	public void setRating(int rating)
 	{
 		this.rating = rating;
+	}
+
+	public String toString()
+	{
+		String str = "";
+
+		str += "ID: " + this.getId() + "\n";
+		str += "Name: " + this.getName() + "\n";
+		str += "Description: " + this.getDescription() + "\n";
+
+		return str;
 	}
 }

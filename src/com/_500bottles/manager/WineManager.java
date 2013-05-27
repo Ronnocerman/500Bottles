@@ -1,5 +1,7 @@
 package com._500bottles.manager;
 
+import com._500bottles.da.external.snooth.SnoothDAO;
+import com._500bottles.da.external.snooth.exception.InvalidWineSearch;
 import com._500bottles.da.internal.WineDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Wine;
@@ -10,7 +12,7 @@ import java.util.Vector;
 
 public class WineManager
 {
-	public Wine getWine(long id)
+	public static Wine getWine(long id)
 	{
 		Wine wine = null;
 
@@ -23,30 +25,44 @@ public class WineManager
 		return wine;
 	}
 
-	public WineQueryResult searchWine(WineQuery query)
+	/**
+	 * Gets and returns a
+	 * @param snoothId
+	 * @return
+	 */
+	static Wine getWineBySnoothId(String snoothId)
 	{
-		WineQueryResult result = null;
+		Wine resultWine = null, searchWine = new Wine();
+		searchWine.setSnoothId(snoothId);
 
-		// Search our database.
+		try {
+			resultWine = WineDAO.getWine(searchWine);
+		} catch (DAException e) {
+			System.err.print("DA Exception in WineManager::getWineBySnoothId" + e.getMessage());
+		}
 
-		searchSnooth(query);
-
-		// Search wine.com database.
-
-		// merge the results
-
-		return result;
+		return resultWine;
 	}
 
-	public void addCustomWine(Wine w)
+	static Wine getWineByWineComId()
+	{
+		return null;
+	}
+
+	public static WineQueryResult searchWine(WineQuery query)
+	{
+		return WineQueryManager.search(query);
+	}
+
+	public static void addCustomWine(Wine w)
 	{
 	}
 
-	public void editCustomWine(Wine w)
+	public static void editCustomWine(Wine w)
 	{
 	}
 
-	public void deleteCustomWine(Wine w)
+	public static void deleteCustomWine(Wine w)
 	{
 		try {
 			WineDAO.deleteWine(w);
@@ -55,7 +71,7 @@ public class WineManager
 		}
 	}
 
-	public void setRating(int rating)
+	public static void setRating(int rating)
 	{
 	}
 
@@ -66,40 +82,12 @@ public class WineManager
 	 * 
 	 * public void deleteTastingNotes() { }
 	 */
-	public void setFavorite(Wine w)
+	public static void setFavorite(Wine w)
 	{
 	}
 
-	public boolean isFavorite(long id)
+	public static boolean isFavorite(long id)
 	{
 		return false;
-	}
-
-	/**
-	 * Searches the Snooth API using SnoothDAO and the specified query.
-	 * Returns a set of resulting wines.
-	 * @param query
-	 * @return
-	 */
-	private Vector<Wine> searchSnooth(WineQuery query)
-	{
-		Vector<Wine> v = null;
-
-
-
-		return v;
-	}
-
-	/**
-	 * Searches the Wine.com API using WineDAO and the specified query.
-	 * Returns a set of resulting wines.
-	 * @param query
-	 * @return
-	 */
-	private Vector<Wine> searchWineCom(WineQuery query)
-	{
-		Vector<Wine> v = null;
-
-		return v;
 	}
 }

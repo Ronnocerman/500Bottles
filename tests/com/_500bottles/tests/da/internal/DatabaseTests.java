@@ -26,7 +26,7 @@ public class DatabaseTests {
 	{
 		try {
 			Connection c = Database.connect();
-			Database.disconnect(c);
+			Database.disconnect();
 		} catch (SQLException e) {
 			fail("SQLException" + e.getCause());
 		}

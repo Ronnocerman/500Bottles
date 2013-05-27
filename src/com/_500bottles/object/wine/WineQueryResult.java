@@ -14,6 +14,11 @@ public class WineQueryResult {
 	/* Vector of resulting wines. */
 	private Vector<Wine> wines;
 
+	public WineQueryResult(Vector<Wine> wines)
+	{
+		this.wines = wines;
+	}
+
 	/**
 	 * Returns number of wine results.
 	 * @return

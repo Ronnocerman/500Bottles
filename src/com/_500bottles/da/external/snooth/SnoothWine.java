@@ -322,7 +322,8 @@ public class SnoothWine {
 		Wine w = new Wine();
 
 		w.setName(this.getName());
-		//w.setDescription();
+		w.setDescription(this.getWineMakerNotes());
+		w.setSnoothId(this.getCode());
 		//w.setGeoLocation();
 		//w.setType();
 		//w.setYear();
