@@ -25,7 +25,7 @@ public class UserDAO
 		columns = "(`userEmail`, `userPass`,";
 		columns += "`registrationDate`, `lastLogin`,";
 		columns += "`firstName`, `lastName`, `sex`, `dateOfBirth`";
-		columns += "`height`, `weight`)";
+		columns += "`height`, `weight`, `admin`)";
 
 		registrationDate = DAO.formatDate(user.getRegistrationDate());
 		lastLogin = DAO.formatDate(user.getLastLogin());
@@ -40,16 +40,32 @@ public class UserDAO
 		values += "'" + user.getDOB() + "',";
 		values += "'" + user.getHeight() + "',";
 		values += "'" + user.getWeight() + "',";
+		values += "'" + user.isAdmin() + "')";
 
-		// Check if user exists
+		boolean exist = true;
+		String where = "";
+		where += "userEmail=" + user.getEmail();
 
+		// Check if useremail exists
 		try
 		{
-			DAO.insert(USER_TABLE, columns, values);
-		} catch (SQLException e)
+			DAO.select(USER_TABLE, "*", where);
+		} catch (SQLException e1)
 		{
-			throw new DAException(e.getMessage(), e);
+			exist = false;
 		}
+		if (!exist)
+		{
+			try
+			{
+				DAO.insert(USER_TABLE, columns, values);
+			} catch (SQLException e)
+			{
+				throw new DAException(e.getMessage(), e);
+			}
+		} else
+			throw new DAException("User with email:" + user.getEmail()
+					+ " already exists");
 
 		user.setUserId(Database.getLastInsertId());
 
@@ -83,6 +99,7 @@ public class UserDAO
 		sql += ",dateOfBirth=" + user.getDOB();
 		sql += ",height=" + user.getHeight();
 		sql += ",weight=" + user.getWeight();
+		sql += ",admin=" + user.isAdmin();
 
 		try
 		{
@@ -117,8 +134,27 @@ public class UserDAO
 
 	// TODO:Implement this
 	public static ApplicationUser getUserByEmail(String email)
+			throws DAException
 	{
 		ApplicationUser user = null;
+		ResultSet r;
+		String where = "";
+		where += "userEmail=" + email;
+		try
+		{
+			r = DAO.select(USER_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("User with email: " + email + "not found");
+		}
+		try
+		{
+			user = createUser(r);
+		} catch (SQLException e)
+		{
+			throw new DAException(e.getMessage(), e);
+		}
+
 		return user;
 	}
 
@@ -137,6 +173,8 @@ public class UserDAO
 		Sex sex;
 
 		double height, weight;
+
+		boolean admin;
 
 		// Return null if there was no entry in the ResultSet.
 		if (!r.next())
@@ -160,6 +198,8 @@ public class UserDAO
 		height = r.getDouble("height");
 		weight = r.getDouble("weight");
 
+		admin = r.getBoolean("admin");
+
 		user = new User();
 		user.setUserId(userId);
 		user.setEmail(userEmail);
@@ -172,6 +212,7 @@ public class UserDAO
 		user.setDOB(dateOfBirth);
 		user.setHeight(height);
 		user.setWeight(weight);
+		user.setAdmin(admin);
 
 		return user;
 	}
