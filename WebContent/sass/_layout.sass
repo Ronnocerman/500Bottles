@@ -1,0 +1,56 @@
+$DEFAULT_COLUMN_MARGIN: 2%
+
+.wrapper
+  position: relative
+  max-width: 1500px
+  margin: 0 auto 0
+  min-height: 100%
+
+  .content
+    padding: $DEFAULT_COLUMN_MARGIN
+
+.content_container
+  margin: 0 auto 0
+
+.column_100,
+.column_50,
+.column_33,
+.column_25
+  position: relative
+
+.column_100
+  width: 100%
+
+.column_50
+  $WIDTH: 50%
+  width: $WIDTH - $DEFAULT_COLUMN_MARGIN / 2
+  margin-right: $DEFAULT_COLUMN_MARGIN / 2
+  float: left
+  &:nth-child(2n)
+    width: $WIDTH - $DEFAULT_COLUMN_MARGIN / 2
+    margin-left: $DEFAULT_COLUMN_MARGIN / 2
+    margin-right: 0
+
+.column_33
+  $WIDTH: 33.3333%
+  width: $WIDTH
+  float: left
+  &:nth-child(n+2)
+    width: $WIDTH - $DEFAULT_COLUMN_MARGIN
+    margin-left: $DEFAULT_COLUMN_MARGIN
+
+.column_66
+  $WIDTH: 66.6666%
+  width: $WIDTH
+  float: left
+
+.column_25
+  $WIDTH: 25%
+  width: $WIDTH
+  float: left
+  &:nth-child(n+2)
+    width: $WIDTH - $DEFAULT_COLUMN_MARGIN
+    margin-left: $DEFAULT_COLUMN_MARGIN
+
+.center
+  text-align: center

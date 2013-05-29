@@ -1,0 +1,63 @@
+#view_login
+  position: absolute
+  height: 100%
+  width: 100%
+  background: rgba(white, 0.9)
+  text-align: center
+  -webkit-animation-name: fadeInDownBig
+  -moz-animation-name: fadeInDownBig
+  -o-animation-name: fadeInDownBig
+  animation-name: fadeInDownBig
+  z-index: 100
+
+  &:after
+    content: ""
+    height: 975px
+    width: 340px
+    position: absolute
+    right: 0px
+    top:  -120px
+    opacity: 0.9
+    -webkit-transform-origin: 17% 17%
+    @include background_image("wine_bottle.png")
+    -webkit-animation-delay: 1s
+    -moz-animation-delay: 1s
+    -o-animation-delay: 1s
+    animation-delay: 1s
+    -webkit-animation-name: bounceInUp
+    -moz-animation-name: bounceInUp
+    -o-animation-name: bounceInUp
+    animation-name: bounceInUp
+    -webkit-animation-duration: 1s
+    -moz-animation-duration: 1s
+    -o-animation-duration: 1s
+    animation-duration: 1s
+    -webkit-animation-fill-mode: both
+    -moz-animation-fill-mode: both
+    -o-animation-fill-mode: both
+    animation-fill-mode: both
+
+  form, .forgot_signup
+    width: 30%
+    min-width: 320px
+    margin:  0 auto 0
+
+  form
+    min-width: 320px
+    margin:  20% auto 0 auto
+    box-shadow: 0 0 10px rgba(black, 0.2)
+    input[type="password"]
+      display: none
+
+  .forgot_signup
+    padding-top: 0.7em
+    font-size:  0.8em
+    text-align: right
+
+    a
+      text-decoration: none
+      color: #AAA
+      padding-left: 1em
+      @include transition(all, 0.35s)
+      &:hover
+        color: black

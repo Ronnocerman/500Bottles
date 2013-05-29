@@ -1,0 +1,40 @@
+// Styles that apply to both tablet and smartphone sizes.
+@media screen and (min-width: $SMARTPHONE_MIN_WIDTH) and (max-width: $TABLET_MAX_WIDTH)
+  .column_100.content>*, .column_100 .content,
+  .column_50.content>*, .column_50 .content,
+  .column_66.content>*, .column_66 .content,
+  .column_33.content>*, .column_33 .content,
+  .column_25.content>*, .column_25 .content
+    margin-left: 2%
+    margin-right: 2%
+
+  .frontpage .percentage
+    width: 30%
+
+  .desktop_only
+    display: none
+
+
+@media screen and (min-width: $SMARTPHONE_MIN_WIDTH) and (max-width: $SMARTPHONE_MAX_WIDTH)
+  .content_container
+    width: 100%
+
+  .column_50,
+  .column_66,
+  .column_33,
+  .column_25,
+
+  .column_50.right,
+  .column_66.right,
+  .column_33.right,
+  .column_25.right,
+
+  .column_50.left,
+  .column_50.left+.column_50.right,
+  .column_33.left,
+  .column_25.left,
+  .column_25.left+.column_25.right
+    &:nth-child(n)
+      margin-right: 0
+      margin-left: 0
+      width: 100%

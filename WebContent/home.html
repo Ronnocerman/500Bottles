@@ -1,62 +1,108 @@
-<!-- 500bottles.com home page || Last updated: 26 May 2013 -->
-
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>500bottles.com &raquo; home</title>
-		
-		<!-- Loads typefaces for use in CSS pages -->
-		<link href='http://fonts.googleapis.com/css?family=Signika:300,400' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Montez' rel='stylesheet' type='text/css'>
+<head>
+	<title>500bottles.com &raquo; home</title>
 
-		<!-- Loads CSS files for use on page -->
-		<link rel="stylesheet" type="text/css" href="css/main.css" />
-		<link rel="stylesheet" type="text/css" href="css/inputfields.css">
-	</head>
+	<!-- Loads typefaces for use in CSS pages -->
+	<link href='http://fonts.googleapis.com/css?family=Signika:300,400' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
 
-	<body>
-		<div id="header">
-      <div class="content">
-        <a href="winewizard.html">Wine Wizard</a> • 
-        <a href="cellar.html">Cellar</a> • 
-        <a href="winebook.html">Winebook</a>
-      </div>
-      
-      <div class="minor">
-		<a href="createaccount.html">register</a> • 
-		<a href="login.html">log in</a>
-      </div>
-    </div>
-	
-		<center>
-		<!--	Header image	-->
-		<a href="home.html"><img src="images/500bottles.png" width="100%"></a>
-		</center>
-						
-			<!--	Side description	-->
-			<table class="home">
-			<tr>
-			<td>
-				<h1>Welcome to 500 Bottles!</h1>
-				What's 500 Bottles?  Only the best damned wine-related web-based application under 
-				the sun, that's what!  Here you'll be able to keep tabs on all your wine escapades 
-				with our handy-dandy Winebook, track and store information about your massive 
-				collection of unique variants of chianti (amongst others, of course), as well as search 
-				for any wine that you can think of--and then some!<br><br>
-				
-				Signing up takes less than a minute, and then it's on to a whole new world of wine 
-				adventure!<br><br>
-				-<i>Cheers!</i><br>
-				<a href="aboutus.html"><img src="images/nsfwineblack.png" width="20%"></a>
-			</td>			
-			</tr>			
-			</table>
-			
-			<table class="homeside"><tr><td>
-			New to 500 Bottles?<br>
-			<a href="createaccount.html">Sign up</a>!<br>
-			Already a member?<br>
-			<a href="login.html">Log in</a>!
-			</td></td></tr></table>
-	</body>
+	<!-- Loads CSS files for use on page -->
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+
+<body>
+
+<script>
+	function password_test() {
+		console.log("adding password test func");
+
+		var bottle_time = 1000;
+
+		var login_view = document.getElementById("view_login");
+		var form = document.getElementById("view_login");
+		var fp = document.getElementById("faux_password");
+		var p = document.getElementById("password");
+		var e = document.getElementById("email");
+		var email_placeholder = e.value;
+
+		e.addEventListener("blur", function() {
+			if (e.value == "")
+				e.value = email_placeholder;
+		});
+
+		e.addEventListener("focus", function() {
+			if (e.value == email_placeholder)
+				e.value = "";
+		});
+
+		fp.addEventListener("focus", function() {
+			fp.style.display = "none";
+			p.style.display = "block";
+			p.focus();
+		});
+
+		p.addEventListener("blur", function() {
+
+			if (p.value != "")
+				return;
+
+			p.style.display = "none";
+			fp.style.display = "block";
+		});
+	}
+
+	window.addEventListener("load", password_test);
+</script>
+
+<section id="view_login" class="view animated" style="display: none">
+	<form id="login_form">
+		<div class="person_icon">
+			<input id="email" type="text" value="email" class="square_bottom" />
+		</div>
+		<div class="password_icon">
+			<input id="password" type="password" class="square_top" />
+			<input id="faux_password" type="text" value="password" class="square_top" />
+		</div>
+		<input type="button" value="log in"/>
+	</form>
+	<div class="forgot_signup">
+		<a href="">forgot password</a>
+	</div>
+</section>
+
+
+<!--	Header image	-->
+<a href="home.html"><img src="images/500bottles.png" width="100%"></a>
+
+<div class="wrapper">
+	<div class="column_66">
+		<div class="content">
+		<h1>Welcome to 500 Bottles!</h1>
+		<p>What's 500 Bottles? Only the best damned wine-related web-based
+		application under
+		the sun, that's what! Here you'll be able to keep tabs on all your
+		wine escapades
+		with our handy-dandy Winebook, track and store information about
+		your massive
+		collection of unique variants of chianti (amongst others, of
+		course), as well as search
+		for any wine that you can think of--and then some!<br><br>
+
+		Signing up takes less than a minute, and then it's on to a whole new
+		world of wine
+		adventure!<br><br>
+		-<i>Cheers!</i><br>
+		<a href="aboutus.html"><img src="images/nsfwineblack.png" width="20%"></a>
+		</p>
+		</div>
+	</div>
+	<div class="column_33">
+		New to 500 Bottles?<br>
+		<a href="createaccount.html">Sign up</a>!<br>
+		Already a member?<br>
+		<a href="login.html">Log in</a>!
+	</div>
+</div>
+</body>
 </html>
