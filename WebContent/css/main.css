@@ -1,11 +1,10 @@
+/*A series of CSS rules, mostly for general formatting or pages that only use one or two
+specialised things.*/
+
+/*Main background and typeface setting*/
 body{
 	background-color: #fff3a0;
-	/*
-	* Couldn't figure out how to get this to link from the folder itself, so if 
-	* someone could figure out how to get it to do the thing from the folder 
-	* that'd be great.
-	*/
-	background-image: url(file:///home/elisa/Documents/NSFW/images/bgtest1.png);
+	background-image: url('../images/bgtest1.png');
 	background-repeat: repeat;
 	font-family: 'Signika';
 	font-size: 24px;
@@ -14,6 +13,7 @@ body{
 	padding-bottom:12%;
 }
 
+/*Links*/
 a{
 	color: #C34349;
 	text-decoration: underline;
@@ -24,25 +24,7 @@ a:hover{
 	text-decoration: underline;
 }
 
-a:visited{
-	color: #C34349;
-	text-decoration: none;
-}
-
-.footer{
-	position: fixed;
-	bottom: 0px;
-	left: 0px;
-	right: 0px;
-	padding: 10px;
-	font-size: 14px;
-	color: #DDDDDD;
-	font-family: 'Signika';
-	font-weight: lighter;
-	background-color: #620408;
-	z-index: 5;
-}
-
+/*Page header content and decoration*/
 div#header{
 	position: fixed !important;
 	position: absolute;
@@ -77,8 +59,7 @@ div#header div.minor{
 
 div#header a{
 	color: #fff;
-	text-decoration: none;
-	font-family: 'Signika';	
+	text-decoration: none;	
 }
 
 div#header a:hover{
@@ -86,45 +67,35 @@ div#header a:hover{
 	text-decoration: none;	
 }
 
-.search-table{
-	text-align: left;
-	padding: 5px;
-	width: 420px;
-	color: #222222;
-	font-size: 24px;
+/*Various headers*/
+h1{
+	font-weight: bold;
+	color: #9e0a17;	
+	font-size: 36px;
 }
 
+h2{
+	font-weight: bold;
+	font-size: 38px;
+	color: #222;
+}
+
+h3{
+	font-weight: bold;
+	color: #9e0a17;
+	font-size: 16px;	
+}
+
+/*Used in home.html*/
 .home{
 	border-width: 0px;
 	text-align: justify;
 	padding: 4px;
 	font-size: 26px;
 	width: 70%;
-	font-family: 'Signika';
 	font-size: 24px;
 	font-weight: lighter;
 	color: #222222;
-}
-
-h1{
-	font-weight: bold;
-	font-family: 'Signika';
-	color: #800f14;	
-	font-size: 36px;
-}
-
-h3{
-	font-weight: bold;
-	font-family: 'Signika';
-	color: #800f14;
-	font-size: 16px;	
-}
-
-h2{
-	font-weight: bold;
-	font-family: 'Signika';
-	font-size: 38px;
-	color: #222;
 }
 
 .homeside{
@@ -134,7 +105,6 @@ h2{
 	padding: 4px;
 	font-size: 24px;
 	width: 25%;
-	font-family: 'Signika';
 	font-size: 24px;
 	font-weight: lighter;
 	color: #222222;
@@ -143,6 +113,21 @@ h2{
 	left: 72%;
 }
 
+/*Used in winewizard.html*/
+.search-table{
+	text-align: left;
+	padding: 5px;
+	width: 420px;
+	color: #222222;
+	font-size: 24px;
+}
+
+/*Used in cellar.html*/
+.floatRight{
+	float: right;	
+}
+
+/*Used in dashboard.html*/
 .piechart{
 	top: 73%;
 	left: 5%;
@@ -157,8 +142,4 @@ h2{
 	border-width: 0px;
 	padding: 4px;
 	width: 400px;	
-}
-
-.floatRight{
-	float: right;	
 }

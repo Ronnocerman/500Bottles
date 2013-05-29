@@ -1,24 +1,68 @@
-table{
-	opacity: 1.0;
+/*Specialised CSS used in winebook.html that did not fall under the perview of
+inputfields.css*/
+.floatBottom{
+	float: right;
+	top: 80%;	
 }
 
-table:hover{
-	opacity: 0.4;
+h4{
+	font-size: 18px;
+	color: #a5232f;
+	font-weight: bold;
+	padding-left: 4px;
 }
 
-.winebook{
-	background-color: #fffee1;
-	border-width: 0px;
-	text-align: justify;
-	padding: 4px;
-	font-size: 24px;
-	width: 250px;
-	height: 250px;
-	font-family: 'Signika';
+/*Grid stuff*/
+ul#grid{
+  list-style: none;
+  margin: 20px 12% 0;
+  width: 80%;
+}
+
+#grid li{
+  float: left;
+  display: block;
+  height: 250px;
+  width: 250px;
+  border: 0px;
+  background-color: #fffee1;
+  margin: 0 20px 20px 20px;
+} 
+
+.portfolio{
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  font-family: 'Signika';
+}
+
+#grid li:hover{
+	opacity: 0.7;
+	filter:alpha(opacity=20);	
+}
+
+#grid li img{
+  padding: 7px;
+  margin: 0;
+  max-width: 250px;
+  max-height: 250px;
+}
+  
+#grid p{
 	font-size: 14px;
-	font-weight: lighter;
-	color: #222222;
-	left: 10%;
-	position: absolute;
-	right: 10%;
+	text-align: justify;
+	padding: 6px;	
+}
+
+.linkHover{
+	visibility: hidden;
+	text-align: right;
+	font-size: 14px;
+	margin-top: -20px;
+	margin-right: 5px;
+}
+
+.entries li:hover .linkHover{
+	visibility: visible;
 }
