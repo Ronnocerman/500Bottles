@@ -1,0 +1,63 @@
+<!-- 500bottles.com add a wine page || Last updated: 26 May 2013 -->
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>500bottles.com &raquo; add a wine to your cellar</title>
+		
+		<!-- Loads typefaces for use in CSS pages -->
+		<link href='http://fonts.googleapis.com/css?family=Signika:300,400' rel='stylesheet' type='text/css'>
+
+		<!-- Loads CSS files for use on page -->
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="stylesheet" type="text/css" href="css/inputfields.css">
+	</head>
+
+	<body>
+		<div id="header">
+      <div class="content">
+        <a href="winewizard.html">Wine Wizard</a> • 
+        <a href="cellar.html">Cellar</a> • 
+        <a href="winebook.html">Winebook</a>
+      </div>
+      
+      <div class="minor">
+		<a href="createaccount.html">register</a> • 
+		<a href="login.html">log in</a>
+      </div>
+    </div>
+	
+		<center>
+		<!--	Header image	-->
+		<a href="home.html"><img src="images/500bottles.png" width="100%"></a>
+		</center>
+		
+		<center>					
+		<table class="search-table"><tr><td>
+			<!--	form for adding a wine	-->
+			<form>
+			<input type="text" name="name" required='1' placeholder="name" class="cellar-entry"
+			autocomplete="on"><br>
+			<input type="text" name="type" placeholder="type" class="cellar-entry" 
+			autocomplete="on"><br>
+			<input type="text" name="varietal" placeholder="varietal" class="cellar-entry" 
+			autocomplete="on"><br>
+			<input type="text" name="location" placeholder="location" class="cellar-entry" 
+			autocomplete="on"><br>
+			<input type="text" name="vintage" placeholder="vintage" class="cellar-entry" 
+			autocomplete="on"><br>
+			<input type="text" name="region" placeholder="region" class="cellar-entry" 
+			autocomplete="on"><br>
+			<input type="text" name="notes" placeholder="personal notes" class="cellar-entry" 
+			autocomplete="on" maxlength="140"><br>
+			<input type="text" name="qty" placeholder="qty" class="qty"><br><br>
+			
+			<center>
+				<input type="image" src="images/buttonSubmit.png">
+				<a href="cellar.html"><img src="images/buttonCancel.png"></a>
+			</center>
+			</form>
+		</td></tr></table>
+		</center>
+	</body>
+</html>

@@ -1,0 +1,145 @@
+/*A series of CSS rules, mostly for general formatting or pages that only use one or two
+specialised things.*/
+
+/*Main background and typeface setting*/
+body{
+	background-color: #fff3a0;
+	background-image: url('../images/bgtest1.png');
+	background-repeat: repeat;
+	font-family: 'Signika';
+	font-size: 24px;
+	font-weight: lighter;
+	color: #222222;
+	padding-bottom:12%;
+}
+
+/*Links*/
+a{
+	color: #C34349;
+	text-decoration: underline;
+}
+
+a:hover{
+	color: #DE97AC;
+	text-decoration: underline;
+}
+
+/*Page header content and decoration*/
+div#header{
+	position: fixed !important;
+	position: absolute;
+	z-index: 4;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 70px;
+	color: #fff;
+	background-color: rgba(80, 0, 10, .55) !important;
+	background-color: #620408;
+}
+
+div#header div.content, div#header-dark div.content{
+	position: relative;
+	margin: 0 auto;
+	text-align: center;
+	top: 20px;
+	height: 70px;
+	font-size: 36px;
+	color:#fff;
+}
+
+div#header div.minor{
+	position: relative;
+	text-align: right;
+	font-size: 14px;
+	right: 7px;
+	top: -23%;
+	color: #fff;	
+}
+
+div#header a{
+	color: #fff;
+	text-decoration: none;	
+}
+
+div#header a:hover{
+	color: #333;
+	text-decoration: none;	
+}
+
+/*Various headers*/
+h1{
+	font-weight: bold;
+	color: #9e0a17;	
+	font-size: 36px;
+}
+
+h2{
+	font-weight: bold;
+	font-size: 38px;
+	color: #222;
+}
+
+h3{
+	font-weight: bold;
+	color: #9e0a17;
+	font-size: 16px;	
+}
+
+/*Used in home.html*/
+.home{
+	border-width: 0px;
+	text-align: justify;
+	padding: 4px;
+	font-size: 26px;
+	width: 70%;
+	font-size: 24px;
+	font-weight: lighter;
+	color: #222222;
+}
+
+.homeside{
+	background-color: #fffee1;
+	border-width: 0px;
+	text-align: center;
+	padding: 4px;
+	font-size: 24px;
+	width: 25%;
+	font-size: 24px;
+	font-weight: lighter;
+	color: #222222;
+	position: absolute;
+	top: 60%;
+	left: 72%;
+}
+
+/*Used in winewizard.html*/
+.search-table{
+	text-align: left;
+	padding: 5px;
+	width: 420px;
+	color: #222222;
+	font-size: 24px;
+}
+
+/*Used in cellar.html*/
+.floatRight{
+	float: right;	
+}
+
+/*Used in dashboard.html*/
+.piechart{
+	top: 73%;
+	left: 5%;
+	position: absolute;
+	border-width: 0px;
+	padding: 4px;
+}
+
+.wineoftheday{
+	left: 5%;
+	position: absolute;
+	border-width: 0px;
+	padding: 4px;
+	width: 400px;	
+}

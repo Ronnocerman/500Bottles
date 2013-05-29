@@ -1,26 +1,77 @@
 package com._500bottles.manager;
 
+import com._500bottles.da.external.snooth.SnoothDAO;
+import com._500bottles.da.external.snooth.exception.InvalidWineSearch;
+import com._500bottles.da.internal.WineDAO;
+import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Wine;
+import com._500bottles.object.wine.WineQuery;
+import com._500bottles.object.wine.WineQueryResult;
+
+import java.util.Vector;
 
 public class WineManager
 {
-	public Wine getWine(long id)
+	public static Wine getWine(long id)
+	{
+		Wine wine = null;
+
+		try {
+			wine = WineDAO.getWine(id);
+		} catch (DAException e) {
+			// TODO:
+		}
+
+		return wine;
+	}
+
+	/**
+	 * Gets and returns a
+	 * @param snoothId
+	 * @return
+	 */
+	static Wine getWineBySnoothId(String snoothId)
+	{
+		Wine resultWine = null, searchWine = new Wine();
+		searchWine.setSnoothId(snoothId);
+
+		try {
+			resultWine = WineDAO.getWine(searchWine);
+		} catch (DAException e) {
+			System.err.print("DA Exception in WineManager::getWineBySnoothId" + e.getMessage());
+		}
+
+		return resultWine;
+	}
+
+	static Wine getWineByWineComId()
+	{
+		return null;
+	}
+
+	public static WineQueryResult searchWine(WineQuery query)
+	{
+		return WineQueryManager.search(query);
+	}
+
+	public static void addCustomWine(Wine w)
 	{
 	}
 
-	public void addCustomWine(Wine w)
+	public static void editCustomWine(Wine w)
 	{
 	}
 
-	public void editCustomWine(Wine w)
+	public static void deleteCustomWine(Wine w)
 	{
+		try {
+			WineDAO.deleteWine(w);
+		} catch (DAException e) {
+			// TODO:
+		}
 	}
 
-	public void deleteCustomWine(Wine w)
-	{
-	}
-
-	public void setRating(int rating)
+	public static void setRating(int rating)
 	{
 	}
 
@@ -31,11 +82,12 @@ public class WineManager
 	 * 
 	 * public void deleteTastingNotes() { }
 	 */
-	public void setFavorite(Wine w)
+	public static void setFavorite(Wine w)
 	{
 	}
 
-	public boolean isFavorite(long id)
+	public static boolean isFavorite(long id)
 	{
+		return false;
 	}
 }

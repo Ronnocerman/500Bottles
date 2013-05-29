@@ -1,0 +1,84 @@
+<!-- 500bottles.com cellar page || Last updated: 26 May 2013 -->
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>500bottles.com &raquo; your cellar</title>
+		
+		<!-- Loads typefaces for use in CSS pages -->
+		<link href='http://fonts.googleapis.com/css?family=Signika:300,400' rel='stylesheet' 
+		type='text/css'>
+
+		<!-- Loads CSS files for use on page -->
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="stylesheet" type="text/css" href="css/inputfields.css">
+		<link rel="stylesheet" type="text/css" href="css/cellar.css">
+		
+		<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    	<script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+      google.setOnLoadCallback(drawTable);
+      
+      function drawTable() {
+        var cssClassNames ={
+           'headerCell': 'tableHeader',
+           'tableCell': 'cellar'
+        };
+        
+        var options = {'allowHtml': true, 'cssClassNames': cssClassNames, 'showRowNumber': false};
+        
+        var data = new google.visualization.DataTable();
+        
+        data.addColumn('string', 'Name');
+        data.addColumn('string', 'Type');
+        data.addColumn('string', 'Varietal');
+        data.addColumn('string', 'Region');
+        data.addColumn('string', 'Location');
+        data.addColumn('string', 'Personal');
+        data.addColumn('number', 'Qty');
+        
+        //TODO: change this to a for loop that will get data from the server and 
+        //populate the table
+        data.addRows([
+          ['asda', 'asda', 'awedad', 'aefsd', 'trsfe', 'aezrs', 20],
+          ['fgsdg', 'awweawe', 'mhjfhntc', 'zxcasd', 'ythghdf', 'asdawraw', 123],
+          ['refds', 'asdzx', 'rtgffg', 'asd', 'mytd', 'adsf', 413],
+          ['yutre', 'iojhjg', 'cvdse', 'zxcdfrt', 'zxcda', 'bhjuytrd', 7654]
+        ]);
+
+        var table = new google.visualization.Table(document.getElementById('table_div'));
+        table.draw(data, options);
+        
+        //TODO: Write an action listener function that will allow the user to click a row and then 
+        //hit either 'edit' or 'delete' to perform an action on that particular wine entry.
+      }
+    </script>
+	</head>
+
+	<body>
+		<div id="header">
+      <div class="content">
+        <a href="winewizard.html">Wine Wizard</a> • 
+        <a href="cellar.html">Cellar</a> • 
+        <a href="winebook.html">Winebook</a>
+      </div>
+      
+      <div class="minor">
+		<a href="createaccount.html">register</a> • 
+		<a href="login.html">log in</a>
+      </div>
+    </div>
+	
+		<center>
+		<!--	Header image	-->
+		<a href="home.html"><img src="images/500bottles.png" width="100%"></a>
+		</center>
+			
+		<div class="addEditDelete">
+		<a href="addnewwine.html"><img src="images/buttonAdd.png" align="left"></a>
+		<a href="editwine.html">edit</a> • 
+		<a href="deleteactionhere">delete</a>		
+		</div>
+		<div id='table_div'></div>
+	</body>
+</html>

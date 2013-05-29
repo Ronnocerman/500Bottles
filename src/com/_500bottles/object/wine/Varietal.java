@@ -5,6 +5,11 @@ public class Varietal
 	private String grapeType;// new pokemon type confirmed
 	private long id;
 
+	public Varietal()
+	{
+
+	}
+
 	public Varietal(String s)
 	{
 		grapeType = s;

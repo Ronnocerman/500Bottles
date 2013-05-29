@@ -33,7 +33,7 @@ public class Admin extends ApplicationUser
 	}
 
 	@Override
-	public void setDateOfBirth(long Dob)
+	public void setDOB(long Dob)
 	{
 		// TODO Auto-generated method stub
 		dateOfBirth = Dob;

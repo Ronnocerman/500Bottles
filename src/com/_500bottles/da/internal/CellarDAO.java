@@ -1,5 +1,7 @@
 package com._500bottles.da.internal;
 
+import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -25,14 +27,15 @@ public class CellarDAO extends DAO
 
 		// table = Config.getProperty("cellarItemTableName");
 
-		columns = "( `wineID`,";
+		columns = "( `cellarID`,";
+		columns += "`wineID`,";
 		columns += "`quantity`,";
 		columns += "`notes`)";
 
-		// values = "('" + item.getCellarItemId() + "',";
-		values = "('" + item.getWineId() + "',";
+		values = "('" + item.getCellarId() + "',";
+		values += "'" + item.getWineId() + "',";
 		values += "'" + item.getQuantity() + "',";
-		values += "'" + item.getNotes() + "')";
+		values += "'" + escapeXml(item.getNotes()) + "')";
 
 		try
 		{
@@ -41,6 +44,7 @@ public class CellarDAO extends DAO
 			// TODO: Better exception handling.
 		} catch (Exception e)
 		{
+			System.err.print(e.getMessage());
 			throw e;
 		}
 
@@ -51,15 +55,15 @@ public class CellarDAO extends DAO
 
 	public static Cellar addCellar(Cellar cellar) throws Exception
 	{
-		String columns, values, cellarItemsJSON;
+		String columns, values, cellarItemsJSON; // cellarItemsJSON not used
+													// anymore
 
-		// table = Config.getProperty("cellarTableName");
+		columns = "( `userId`)";
 
-		columns = "( `cellarItemsJSON`)";
+		// cellarItemsJSON =
+		// cellar.getCellarItemIdsAsJSONArray().toJSONString();
 
-		cellarItemsJSON = cellar.getCellarItemIdsAsJSONArray().toJSONString();
-
-		values = "('" + cellarItemsJSON + "')";
+		values = "('" + cellar.getUserId() + "')";
 		// values += "'" + "0" + "')";
 
 		try
@@ -76,44 +80,61 @@ public class CellarDAO extends DAO
 		return cellar;
 	}
 
-	public void deleteCellarItem(CellarItem item) throws SQLException
+	public static void deleteCellarItem(CellarItem item) throws SQLException
 	{
-		delete(CELLARITEM_TABLE, "WHERE cellarItemId=" + item.getId());
+		// delete(CELLARITEM_TABLE, "cellarItemId=" + item.getId());
+		deleteCellarItem(item.getId());
+
 	}
 
-	public void deleteCellar(Cellar cellar) throws SQLException
+	public static void deleteCellarItem(long cellarItemId) throws SQLException
 	{
-		delete(CELLAR_TABLE, "WHERE cellarId=" + cellar.getCellarId());
+		delete(CELLARITEM_TABLE, "cellarItemId=" + cellarItemId);
 	}
 
-	public void editCellarItem(CellarItem item) throws SQLException
+	public static void deleteCellar(Cellar cellar) throws SQLException
+	{
+		// delete(CELLAR_TABLE, "WHERE cellarId=" + cellar.getCellarId());
+		deleteCellar(cellar.getCellarId());
+	}
+
+	public static void deleteCellar(long cellarId) throws SQLException
+	{
+		delete(CELLAR_TABLE, "cellarId=" + cellarId);
+	}
+
+	public static CellarItem editCellarItem(CellarItem item)
+			throws SQLException
 	{
 		long cellarItemId = item.getId();
 		String sql = "";
 
-		sql += "wineID=" + item.getWineId();
+		sql += "cellarID=" + item.getCellarId();
+		sql += ",wineID=" + item.getWineId();
 		sql += ",quantity=" + item.getQuantity();
-		sql += ",notes=" + item.getNotes();
+		sql += ",notes='" + escapeXml(item.getNotes()) + "'";
 
 		update(CELLARITEM_TABLE, sql, "cellarItemId=" + cellarItemId);
+		return item;
 	}
 
-	public void editCellar(Cellar cellar) throws SQLException
+	public static Cellar editCellar(Cellar cellar) throws SQLException
 	{
 		long cellarId = cellar.getCellarId();
 		String sql = "";
 
+		// Get UserId from session manager
 		// sql += "cellarID=" + cellar.getCellarId();
-		sql += "cellarItemsJSON=" + cellar.getCellarItemIdsAsJSONArray();
+		sql += "userId=" + cellar.getUserId();
 
 		update(CELLAR_TABLE, sql, "cellarId=" + cellarId);
+		return cellar;
 	}
 
-	public void getCellarItem(long cellarItemId)
+	public static CellarItem getCellarItem(long cellarItemId)
 	{
-
 		// String table;
-
+		CellarItem item = null;
 		ResultSet r;
 
 		try
@@ -121,18 +142,18 @@ public class CellarDAO extends DAO
 			String where = "cellarItemId = ";
 			where += cellarItemId;
 			r = select(CELLARITEM_TABLE, "*", where);
-			createCellarItem(r);
+			item = createCellarItem(r);
+			Database.disconnect(); // what was that one command that josh used?
 
 		} catch (Exception e)
 		{
 			// TODO: handle query exceptions.
 		}
-
+		return item;
 	}
 
-	public void getCellar(long cellarId)
+	public static void getCellar(long cellarId)
 	{
-
 		// String table;
 
 		ResultSet r;
@@ -143,7 +164,7 @@ public class CellarDAO extends DAO
 			where += cellarId;
 			r = select(CELLAR_TABLE, "*", where);
 			createCellar(r);
-
+			Database.disconnect();
 		} catch (Exception e)
 		{
 			// TODO: handle query exceptions.
@@ -151,24 +172,24 @@ public class CellarDAO extends DAO
 
 	}
 
-	public CellarItem createCellarItem(ResultSet r) throws SQLException
+	public static CellarItem createCellarItem(ResultSet r) throws SQLException
 	{
 		CellarItem cellarItem;
 		Wine w;
 
-		long cellarItemId;
+		long cellarItemId, cellarId;
 		int quantity;
 		String notes;
 		long wineId;
 
-		cellarItemId = r.getLong("cellarItemId");
-		wineId = r.getLong("wineId");
-
-		quantity = r.getInt("quantity");
-		notes = r.getString("notes");
-
 		if (!r.next())
 			return null;
+
+		cellarId = r.getLong("cellarId");
+		cellarItemId = r.getLong("cellarItemId");
+		wineId = r.getLong("wineId");
+		quantity = r.getInt("quantity");
+		notes = r.getString("notes");
 
 		w = new Wine();
 		w.setId((int) wineId);
@@ -176,24 +197,28 @@ public class CellarDAO extends DAO
 		cellarItem.setQuantity(quantity);
 		cellarItem.setNotes(notes);
 		cellarItem.setCellarItemId(cellarItemId);
+		cellarItem.setCellarId(cellarId);
 
 		return cellarItem;
 	}
 
-	public Cellar createCellar(ResultSet r) throws SQLException // maybe don't
-																// need
+	public static Cellar createCellar(ResultSet r) throws SQLException // maybe
+																		// don't
+	// need
 	{
 		Cellar c;
 
-		long cellarId;
-
-		cellarId = r.getLong("cellarId");
+		long cellarId, userId;
 
 		if (!r.next())
 			return null;
 
+		cellarId = r.getLong("cellarId");
+		userId = r.getLong("userId");
+
 		c = new Cellar();
 		c.setCellarId(cellarId);
+		c.setUserId(userId);
 
 		return c;
 	}

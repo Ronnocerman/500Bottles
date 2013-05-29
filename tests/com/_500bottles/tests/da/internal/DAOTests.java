@@ -36,4 +36,10 @@ public class DAOTests {
 
 	}
 
+	@Test
+	public void getLastAutoIncrementId()
+	{
+
+	}
+
 }

@@ -13,16 +13,17 @@ public abstract class OrderedSort extends Sort
 {
 	protected static final String ASCENDING_SORT = "asc";
 	protected static final String DESCENDING_SORT = "desc";
-	protected static final String DEFAULT_SORT_OPTION = "asc";
+	protected static final String DEFAULT_SORT_OPTION = ASCENDING_SORT;
 
 	protected OrderedSort(String sort) {
 		this.setSort(sort);
+		this.setSort(DEFAULT_SORT_OPTION);
 	}
 
 	protected OrderedSort(String sort, String order) throws InvalidSort
 	{
-		this.setOrder(order);
 		this.setSort(sort);
+		this.setOrder(order);
 	}
 
 	private void setOrder(String order) throws InvalidSort

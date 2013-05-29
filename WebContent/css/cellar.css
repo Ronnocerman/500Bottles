@@ -1,0 +1,25 @@
+/*Specialised CSS for cellar.html that were not input fields.*/
+
+.cellar{
+	font-family: 'Signika';
+	font-size: 18px;
+	font-weight: lighter;
+	color: #222;
+	padding: 4px;
+	text-align: left;
+}
+
+.tableHeader{
+	background-color: #3c3c3c;
+	font-family: 'Signika';
+	font-size: 18px;
+	font-weight: semi-bold;
+	color: #DDD;
+	padding: 4px;
+}
+
+.addEditDelete{
+	text-align: right;
+	padding-bottom: 4px;	
+}
+

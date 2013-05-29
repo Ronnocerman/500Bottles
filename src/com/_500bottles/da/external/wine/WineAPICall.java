@@ -56,7 +56,10 @@ public class WineAPICall
 			temp.setName(s);
 			temp.setYear(Long.valueOf(s.substring(s.length() - 4, s.length())));
 
-			temp.setId((long) jsonObject.get("Id"));
+			temp.setWinecomId((long) jsonObject.get("Id"));
+
+			temp.setPriceMin((long) jsonObject.get("PriceMin"));
+			temp.setPriceMax((long) jsonObject.get("PriceMax"));
 
 			JSONObject jsonObject2 = (JSONObject) jsonObject.get("Appellation");
 			Appellation appellation = new Appellation(
@@ -66,7 +69,7 @@ public class WineAPICall
 			JSONArray jsonArray2 = (JSONArray) jsonObject.get("Labels");
 
 			jsonObject2 = (JSONObject) jsonArray2.get(0);
-			temp.setThumbnailURL((String) jsonObject2.get("Url"));
+			temp.setImage((String) jsonObject2.get("Url"));
 
 			jsonObject2 = (JSONObject) jsonObject.get("Varietal");
 			Varietal varietal = new Varietal((String) jsonObject2.get("Name"));

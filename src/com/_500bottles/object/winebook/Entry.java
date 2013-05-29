@@ -11,6 +11,7 @@ import org.json.simple.JSONArray;
  */
 public class Entry {
 	private long entryId;
+	private long userId;
 	private String title;
 	private String content;
 	private Vector<Photo> photos;
@@ -78,6 +79,16 @@ public class Entry {
 	public long getEntryId()
 	{
 		return entryId;
+	}
+
+	public long getUserId()
+	{
+		return userId;
+	}
+
+	public void setUserId(long userId)
+	{
+		this.userId = userId;
 	}
 
 	/**

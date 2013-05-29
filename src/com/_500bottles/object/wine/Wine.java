@@ -5,6 +5,7 @@ import com._500bottles.object.geolocation.GeoLocation;
 public class Wine
 {
 	private long id;
+	private String snoothId;
 	private String name;
 	private String description;
 	private GeoLocation geoLocation;
@@ -13,17 +14,35 @@ public class Wine
 	private Appellation appellation;
 	private Varietal varietal;
 	private Vineyard vineyard;
-	private long rating;
-	private String thumbnailURL;
+	private double rating;
+	private String image;
+	private long priceMin;
+	private long priceMax;
+	private long winecomId;
 
-	public String getThumbnailURL()
+	public Wine()
 	{
-		return thumbnailURL;
+		this.setId(0);
+		this.setSnoothId("");
+		this.setName("");
+		this.setDescription("");
+		this.setGeoLocation(new GeoLocation());
+		this.setType(new WineType());
+		this.setYear(0);
+		this.setAppellation(new Appellation());
+		this.setVarietal(new Varietal());
+		this.setVineyard(new Vineyard());
+		this.setRating(0);
 	}
 
-	public void setThumbnailURL(String url)
+	public String getImage()
 	{
-		thumbnailURL = url;
+		return image;
+	}
+
+	public void setImage(String image)
+	{
+		this.image = image;
 	}
 
 	public long getId()
@@ -34,6 +53,16 @@ public class Wine
 	public void setId(long id)
 	{
 		this.id = id;
+	}
+
+	public String getSnoothId()
+	{
+		return snoothId;
+	}
+
+	public void setSnoothId(String snoothId)
+	{
+		this.snoothId = snoothId;
 	}
 
 	public String getName()
@@ -116,13 +145,54 @@ public class Wine
 		this.vineyard = vineyard;
 	}
 
-	public long getRating()
+	public double getRating()
 	{
 		return rating;
 	}
 
-	public void setRating(long l)
+	public void setRating(double rating)
 	{
-		this.rating = l;
+		this.rating = rating;
+	}
+
+	public String toString()
+	{
+		String str = "";
+
+		str += "ID: " + this.getId() + "\n";
+		str += "Name: " + this.getName() + "\n";
+		str += "Description: " + this.getDescription() + "\n";
+
+		return str;
+	}
+
+	public long getPriceMin()
+	{
+		return priceMin;
+	}
+
+	public void setPriceMin(long priceMin)
+	{
+		this.priceMin = priceMin;
+	}
+
+	public long getPriceMax()
+	{
+		return priceMax;
+	}
+
+	public void setPriceMax(long priceMax)
+	{
+		this.priceMax = priceMax;
+	}
+
+	public long getWinecomId()
+	{
+		return winecomId;
+	}
+
+	public void setWinecomId(long winecomId)
+	{
+		this.winecomId = winecomId;
 	}
 }

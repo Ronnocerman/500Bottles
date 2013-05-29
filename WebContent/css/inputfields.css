@@ -1,0 +1,145 @@
+/*CSS for customisation of the various input fields used on the site.*/
+
+/*Used in register.html and login.html*/
+.text-label{
+    color: #111;
+    font-family: 'Signika';
+    font-weight: semi-bold;
+    font-size: 24px;
+    background: #fff;
+    padding: 4px 4px 4px 30px;
+    height: 40px;
+    width: 250px;
+    border-width: 0px;
+}
+
+.email{
+    color: #111;
+    font-family: 'Signika';
+    font-weight: semi-bold;
+    font-size: 24px;
+    background: #fff;
+    padding: 4px 4px 4px 10px;
+    height: 40px;
+    width: 420px;
+    border-width: 0px;
+}
+
+.small-box{
+	color: #111;
+	font-family: 'Signika';
+	font-weight: semi-bold;
+	font-size: 24px;
+	background: #fff;
+	padding: 4px 4px 4px 4px;
+	height: 40px;
+	width: 40px;
+	border-width: 0px;	
+}
+
+.year{
+	color: #111;
+	font-family: 'Signika';
+	font-weight: semi-bold;
+	font-size: 24px;
+	background: #fff;
+	padding: 4px 4px 4px 4px;
+	height: 40px;
+	width: 100px;
+	border-width: 0px;
+}
+
+/*Used in winebook.html*/
+.winebook-title{
+	color: #111;
+   font-family: 'Signika';
+   font-weight: semi-bold;
+   font-size: 24px;
+   background: #fff;
+   padding: 10px 10px 10px 10px;
+   height: 30px;
+   width: 650px;
+   border-width: 0px;
+}
+
+.winebook-entry{
+	color: #111;
+   font-family: 'Signika';
+   font-weight: semi-bold;
+   font-size: 24px;
+   background: #fff;
+   padding: 10px 10px 10px 10px;
+   height: 600px;
+   width: 650px;
+   border-width: 0px;
+}
+
+.fileUpload{
+	font-family: 'Signika';
+	color: #222;
+	font-size: 16px;
+	font-weight: lighter;
+	padding: 4px;	
+}
+
+/*Used in winewizard.html*/
+.search{
+	color: #111;
+   font-family: 'Signika';
+   font-weight: semi-bold;
+   font-size: 24px;
+   background: #fff;
+   padding: 4px 4px 4px 10px;
+   height: 40px;
+   width: 420px;
+   border-width: 0px;
+}
+
+.select-varietal{
+	color: #111;
+   font-family: 'Signika';
+   font-weight: semi-bold;
+   font-size: 24px;
+   background: #fff;
+   padding: 4px 4px 4px 10px;
+   height: 40px;
+   width: 420px;
+   border-width: 0px;
+}
+
+.other-search{
+	color: #111;
+   font-family: 'Signika';
+   font-weight: semi-bold;
+   font-size: 24px;
+   background: #fff;
+   padding: 4px 4px 4px 10px;
+   height: 30px;
+   width: 406px;
+   border-width: 0px;
+}
+
+/*Used in cellar.html*/
+.cellar-entry{
+    color: #111;
+    font-family: 'Signika';
+    font-weight: semi-bold;
+    font-size: 24px;
+    background: #fff;
+    padding: 4px 4px 4px 10px;
+    height: 40px;
+    width: 420px;
+    border-width: 0px;
+}
+
+.qty{
+    color: #111;
+    font-family: 'Signika';
+    font-weight: semi-bold;
+    font-size: 24px;
+    background: #fff;
+    padding: 4px 4px 4px 10px;
+    height: 40px;
+    width: 80px;
+    border-width: 0px;
+}

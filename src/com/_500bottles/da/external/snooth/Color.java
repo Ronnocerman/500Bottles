@@ -48,6 +48,9 @@ public class Color
 
 	public boolean equals(Color c)
 	{
+		if (c == null)
+			return false;
+
 		if (this.color.equals(c.toString()))
 			return true;
 

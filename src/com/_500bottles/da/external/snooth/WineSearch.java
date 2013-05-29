@@ -3,6 +3,7 @@ package com._500bottles.da.external.snooth;
 import com._500bottles.config.Config;
 import com._500bottles.da.external.snooth.exception.InvalidWineSearch;
 import com._500bottles.da.external.snooth.sort.Sort;
+import com._500bottles.object.wine.WineQuery;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -27,16 +28,15 @@ public class WineSearch
 
 	private final static int DEFAULT_NUM_RESULTS = 10;
 
-	private final static int DEFAULT_AVAIL = 0;
+	private final static boolean DEFAULT_AVAIL = false;
 
-	private final static ProductType DEFAULT_PRODUCT_TYPE =
-		new ProductType();
+	private final static ProductType DEFAULT_PRODUCT_TYPE = null;
 
-	private final static Color DEFAULT_COLOR = new Color();
+	private final static Color DEFAULT_COLOR = null;
 
 	private final static int DEFAULT_STORE_ID = 0;
 
-	private final static Country DEFAULT_COUNTRY = new Country();
+	private final static Country DEFAULT_COUNTRY = null;
 
 	private final static int DEFAULT_ZIPCODE = 0;
 
@@ -54,7 +54,7 @@ public class WineSearch
 
 	private final static double DEFAULT_MAX_RATING = 0;
 
-	private final static Language DEFAULT_LANGUAGE = new Language();
+	private final static Language DEFAULT_LANGUAGE = null;
 
 	/* Search query. */
 	private String q;
@@ -142,6 +142,12 @@ public class WineSearch
 		this.setLanguage(DEFAULT_LANGUAGE);
 	}
 
+	public WineSearch(WineQuery query) throws InvalidWineSearch
+	{
+		this.setQuery(query.getTextQuery());
+		// TODO: Match the rest of the queries.
+	}
+
 	public String toString()
 	{
 		String url = BASE_API_URL;
@@ -160,19 +166,22 @@ public class WineSearch
 		if (this.getNumberOfResults() != DEFAULT_NUM_RESULTS)
 			url += "&n=" + this.getNumberOfResults();
 
-		if (this.getAvailable() != DEFAULT_AVAIL)
-			url += "&a=" + this.getAvailable();
+		if (this.getAvailable() != DEFAULT_AVAIL) {
+			if (this.getAvailable())
+				url += "&a=1";
+		}
 
-		if (!this.getProductType().equals(DEFAULT_PRODUCT_TYPE))
+
+		if (this.getProductType() != DEFAULT_PRODUCT_TYPE)
 			url += "&t=" + this.getProductType().toString();
 
-		if (!this.getColor().equals(DEFAULT_COLOR))
+		if (this.getColor() != DEFAULT_COLOR)
 			url += "&color=" + this.getColor().toString();
 
 		if (this.getStoreId() != DEFAULT_STORE_ID)
 			url += "&m=" + this.getStoreId();
 
-		if (!this.getCountry().equals(DEFAULT_COUNTRY))
+		if (this.getCountry() != DEFAULT_COUNTRY)
 			url += "&c=" + this.getCountry().toString();
 
 		if (this.getZipCode() != DEFAULT_ZIPCODE)
@@ -182,7 +191,7 @@ public class WineSearch
 			url += "&lat=" + this.getLatitude();
 
 		if (this.getLongitude() != DEFAULT_LONGITUDE)
-			url += "&lat=" + this.getLatitude();
+			url += "&lng=" + this.getLongitude();
 
 		if (this.getSort() != DEFAULT_SORT)
 			url += "&s=" + this.getSort().toString();
@@ -199,7 +208,7 @@ public class WineSearch
 		if (this.getMaxRating() != DEFAULT_MAX_RATING)
 			url += "&xr=" + this.getMaxRating();
 
-		if (!this.getLanguage().equals(DEFAULT_LANGUAGE))
+		if (this.getLanguage() != DEFAULT_LANGUAGE)
 			url += "&lang=" + this.getLanguage().toString();
 
 		return url;
@@ -250,14 +259,19 @@ public class WineSearch
 		this.n = n;
 	}
 
-	public int getAvailable()
+	public boolean getAvailable()
 	{
-		return a;
+		if (a > 0)
+			return true;
+		return false;
 	}
 
-	public void setAvailable(int a)
+	public void setAvailable(boolean a)
 	{
-		this.a = a;
+		if (a)
+			this.a = 1;
+		else
+			this.a = 0;
 	}
 
 	public ProductType getProductType()
