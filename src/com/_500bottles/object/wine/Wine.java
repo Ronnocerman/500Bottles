@@ -13,7 +13,18 @@ public class Wine
 	private Appellation appellation;
 	private Varietal varietal;
 	private Vineyard vineyard;
-	private int rating;
+	private long rating;
+	private String thumbnailURL;
+
+	public String getThumbnailURL()
+	{
+		return thumbnailURL;
+	}
+
+	public void setThumbnailURL(String url)
+	{
+		thumbnailURL = url;
+	}
 
 	public long getId()
 	{
@@ -105,13 +116,13 @@ public class Wine
 		this.vineyard = vineyard;
 	}
 
-	public int getRating()
+	public long getRating()
 	{
 		return rating;
 	}
 
-	public void setRating(int rating)
+	public void setRating(long l)
 	{
-		this.rating = rating;
+		this.rating = l;
 	}
 }

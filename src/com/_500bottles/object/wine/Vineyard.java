@@ -5,6 +5,11 @@ public class Vineyard
 	private String name;
 	private long id;
 
+	public Vineyard(String string)
+	{
+		name = string;
+	}
+
 	public long getId()
 	{
 		return id;
