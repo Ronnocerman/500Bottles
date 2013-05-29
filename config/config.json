@@ -5,7 +5,7 @@
     "databaseUsername": "500bottles",
     "databasePassword": "password",
 
-    "winebookTableName": "WinebookEntries",
+    "winebookTableName": "WineBook",
     "wineTableName": "Wines",
     "cellarItemTableName": "CellarItem",
     "cellarTableName": "Cellar",

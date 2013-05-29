@@ -1,17 +1,15 @@
 package com._500bottles.manager;
 
-import java.sql.SQLException;
-
 import com._500bottles.da.internal.UserDAO;
 import com._500bottles.exception.da.DAException;
-import com._500bottles.object.user.User;
+import com._500bottles.object.user.ApplicationUser;
 
 public class UserManager
 {
 
-	public User getUser(long id)
+	public ApplicationUser getUser(long id)
 	{
-		User u = null;
+		ApplicationUser u = null;
 		try
 		{
 			u = UserDAO.getUser(id);
@@ -22,16 +20,11 @@ public class UserManager
 		return u;
 	}
 
-	public void editUser(long id)
+	public void editUser(ApplicationUser u)
 	{
-		User u = null;
 		try
 		{
-			u = UserDAO.getUser(id);
 			UserDAO.editUser(u);
-		} catch (SQLException e)
-		{
-			// TODO: Stuff
 		} catch (DAException e)
 		{
 			// TODO: Things
@@ -41,7 +34,7 @@ public class UserManager
 
 	public void removeUser(long id)
 	{
-		User u = null;
+		ApplicationUser u = null;
 		try
 		{
 			u = UserDAO.getUser(id);
@@ -49,20 +42,18 @@ public class UserManager
 		} catch (DAException e)
 		{
 			// TODO
-		} catch (SQLException e)
-		{
-			// TODO
 		}
 	}
 
-	public void addUser(User u)
+	public void addUser(ApplicationUser u)
 	{
 		try
 		{
 			UserDAO.addUser(u);
-		} catch (Exception e)
+		} catch (DAException e)
 		{
-			// TODO
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

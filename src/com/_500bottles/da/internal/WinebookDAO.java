@@ -14,16 +14,27 @@ import com._500bottles.object.wine.Wine;
 import com._500bottles.object.winebook.Entry;
 import com._500bottles.object.winebook.Photo;
 
+/**
+ * Coordinates all Winebook related database access for Winebook Entry adding,
+ * deleting, getting, and updating in the database.
+ */
 public class WinebookDAO extends DAO
 {
 	private final static String WINEBOOK_TABLE = Config
 			.getProperty("winebookTableName");
 
-	public static Entry addEntry(Entry entry) throws Exception
+	/**
+	 * Adds a cellar item to the winebook. Returns an entry object with the
+	 * new unique id set. Throws a DAException if the SQL insertion fails.
+	 * @param entry		The entry object to add to Winebook.
+	 * @return		Entry object with the entry ID set.
+	 * @throws DAException
+	 */
+	public static Entry addEntry(Entry entry) throws DAException
 	{
-		String table, columns, values, dateCreated, dateLastEdited, winesJSON, photosJSON;
+		String  columns, values, dateCreated, dateLastEdited, winesJSON,
+			photosJSON;
 
-		// TODO: Maybe delete userID if not needed
 		columns = "(`userID`, `title`, `dateCreated`,";
 		columns += "`dateLastEdited`, `textContent`,";
 		columns += "`winesJSON`, `photosJSON`)";
@@ -34,8 +45,7 @@ public class WinebookDAO extends DAO
 		photosJSON = entry.getPhotoIdsAsJSONArray().toJSONString();
 		winesJSON = entry.getWineIdsAsJSONArray().toJSONString();
 
-		// TODO: get user id from session manager or via user object.
-		values = "('" + "0" + "',";
+		values = "('" + entry.getUserId() + "',";
 		values += "'" + entry.getTitle() + "',";
 		values += "'" + dateCreated + "',";
 		values += "'" + dateLastEdited + "',";
@@ -43,13 +53,11 @@ public class WinebookDAO extends DAO
 		values += "'" + winesJSON + "',";
 		values += "'" + photosJSON + "')";
 
-		try
-		{
-			int i = insert(WINEBOOK_TABLE, columns, values);
-			// TODO: Better exception handling.
-		} catch (Exception e)
-		{
-			throw e;
+		try {
+			insert(WINEBOOK_TABLE, columns, values);
+			Database.disconnect();
+		} catch (SQLException e) {
+			throw new DAException("Failed Winebook entry insertion.", e);
 		}
 
 		entry.setEntryId(getLastInsertId());
@@ -57,56 +65,130 @@ public class WinebookDAO extends DAO
 		return entry;
 	}
 
-	public static void deleteEntry(Entry entry) throws SQLException
+	/**
+	 * Deletes a winebook entry. The entry's id must be set for a deletion
+	 * to succeed. Throws DAException if the entry ID is not set. Throws
+	 * NullPointerException if the entry object is null.
+	 * @param entry 	The entry to delete.
+	 * @throws DAException
+	 * @throws NullPointerException
+	 */
+	public static void deleteEntry(Entry entry) throws DAException,
+		NullPointerException
 	{
-		delete(WINEBOOK_TABLE, "WHERE entryId=" + entry.getEntryId());
+		if (entry == null)
+			throw new NullPointerException("Entry object null.");
+
+		if (entry.getEntryId() == 0)
+			throw new DAException("Entry ID not set.");
+
+		try {
+			delete(WINEBOOK_TABLE, "WHERE entryId=" +
+				entry.getEntryId());
+			Database.disconnect();
+		} catch (SQLException e) {
+			throw new DAException("Failed Winebook entry deletion.",
+				e.getCause());
+		}
 	}
 
-	public static void editEntry(Entry entry) throws SQLException
+	/**
+	 * Edits a winebook entry. Takes the passed entry object and updates
+	 * the database entry with the corresponding values. The passed entry
+	 * object must have the entry ID set. Throws DAException if the entry ID
+	 * is not set or on an SQL error. Throws NullPointerException if the
+	 * entry object is null.
+	 * @param entry
+	 * @throws DAException
+	 * @throws NullPointerException
+	 */
+	public static void editEntry(Entry entry) throws DAException,
+		NullPointerException
 	{
+		if (entry == null)
+			throw new NullPointerException("Entry object null.");
+
+		if (entry.getEntryId() == 0)
+			throw new DAException("Entry ID not set.");
+
 		long entryId = entry.getEntryId();
 		String sql = "";
 
-		// sql += "entryID=" + entry.getEntryId();
 		sql += "title=" + entry.getTitle();
-		sql += ",dateCreated=" + formatDate(entry.getDateCreated());
-		sql += ",dateLastEdited=" + formatDate(entry.getDateLastEdited());
-		sql += ",textContent=" + entry.getContent();
-		sql += ",winesJSON=" + entry.getWineIdsAsJSONArray();
-		sql += ",photosJSON=" + entry.getPhotoIdsAsJSONArray();
+		sql += ", userId=" + entry.getUserId();
+		sql += ", dateCreated=" + formatDate(entry.getDateCreated());
+		sql += ", dateLastEdited=" + formatDate(entry.getDateLastEdited());
+		sql += ", textContent=" + entry.getContent();
+		sql += ", winesJSON=" + entry.getWineIdsAsJSONArray();
+		sql += ", photosJSON=" + entry.getPhotoIdsAsJSONArray();
 
-		update(WINEBOOK_TABLE, sql, "entryId=" + entryId);
+		try {
+			update(WINEBOOK_TABLE, sql, "entryId=" + entryId);
+			Database.disconnect();
+		} catch (SQLException e) {
+			throw new DAException("Failed Winebook entry update.", e);
+		}
 	}
 
-	public static Entry getEntry(Entry entry) throws DAException
+	/**
+	 * Gets and returns an entry object from the database. The entry object
+	 * must have entry ID set to retrieve an entry. Throws DAException
+	 * if an SQL error occurs or if the entry ID was not set. Throws
+	 * NullPointerException if the entry is null.
+	 * @param entry		An entry object with entry ID set to retrieve
+	 *                      from the database.
+	 * @return              Entry object.
+	 * @throws DAException
+	 */
+	public static Entry getEntry(Entry entry) throws DAException,
+		NullPointerException
 	{
+		if (entry == null)
+			throw new NullPointerException("Null Winebook entry.");
+
+		if (entry.getEntryId() == 0)
+			throw new DAException("Entry ID not set.");
+
 		long entryId = entry.getEntryId();
 		return getEntry(entryId);
 	}
 
+	/**
+	 * Gets and returns an entry object from the database. Throws
+	 * DAException if an SQL error occurs or if the entry ID was not set.
+	 * Throws NullPointerException if the entry is null.
+	 * @param entryId	The ID of the entry to get.
+	 * @return              The Entry object.
+	 * @throws DAException
+	 */
 	public static Entry getEntry(long entryId) throws DAException
 	{
 		ResultSet r;
 		Entry entry = null;
 
-		try
-		{
-			r = select(WINEBOOK_TABLE, "*");
+		try {
+			r = select(WINEBOOK_TABLE, "*", "entryId=" + entryId);
 			entry = createEntry(r);
-
-		} catch (Exception e)
-		{
-			// TODO: handle query exceptions.
+			Database.disconnect();
+		} catch (SQLException e) {
+			throw new DAException("SQL select exception.", e);
 		}
 
 		return entry;
 	}
 
-	private static Entry createEntry(ResultSet r) throws SQLException
+	/**
+	 * Creates an Entry object based on the ResultSet returned from an
+	 * select operation. Returns null if the ResultSet is empty.
+	 * @param res	The ResultSet returned from a SELECT operation.
+	 * @return	Entry object.
+	 * @throws SQLException
+	 */
+	private static Entry createEntry(ResultSet res) throws SQLException
 	{
 		Entry entry;
 
-		long userId, entryId;
+		long entryId;
 
 		String title, textContent, winesJSON, photosJSON;
 
@@ -118,25 +200,24 @@ public class WinebookDAO extends DAO
 		Vector<Photo> photos;
 
 		// Return null if there was no entry in the ResultSet.
-		if (!r.next())
+		if (!res.next())
 			return null;
 
-		userId = r.getLong("userId");
-		entryId = r.getLong("entryId");
-		title = r.getString("title");
-		textContent = r.getString("textContent");
-		winesJSON = r.getString("winesJSON");
-		photosJSON = r.getString("photosJSON");
+		entryId = res.getLong("entryId");
+		title = res.getString("title");
+		textContent = res.getString("textContent");
+		winesJSON = res.getString("winesJSON");
+		photosJSON = res.getString("photosJSON");
 
 		wineIds = (JSONArray) JSONValue.parse(winesJSON);
 		photosIds = (JSONArray) JSONValue.parse(photosJSON);
 
 		// TODO: Create the wine and photo objects to add to the entry.
-		wines = new Vector<Wine>(); // (wineIds);
-		photos = new Vector<Photo>(); // (photosIds);
+		wines = new Vector<Wine>(wineIds);
+		photos = new Vector<Photo>(photosIds);
 
-		dateCreated = r.getDate("dateCreated");
-		dateLastEdited = r.getDate("dateLastEdited");
+		dateCreated = res.getDate("dateCreated");
+		dateLastEdited = res.getDate("dateLastEdited");
 
 		entry = new Entry(entryId, title, textContent, photos, wines,
 				dateCreated, dateLastEdited);

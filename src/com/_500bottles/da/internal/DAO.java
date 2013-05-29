@@ -33,7 +33,7 @@ public abstract class DAO
 	 * @throws ClassNotFoundException
 	 */
 	public static int insert(String table, String columns, String values)
-			throws SQLException, ClassNotFoundException
+			throws SQLException
 	{
 		String sql = "INSERT INTO " + table + " ";
 		sql += columns + " ";

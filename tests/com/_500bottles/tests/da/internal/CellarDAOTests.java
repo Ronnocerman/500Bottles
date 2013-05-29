@@ -139,6 +139,14 @@ public class CellarDAOTests
 	public void testEditCellar()
 	{
 		Cellar cellar = null;
+		/*
+		 * try { cellar = CellarDAO.getCellar(2); } catch (Exception e) {
+		 * fail(); }
+		 * 
+		 * try { item.setNotes("This wine is awesome"); item.setQuantity(8);
+		 * item = CellarDAO.editCellarItem(item); } catch (Exception e) {
+		 * fail(); }
+		 */
 
 	}
 
