@@ -136,17 +136,27 @@ public class CellarDAOTests
 		}
 	}
 
+	@Test
 	public void testEditCellar()
 	{
 		Cellar cellar = null;
-		/*
-		 * try { cellar = CellarDAO.getCellar(2); } catch (Exception e) {
-		 * fail(); }
-		 * 
-		 * try { item.setNotes("This wine is awesome"); item.setQuantity(8);
-		 * item = CellarDAO.editCellarItem(item); } catch (Exception e) {
-		 * fail(); }
-		 */
+		System.out.print("hay");
+		try
+		{
+			cellar = CellarDAO.getCellar(2);
+		} catch (Exception e)
+		{
+			fail();
+		}
+
+		try
+		{
+			cellar.setUserId(55);
+			cellar = CellarDAO.editCellar(cellar);
+		} catch (Exception e)
+		{
+			fail();
+		}
 
 	}
 

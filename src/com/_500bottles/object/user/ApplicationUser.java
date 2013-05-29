@@ -11,7 +11,7 @@ public abstract class ApplicationUser
 	protected char[] password;
 	protected double height;
 	protected double weight;
-	protected long dateOfBirth;
+	protected Date dateOfBirth;
 	protected Sex sex;
 	protected String firstName;
 	protected String lastName;
@@ -42,7 +42,7 @@ public abstract class ApplicationUser
 		lastName = last;
 	}
 
-	public void setDOB(long Dob)
+	public void setDOB(Date Dob)
 	{
 		// TODO Auto-generated method stub
 		dateOfBirth = Dob;
@@ -129,7 +129,7 @@ public abstract class ApplicationUser
 		return weight;
 	}
 
-	public long getDOB()
+	public Date getDOB()
 	{
 		// TODO Auto-generated method stub
 		return dateOfBirth;

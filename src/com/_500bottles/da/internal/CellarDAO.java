@@ -55,8 +55,8 @@ public class CellarDAO extends DAO
 
 	public static Cellar addCellar(Cellar cellar) throws Exception
 	{
-		String columns, values, cellarItemsJSON; // cellarItemsJSON not used
-													// anymore
+		String columns, values; // cellarItemsJSON not used
+								// anymore
 
 		columns = "( `userId`)";
 
@@ -152,10 +152,10 @@ public class CellarDAO extends DAO
 		return item;
 	}
 
-	public static void getCellar(long cellarId)
+	public static Cellar getCellar(long cellarId)
 	{
 		// String table;
-
+		Cellar cellar = null;
 		ResultSet r;
 
 		try
@@ -163,12 +163,13 @@ public class CellarDAO extends DAO
 			String where = "cellarId = ";
 			where += cellarId;
 			r = select(CELLAR_TABLE, "*", where);
-			createCellar(r);
+			cellar = createCellar(r);
 			Database.disconnect();
 		} catch (Exception e)
 		{
 			// TODO: handle query exceptions.
 		}
+		return cellar;
 
 	}
 
