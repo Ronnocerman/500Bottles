@@ -89,7 +89,8 @@ public abstract class DAO
 	public static int update(String table, String set, String where)
 			throws SQLException
 	{
-		String sql = "UPDATE " + table + " SET " + set + " " + where + ";";
+		String sql = "UPDATE " + table + " SET " + set + " WHERE " + where
+				+ ";";
 
 		return Database.modQuery(sql);
 	}

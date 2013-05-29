@@ -74,15 +74,17 @@ public class FavoritesDAO
 	{
 		Favorites f;
 
-		long favoritesId;
+		long favoritesId, wineId;
 
 		favoritesId = r.getLong("favoritesId");
+		wineId = r.getLong("wineId");
 
 		if (!r.next())
 			return null;
 
 		f = new Favorites();
 		f.setfavoritesId(favoritesId);
+		f.setWineId(wineId);
 
 		return f;
 	}
