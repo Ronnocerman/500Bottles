@@ -15,6 +15,7 @@ public class Wine
 	private Varietal varietal;
 	private Vineyard vineyard;
 	private double rating;
+	private String image;
 	private long priceMin;
 	private long priceMax;
 	private long winecomId;
@@ -32,6 +33,16 @@ public class Wine
 		this.setVarietal(new Varietal());
 		this.setVineyard(new Vineyard());
 		this.setRating(0);
+	}
+
+	public String getImage()
+	{
+		return image;
+	}
+
+	public void setImage(String image)
+	{
+		this.image = image;
 	}
 
 	public long getId()
