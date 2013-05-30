@@ -17,7 +17,7 @@
 
 <body>
 
-<section id="view_login" class="view animated" style="display: none">
+<section id="view_login" class="view animated no_display">
 	<form id="login_form">
 		<div class="person_icon">
 			<input id="email" type="text" value="email" class="square_bottom" />
@@ -29,7 +29,7 @@
 		<input type="button" value="log in"/>
 	</form>
 	<div class="forgot_signup">
-		<a class="light_link" href="">forgot password</a>
+		<a class="light_link box_arrow" href="">forgot password</a>
 	</div>
     <div class="wine_bottle animated bounceInUp delay_1s"></div>
 </section>
@@ -113,8 +113,8 @@
 	<div class="column_33 login_sidebar">
         <div class="content">
             <div class="light_bg curved shadow">
-                <a class="button create_account square_bottom" href="createaccount.html">sign up</a>
-                <a class="button login square_top" href="login.html">log in</a>
+                <a id="create_account" class="button create_account square_bottom">sign up</a>
+                <a id="log_in" class="button login square_top">log in</a>
             </div>
         </div>
 	</div>

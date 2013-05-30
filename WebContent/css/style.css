@@ -172,6 +172,9 @@ a.box_arrow {
   a.box_arrow:hover:after {
     opacity: 0.9; }
 
+.no_display {
+  display: none; }
+
 .align_right {
   text-align: right; }
 
@@ -326,10 +329,6 @@ footer {
   width: 100%;
   background: rgba(255, 255, 255, 0.9);
   text-align: center;
-  -webkit-animation-name: fadeInDownBig;
-  -moz-animation-name: fadeInDownBig;
-  -o-animation-name: fadeInDownBig;
-  animation-name: fadeInDownBig;
   z-index: 100; }
   #view_login .wine_bottle {
     content: "";
@@ -365,6 +364,11 @@ footer {
     padding-top: 0.7em;
     font-size: 0.8em;
     text-align: right; }
+    #view_login .forgot_signup .box_arrow:after {
+      top: 1px;
+      right: -22px;
+      height: 16px;
+      width: 16px; }
 
 #home .create_account, #home .login {
   width: 90%;
