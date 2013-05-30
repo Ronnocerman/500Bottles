@@ -15,7 +15,7 @@ public abstract class ApplicationUser
 	protected Sex sex;
 	protected String firstName;
 	protected String lastName;
-	protected boolean admin;
+	protected int admin;
 
 	public void setEmail(String emailAddress)
 	{
@@ -132,12 +132,12 @@ public abstract class ApplicationUser
 		return userId;
 	}
 
-	public boolean isAdmin()
+	public int isAdmin()
 	{
 		return admin;
 	}
 
-	public void setAdmin(boolean admin)
+	public void setAdmin(int admin)
 	{
 		this.admin = admin;
 	}
