@@ -21,7 +21,9 @@
   /* jQuery selector for previous page button. */
   var PREV_PAGE_BTN = ".prev";
 
-  /* Number of image gallery rows to create. */
+  /* Number of image gallery rows to create. Can be overwritten by setting
+   * data-row attribute of the GALLERY_CONTAINER_SEL.
+   */
   var NUM_OF_ROWS = 2;
 
   var SLIDE_MARGIN = 100;
@@ -44,8 +46,22 @@
 
   /* Binds button event handlers. */
   function bind_events() {
-    $(NEXT_PAGE_BTN).on("click", next_page);
-    $(PREV_PAGE_BTN).on("click", previous_page);
+
+      $(GALLERY_PARENT_SEL).each(function(index, el) {
+
+          $(el).children(NEXT_PAGE_BTN).on("click", function() {
+              return (function(e) {
+                  next_page(e);
+              })(el);
+          } );
+
+          $(el).children(PREV_PAGE_BTN).on("click", function() {
+              return (function(e) {
+                  previous_page(e);
+              })(el);
+          });
+
+      });
   }
 
   /* Builds internal representation of gallery. */
@@ -53,6 +69,8 @@
     var i, j,               // loop index
         start_index,        // start index for adding images to rows
         end_index;     // count of images per row
+
+    NUM_OF_ROWS = $(GALLERY_PARENT_SEL).data("rows") || NUM_OF_ROWS;
 
     // get all the images
     images = $(GALLERY_CONTAINER_SEL).children(IMAGE_ELEMENT_SEL);
@@ -105,29 +123,33 @@
   }
 
   /* Scrolls gallery to next page. */
-  function next_page() {
-    var parent_width = $(GALLERY_PARENT_SEL).width();
-    var gallery_width = $(GALLERY_CONTAINER_SEL).width();
-    var gallery_position = parseInt($(GALLERY_CONTAINER_SEL).css("margin-left"));
+  function next_page(gallery_parent) {
+    var gallery_container = $(gallery_parent).children(GALLERY_CONTAINER_SEL);
+
+    var parent_width = $(gallery_parent).width();
+    var gallery_width = $(gallery_container).width();
+    var gallery_position = parseInt($(gallery_container).css("margin-left"));
     var new_position = gallery_position - parent_width + SLIDE_MARGIN;
 
     if (-new_position > gallery_width - parent_width)
       new_position = -(gallery_width - parent_width);
 
-    $(GALLERY_CONTAINER_SEL).css("margin-left", new_position + "px");
+    $(gallery_container).css("margin-left", new_position + "px");
   }
 
   /* Scrolls gallery to previous page. */
-  function previous_page() {
-    var parent_width = $(GALLERY_PARENT_SEL).width();
-    var gallery_width = $(GALLERY_CONTAINER_SEL).width();
-    var gallery_position = parseInt($(GALLERY_CONTAINER_SEL).css("margin-left"));
+  function previous_page(gallery_parent) {
+      var gallery_container = $(gallery_parent).children(GALLERY_CONTAINER_SEL);
+
+    var parent_width = $(gallery_parent).width();
+    var gallery_width = $(gallery_container).width();
+    var gallery_position = parseInt($(gallery_container).css("margin-left"));
     var new_position = gallery_position + parent_width - SLIDE_MARGIN;
 
     if (new_position > 0)
       new_position = 0;
 
-    $(GALLERY_CONTAINER_SEL).css("margin-left", new_position + "px");
+    $(gallery_container).css("margin-left", new_position + "px");
   }
 
   /* Handles window resize events. */

@@ -19,7 +19,8 @@
   margin: 0 auto 0;
   min-height: 100%; }
   .wrapper .content {
-    padding: 2%; }
+    padding: 1em;
+    position: relative; }
 
 .content_container {
   margin: 0 auto 0; }
@@ -31,7 +32,8 @@
   position: relative; }
 
 .column_100 {
-  width: 100%; }
+  width: 100%;
+  float: left; }
 
 .column_50 {
   width: 49%;
@@ -81,15 +83,21 @@ h1 {
 h2 {
   font-size: 2.8em; }
 
+h3 {
+  font-size: 2.4em; }
+
 .light_bg {
   background-color: white; }
+
+.squairy_bg {
+  background-image: url("../img/squairy_light.png"); }
 
 .curved {
   border-radius: 8px;
   border: 1px solid #cccccc; }
 
 .shadow {
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3); }
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); }
 
 .wine_grid {
   list-style: none;
@@ -118,6 +126,60 @@ h2 {
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) inset; }
     .wine_grid .wine img {
       width: 100%; }
+
+a.light_link {
+  text-decoration: none;
+  color: #aaaaaa;
+  padding-left: 1em;
+  -webkit-transition: all 0.35s 0s;
+  -moz-transition: all 0.35s 0s;
+  -ms-transition: all 0.35s 0s;
+  -o-transition: all 0.35s 0s;
+  transition: all 0.35s 0s;
+  -webkit-transition-timing-function: default;
+  -moz-transition-timing-function: default;
+  -ms-transition-timing-function: default;
+  -o-transition-timing-function: default;
+  transition-timing-function: default; }
+  a.light_link:hover {
+    color: black; }
+
+a.box_arrow {
+  position: relative; }
+  a.box_arrow:after {
+    content: "";
+    background: url("../img/icons/box-arrow.png") no-repeat center center;
+    background-size: 100% 100%;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/icons/box-arrow.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/icons/box-arrow.png',sizingMethod='scale')";
+    height: 18px;
+    width: 18px;
+    display: block;
+    top: 2px;
+    right: -25px;
+    position: absolute;
+    opacity: 0.2;
+    -webkit-transition: all 1s 0s;
+    -moz-transition: all 1s 0s;
+    -ms-transition: all 1s 0s;
+    -o-transition: all 1s 0s;
+    transition: all 1s 0s;
+    -webkit-transition-timing-function: default;
+    -moz-transition-timing-function: default;
+    -ms-transition-timing-function: default;
+    -o-transition-timing-function: default;
+    transition-timing-function: default; }
+  a.box_arrow:hover:after {
+    opacity: 0.9; }
+
+.align_right {
+  text-align: right; }
+
+.align_left {
+  text-align: left; }
+
+.align_center {
+  text-align: center; }
 
 .clearfix:before,
 .clearfix:after {
@@ -172,7 +234,6 @@ form input[type="button"], .button {
   border-top: none; }
 
 form {
-  background: #f5f2f9;
   padding: 2em; }
   form input {
     font-family: Signika;
@@ -188,7 +249,7 @@ form {
     -o-transition-timing-function: default;
     transition-timing-function: default;
     border: none;
-    padding: 3.4% 4% 2% 12%; }
+    padding: 3.4% 4% 2% 4%; }
   form input[type="text"], form input[type="password"] {
     border: none;
     width: 84%;
@@ -288,9 +349,12 @@ footer {
     min-width: 320px;
     margin: 0 auto 0; }
   #view_login form {
+    background: #f5f2f9;
     min-width: 320px;
     margin: 20% auto 0 auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
+    #view_login form input {
+      padding-left: 12%; }
     #view_login form input[type="password"] {
       display: none; }
     #view_login form input[type="button"] {
@@ -301,22 +365,6 @@ footer {
     padding-top: 0.7em;
     font-size: 0.8em;
     text-align: right; }
-    #view_login .forgot_signup a {
-      text-decoration: none;
-      color: #aaaaaa;
-      padding-left: 1em;
-      -webkit-transition: all 0.35s 0s;
-      -moz-transition: all 0.35s 0s;
-      -ms-transition: all 0.35s 0s;
-      -o-transition: all 0.35s 0s;
-      transition: all 0.35s 0s;
-      -webkit-transition-timing-function: default;
-      -moz-transition-timing-function: default;
-      -ms-transition-timing-function: default;
-      -o-transition-timing-function: default;
-      transition-timing-function: default; }
-      #view_login .forgot_signup a:hover {
-        color: black; }
 
 #home .create_account, #home .login {
   width: 90%;
@@ -352,7 +400,7 @@ footer {
     height: 100px;
     width: 100px;
     position: absolute;
-    bottom: 131px;
+    top: 40%;
     -webkit-transition: all 1s 0s;
     -moz-transition: all 1s 0s;
     -ms-transition: all 1s 0s;
@@ -382,6 +430,24 @@ footer {
     left: -30px; }
   #home .wine_grid_container:hover .next {
     right: -30px; }
+#home #wine_search {
+  margin-top: 4.2em; }
+  #home #wine_search input {
+    padding: 2% 2% !important;
+    display: -moz-inline-stack;
+    display: inline-block;
+    zoom: 1;
+    *display: inline; }
+  #home #wine_search input[type="text"] {
+    width: 66%; }
+  #home #wine_search input[type="button"] {
+    margin-left: 2% !important;
+    margin-top: -4px !important;
+    width: 27%; }
+#home .advanced_link {
+  position: absolute;
+  bottom: 2.2em;
+  right: 4.6em; }
 
 @media screen and (min-width: 1200px) {
   .content_container {

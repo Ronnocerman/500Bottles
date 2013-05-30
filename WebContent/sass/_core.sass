@@ -16,15 +16,21 @@ h1
 h2
   font-size: 2.8em
 
+h3
+  font-size: 2.4em
+
 .light_bg
   background-color: white
+
+.squairy_bg
+  background-image: url("../img/squairy_light.png")
 
 .curved
   border-radius: 8px
   border: 1px solid #CCC
 
 .shadow
-  box-shadow: 0 0 12px rgba(black, 0.3)
+  box-shadow: 0 0 4px rgba(black, 0.3)
 
 .wine_grid
   list-style: none
@@ -45,6 +51,41 @@ h2
       width: 100%
 
 
+a.light_link
+  text-decoration: none
+  color: #AAA
+  padding-left: 1em
+  @include transition(all, 0.35s)
+  &:hover
+    color: black
+
+a.box_arrow
+  position: relative
+  &:after
+    content: ""
+    @include background_image("icons/box-arrow.png")
+    height: 18px
+    width: 18px
+    display: block
+    top: 2px
+    right: -25px
+    position: absolute
+    opacity: 0.2
+    @include transition(all, 1s)
+  &:hover:after
+    opacity: 0.9
+
+
+
+
+
+.align_right
+  text-align: right
+.align_left
+  text-align: left
+.align_center
+  text-align: center
+  
 // For modern browsers
 .clearfix:before,
 .clearfix:after
