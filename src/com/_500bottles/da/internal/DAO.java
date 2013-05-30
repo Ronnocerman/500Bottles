@@ -39,7 +39,7 @@ public abstract class DAO
 		sql += columns + " ";
 		sql += "VALUES " + values + ";";
 
-		System.out.println(sql);
+		// System.out.println(sql);
 
 		return Database.modQuery(sql);
 	}

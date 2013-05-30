@@ -24,16 +24,17 @@ public class WinebookDAO extends DAO
 			.getProperty("winebookTableName");
 
 	/**
-	 * Adds a cellar item to the winebook. Returns an entry object with the
-	 * new unique id set. Throws a DAException if the SQL insertion fails.
-	 * @param entry		The entry object to add to Winebook.
-	 * @return		Entry object with the entry ID set.
+	 * Adds a cellar item to the winebook. Returns an entry object with the new
+	 * unique id set. Throws a DAException if the SQL insertion fails.
+	 * 
+	 * @param entry
+	 *            The entry object to add to Winebook.
+	 * @return Entry object with the entry ID set.
 	 * @throws DAException
 	 */
 	public static Entry addEntry(Entry entry) throws DAException
 	{
-		String  columns, values, dateCreated, dateLastEdited, winesJSON,
-			photosJSON;
+		String columns, values, dateCreated, dateLastEdited, winesJSON, photosJSON;
 
 		columns = "(`userID`, `title`, `dateCreated`,";
 		columns += "`dateLastEdited`, `textContent`,";
@@ -53,10 +54,12 @@ public class WinebookDAO extends DAO
 		values += "'" + winesJSON + "',";
 		values += "'" + photosJSON + "')";
 
-		try {
+		try
+		{
 			insert(WINEBOOK_TABLE, columns, values);
 			Database.disconnect();
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			throw new DAException("Failed Winebook entry insertion.", e);
 		}
 
@@ -66,44 +69,50 @@ public class WinebookDAO extends DAO
 	}
 
 	/**
-	 * Deletes a winebook entry. The entry's id must be set for a deletion
-	 * to succeed. Throws DAException if the entry ID is not set. Throws
+	 * Deletes a winebook entry. The entry's id must be set for a deletion to
+	 * succeed. Throws DAException if the entry ID is not set. Throws
 	 * NullPointerException if the entry object is null.
-	 * @param entry 	The entry to delete.
+	 * 
+	 * @param entry
+	 *            The entry to delete.
 	 * @throws DAException
 	 * @throws NullPointerException
 	 */
 	public static void deleteEntry(Entry entry) throws DAException,
-		NullPointerException
+			NullPointerException
 	{
+		// System.out.println("entryId = " + entry.getEntryId());
 		if (entry == null)
 			throw new NullPointerException("Entry object null.");
 
 		if (entry.getEntryId() == 0)
 			throw new DAException("Entry ID not set.");
 
-		try {
-			delete(WINEBOOK_TABLE, "WHERE entryId=" +
-				entry.getEntryId());
+		try
+		{
+
+			delete(WINEBOOK_TABLE, "entryId=" + entry.getEntryId());
 			Database.disconnect();
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			throw new DAException("Failed Winebook entry deletion.",
-				e.getCause());
+					e.getCause());
 		}
 	}
 
 	/**
-	 * Edits a winebook entry. Takes the passed entry object and updates
-	 * the database entry with the corresponding values. The passed entry
-	 * object must have the entry ID set. Throws DAException if the entry ID
-	 * is not set or on an SQL error. Throws NullPointerException if the
-	 * entry object is null.
+	 * Edits a winebook entry. Takes the passed entry object and updates the
+	 * database entry with the corresponding values. The passed entry object
+	 * must have the entry ID set. Throws DAException if the entry ID is not set
+	 * or on an SQL error. Throws NullPointerException if the entry object is
+	 * null.
+	 * 
 	 * @param entry
 	 * @throws DAException
 	 * @throws NullPointerException
 	 */
 	public static void editEntry(Entry entry) throws DAException,
-		NullPointerException
+			NullPointerException
 	{
 		if (entry == null)
 			throw new NullPointerException("Entry object null.");
@@ -122,26 +131,30 @@ public class WinebookDAO extends DAO
 		sql += ", winesJSON=" + entry.getWineIdsAsJSONArray();
 		sql += ", photosJSON=" + entry.getPhotoIdsAsJSONArray();
 
-		try {
+		try
+		{
 			update(WINEBOOK_TABLE, sql, "entryId=" + entryId);
 			Database.disconnect();
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			throw new DAException("Failed Winebook entry update.", e);
 		}
 	}
 
 	/**
-	 * Gets and returns an entry object from the database. The entry object
-	 * must have entry ID set to retrieve an entry. Throws DAException
-	 * if an SQL error occurs or if the entry ID was not set. Throws
-	 * NullPointerException if the entry is null.
-	 * @param entry		An entry object with entry ID set to retrieve
-	 *                      from the database.
-	 * @return              Entry object.
+	 * Gets and returns an entry object from the database. The entry object must
+	 * have entry ID set to retrieve an entry. Throws DAException if an SQL
+	 * error occurs or if the entry ID was not set. Throws NullPointerException
+	 * if the entry is null.
+	 * 
+	 * @param entry
+	 *            An entry object with entry ID set to retrieve from the
+	 *            database.
+	 * @return Entry object.
 	 * @throws DAException
 	 */
 	public static Entry getEntry(Entry entry) throws DAException,
-		NullPointerException
+			NullPointerException
 	{
 		if (entry == null)
 			throw new NullPointerException("Null Winebook entry.");
@@ -154,11 +167,13 @@ public class WinebookDAO extends DAO
 	}
 
 	/**
-	 * Gets and returns an entry object from the database. Throws
-	 * DAException if an SQL error occurs or if the entry ID was not set.
-	 * Throws NullPointerException if the entry is null.
-	 * @param entryId	The ID of the entry to get.
-	 * @return              The Entry object.
+	 * Gets and returns an entry object from the database. Throws DAException if
+	 * an SQL error occurs or if the entry ID was not set. Throws
+	 * NullPointerException if the entry is null.
+	 * 
+	 * @param entryId
+	 *            The ID of the entry to get.
+	 * @return The Entry object.
 	 * @throws DAException
 	 */
 	public static Entry getEntry(long entryId) throws DAException
@@ -166,11 +181,13 @@ public class WinebookDAO extends DAO
 		ResultSet r;
 		Entry entry = null;
 
-		try {
+		try
+		{
 			r = select(WINEBOOK_TABLE, "*", "entryId=" + entryId);
 			entry = createEntry(r);
 			Database.disconnect();
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			throw new DAException("SQL select exception.", e);
 		}
 
@@ -178,10 +195,12 @@ public class WinebookDAO extends DAO
 	}
 
 	/**
-	 * Creates an Entry object based on the ResultSet returned from an
-	 * select operation. Returns null if the ResultSet is empty.
-	 * @param res	The ResultSet returned from a SELECT operation.
-	 * @return	Entry object.
+	 * Creates an Entry object based on the ResultSet returned from an select
+	 * operation. Returns null if the ResultSet is empty.
+	 * 
+	 * @param res
+	 *            The ResultSet returned from a SELECT operation.
+	 * @return Entry object.
 	 * @throws SQLException
 	 */
 	private static Entry createEntry(ResultSet res) throws SQLException

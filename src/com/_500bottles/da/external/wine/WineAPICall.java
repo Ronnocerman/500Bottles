@@ -58,8 +58,8 @@ public class WineAPICall
 
 			temp.setWinecomId((long) jsonObject.get("Id"));
 
-			temp.setPriceMin((long) jsonObject.get("PriceMin"));
-			temp.setPriceMax((long) jsonObject.get("PriceMax"));
+			temp.setPriceMin((double) jsonObject.get("PriceMin"));
+			temp.setPriceMax((double) jsonObject.get("PriceMax"));
 
 			JSONObject jsonObject2 = (JSONObject) jsonObject.get("Appellation");
 			Appellation appellation = new Appellation(
@@ -83,7 +83,8 @@ public class WineAPICall
 			temp.setVineyard(vineyard);
 
 			jsonObject2 = (JSONObject) jsonObject.get("Ratings");
-			temp.setRating((long) jsonObject2.get("HighestScore"));
+			temp.setRating(Long.valueOf((long) jsonObject2.get("HighestScore"))
+					.doubleValue());
 
 			wineVector.add(temp);
 
