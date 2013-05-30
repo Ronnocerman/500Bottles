@@ -126,7 +126,7 @@ public class UserDAO extends DAO
 			Database.disconnect();
 		} catch (SQLException e)
 		{
-			throw new DAException("User not found", e);
+			throw new DAException("Failed User update.", e);
 		}
 	}
 
