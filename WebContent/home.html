@@ -9,51 +9,11 @@
 
 	<!-- Loads CSS files for use on page -->
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+
+    <script src="js/home.js" type="text/javascript"></script>
 </head>
 
 <body>
-
-<script>
-	function password_test() {
-		console.log("adding password test func");
-
-		var bottle_time = 1000;
-
-		var login_view = document.getElementById("view_login");
-		var form = document.getElementById("view_login");
-		var fp = document.getElementById("faux_password");
-		var p = document.getElementById("password");
-		var e = document.getElementById("email");
-		var email_placeholder = e.value;
-
-		e.addEventListener("blur", function() {
-			if (e.value == "")
-				e.value = email_placeholder;
-		});
-
-		e.addEventListener("focus", function() {
-			if (e.value == email_placeholder)
-				e.value = "";
-		});
-
-		fp.addEventListener("focus", function() {
-			fp.style.display = "none";
-			p.style.display = "block";
-			p.focus();
-		});
-
-		p.addEventListener("blur", function() {
-
-			if (p.value != "")
-				return;
-
-			p.style.display = "none";
-			fp.style.display = "block";
-		});
-	}
-
-	window.addEventListener("load", password_test);
-</script>
 
 <section id="view_login" class="view animated" style="display: none">
 	<form id="login_form">
