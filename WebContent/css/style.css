@@ -72,6 +72,53 @@ h1 {
   font-size: 3em;
   color: black; }
 
+.light_bg {
+  background-color: white; }
+
+.curved {
+  border-radius: 8px;
+  border: 1px solid #dddddd;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3); }
+
+form input, .button {
+  border-radius: 6px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  font-family: Signika;
+  font-size: 1.3em; }
+
+form input[type="button"], .button {
+  width: 87.2%;
+  background-color: #960523;
+  color: white;
+  cursor: pointer; }
+  form input[type="button"]:hover, .button:hover {
+    background-color: #ae0523; }
+  form input[type="button"]:active, .button:active {
+    -webkit-transition: text-shadow 0.1s 0s;
+    -moz-transition: text-shadow 0.1s 0s;
+    -ms-transition: text-shadow 0.1s 0s;
+    -o-transition: text-shadow 0.1s 0s;
+    transition: text-shadow 0.1s 0s;
+    -webkit-transition-timing-function: default;
+    -moz-transition-timing-function: default;
+    -ms-transition-timing-function: default;
+    -o-transition-timing-function: default;
+    transition-timing-function: default;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); }
+
+.square_bottom {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom: 3px solid white; }
+
+.square_top {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding-bottom: 3%;
+  border-top: none; }
+
 form {
   background: #f5f2f9;
   padding: 2em; }
@@ -89,7 +136,6 @@ form {
     -o-transition-timing-function: default;
     transition-timing-function: default;
     border: none;
-    border-radius: 6px;
     padding: 3.4% 4% 2% 12%; }
   form input[type="text"], form input[type="password"] {
     border: none;
@@ -102,36 +148,6 @@ form {
       color: #333333; }
     form input[type="text"]:focus, form input[type="password"]:focus {
       outline: 0; }
-  form input[type="button"] {
-    width: 100%;
-    padding: 2.4% !important;
-    margin-top: 4% !important;
-    background-color: #960523;
-    color: white;
-    cursor: pointer; }
-    form input[type="button"]:hover {
-      background-color: #ae0523; }
-    form input[type="button"]:active {
-      -webkit-transition: text-shadow 0.1s 0s;
-      -moz-transition: text-shadow 0.1s 0s;
-      -ms-transition: text-shadow 0.1s 0s;
-      -o-transition: text-shadow 0.1s 0s;
-      transition: text-shadow 0.1s 0s;
-      -webkit-transition-timing-function: default;
-      -moz-transition-timing-function: default;
-      -ms-transition-timing-function: default;
-      -o-transition-timing-function: default;
-      transition-timing-function: default;
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); }
-  form .square_bottom {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    border-bottom: 3px solid white; }
-  form .square_top {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    padding-bottom: 3%;
-    border-top: none; }
   form .person_icon, form .password_icon {
     position: relative; }
   form .person_icon:before, form .password_icon:before {
@@ -174,7 +190,7 @@ form {
     width: 340px;
     position: absolute;
     right: 0px;
-    top: -120px;
+    bottom: -100px;
     opacity: 0.9;
     -webkit-transform-origin: 17% 17%;
     background: url("../img/wine_bottle.png") no-repeat center center;
@@ -207,6 +223,10 @@ form {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
     #view_login form input[type="password"] {
       display: none; }
+    #view_login form input[type="button"] {
+      width: 100%;
+      padding: 2.4% !important;
+      margin-top: 4% !important; }
   #view_login .forgot_signup {
     padding-top: 0.7em;
     font-size: 0.8em;
@@ -227,6 +247,20 @@ form {
       transition-timing-function: default; }
       #view_login .forgot_signup a:hover {
         color: black; }
+
+#home .create_account, #home .login {
+  width: 90%;
+  margin: 0 auto 0;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em; }
+#home .login {
+  margin-top: -2px; }
+#home .login_sidebar .light_bg {
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
+  position: relative;
+  width: 80%;
+  margin: 0.5em auto 0; }
 
 @media screen and (min-width: 1200px) {
   .content_container {

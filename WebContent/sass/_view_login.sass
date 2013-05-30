@@ -10,13 +10,14 @@
   animation-name: fadeInDownBig
   z-index: 100
 
+  // Large wine bottle.
   &:after
     content: ""
     height: 975px
     width: 340px
     position: absolute
     right: 0px
-    top:  -120px
+    bottom:  -100px
     opacity: 0.9
     -webkit-transform-origin: 17% 17%
     @include background_image("wine_bottle.png")
@@ -48,6 +49,10 @@
     box-shadow: 0 0 10px rgba(black, 0.2)
     input[type="password"]
       display: none
+    input[type="button"]
+      width: 100%
+      padding:  2.4% !important
+      margin-top: 4% !important
 
   .forgot_signup
     padding-top: 0.7em

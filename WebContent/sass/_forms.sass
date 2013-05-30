@@ -1,3 +1,33 @@
+form input, .button
+  border-radius: 6px
+  text-decoration: none
+  display: block
+  text-align: center
+  font-family: Signika
+  font-size: 1.3em
+
+form input[type="button"], .button
+  width: 100% - 12.8%
+  background-color: #960523
+  color:  white
+  cursor: pointer
+  &:hover
+    background-color: #AE0523
+  &:active
+    @include transition(text-shadow, 0.1s)
+    text-shadow: 0 0 8px rgba(white, 0.8)
+
+.square_bottom
+  border-bottom-right-radius: 0
+  border-bottom-left-radius: 0
+  border-bottom: 3px solid white
+
+.square_top
+  border-top-left-radius: 0
+  border-top-right-radius: 0
+  padding-bottom: 3%
+  border-top: none
+
 form
   background: #f5f2f9
   padding: 2em
@@ -8,7 +38,6 @@ form
     font-size: 1.7em
     @include transition(all, 0.4s)
     border:  none
-    border-radius: 6px
     padding:  3.4% 4% 2% 12%
 
   input[type="text"], input[type="password"]
@@ -22,30 +51,6 @@ form
       color: #333
     &:focus
       outline: 0
-
-  input[type="button"]
-    width: 100%
-    padding:  2.4% !important
-    margin-top: 4% !important
-    background-color: #960523
-    color:  white
-    cursor: pointer
-    &:hover
-      background-color: #AE0523
-    &:active
-      @include transition(text-shadow, 0.1s)
-      text-shadow: 0 0 8px rgba(white, 0.8)
-
-  .square_bottom
-    border-bottom-right-radius: 0
-    border-bottom-left-radius: 0
-    border-bottom: 3px solid white
-
-  .square_top
-    border-top-left-radius: 0
-    border-top-right-radius: 0
-    padding-bottom: 3%
-    border-top: none
 
   .person_icon, .password_icon
     position: relative
