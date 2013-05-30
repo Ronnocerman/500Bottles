@@ -114,6 +114,8 @@ public class CellarDAO extends DAO
 		sql += ",quantity=" + item.getQuantity();
 		sql += ",notes='" + escapeXml(item.getNotes()) + "'";
 
+		System.out.println(sql);
+
 		update(CELLARITEM_TABLE, sql, "cellarItemId=" + cellarItemId);
 		return item;
 	}

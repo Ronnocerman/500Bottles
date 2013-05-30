@@ -114,7 +114,7 @@ public abstract class DAO
 	{
 		String sql = "SELECT " + select + " FROM " + table;
 		sql += " WHERE " + where + ";";
-
+		// System.out.println(sql);
 		return Database.readQuery(sql);
 	}
 

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import com._500bottles.config.Config;
 import com.mysql.jdbc.Statement;
 
@@ -20,35 +21,36 @@ public class Database
 	private static Connection conn = null;
 
 	/**
-	 * Conducts a query of the database the does not modify the contents of
-	 * the database.
-	 * @param q	Query to execute.
-	 * @return      ResultSet object of query result.
+	 * Conducts a query of the database the does not modify the contents of the
+	 * database.
+	 * 
+	 * @param q
+	 *            Query to execute.
+	 * @return ResultSet object of query result.
 	 * @throws SQLException
 	 */
 	public static ResultSet readQuery(String q) throws SQLException
 	{
 		PreparedStatement p;
 		ResultSet r;
-
-		try {
-			if (conn == null)
-				conn = connect();
-
-			p = conn.prepareStatement(q);
-			r = p.executeQuery(q);
-
-		} catch (SQLException e) {
-			throw e;
-		}
+		// System.out.println("readQuery");
+		if (conn == null)
+			conn = connect();
+		// System.out.println("before prep");
+		p = conn.prepareStatement(q);
+		// System.out.println("btween prep and exe Query");
+		r = p.executeQuery(q);
+		// System.out.println("after executeQuery");
 
 		return r;
 	}
 
 	/**
 	 * Conducts a query of the database that may modify database records.
-	 * @param q	Query to execute.
-	 * @return	Numeric result of database query.
+	 * 
+	 * @param q
+	 *            Query to execute.
+	 * @return Numeric result of database query.
 	 * @throws SQLException
 	 */
 	public static int modQuery(String q) throws SQLException
@@ -56,7 +58,8 @@ public class Database
 		PreparedStatement p;
 		int i;
 
-		try {
+		try
+		{
 			if (conn == null)
 				conn = connect();
 
@@ -64,18 +67,18 @@ public class Database
 			i = p.executeUpdate(q, Statement.RETURN_GENERATED_KEYS);
 			setLastInsertId(p.getGeneratedKeys());
 
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			throw e;
 		}
 
 		return i;
 	}
 
-
-
 	/**
 	 * Connects to the database and returns the Connection object.
-	 * @return	Database Connection object.
+	 * 
+	 * @return Database Connection object.
 	 * @throws SQLException
 	 */
 	public static Connection connect() throws SQLException
@@ -88,9 +91,12 @@ public class Database
 		dbPassword = Config.getProperty("databasePassword");
 		connectionUrl = getConnectionUrl();
 
-		try {
-			connection = DriverManager.getConnection(connectionUrl, dbUsername, dbPassword);
-		} catch (SQLException e) {
+		try
+		{
+			connection = DriverManager.getConnection(connectionUrl, dbUsername,
+					dbPassword);
+		} catch (SQLException e)
+		{
 			throw e;
 		}
 
@@ -99,23 +105,28 @@ public class Database
 
 	/**
 	 * Disconnects a database connection.
+	 * 
 	 * @throws SQLException
 	 */
 	public static void disconnect() throws SQLException
 	{
-		if (conn == null) return;
+		if (conn == null)
+			return;
 
-		try {
+		try
+		{
 			conn.close();
 			conn = null;
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			throw e;
 		}
 	}
 
 	/**
 	 * Returns the ID of the last auto-increment insertion operation.
-	 * @return	Last auto-increment id.
+	 * 
+	 * @return Last auto-increment id.
 	 */
 	public static long getLastInsertId()
 	{
@@ -124,7 +135,8 @@ public class Database
 
 	/**
 	 * Builds the JDBC connection URL using configuration information.
-	 * @return	JDBC Connection URL
+	 * 
+	 * @return JDBC Connection URL
 	 */
 	private static String getConnectionUrl()
 	{
@@ -134,15 +146,17 @@ public class Database
 		dbHost = Config.getProperty("databaseHost");
 		dbName = Config.getProperty("databaseName");
 
-		connectionUrl = "jdbc:mysql://" + dbHost + ":"
-			+ dbPort + "/" + dbName + "?";
+		connectionUrl = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName
+				+ "?";
 
 		return connectionUrl;
 	}
 
 	/**
 	 * Sets the static lastInsertId variable for later retrieval.
-	 * @param r	ResultSet containing last insert id.
+	 * 
+	 * @param r
+	 *            ResultSet containing last insert id.
 	 * @throws SQLException
 	 */
 	private static void setLastInsertId(ResultSet r) throws SQLException

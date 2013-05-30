@@ -1,5 +1,7 @@
 package com._500bottles.da.internal;
 
+import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -123,20 +125,29 @@ public class WinebookDAO extends DAO
 		long entryId = entry.getEntryId();
 		String sql = "";
 
-		sql += "title=" + entry.getTitle();
-		sql += ", userId=" + entry.getUserId();
-		sql += ", dateCreated=" + formatDate(entry.getDateCreated());
-		sql += ", dateLastEdited=" + formatDate(entry.getDateLastEdited());
-		sql += ", textContent=" + entry.getContent();
-		sql += ", winesJSON=" + entry.getWineIdsAsJSONArray();
-		sql += ", photosJSON=" + entry.getPhotoIdsAsJSONArray();
+		System.out.println("yoyotitle: " + entry.getTitle());
+
+		sql += "title='" + escapeXml(entry.getTitle()) + "'";
+		sql += ",userId=" + entry.getUserId();
+		sql += ",dateCreated='" + formatDate(entry.getDateCreated()) + "'";
+		sql += ",dateLastEdited='" + formatDate(entry.getDateLastEdited())
+				+ "'";
+		sql += ",textContent='" + escapeXml(entry.getContent()) + "'";
+		sql += ",winesJSON='"
+				+ escapeXml(entry.getWineIdsAsJSONArray().toString()) + "'";
+		sql += ",photosJSON='"
+				+ escapeXml(entry.getPhotoIdsAsJSONArray().toString()) + "'";
+
+		System.out.println(sql);
 
 		try
 		{
+			System.out.println("entryId: " + entryId);
 			update(WINEBOOK_TABLE, sql, "entryId=" + entryId);
-			Database.disconnect();
+			// Database.disconnect();
 		} catch (SQLException e)
 		{
+			System.out.println("exception: " + e.getMessage());
 			throw new DAException("Failed Winebook entry update.", e);
 		}
 	}

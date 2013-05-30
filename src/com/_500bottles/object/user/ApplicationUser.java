@@ -37,7 +37,7 @@ public abstract class ApplicationUser
 		this.lastName = lastName;
 	}
 
-	public void setDOB(Date Dob)
+	public void setDOB(Date dateOfBirth)
 	{
 		this.dateOfBirth = dateOfBirth;
 	}

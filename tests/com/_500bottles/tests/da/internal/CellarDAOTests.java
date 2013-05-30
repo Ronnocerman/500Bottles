@@ -119,7 +119,7 @@ public class CellarDAOTests
 
 		try
 		{
-			item = CellarDAO.getCellarItem(2);
+			item = CellarDAO.getCellarItem(15);
 		} catch (Exception e)
 		{
 			fail();
@@ -127,7 +127,7 @@ public class CellarDAOTests
 
 		try
 		{
-			item.setNotes("This wine is awesome");
+			item.setNotes("Fuck this shit");
 			item.setQuantity(8);
 			item = CellarDAO.editCellarItem(item);
 		} catch (Exception e)
