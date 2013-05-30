@@ -4,6 +4,16 @@ public class Appellation
 {
 	private String location;
 
+	public Appellation()
+	{
+
+	}
+
+	public Appellation(String s)
+	{
+		location = s;
+	}
+
 	public String getLocation()
 	{
 		return location;

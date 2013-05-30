@@ -4,6 +4,16 @@ public class WineType
 {
 	private String wineType;
 
+	public WineType()
+	{
+
+	}
+
+	public WineType(String string)
+	{
+		wineType = string;
+	}
+
 	public String getWineType()
 	{
 		return wineType;

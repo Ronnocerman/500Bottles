@@ -1,0 +1,50 @@
+// Inline block fix for IE.
+@mixin inline_block
+  display: -moz-inline-stack
+  display: inline-block
+  zoom: 1
+  *display: inline
+
+// Prevents user selection of element.
+@mixin prevent_selection
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+// Allows user selection of elements.
+@mixin allow_selection
+  -webkit-touch-callout: normal
+  -webkit-user-select: normal
+  -khtml-user-select: normal
+  -moz-user-select: normal
+  -ms-user-select: normal
+  user-select: normal
+
+// For adding background images to elements.
+@mixin background_image($image, $width: 100%, $height: 100%, $xpos: center, $ypos: center)
+  background: url("../img/#{$image}") no-repeat $xpos $ypos
+  background-size: $width $height
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='#{$ABSOLUTE_IMAGE_PATH}/#{$image}',sizingMethod='scale')
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='#{$ABSOLUTE_IMAGE_PATH}/#{$image}',sizingMethod='scale')"
+
+@mixin transition($properties: all, $time: 1s, $delay: 0s, $func: default)
+  -webkit-transition: $properties $time $delay
+  -moz-transition: $properties $time $delay
+  -ms-transition: $properties $time $delay
+  -o-transition: $properties $time $delay
+  transition: $properties $time $delay
+  -webkit-transition-timing-function: $func
+  -moz-transition-timing-function: $func
+  -ms-transition-timing-function: $func
+  -o-transition-timing-function: $func
+  transition-timing-function: $func
+
+@mixin rotate($deg)
+  -webkit-transform: rotate($deg)
+  -moz-transform: rotate($deg)
+  -ms-transform: rotate($deg)
+  -o-transform: rotate($deg)
+  transform: rotate($deg)

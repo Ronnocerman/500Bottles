@@ -1,14 +1,15 @@
 package com._500bottles.object.wine;
 
-import com._500bottles.object.geolocation.GeoLocation;
-
 import java.util.Date;
 import java.util.Vector;
+
+import com._500bottles.object.geolocation.GeoLocation;
 
 /**
  *
  */
-public class WineQuery {
+public class WineQuery
+{
 
 	private final static Vector<Long> DEFAULT_IDS = new Vector<Long>();
 	private final static String DEFAULT_TEXT_QUERY = "";
@@ -70,7 +71,8 @@ public class WineQuery {
 	/**
 	 * Default constructor.
 	 */
-	public WineQuery() {
+	public WineQuery()
+	{
 		this.setIds(DEFAULT_IDS);
 		this.setTextQuery(DEFAULT_TEXT_QUERY);
 		this.setNameContains(DEFAULT_NAME_CONTAINS);
@@ -89,8 +91,9 @@ public class WineQuery {
 
 	/**
 	 * Gets the vector of Wine IDs set for this query.
-	 * @return	Returns a Vector of Long id's set for this query. If
-	 * 		no id's were set an empty vector is returned.
+	 * 
+	 * @return Returns a Vector of Long id's set for this query. If no id's were
+	 *         set an empty vector is returned.
 	 */
 	public Vector<Long> getIds()
 	{
@@ -99,6 +102,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the Wine ID for this query.
+	 * 
 	 * @param ids
 	 */
 	public void setIds(Vector<Long> ids)
@@ -108,6 +112,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the text query for this WineQuery.
+	 * 
 	 * @param textQuery
 	 */
 	public void setTextQuery(String textQuery)
@@ -116,9 +121,10 @@ public class WineQuery {
 	}
 
 	/**
-	 * Gets the text query for this WineQuery. If no text query was
-	 * specified then an empty string is returned.
-	 * @return	Text query for this WineQuery, or an empty string.
+	 * Gets the text query for this WineQuery. If no text query was specified
+	 * then an empty string is returned.
+	 * 
+	 * @return Text query for this WineQuery, or an empty string.
 	 */
 	public String getTextQuery()
 	{
@@ -126,9 +132,10 @@ public class WineQuery {
 	}
 
 	/**
-	 * Gets the "Name Contains" search field for this query. If not
-	 * specified returns an empty string.
-	 * @return	"Name Contains" field or an empty string.
+	 * Gets the "Name Contains" search field for this query. If not specified
+	 * returns an empty string.
+	 * 
+	 * @return "Name Contains" field or an empty string.
 	 */
 	public String getNameContains()
 	{
@@ -137,6 +144,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the "Name Contains" field for this query.
+	 * 
 	 * @param nameContains
 	 */
 	public void setNameContains(String nameContains)
@@ -145,9 +153,10 @@ public class WineQuery {
 	}
 
 	/**
-	 * Gets the "Description Contains" field for this query. If not
-	 * specified returns an empty string.
-	 * @return	"Description Contains" field or an empty string.
+	 * Gets the "Description Contains" field for this query. If not specified
+	 * returns an empty string.
+	 * 
+	 * @return "Description Contains" field or an empty string.
 	 */
 	public String getDescriptionContains()
 	{
@@ -156,6 +165,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the "Description Contains" field for this query.
+	 * 
 	 * @param descriptionContains
 	 */
 	public void setDescriptionContains(String descriptionContains)
@@ -164,10 +174,10 @@ public class WineQuery {
 	}
 
 	/**
-	 * Gets the geolocation object for this query. If no geolocation object
-	 * was specified, it returns null.
-	 * @return	GeoLocation for this WineQuery or null if not
-	 * 		specified.
+	 * Gets the geolocation object for this query. If no geolocation object was
+	 * specified, it returns null.
+	 * 
+	 * @return GeoLocation for this WineQuery or null if not specified.
 	 */
 	public GeoLocation getGeoLocation()
 	{
@@ -176,6 +186,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the geolocation object for this query.
+	 * 
 	 * @param geoLocation
 	 */
 	public void setGeoLocation(GeoLocation geoLocation)
@@ -184,9 +195,10 @@ public class WineQuery {
 	}
 
 	/**
-	 * Gets the distance set for this query. If no distance was specified
-	 * it returns -1.
-	 * @return	The distance set for this WineQuery or -1.
+	 * Gets the distance set for this query. If no distance was specified it
+	 * returns -1.
+	 * 
+	 * @return The distance set for this WineQuery or -1.
 	 */
 	public int getDistance()
 	{
@@ -195,6 +207,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the distance for this query.
+	 * 
 	 * @param distance
 	 */
 	public void setDistance(int distance)
@@ -204,7 +217,8 @@ public class WineQuery {
 
 	/**
 	 * Gets the WineType set for this query or null if not specified.
-	 * @return	WineType for this query or null.
+	 * 
+	 * @return WineType for this query or null.
 	 */
 	public WineType getType()
 	{
@@ -213,6 +227,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the WineType for this query.
+	 * 
 	 * @param type
 	 */
 	public void setType(WineType type)
@@ -221,9 +236,10 @@ public class WineQuery {
 	}
 
 	/**
-	 * Gets the minimum year for this wine query. If not specified, it
-	 * will return null.
-	 * @return	Minimum year for this query or null.
+	 * Gets the minimum year for this wine query. If not specified, it will
+	 * return null.
+	 * 
+	 * @return Minimum year for this query or null.
 	 */
 	public Date getMinYear()
 	{
@@ -232,6 +248,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the minimum year for this query.
+	 * 
 	 * @param minYear
 	 */
 	public void setMinYear(Date minYear)
@@ -240,9 +257,10 @@ public class WineQuery {
 	}
 
 	/**
-	 * Gets the maximum year for this query. If not specified, it
-	 * will return null.
-	 * @return	Maximum year for this query or null.
+	 * Gets the maximum year for this query. If not specified, it will return
+	 * null.
+	 * 
+	 * @return Maximum year for this query or null.
 	 */
 	public Date getMaxYear()
 	{
@@ -251,6 +269,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the maximum year for this query.
+	 * 
 	 * @param maxYear
 	 */
 	public void setMaxYear(Date maxYear)
@@ -260,7 +279,8 @@ public class WineQuery {
 
 	/**
 	 * Gets the Appellation set for this query or null if not specified.
-	 * @return 	Appellation for this query or null.
+	 * 
+	 * @return Appellation for this query or null.
 	 */
 	public Appellation getAppellation()
 	{
@@ -269,6 +289,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the Appellation for this query.
+	 * 
 	 * @param appellation
 	 */
 	public void setAppellation(Appellation appellation)
@@ -279,7 +300,8 @@ public class WineQuery {
 	/**
 	 * Gets the Vector of varietals for this query. If no varietals were
 	 * specified, it will return an empty Vector.
-	 * @return	Vector of varietals for this query.
+	 * 
+	 * @return Vector of varietals for this query.
 	 */
 	public Vector<Varietal> getVarietal()
 	{
@@ -288,6 +310,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the Varietals for this query.
+	 * 
 	 * @param varietal
 	 */
 	public void setVarietal(Vector<Varietal> varietal)
@@ -298,7 +321,8 @@ public class WineQuery {
 	/**
 	 * Gets the Vector of Vineyards for this query. If no vineyards were
 	 * specified, it will return an empty vector.
-	 * @return	Vector of vineyards for this query.
+	 * 
+	 * @return Vector of vineyards for this query.
 	 */
 	public Vector<Vineyard> getVineyard()
 	{
@@ -307,6 +331,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the Vineyards for this query.
+	 * 
 	 * @param vineyard
 	 */
 	public void setVineyard(Vector<Vineyard> vineyard)
@@ -317,7 +342,8 @@ public class WineQuery {
 	/**
 	 * Gets the minimum rating for this query. If no minimum rating was
 	 * specified it will return -1.
-	 * @return	Minimum rating for this query or -1.
+	 * 
+	 * @return Minimum rating for this query or -1.
 	 */
 	public double getMinRating()
 	{
@@ -326,6 +352,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the minimum rating for this query.
+	 * 
 	 * @param minRating
 	 */
 	public void setMinRating(double minRating)
@@ -336,7 +363,8 @@ public class WineQuery {
 	/**
 	 * Gets the maximum rating for this query. If no maximum rating was
 	 * specified it will return -1.
-	 * @return 	Maximum rating for this query or -1.
+	 * 
+	 * @return Maximum rating for this query or -1.
 	 */
 	public double getMaxRating()
 	{
@@ -345,6 +373,7 @@ public class WineQuery {
 
 	/**
 	 * Sets the maximum rating for this query.
+	 * 
 	 * @param maxRating
 	 */
 	public void setMaxRating(double maxRating)

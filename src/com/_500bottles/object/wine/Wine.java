@@ -15,8 +15,9 @@ public class Wine
 	private Varietal varietal;
 	private Vineyard vineyard;
 	private double rating;
-	private long priceMin;
-	private long priceMax;
+	private String image;
+	private double priceMin;
+	private double priceMax;
 	private long winecomId;
 
 	public Wine()
@@ -32,6 +33,16 @@ public class Wine
 		this.setVarietal(new Varietal());
 		this.setVineyard(new Vineyard());
 		this.setRating(0);
+	}
+
+	public String getImage()
+	{
+		return image;
+	}
+
+	public void setImage(String image)
+	{
+		this.image = image;
 	}
 
 	public long getId()
@@ -144,6 +155,7 @@ public class Wine
 		this.rating = rating;
 	}
 
+	@Override
 	public String toString()
 	{
 		String str = "";
@@ -155,22 +167,22 @@ public class Wine
 		return str;
 	}
 
-	public long getPriceMin()
+	public double getPriceMin()
 	{
 		return priceMin;
 	}
 
-	public void setPriceMin(long priceMin)
+	public void setPriceMin(double d)
 	{
-		this.priceMin = priceMin;
+		this.priceMin = d;
 	}
 
-	public long getPriceMax()
+	public double getPriceMax()
 	{
 		return priceMax;
 	}
 
-	public void setPriceMax(long priceMax)
+	public void setPriceMax(double priceMax)
 	{
 		this.priceMax = priceMax;
 	}

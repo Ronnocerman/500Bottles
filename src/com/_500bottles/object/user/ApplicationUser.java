@@ -11,7 +11,7 @@ public abstract class ApplicationUser
 	protected byte[] passwordHash;
 	protected double height;
 	protected double weight;
-	protected long dateOfBirth;
+	protected Date dateOfBirth;
 	protected Sex sex;
 	protected String firstName;
 	protected String lastName;
@@ -37,7 +37,7 @@ public abstract class ApplicationUser
 		this.lastName = lastName;
 	}
 
-	public void setDOB(long dateOfBirth)
+	public void setDOB(Date Dob)
 	{
 		this.dateOfBirth = dateOfBirth;
 	}
@@ -112,7 +112,7 @@ public abstract class ApplicationUser
 		return weight;
 	}
 
-	public long getDOB()
+	public Date getDOB()
 	{
 		return dateOfBirth;
 	}
