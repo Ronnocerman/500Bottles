@@ -1,10 +1,11 @@
 package com._500bottles.exception;
 
-public class NSFWException extends Exception
+@SuppressWarnings("serial")
+public abstract class NSFWException extends Exception
 {
 	public NSFWException()
 	{
-		super();
+
 	}
 
 	public NSFWException(String msg)
@@ -15,5 +16,10 @@ public class NSFWException extends Exception
 	public NSFWException(String msg, Throwable cause)
 	{
 		super(msg, cause);
+	}
+
+	public NSFWException(Throwable cause)
+	{
+		super(cause);
 	}
 }

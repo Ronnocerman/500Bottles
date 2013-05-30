@@ -8,62 +8,53 @@ public abstract class ApplicationUser
 	protected Date registrationDate;
 	protected Date lastLogin;
 	protected String emailAddress;
-	protected char[] password;
+	protected byte[] passwordHash;
 	protected double height;
 	protected double weight;
 	protected Date dateOfBirth;
 	protected Sex sex;
 	protected String firstName;
 	protected String lastName;
-	protected boolean admin;
+	protected int admin;
 
-	public void setEmail(String email)
+	public void setEmail(String emailAddress)
 	{
-		// TODO Auto-generated method stub
-		emailAddress = email;
-
+		this.emailAddress = emailAddress;
 	}
 
-	public void setPassword(char[] pass)
+	public void setPassword(byte[] passwordHash)
 	{
-		// TODO Auto-generated method stub
-		password = pass;
+		this.passwordHash = passwordHash;
 	}
 
-	public void setFirstName(String first)
+	public void setFirstName(String firstName)
 	{
-		// TODO Auto-generated method stub
-		firstName = first;
+		this.firstName = firstName;
 	}
 
-	public void setLastName(String last)
+	public void setLastName(String lastName)
 	{
-		// TODO Auto-generated method stub
-		lastName = last;
+		this.lastName = lastName;
 	}
 
 	public void setDOB(Date Dob)
 	{
-		// TODO Auto-generated method stub
-		dateOfBirth = Dob;
+		this.dateOfBirth = dateOfBirth;
 	}
 
-	public void setSex(Sex s)
+	public void setSex(Sex sex)
 	{
-		// TODO Auto-generated method stub
-		sex = s;
+		this.sex = sex;
 	}
 
-	public void setWeight(double fat)
+	public void setWeight(double weight)
 	{
-		// TODO Auto-generated method stub
-		weight = fat;
+		this.weight = weight;
 	}
 
-	public void setHeight(double tall)
+	public void setHeight(double height)
 	{
-		// TODO Auto-generated method stub
-		height = tall;
+		this.height = height;
 	}
 
 	public void setRegistrationDate(Date registrationDate)
@@ -83,66 +74,57 @@ public abstract class ApplicationUser
 
 	public String getEmail()
 	{
-		// TODO Auto-generated method stub
 		return emailAddress;
 	}
 
-	public char[] getPasswordHash()
+	public byte[] getPasswordHash()
 	{
-		// TODO Auto-generated method stub
-		return password;
+		return passwordHash.clone();
 	}
 
 	public String getName()
 	{
-		// TODO Auto-generated method stub
 		return firstName + " " + lastName;
 	}
 
 	public String getFirstName()
 	{
-		// TODO Auto-generated method stub
 		return firstName;
 	}
 
 	public String getLastName()
 	{
-		// TODO Auto-generated method stub
 		return lastName;
 	}
 
 	public Sex getSex()
 	{
-		// TODO Auto-generated method stub
 		return sex;
 	}
 
 	public double getHeight()
 	{
-		// TODO Auto-generated method stub
 		return height;
 	}
 
 	public double getWeight()
 	{
-		// TODO Auto-generated method stub
 		return weight;
 	}
 
 	public Date getDOB()
 	{
-		// TODO Auto-generated method stub
 		return dateOfBirth;
 	}
 
 	public Date getRegistrationDate()
 	{
-		return registrationDate;
+		return (Date) registrationDate.clone();
 	}
 
 	public Date getLastLogin()
 	{
-		return lastLogin;
+		return (Date) lastLogin.clone();
 	}
 
 	public long getUserId()
@@ -150,12 +132,12 @@ public abstract class ApplicationUser
 		return userId;
 	}
 
-	public boolean isAdmin()
+	public int isAdmin()
 	{
 		return admin;
 	}
 
-	public void setAdmin(boolean admin)
+	public void setAdmin(int admin)
 	{
 		this.admin = admin;
 	}
