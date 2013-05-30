@@ -1,0 +1,15 @@
+// These styles apply to both Desktop and Desktop-Wide sizes...
+@media screen and (min-width: $DESKTOP_MIN_WIDTH)
+
+  .column_100.content>*, .column_100 .content,
+  .column_66.content>*, .column_66 .content,
+  .column_50.content>*, .column_50 .content,
+  .column_33.content>*, .column_33 .content,
+  .column_25.content>*, .column_25 .content
+    margin-left: 0%
+    margin-right: 0%
+
+// These styles apply only to the Desktop size.
+//@media screen and (min-width: $DESKTOP_MIN_WIDTH) and (max-width: $DESKTOP_MAX_WIDTH)
+//  .content_container
+//    width: $DESKTOP_MIN_WIDTH

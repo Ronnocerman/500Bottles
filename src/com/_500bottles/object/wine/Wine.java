@@ -155,6 +155,7 @@ public class Wine
 		this.rating = rating;
 	}
 
+	@Override
 	public String toString()
 	{
 		String str = "";

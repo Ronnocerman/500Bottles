@@ -1,0 +1,75 @@
+form input, .button
+  border-radius: 6px
+  text-decoration: none
+  display: block
+  text-align: center
+  font-family: Signika
+  font-size: 1.3em
+
+form input[type="button"], .button
+  width: 100% - 12.8%
+  background-color: #960523
+  color:  white
+  cursor: pointer
+  &:hover
+    background-color: #AE0523
+  &:active
+    @include transition(text-shadow, 0.1s)
+    text-shadow: 0 0 8px rgba(white, 0.8)
+
+.square_bottom
+  border-bottom-right-radius: 0
+  border-bottom-left-radius: 0
+  border-bottom: 3px solid white
+
+.square_top
+  border-top-left-radius: 0
+  border-top-right-radius: 0
+  padding-bottom: 3%
+  border-top: none
+
+form
+  background: #f5f2f9
+  padding: 2em
+
+
+  input
+    font-family: Signika
+    font-size: 1.7em
+    @include transition(all, 0.4s)
+    border:  none
+    padding:  3.4% 4% 2% 12%
+
+  input[type="text"], input[type="password"]
+    border: none
+    width:  84%
+    margin-top: -2px
+    border:  1px solid rgba(black, 0.1)
+    position: relative
+    color: #AAA
+    &:hover, &:focus
+      color: #333
+    &:focus
+      outline: 0
+
+  .person_icon, .password_icon
+    position: relative
+    
+  .person_icon:before, .password_icon:before
+    content: ""
+    display: block
+    position: absolute
+    left:  0.8em
+    top:  1.1em
+    z-index: 100
+    opacity: 0.2
+
+  .person_icon:before
+    @include background_image("icons/login.png", 100%, auto, 0px, -20px)
+    height:  20px
+    width:  20px
+
+  .password_icon:before
+    @include background_image("icons/login.png", 100%, auto, 0px, 0px)
+    height:  20px
+    width:  20px

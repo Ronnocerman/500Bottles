@@ -1,0 +1,21 @@
+@media screen and (min-width: $TABLET_MIN_WIDTH) and (max-width: $TABLET_MAX_WIDTH)
+  .content_container
+    width: 100%
+
+  .column_50,
+  .column_66,
+  .column_33
+    &:nth-child(n)
+      margin-right: 0
+      margin-left: 0
+      width: 100%
+
+  .column_25
+    $WIDTH: 50%
+    width: $WIDTH
+    &:nth-child(n)
+      margin: 0
+      width: $WIDTH
+    &:nth-child(2n+1)
+      float: right
+      width: $WIDTH - $DEFAULT_COLUMN_MARGIN
