@@ -1,0 +1,16 @@
+header
+  border-bottom: 1px solid #888
+  padding: 0
+  margin: 0
+  position: relative
+  @include background_image("header.png", auto, 100%, left)
+  height: 303px
+
+  &:after
+    content: ""
+    width: 100%
+    height: 0px
+    position: absolute
+    bottom: 0px
+    border-bottom: 4px solid white
+    opacity: 0.3
