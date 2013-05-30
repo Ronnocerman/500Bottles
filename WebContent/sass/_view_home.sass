@@ -15,3 +15,44 @@
     position: relative
     width: 80%
     margin: 0.5em auto 0
+
+
+  .wine_grid_container
+    padding: 1em
+    box-shadow: 0 0 3px rgba(black, 0.3) inset
+    overflow: hidden
+    background-image: url("../img/squairy_light.png")
+    position: relative
+
+    h2
+      border-bottom: 1px solid rgba(black, 0.2)
+      margin-top: -0.1em
+      margin-bottom: 0.2em
+      margin-right: 10px
+      margin-left: -30px
+      padding-left: 30px
+
+    .next, .prev
+      @include background_image("icons/arrow.png")
+      height: 100px
+      width: 100px
+      position: absolute
+      bottom: 131px
+      @include transition(all, 1s)
+      opacity: 0.1
+      cursor: pointer
+    .prev
+      @include rotate(-180deg)
+      left: -100px
+    .next
+      right: -100px
+
+    &:hover
+      .prev, .next
+        opacity: 0.4
+        &:hover
+          opacity: 1
+      .prev
+        left: -30px
+      .next
+        right: -30px

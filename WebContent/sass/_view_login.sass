@@ -1,5 +1,5 @@
 #view_login
-  position: absolute
+  position: fixed
   height: 100%
   width: 100%
   background: rgba(white, 0.9)
@@ -11,7 +11,7 @@
   z-index: 100
 
   // Large wine bottle.
-  &:after
+  .wine_bottle
     content: ""
     height: 975px
     width: 340px
@@ -21,22 +21,6 @@
     opacity: 0.9
     -webkit-transform-origin: 17% 17%
     @include background_image("wine_bottle.png")
-    -webkit-animation-delay: 1s
-    -moz-animation-delay: 1s
-    -o-animation-delay: 1s
-    animation-delay: 1s
-    -webkit-animation-name: bounceInUp
-    -moz-animation-name: bounceInUp
-    -o-animation-name: bounceInUp
-    animation-name: bounceInUp
-    -webkit-animation-duration: 1s
-    -moz-animation-duration: 1s
-    -o-animation-duration: 1s
-    animation-duration: 1s
-    -webkit-animation-fill-mode: both
-    -moz-animation-fill-mode: both
-    -o-animation-fill-mode: both
-    animation-fill-mode: both
 
   form, .forgot_signup
     width: 30%
