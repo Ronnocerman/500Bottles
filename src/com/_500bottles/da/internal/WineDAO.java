@@ -3,8 +3,12 @@ package com._500bottles.da.internal;
 import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Vector;
 
 import com._500bottles.config.Config;
 import com._500bottles.exception.da.DAException;
@@ -43,15 +47,15 @@ public class WineDAO extends DAO
 		values += "'" + wine.getGeoLocation().getLon() + "',";
 		values += "'" + wine.getGeoLocation().getLat() + "',";
 		// Get type...
-		values += "'" + "0" + "',";
+		values += "'" + wine.getType().getWineType() + "',";
 		// Get year...
-		values += "'" + "1" + "',";
+		values += "'" + wine.getYear() + "',";
 		// Get varietal
-		values += "'" + "0" + "',";
+		values += "'" + wine.getVarietal().getGrapeType() + "',";
 		// Get vineyard
-		values += "'" + "0" + "',";
+		values += "'" + wine.getVineyard().getName() + "',";
 		// Get rating...
-		values += "'" + "0" + "',";
+		values += "'" + wine.getRating() + "',";
 		values += "'" + wine.getSnoothId() + "')";
 
 		try
@@ -163,6 +167,39 @@ public class WineDAO extends DAO
 		}
 
 		return wine;
+	}
+
+	public Vector<Wine> getAllWine(long userId) throws DAException
+	{
+		Vector<Wine> wineVector = null;
+		long cellarId;
+		ResultSet r;
+
+		try
+		{
+			r = select("Cellar", "*", "userId='" + userId + "'");
+			cellarId = r.getInt("cfellarId");
+
+			r = select("CellarItem", "*", "cellarId='" + cellarId + "'");
+
+			Array wineIdArray = r.getArray("wineId");
+			Set<Long> wineIdSet = (Set<Long>) wineIdArray.getArray();
+			Iterator it = wineIdSet.iterator();
+
+			for (int i = 0; i < wineIdSet.size(); i++)
+			{
+				Wine temp = new Wine();
+				temp = getWine((long) it.next());
+				wineVector.add(temp);
+			}
+			Database.disconnect();
+
+		} catch (SQLException e)
+		{
+			throw new DAException(e.getMessage(), e.getCause());
+		}
+
+		return wineVector;
 	}
 
 	private static Wine createWine(ResultSet r) throws SQLException
