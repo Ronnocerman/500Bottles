@@ -5,8 +5,6 @@ import static org.junit.Assert.fail;
 
 import java.util.Date;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import com._500bottles.da.internal.WinebookDAO;
@@ -23,31 +21,31 @@ public class WinebookDAOTests
 	boolean test = false;
 	Entry entry1, entry2, entry3, entry4;
 
-	@Before
-	public void setUp()
+	/*
+	 * @Before public void setUp() { entry1 = new Entry(); entry3 = new Entry(0,
+	 * "Title", "Content", new Date(), new Date()); entry4 = new Entry();
+	 * 
+	 * entry1.setTitle("Test Title"); entry1.setContent("Test entry content.");
+	 * entry1.setDateCreated(new Date());
+	 * 
+	 * entry4.setTitle("Temecula"); entry4.setContent("CSE 110 Wine Tasting.");
+	 * entry4.setDateCreated(new Date()); }
+	 * 
+	 * @After public void tearDown() { entry1 = null; }
+	 */
+
+	// @Test
+	public void addEntry()
 	{
-		entry1 = new Entry();
-		entry3 = new Entry(0, "Title", "Content", new Date(), new Date());
 		entry4 = new Entry();
-
-		entry1.setTitle("Test Title");
-		entry1.setContent("Test entry content.");
-		entry1.setDateCreated(new Date());
-
 		entry4.setTitle("Temecula");
 		entry4.setContent("CSE 110 Wine Tasting.");
 		entry4.setDateCreated(new Date());
-	}
 
-	@After
-	public void tearDown()
-	{
-		entry1 = null;
-	}
-
-	@Test
-	public void addEntry()
-	{
+		entry1 = new Entry();
+		entry1.setTitle("Test Title");
+		entry1.setContent("Test entry content.");
+		entry1.setDateCreated(new Date());
 		try
 		{
 			WinebookDAO.addEntry(entry1);
@@ -61,6 +59,18 @@ public class WinebookDAOTests
 	@Test
 	public void deleteEntry()
 	{
+		entry1 = new Entry();
+		entry1.setTitle("Test Title");
+		entry1.setContent("Test entry content.WTFFFFF");
+		entry1.setDateCreated(new Date());
+
+		try
+		{
+			WinebookDAO.addEntry(entry1);
+		} catch (DAException e)
+		{
+			fail(e.getMessage());
+		}
 		try
 		{
 			WinebookDAO.deleteEntry(entry1);
@@ -112,6 +122,7 @@ public class WinebookDAOTests
 	@Test
 	public void deleteEntryWithIdZero() throws DAException
 	{
+		entry3 = new Entry(0, "Title", "Content", new Date(), new Date());
 		try
 		{
 			if (entry3.getEntryId() == 0)
@@ -130,7 +141,7 @@ public class WinebookDAOTests
 		}
 	}
 
-	@Test
+	// @Test
 	public void editEntry()
 	{
 		fail("Not yet implemented.");
@@ -159,6 +170,7 @@ public class WinebookDAOTests
 	@Test
 	public void editEntryWithIdZero()
 	{
+		entry3 = new Entry(0, "Title", "Content", new Date(), new Date());
 		try
 		{
 			if (entry3.getEntryId() == 0)
@@ -179,6 +191,11 @@ public class WinebookDAOTests
 	@Test
 	public void getEntryWithEntry() throws DAException, NullPointerException
 	{
+		entry4 = new Entry();
+		entry4.setTitle("Temecula");
+		entry4.setContent("CSE 110 Wine Tasting.");
+		entry4.setDateCreated(new Date());
+		WinebookDAO.addEntry(entry4);
 		Entry entry = WinebookDAO.getEntry(entry4);
 
 		assertEquals(entry.getTitle(), "Temecula");
@@ -211,6 +228,7 @@ public class WinebookDAOTests
 	@Test
 	public void getEntryWithEntryWithIdZero()
 	{
+		entry3 = new Entry(0, "Title", "Content", new Date(), new Date());
 		try
 		{
 			if (entry3.getEntryId() == 0)
@@ -229,7 +247,7 @@ public class WinebookDAOTests
 		}
 	}
 
-	@Test
+	// @Test
 	public void getEntryWithEntryId()
 	{
 		fail("Not yet implemented.");
@@ -238,6 +256,16 @@ public class WinebookDAOTests
 	@Test
 	public void getEntryWithEntryIdZero()
 	{
+		entry3 = new Entry(0, "Title", "Content", new Date(), new Date());
+
+		try
+		{
+			WinebookDAO.addEntry(entry3);
+		} catch (DAException e)
+		{
+			fail(e.getMessage());
+		}
+
 		try
 		{
 			if (entry3.getEntryId() == 0)
@@ -256,7 +284,7 @@ public class WinebookDAOTests
 		}
 	}
 
-	@Test
+	// @Test
 	public void creatEntry()
 	{
 		fail("Not yet implemented.");
