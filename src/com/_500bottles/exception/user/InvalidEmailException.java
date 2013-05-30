@@ -1,8 +1,9 @@
 package com._500bottles.exception.user;
 
+@SuppressWarnings("serial")
 public class InvalidEmailException extends UserException
 {
-	public void checkTheForDot(String email)
+	public static void checkTheForDot(String email)
 	{
 		if (email.lastIndexOf('.') != -1)
 		{

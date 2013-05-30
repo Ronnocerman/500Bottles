@@ -1,7 +1,5 @@
 package com._500bottles.manager;
 
-import java.sql.SQLException;
-
 import com._500bottles.da.internal.WinebookDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.winebook.Entry;
@@ -18,9 +16,6 @@ public class WinebookManager
 		} catch (DAException e)
 		{
 			// TODO
-		} catch (Exception e)
-		{
-			// TODO
 		}
 	}
 
@@ -34,9 +29,6 @@ public class WinebookManager
 		} catch (DAException e)
 		{
 			// TODO
-		} catch (SQLException e)
-		{
-			// TODO
 		}
 	}
 
@@ -48,9 +40,6 @@ public class WinebookManager
 			ent = WinebookDAO.getEntry(id);
 			WinebookDAO.deleteEntry(ent);
 		} catch (DAException e)
-		{
-			// TODO
-		} catch (SQLException e)
 		{
 			// TODO
 		}
