@@ -18,10 +18,7 @@ public class UserDAO
 	public static ApplicationUser addUser(ApplicationUser user)
 			throws DAException
 	{
-		// TODO instanceof ApplicationUser to check if User or Admin
-		// TODO Check if user exists, then throw a DAException with a proper
-		// message, if so.
-		String columns, values, registrationDate, lastLogin;
+		String columns, values, registrationDate, lastLogin, dateOfBirth;
 		columns = "(`userEmail`, `userPass`,";
 		columns += "`registrationDate`, `lastLogin`,";
 		columns += "`firstName`, `lastName`, `sex`, `dateOfBirth`";
@@ -29,6 +26,7 @@ public class UserDAO
 
 		registrationDate = DAO.formatDate(user.getRegistrationDate());
 		lastLogin = DAO.formatDate(user.getLastLogin());
+		dateOfBirth = DAO.formatDate(user.getDOB());
 
 		values = "('" + user.getEmail() + "',";
 		values += "'" + user.getPasswordHash().toString() + "',";
@@ -37,7 +35,7 @@ public class UserDAO
 		values += "'" + user.getFirstName() + "',";
 		values += "'" + user.getLastName() + "',";
 		values += "'" + user.getSex() + "',";
-		values += "'" + user.getDOB() + "',";
+		values += "'" + dateOfBirth + "',";
 		values += "'" + user.getHeight() + "',";
 		values += "'" + user.getWeight() + "',";
 		values += "'" + user.isAdmin() + "')";
@@ -50,11 +48,9 @@ public class UserDAO
 		try
 		{
 			DAO.select(USER_TABLE, "*", where);
+			throw new DAException("User with email:" + user.getEmail()
+					+ " already exists");
 		} catch (SQLException e1)
-		{
-			exist = false;
-		}
-		if (!exist)
 		{
 			try
 			{
@@ -63,13 +59,10 @@ public class UserDAO
 			{
 				throw new DAException(e.getMessage(), e);
 			}
-		} else
-			throw new DAException("User with email:" + user.getEmail()
-					+ " already exists");
+			user.setUserId(Database.getLastInsertId());
 
-		user.setUserId(Database.getLastInsertId());
-
-		return user;
+			return user;
+		}
 	}
 
 	public static void deleteUser(ApplicationUser user) throws DAException
@@ -77,6 +70,7 @@ public class UserDAO
 		try
 		{
 			DAO.delete(USER_TABLE, "WHERE userId=" + user.getUserId());
+			Database.disconnect();
 		} catch (SQLException e)
 		{
 			throw new DAException(e.getMessage(), e);
@@ -104,6 +98,7 @@ public class UserDAO
 		try
 		{
 			DAO.update(USER_TABLE, sql, "userId=" + userId);
+			Database.disconnect();
 		} catch (SQLException e)
 		{
 			throw new DAException("User not found", e);
@@ -114,16 +109,12 @@ public class UserDAO
 	{
 		ResultSet r;
 		ApplicationUser user = null;
+
 		try
 		{
 			r = DAO.select(USER_TABLE, "*");
-		} catch (SQLException e)
-		{
-			throw new DAException(e.getMessage(), e);
-		}
-		try
-		{
 			user = createUser(r);
+			Database.disconnect();
 		} catch (SQLException e)
 		{
 			throw new DAException(e.getMessage(), e);
@@ -132,7 +123,6 @@ public class UserDAO
 		return user;
 	}
 
-	// TODO:Implement this
 	public static ApplicationUser getUserByEmail(String email)
 			throws DAException
 	{
@@ -145,7 +135,7 @@ public class UserDAO
 			r = DAO.select(USER_TABLE, "*", where);
 		} catch (SQLException e)
 		{
-			throw new DAException("User with email: " + email + "not found");
+			throw new DAException("User with email: " + email + " not found");
 		}
 		try
 		{
@@ -162,13 +152,13 @@ public class UserDAO
 	{
 		User user;
 
-		long userId, dateOfBirth;
+		long userId;
 
 		String userEmail, firstName, lastName, sex1;
 
 		char[] userPass;
 
-		Date registrationDate, lastLogin;
+		Date registrationDate, lastLogin, dateOfBirth;
 
 		Sex sex;
 
@@ -181,7 +171,7 @@ public class UserDAO
 			return null;
 
 		userId = r.getLong("userId");
-		dateOfBirth = r.getLong("dateOfBirth");
+		dateOfBirth = r.getDate("dateOfBirth");
 
 		userEmail = r.getString("userEmail");
 		firstName = r.getString("firstName");
