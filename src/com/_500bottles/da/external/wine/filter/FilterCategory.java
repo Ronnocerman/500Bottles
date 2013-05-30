@@ -8,7 +8,6 @@ public class FilterCategory extends Filter
 	{
 		_filter = "categories";
 		_filter = _filter + "(" + a.getAttribute() + ")";
-		System.out.println(_filter);
 	}
 
 	public void addAttribute(Attribute a)
@@ -18,6 +17,5 @@ public class FilterCategory extends Filter
 		else
 			_filter = _filter.substring(0, _filter.length() - 1) + "+"
 					+ a.getAttribute() + ")";
-		System.out.println(_filter);
 	}
 }

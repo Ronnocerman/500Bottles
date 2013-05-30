@@ -11,7 +11,7 @@ import com._500bottles.da.external.wine.otherParameters.Size;
 import com._500bottles.da.external.wine.otherParameters.State;
 import com._500bottles.da.external.wine.sort.Sort;
 
-public class WineDAOWine
+public class WineAPIURL
 {
 	private final static String DEFAULT_APIFORMAT = "json";
 	private final static String DEFAULT_RESOURCE = "catalog?";
@@ -35,11 +35,11 @@ public class WineDAOWine
 
 	private static String url = "http://services.wine.com/api/beta/service.svc/";
 
-	public WineDAOWine()
+	public WineAPIURL()
 	{
 	}
 
-	public WineDAOWine(String xmlOrJson, String categoryOrCatalog)
+	public WineAPIURL(String xmlOrJson, String categoryOrCatalog)
 			throws InvalidSetting
 	{
 		if (xmlOrJson.toLowerCase() != "xml"
@@ -58,7 +58,7 @@ public class WineDAOWine
 
 	}
 
-	public void addToUrl(Sort s)
+	public void addToURL(Sort s)
 	{
 		sort = s.getString();
 	}
@@ -90,7 +90,6 @@ public class WineDAOWine
 
 	public void addToURL(FilterCategory f)
 	{
-		System.out.println(f.getString());
 		filterCategory = f.getString();
 	}
 
@@ -106,53 +105,56 @@ public class WineDAOWine
 
 	public String getString()
 	{
+		System.out.println(url);
+		String temp = url;
 		if (apiformat == "")
-			url += DEFAULT_APIFORMAT;
+			temp += DEFAULT_APIFORMAT;
 		else
-			url = url + apiformat + "/";
+			temp = temp + apiformat + "/";
 
 		if (resource == "")
-			url += DEFAULT_RESOURCE;
+			temp += DEFAULT_RESOURCE;
 		else
-			url += resource;
+			temp += resource;
 
 		if (filterCategory == "" && filterRating == "" && filterPrice == "")
-			url += DEFAULT_FILTER;
+			temp += DEFAULT_FILTER;
 		else
 		{
 			url += "filter=";
 			if (filterCategory != "")
-				url += filterCategory;
+				temp += filterCategory;
 			if (filterRating != "")
 			{
 				if (filterCategory == "")
-					url += filterRating;
+					temp += filterRating;
 				else
-					url = url + "+" + filterRating;
+					temp = temp + "+" + filterRating;
 			}
 			if (filterPrice != "")
 			{
 				if (filterCategory == "" && filterRating == "")
-					url += filterPrice;
+					temp += filterPrice;
 				else
-					url = url + "+" + filterPrice;
+					temp = temp + "+" + filterPrice;
 			}
 		}
 		if (otherOffset != "")
-			url = url + "&" + otherOffset;
+			temp = temp + "&" + otherOffset;
 		if (otherInStock != "")
-			url = url + "&" + otherInStock;
+			temp = temp + "&" + otherInStock;
 		if (otherSize != "")
-			url = url + "&" + otherSize;
+			temp = temp + "&" + otherSize;
 		if (otherState != "")
-			url = url + "&" + otherState;
+			temp = temp + "&" + otherState;
 		if (otherSearch != "")
-			url = url + "&" + otherSearch;
+			temp = temp + "&" + otherSearch;
 		if (sort != "")
-			url += sort;
+			temp += sort;
 
-		url = url + "&apikey=" + API_KEY;
-		return url;
+		temp = temp + "&apikey=" + API_KEY;
+
+		return temp;
 
 	}
 }

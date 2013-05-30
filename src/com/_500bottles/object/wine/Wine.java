@@ -16,8 +16,8 @@ public class Wine
 	private Vineyard vineyard;
 	private double rating;
 	private String image;
-	private long priceMin;
-	private long priceMax;
+	private double priceMin;
+	private double priceMax;
 	private long winecomId;
 
 	public Wine()
@@ -166,22 +166,22 @@ public class Wine
 		return str;
 	}
 
-	public long getPriceMin()
+	public double getPriceMin()
 	{
 		return priceMin;
 	}
 
-	public void setPriceMin(long priceMin)
+	public void setPriceMin(double d)
 	{
-		this.priceMin = priceMin;
+		this.priceMin = d;
 	}
 
-	public long getPriceMax()
+	public double getPriceMax()
 	{
 		return priceMax;
 	}
 
-	public void setPriceMax(long priceMax)
+	public void setPriceMax(double priceMax)
 	{
 		this.priceMax = priceMax;
 	}
