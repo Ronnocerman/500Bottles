@@ -37,9 +37,6 @@ public class MainDispatch extends HttpServlet
 
 		testWine.setVarietal(v);
 
-		//HttpSession session = request.getSession();
-		//session.setAttribute("testWine", testWine);
-
 		request.setAttribute("testWine", testWine);
 
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
