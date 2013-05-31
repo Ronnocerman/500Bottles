@@ -1,12 +1,7 @@
 package com._500bottles.da.external.snooth.sort;
 
-import com._500bottles.da.external.snooth.exception.InvalidSort;
-
 /**
- * Created with IntelliJ IDEA.
- * User: administrator
- * Date: 5/22/13
- * Time: 11:09 AM
+ * Created with IntelliJ IDEA. User: administrator Date: 5/22/13 Time: 11:09 AM
  * To change this template use File | Settings | File Templates.
  */
 public abstract class Sort
@@ -20,8 +15,10 @@ public abstract class Sort
 
 	/**
 	 * Returns the API argument string for product.
-	 * @return	Color string.
+	 * 
+	 * @return Color string.
 	 */
+	@Override
 	public String toString()
 	{
 		return sort;

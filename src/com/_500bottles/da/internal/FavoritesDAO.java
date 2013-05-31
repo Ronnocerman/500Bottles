@@ -43,7 +43,7 @@ public class FavoritesDAO
 	{
 		try
 		{
-			DAO.delete(FAVORITES_TABLE, "WHERE wineId=" + wine.getId());
+			DAO.delete(FAVORITES_TABLE, "wineId=" + wine.getId());
 			Database.disconnect();
 		} catch (SQLException e)
 		{
@@ -56,7 +56,7 @@ public class FavoritesDAO
 		try
 		{
 			DAO.delete(FAVORITES_TABLE,
-					"WHERE favoritesId=" + favorite.getfavoritesId());
+					"favoritesId=" + favorite.getfavoritesId());
 			Database.disconnect();
 		} catch (SQLException e)
 		{
@@ -89,7 +89,7 @@ public class FavoritesDAO
 
 		try
 		{
-			r = DAO.select(FAVORITES_TABLE, "*");
+			r = DAO.select(FAVORITES_TABLE, "*", "favoritesId=" + favoritesId);
 			favorite = createFavorites(r);
 			Database.disconnect();
 		} catch (SQLException e)

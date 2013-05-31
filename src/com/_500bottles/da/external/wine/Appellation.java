@@ -14,7 +14,8 @@ public class Appellation extends Attribute
 		this.setCategory(appellation);
 	}
 
-	protected void initcategoryAttributeMap()
+	@Override
+	protected void initCategoryAttributeMap()
 	{
 		categoryAttributeMap = new HashMap<String, String>();
 

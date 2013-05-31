@@ -2,6 +2,7 @@ package com._500bottles.exception.da;
 
 import com._500bottles.exception.NSFWException;
 
+@SuppressWarnings("serial")
 public class ConnectionException extends NSFWException
 {
 

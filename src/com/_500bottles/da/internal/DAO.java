@@ -32,7 +32,7 @@ public abstract class DAO
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public static int insert(String table, String columns, String values)
+	protected static int insert(String table, String columns, String values)
 			throws SQLException
 	{
 		String sql = "INSERT INTO " + table + " ";
@@ -49,7 +49,7 @@ public abstract class DAO
 	 * 
 	 * @return Last auto-increment id.
 	 */
-	public static long getLastInsertId()
+	protected static long getLastInsertId()
 	{
 		return Database.getLastInsertId();
 	}
@@ -66,7 +66,7 @@ public abstract class DAO
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public static int delete(String table, String where) throws SQLException
+	protected static int delete(String table, String where) throws SQLException
 	{
 		String sql = "DELETE FROM " + table + " WHERE " + where + ";";
 
@@ -86,7 +86,7 @@ public abstract class DAO
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public static int update(String table, String set, String where)
+	protected static int update(String table, String set, String where)
 			throws SQLException
 	{
 		String sql = "UPDATE " + table + " SET " + set + " WHERE " + where
@@ -109,7 +109,7 @@ public abstract class DAO
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public static ResultSet select(String table, String select, String where)
+	protected static ResultSet select(String table, String select, String where)
 			throws SQLException
 	{
 		String sql = "SELECT " + select + " FROM " + table;
@@ -118,7 +118,7 @@ public abstract class DAO
 		return Database.readQuery(sql);
 	}
 
-	public static ResultSet select(String table, String select)
+	protected static ResultSet select(String table, String select)
 			throws SQLException
 	{
 		String sql = "SELECT " + select + " FROM " + table + ";";

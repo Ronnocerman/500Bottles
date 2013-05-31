@@ -38,11 +38,11 @@ public class WineDAO extends DAO
 		columns = "(`wineName`, `description`, `longitude`, `latitude`,";
 		columns += "`wineType`, `vintage`,";
 		columns += "`varietalId`,";
-		columns += "`vineyardId`, `rating`, `snoothId`)";
+		columns += "`vineyardId`, `rating`, `snoothId` , `priceMin`, `priceMax`, `winecomId` )";
 
 		// TODO: get user id from session manager or via user object.
 		// TODO: getGeoLocation and getAppellation
-		values = "('" + wine.getName() + "',";
+		values = "('" + escapeXml(wine.getName()) + "',";
 		values += "'" + escapeXml(wine.getDescription()) + "',";
 		values += "'" + wine.getGeoLocation().getLon() + "',";
 		values += "'" + wine.getGeoLocation().getLat() + "',";
@@ -51,12 +51,17 @@ public class WineDAO extends DAO
 		// Get year...
 		values += "'" + wine.getYear() + "',";
 		// Get varietal
-		values += "'" + wine.getVarietal().getGrapeType() + "',";
+		values += "'" + wine.getVarietal().getId() + "',";
 		// Get vineyard
-		values += "'" + wine.getVineyard().getName() + "',";
+		values += "'" + wine.getVineyard().getId() + "',";
 		// Get rating...
 		values += "'" + wine.getRating() + "',";
-		values += "'" + wine.getSnoothId() + "')";
+		values += "'" + wine.getSnoothId() + "',";
+
+		values += "'" + wine.getPriceMin() + "',";
+		values += "'" + wine.getPriceMax() + "',";
+
+		values += "'" + wine.getWinecomId() + "')";
 
 		try
 		{
@@ -77,7 +82,7 @@ public class WineDAO extends DAO
 	{
 		try
 		{
-			delete(WINE_TABLE, "WHERE wineId=" + wine.getId());
+			delete(WINE_TABLE, "wineId=" + wine.getId());
 			Database.disconnect();
 		} catch (SQLException e)
 		{
@@ -94,18 +99,19 @@ public class WineDAO extends DAO
 		// sql += "entryID=" + entry.getEntryId();
 		sql += "vineyardId=" + wine.getVineyard().getId();
 		sql += ",varietalId=" + wine.getVarietal().getId();
-		sql += ",appellation=" + wine.getAppellation().getLocation();
-		sql += ",wineName=" + wine.getName();
-		sql += ",wineType=" + wine.getType();
+		sql += ",appellation='"
+				+ escapeXml(wine.getAppellation().getLocation()) + "'";
+		sql += ",wineName='" + escapeXml(wine.getName()) + "'";
+		sql += ",wineType='" + escapeXml(wine.getType().getWineType()) + "'";
 		sql += ",vintage=" + wine.getYear();
-		sql += ",description=" + wine.getDescription();
+		sql += ",description='" + escapeXml(wine.getDescription()) + "'";
 		sql += ",priceMin=" + wine.getPriceMin();
 		sql += ",priceMax=" + wine.getPriceMin();
 		sql += ",rating=" + wine.getRating();
 		sql += ",longitude=" + wine.getGeoLocation().getLon();
 		sql += ",latitude=" + wine.getGeoLocation().getLat();
 		sql += ",winecomId=" + wine.getWinecomId();
-		sql += ",snoothId=" + wine.getSnoothId();
+		sql += ",snoothId=' " + escapeXml(wine.getSnoothId()) + "'";
 
 		try
 		{
@@ -133,12 +139,14 @@ public class WineDAO extends DAO
 
 	public static Wine getWine(long wineId) throws DAException
 	{
+		System.out.println("getWine wineId: " + wineId);
 		ResultSet r;
 		Wine wine;
 
 		try
 		{
-			r = select(WINE_TABLE, "*");
+			r = select(WINE_TABLE, "*", "wineId=" + wineId);
+			System.out.println("after the select in getWine");
 			wine = createWine(r);
 			Database.disconnect();
 
@@ -206,8 +214,8 @@ public class WineDAO extends DAO
 	{
 		Wine wine;
 
-		long wineId, year, varId, vineId, priceMin, priceMax, winecomId;
-		double rating;
+		long wineId, year, varId, vineId, winecomId;
+		double rating, priceMin, priceMax;
 		float lon, lat;
 
 		String name, description, typeString, appellationString, snoothId;
@@ -219,48 +227,47 @@ public class WineDAO extends DAO
 
 		if (!r.next())
 			return null;
-		/*
-		 * sql += "name=" + wine.getName(); sql += ",description=" +
-		 * wine.getDescription(); sql += ",geoLocation=" +
-		 * wine.getGeoLocation(); sql += ",type=" + wine.getType(); sql +=
-		 * ",year=" + wine.getYear(); sql += ",appellation=" +
-		 * wine.getAppellation(); sql += ",varietal=" +
-		 * wine.getVarietal().getId(); sql += ",vineyard=" +
-		 * wine.getVineyard().getId(); sql += ",rating=" + wine.getRating();
-		 */
 
-		name = r.getString("wineName");
+		name = unescapeXml(r.getString("wineName"));
 		wineId = r.getLong("wineId");
-		snoothId = r.getString("snoothId");
+		// System.out.println("wineId: " + wineId);
+
+		snoothId = unescapeXml(r.getString("snoothId"));
 		description = unescapeXml(r.getString("description"));
-		// year = r.getLong("vintage");
-		// typeString = r.getString("type");
+		year = r.getLong("vintage");
 
-		// type = new WineType();
-		// type.setWineType(typeString);
+		typeString = unescapeXml(r.getString("wineType"));
 
-		// appellationString = r.getString("appellation");
-		// appellation = new Appellation();
-		// appellation.setLocation(appellationString);
+		type = new WineType();
+		type.setWineType(typeString);
 
-		// lon = r.getFloat("longitude");
-		// lat = r.getFloat("latitude");
+		appellationString = unescapeXml(r.getString("appellation"));
+		appellation = new Appellation();
+		appellation.setLocation(appellationString);
 
-		// geoLocation = new GeoLocation();
-		// geoLocation.setLat(lat);
-		// geoLocation.setLon(lon);
+		lon = r.getFloat("longitude");
+		lat = r.getFloat("latitude");
 
-		// varId = r.getLong("varietal");
-		// varietal = new Varietal();
-		// varietal.setId(varId);
+		geoLocation = new GeoLocation();
+		geoLocation.setLat(lat);
+		geoLocation.setLon(lon);
 
-		// vineId = r.getLong("vineyard");
-		// vineyard = new Vineyard();
-		// vineyard.setId(vineId);
+		varId = r.getLong("varietalId");
+		varietal = new Varietal();
+		varietal.setId(varId);
 
-		// rating = r.getInt("rating");
+		vineId = r.getLong("vineyardId");
+		vineyard = new Vineyard();
+		vineyard.setId(vineId);
 
-		// description = r.getString("description");
+		rating = r.getDouble("rating");
+		priceMin = r.getDouble("priceMin");
+		priceMax = r.getDouble("priceMax");
+
+		winecomId = r.getLong("winecomId");
+
+		description = unescapeXml(r.getString("description"));
+		System.out.println("after getting everything");
 
 		wine = new Wine();
 
@@ -270,13 +277,16 @@ public class WineDAO extends DAO
 
 		wine.setSnoothId(snoothId);
 		wine.setDescription(description);
-		// wine.setYear(year);
-		// wine.setType(type);
-		// wine.setRating(rating);
-		// wine.setGeoLocation(geoLocation);
-		// wine.setAppellation(appellation);
-		// wine.setVarietal(varietal);
-		// wine.setVineyard(vineyard);
+		wine.setYear(year);
+		wine.setType(type);
+		wine.setRating(rating);
+		wine.setGeoLocation(geoLocation);
+		wine.setAppellation(appellation);
+		wine.setVarietal(varietal);
+		wine.setVineyard(vineyard);
+		wine.setPriceMin(priceMin);
+		wine.setPriceMax(priceMax);
+		wine.setWinecomId(winecomId);
 
 		return wine;
 	}

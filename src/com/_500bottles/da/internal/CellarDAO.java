@@ -21,7 +21,8 @@ public class CellarDAO extends DAO
 	private final static String CELLAR_TABLE = Config
 			.getProperty("cellarTableName");
 
-	public static CellarItem addCellarItem(CellarItem item) throws DAException
+	public static CellarItem addCellarItem(long cellarId, CellarItem item)
+			throws DAException
 	{
 
 		String columns, values; // no need for a String table since i have those
@@ -34,7 +35,7 @@ public class CellarDAO extends DAO
 		columns += "`quantity`,";
 		columns += "`notes`)";
 
-		values = "('" + item.getCellarId() + "',";
+		values = "('" + cellarId + "',";
 		values += "'" + item.getWineId() + "',";
 		values += "'" + item.getQuantity() + "',";
 		values += "'" + escapeXml(item.getNotes()) + "')";
@@ -55,7 +56,7 @@ public class CellarDAO extends DAO
 		return item;
 	}
 
-	public static Cellar addCellar(Cellar cellar) throws Exception
+	public static Cellar addCellar(Cellar cellar) throws DAException
 	{
 		String columns, values; // cellarItemsJSON not used
 								// anymore
@@ -129,7 +130,8 @@ public class CellarDAO extends DAO
 		}
 	}
 
-	public static CellarItem editCellarItem(CellarItem item) throws DAException
+	public static CellarItem editCellarItem(long cellarId, CellarItem item)
+			throws DAException
 	{
 		if (item == null)
 			throw new NullPointerException("CellarItem is null.");
@@ -138,7 +140,7 @@ public class CellarDAO extends DAO
 			throw new DAException("CellarItem ID not set");
 		String sql = "";
 
-		sql += "cellarID=" + item.getCellarId();
+		sql += "cellarID=" + cellarId;
 		sql += ",wineID=" + item.getWineId();
 		sql += ",quantity=" + item.getQuantity();
 		sql += ",notes='" + escapeXml(item.getNotes()) + "'";
@@ -244,11 +246,11 @@ public class CellarDAO extends DAO
 		{
 			throw new ConnectionException("SQL select exception");
 		}
-		return cellar;
 
+		return cellar;
 	}
 
-	public static CellarItem createCellarItem(ResultSet r) throws SQLException
+	private static CellarItem createCellarItem(ResultSet r) throws SQLException
 	{
 		CellarItem cellarItem;
 		Wine w;
@@ -278,7 +280,7 @@ public class CellarDAO extends DAO
 		return cellarItem;
 	}
 
-	public static Cellar createCellar(ResultSet r) throws SQLException
+	private static Cellar createCellar(ResultSet r) throws SQLException
 	{
 		Cellar c;
 

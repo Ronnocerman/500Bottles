@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Vector;
 
@@ -210,6 +211,7 @@ public class WinebookDAO extends DAO
 	 * @return Entry object.
 	 * @throws SQLException
 	 */
+	@SuppressWarnings("unchecked")
 	private static Entry createEntry(ResultSet res) throws SQLException
 	{
 		Entry entry;
@@ -239,8 +241,8 @@ public class WinebookDAO extends DAO
 		photosIds = (JSONArray) JSONValue.parse(photosJSON);
 
 		// TODO: Create the wine and photo objects to add to the entry.
-		wines = new Vector<Wine>(wineIds);
-		photos = new Vector<Photo>(photosIds);
+		wines = new Vector<Wine>((Collection<? extends Wine>) wineIds);
+		photos = new Vector<Photo>((Collection<? extends Photo>) photosIds);
 
 		dateCreated = res.getDate("dateCreated");
 		dateLastEdited = res.getDate("dateLastEdited");

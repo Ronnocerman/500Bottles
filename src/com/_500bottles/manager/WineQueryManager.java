@@ -1,6 +1,14 @@
 package com._500bottles.manager;
 
-import com._500bottles.da.external.snooth.*;
+import java.util.Iterator;
+import java.util.Vector;
+
+import com._500bottles.da.external.snooth.SnoothDAO;
+import com._500bottles.da.external.snooth.SnoothWine;
+import com._500bottles.da.external.snooth.WineDetails;
+import com._500bottles.da.external.snooth.WineDetailsResponse;
+import com._500bottles.da.external.snooth.WineSearch;
+import com._500bottles.da.external.snooth.WineSearchResponse;
 import com._500bottles.da.external.snooth.exception.InvalidWineDetails;
 import com._500bottles.da.external.snooth.exception.InvalidWineSearch;
 import com._500bottles.da.internal.WineDAO;
@@ -8,24 +16,23 @@ import com._500bottles.object.wine.Wine;
 import com._500bottles.object.wine.WineQuery;
 import com._500bottles.object.wine.WineQueryResult;
 
-import java.util.Iterator;
-import java.util.Vector;
-
 /**
  * WineQueryManager is the glue between the various external API's an the local
  * database. It manages searching only the local database and/or the external
  * API's. When a wine is discovered using the external API's it is added to the
- * local database so that that particular wine doesn't need to be retrieved
- * from an API repeatedly.
+ * local database so that that particular wine doesn't need to be retrieved from
+ * an API repeatedly.
  */
-class WineQueryManager {
+class WineQueryManager
+{
 
 	/**
 	 * Searches the local database first, then based on some criteria (TBD)
 	 * searches the external API's if required. The wines retrieved from the
-	 * external API's are then converted to local Wine objects and added
-	 * to the database. These new local wine objects are then returned as
-	 * part of the query.
+	 * external API's are then converted to local Wine objects and added to the
+	 * database. These new local wine objects are then returned as part of the
+	 * query.
+	 * 
 	 * @param query
 	 * @return
 	 */
@@ -46,8 +53,9 @@ class WineQueryManager {
 	}
 
 	/**
-	 * Searches the Snooth API using SnoothDAO and the specified query.
-	 * Returns a set of resulting wines.
+	 * Searches the Snooth API using SnoothDAO and the specified query. Returns
+	 * a set of resulting wines.
+	 * 
 	 * @param query
 	 * @return
 	 */
@@ -55,14 +63,16 @@ class WineQueryManager {
 	{
 		WineSearchResponse res = null;
 
-		try {
+		try
+		{
 			// Convert the WineQuery to a Snooth WineSearch object.
 			WineSearch s = new WineSearch(query);
 
 			// Do the Snooth query and get the response object.
 			res = SnoothDAO.doSearch(s);
 
-		} catch (InvalidWineSearch e) {
+		} catch (InvalidWineSearch e)
+		{
 			// TODO
 		}
 
@@ -70,28 +80,28 @@ class WineQueryManager {
 		return res;
 	}
 
-	/**
-	 * Searches the Wine.com API using WineDAO and the specified query.
+	/*
+	 * /** Searches the Wine.com API using WineDAO and the specified query.
 	 * Returns a set of resulting wines.
+	 * 
 	 * @param query
+	 * 
 	 * @return
+	 * 
+	 * private static Vector<Wine> searchWineCom(WineQuery query) { Vector<Wine>
+	 * v = null;
+	 * 
+	 * return v; }
 	 */
-	private static Vector<Wine> searchWineCom(WineQuery query)
-	{
-		Vector<Wine> v = null;
-
-		return v;
-	}
-
 
 	/**
 	 * Merges the wines resulting from a Snooth search into the database.
-	 * @param response	Response from Snooth wine search.
-	 * @return		Returns the wines added to the database as a
-	 * 			result of the merge.
+	 * 
+	 * @param response
+	 *            Response from Snooth wine search.
+	 * @return Returns the wines added to the database as a result of the merge.
 	 */
-	private static Vector<Wine> mergeExternalResults
-		(WineSearchResponse response)
+	private static Vector<Wine> mergeExternalResults(WineSearchResponse response)
 	{
 		Vector<Wine> wines = new Vector<Wine>();
 		Iterator<SnoothWine> it = response.getWinesIterator();
@@ -99,14 +109,16 @@ class WineQueryManager {
 		SnoothWine snoothWine;
 
 		// Iterate through each SnoothWine
-		while (it.hasNext()) {
+		while (it.hasNext())
+		{
 
 			snoothWine = it.next();
 
 			// Find out if the Snooth wine exists in the database.
 			// If not, then get the details and add it to the database.
 			Wine w = WineManager.getWineBySnoothId(snoothWine.getCode());
-			if (w == null) {
+			if (w == null)
+			{
 				w = addSnoothWineToDatabase(snoothWine);
 			}
 
@@ -117,30 +129,36 @@ class WineQueryManager {
 	}
 
 	/**
-	 * Adds a snooth wine to the database. It first retrieves all the
-	 * wine details from Snooth, then adds the specified wine to the DB.
-	 * It returns the Wine object added to the database.
-	 * @param snoothWine	The SnoothWine to add to the database.
-	 * @return		The corresponding Wine object.
+	 * Adds a snooth wine to the database. It first retrieves all the wine
+	 * details from Snooth, then adds the specified wine to the DB. It returns
+	 * the Wine object added to the database.
+	 * 
+	 * @param snoothWine
+	 *            The SnoothWine to add to the database.
+	 * @return The corresponding Wine object.
 	 */
 	private static Wine addSnoothWineToDatabase(SnoothWine snoothWine)
 	{
 		Wine wine = null;
 
-		try {
+		try
+		{
 			WineDetails details = new WineDetails(snoothWine.getCode());
 			WineDetailsResponse r = SnoothDAO.getWineDetails(details);
 
 			Iterator<SnoothWine> it = r.getWinesIterator();
 
-			while (it.hasNext()) {
+			while (it.hasNext())
+			{
 				wine = it.next().toWineObject();
 				WineDAO.addWine(wine);
 			}
 
-		} catch (InvalidWineDetails e) {
+		} catch (InvalidWineDetails e)
+		{
 			// TODO;
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			// TODO:
 		}
 

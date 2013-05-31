@@ -1,10 +1,6 @@
 package com._500bottles.da.external.snooth;
 
 import com._500bottles.da.external.ExternalDAO;
-import com._500bottles.object.wine.Wine;
-
-import java.util.Iterator;
-import java.util.Vector;
 
 public class SnoothDAO extends ExternalDAO
 {

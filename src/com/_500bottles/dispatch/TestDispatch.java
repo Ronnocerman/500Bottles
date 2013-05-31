@@ -1,8 +1,5 @@
 package com._500bottles.dispatch;
 
-import com._500bottles.object.wine.Varietal;
-import com._500bottles.object.wine.Wine;
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -27,15 +24,16 @@ public class TestDispatch extends HttpServlet
 
 	@Override
 	protected void doGet(HttpServletRequest request,
-			     HttpServletResponse response) throws ServletException, IOException
+			HttpServletResponse response) throws ServletException, IOException
 	{
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/test.jsp");
+		RequestDispatcher dispatcher = getServletContext()
+				.getRequestDispatcher("/test.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request,
-			      HttpServletResponse response) throws ServletException, IOException
+			HttpServletResponse response) throws ServletException, IOException
 	{
 		// TODO Auto-generated method stub
 	}

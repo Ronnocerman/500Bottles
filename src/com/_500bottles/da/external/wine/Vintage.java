@@ -16,7 +16,7 @@ public class Vintage extends Attribute
 
 	// TODO
 	@Override
-	protected void initcategoryAttributeMap()
+	protected void initCategoryAttributeMap()
 	{
 
 		categoryAttributeMap = new HashMap<String, String>();

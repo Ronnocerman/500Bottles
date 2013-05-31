@@ -4,7 +4,6 @@ import com._500bottles.object.wine.Wine;
 
 public class CellarItem
 {
-	private long cellarId;
 	private long cellarItemId;
 	private int quantity;
 	private String notes;
@@ -61,16 +60,6 @@ public class CellarItem
 		CellarItem c = (CellarItem) o;
 		return new String(Long.toString(this.getId())).equals(new String(Long
 				.toString(c.getId())));
-	}
-
-	public long getCellarId()
-	{
-		return cellarId;
-	}
-
-	public void setCellarId(long cellarId)
-	{
-		this.cellarId = cellarId;
 	}
 
 	public void incrementQuantity()

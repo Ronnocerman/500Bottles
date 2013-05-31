@@ -3,13 +3,11 @@ package com._500bottles.da.external.snooth;
 import com._500bottles.object.wine.Wine;
 
 /**
- * Created with IntelliJ IDEA.
- * User: administrator
- * Date: 5/24/13
- * Time: 5:35 PM
+ * Created with IntelliJ IDEA. User: administrator Date: 5/24/13 Time: 5:35 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SnoothWine {
+public class SnoothWine
+{
 	private String name;
 	private String wm_notes;
 	private String winery_tasting_notes;
@@ -34,6 +32,7 @@ public class SnoothWine {
 	private int num_merchants;
 	private int num_reviews;
 
+	@Override
 	public String toString()
 	{
 		String s = "";
@@ -273,13 +272,16 @@ public class SnoothWine {
 
 	public void setSnoothrank(Object snoothrank)
 	{
-		if (snoothrank instanceof String) {
+		if (snoothrank instanceof String)
+		{
 			this.snoothrank = -1;
 
-		} else if (snoothrank instanceof Long) {
+		} else if (snoothrank instanceof Long)
+		{
 			this.snoothrank = (new Long((Long) snoothrank)).doubleValue();
 
-		} else {
+		} else
+		{
 			this.snoothrank = (Double) snoothrank;
 		}
 	}
@@ -324,13 +326,13 @@ public class SnoothWine {
 		w.setName(this.getName());
 		w.setDescription(this.getWineMakerNotes());
 		w.setSnoothId(this.getCode());
-		//w.setGeoLocation();
-		//w.setType();
-		//w.setYear();
-		//w.setAppellation();
-		//w.setVarietal();
-		//w.setVineyard();
-		//w.setRating();
+		// w.setGeoLocation();
+		// w.setType();
+		// w.setYear();
+		// w.setAppellation();
+		// w.setVarietal();
+		// w.setVineyard();
+		// w.setRating();
 
 		return w;
 	}
