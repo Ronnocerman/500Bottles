@@ -34,16 +34,4 @@ public class WineAction
 	{
 		WineManager.setRating(rating);
 	}
-
-	public void addTastingNotes()
-	{
-	}
-
-	public void editTastingNotes()
-	{
-	}
-
-	public void clearTastingNotes()
-	{
-	}
 }
