@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class NSFWServlet
  */
+@SuppressWarnings("serial")
 public class NSFWServlet extends HttpServlet
 {
-	private static final long serialVersionUID = 1L;
-
 	public NSFWServlet()
 	{
 		super();

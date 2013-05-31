@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ page import="com._500bottles.manager.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+    <%@ page import="com._500bottles.action.UserAction" %>
 <%
-String email;
-email = request.getParameter("email");
+String email = request.getParameter("email");
+char[] password = request.getParameter("password").toCharArray();
 
+if(UserAction.login("Hello","Hello".toCharArray())) {
 
-
-if(SessionManager.login(email,)) {
-
-		out.println(/*getUsername(email)*/ "Welcome back, " + email );
+		out.println("Welcome back, " + email );
 } else {
 	out.println("userfail");
 }
