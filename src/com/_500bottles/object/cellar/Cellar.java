@@ -64,6 +64,19 @@ public class Cellar
 		return null;
 	}
 
+	public CellarItem getByWineId(long id)
+	{
+		for (int i = 0; i < collection.size(); i++)
+		{
+			if (collection.elementAt(i).getWineId() == id)
+			{
+				return collection.get(i);
+			}
+		}
+		return null;
+
+	}
+
 	public long getCellarId()
 	{
 		return cellarId;

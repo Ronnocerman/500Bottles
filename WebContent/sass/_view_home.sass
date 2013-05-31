@@ -17,10 +17,25 @@
 
   .wine_grid_container
     padding: 1em
-    box-shadow: 0 0 3px rgba(black, 0.3) inset
+    box-shadow: 0 0 8px rgba(black, 0.2) inset
     overflow: hidden
     background-image: url("../img/squairy_light.png")
     position: relative
+
+    &:before, &:after
+      content: ""
+      width: 1px
+      height: 98%
+      position: absolute
+      top: 1%
+      box-shadow: 0 0 8px rgba(black, 0.6)
+      z-index: 1000
+
+    &:after
+      right: -1px
+
+    &:before
+      left: -1px
 
     h2
       border-bottom: 1px solid rgba(black, 0.2)

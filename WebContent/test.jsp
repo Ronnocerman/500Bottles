@@ -5,9 +5,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>BLAHBLAHBLAH</title>
+<title>Tests</title>
 </head>
 <body>
+
+    <h1>Welcome to the AJAX Tester!</h1>
+
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <button>Test AJAX</button>
+            </td>
+            <td>
+                <textarea style="width: 50%; height: 300px;"></textarea>
+            </td>
+        </tr>
+    </table>
 
 </body>
 </html>

@@ -385,10 +385,22 @@ footer {
   margin: 0.5em auto 0; }
 #home .wine_grid_container {
   padding: 1em;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) inset;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2) inset;
   overflow: hidden;
   background-image: url("../img/squairy_light.png");
   position: relative; }
+  #home .wine_grid_container:before, #home .wine_grid_container:after {
+    content: "";
+    width: 1px;
+    height: 98%;
+    position: absolute;
+    top: 1%;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+    z-index: 1000; }
+  #home .wine_grid_container:after {
+    right: -1px; }
+  #home .wine_grid_container:before {
+    left: -1px; }
   #home .wine_grid_container h2 {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     margin-top: -0.1em;
