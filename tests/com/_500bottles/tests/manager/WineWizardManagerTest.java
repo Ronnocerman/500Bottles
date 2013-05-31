@@ -1,6 +1,6 @@
 package com._500bottles.tests.manager;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,18 +12,18 @@ public class WineWizardManagerTest
 {
 	int wineAmount;
 	WineWizardManager wizardManager;
-	ArrayList<String> animals;
-	ArrayList<Integer> animalsNum;
-	ArrayList<Integer> animalsCount;
+	Vector<String> animals;
+	Vector<Integer> animalsNum;
+	Vector<Integer> animalsCount;
 
 	@Before
 	public void setUp()
 	{
 		wineAmount = 22;
-		wizardManager = new WineWizardManager(wineAmount);
-		animals = new ArrayList<String>();
-		animalsNum = new ArrayList<Integer>();
-		animalsCount = new ArrayList<Integer>();
+		wizardManager = new WineWizardManager(wineAmount, 55);
+		animals = new Vector<String>();
+		animalsNum = new Vector<Integer>();
+		animalsCount = new Vector<Integer>();
 
 		animals.add("Dog");
 		animals.add("Sheep");
