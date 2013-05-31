@@ -2,14 +2,17 @@ package com._500bottles.object.winebook;
 
 import java.util.Date;
 import java.util.Vector;
-import com._500bottles.object.wine.Wine;
+
 import org.json.simple.JSONArray;
 
+import com._500bottles.object.wine.Wine;
+
 /**
- * Winebook Entry object representing an individual entry in the user's
- * Winebook journal.
+ * Winebook Entry object representing an individual entry in the user's Winebook
+ * journal.
  */
-public class Entry {
+public class Entry
+{
 	private long entryId;
 	private long userId;
 	private String title;
@@ -34,13 +37,18 @@ public class Entry {
 
 	/**
 	 * Entry constructor including only entry ID and content.
-	 * @param entryId		Entry ID.
-	 * @param content		Textual content for this entry.
-	 * @param dateCreated	Date entry was created.
-	 * @param dateLastEdited		Date of last entry edit.
+	 * 
+	 * @param entryId
+	 *            Entry ID.
+	 * @param content
+	 *            Textual content for this entry.
+	 * @param dateCreated
+	 *            Date entry was created.
+	 * @param dateLastEdited
+	 *            Date of last entry edit.
 	 */
-	public Entry(long entryId, String title, String content,
-				 Date dateCreated, Date dateLastEdited)
+	public Entry(long entryId, String title, String content, Date dateCreated,
+			Date dateLastEdited)
 	{
 		this.entryId = entryId;
 		this.title = title;
@@ -53,15 +61,23 @@ public class Entry {
 
 	/**
 	 * Entry constructor including entry ID, content, photos, and wines.
-	 * @param entryId		ID of entry.
-	 * @param content		Textual content for this entry.
-	 * @param photos		Vector of Photo objects.
-	 * @param wines			Vector of Wine objects.
-	 * @param dateCreated	Date entry created.
-	 * @param dateLastEdited		Date of last entry edit.
+	 * 
+	 * @param entryId
+	 *            ID of entry.
+	 * @param content
+	 *            Textual content for this entry.
+	 * @param photos
+	 *            Vector of Photo objects.
+	 * @param wines
+	 *            Vector of Wine objects.
+	 * @param dateCreated
+	 *            Date entry created.
+	 * @param dateLastEdited
+	 *            Date of last entry edit.
 	 */
-	public Entry(long entryId, String title, String content, Vector<Photo> photos,
-				 Vector<Wine> wines, Date dateCreated, Date dateLastEdited)
+	public Entry(long entryId, String title, String content,
+			Vector<Photo> photos, Vector<Wine> wines, Date dateCreated,
+			Date dateLastEdited)
 	{
 		this.entryId = entryId;
 		this.title = title;
@@ -74,7 +90,8 @@ public class Entry {
 
 	/**
 	 * Returns this entries ID.
-	 * @return	ID of this entry.
+	 * 
+	 * @return ID of this entry.
 	 */
 	public long getEntryId()
 	{
@@ -93,15 +110,18 @@ public class Entry {
 
 	/**
 	 * Returns the title of this entry.
-	 * @return	The title of this entry.
+	 * 
+	 * @return The title of this entry.
 	 */
-	public String getTitle() {
+	public String getTitle()
+	{
 		return title;
 	}
 
 	/**
 	 * Returns the date this entry was created.
-	 * @return	Date object for the date this entry was created.
+	 * 
+	 * @return Date object for the date this entry was created.
 	 */
 	public Date getDateCreated()
 	{
@@ -110,7 +130,8 @@ public class Entry {
 
 	/**
 	 * Returns the date this entry was last edited.
-	 * @return	Date object for the date this entry was last edited.
+	 * 
+	 * @return Date object for the date this entry was last edited.
 	 */
 	public Date getDateLastEdited()
 	{
@@ -119,7 +140,8 @@ public class Entry {
 
 	/**
 	 * Returns this entry's textual content.
-	 * @return	This entries textual content.
+	 * 
+	 * @return This entries textual content.
 	 */
 	public String getContent()
 	{
@@ -128,7 +150,8 @@ public class Entry {
 
 	/**
 	 * Returns array of this entry's Photo objects.
-	 * @return	Array of Photo objects.
+	 * 
+	 * @return Array of Photo objects.
 	 */
 	public Photo[] getArrayOfPhotos()
 	{
@@ -136,11 +159,13 @@ public class Entry {
 	}
 
 	/**
-	 * Returns this entry's collection of Photo objects as a
-	 * JSONArray object which contains only the IDs of the associated
-	 * Photo objects. For use in database storage.
-	 * @return	JSONArray object of this entry's photos.
+	 * Returns this entry's collection of Photo objects as a JSONArray object
+	 * which contains only the IDs of the associated Photo objects. For use in
+	 * database storage.
+	 * 
+	 * @return JSONArray object of this entry's photos.
 	 */
+	@SuppressWarnings("unchecked")
 	public JSONArray getPhotoIdsAsJSONArray()
 	{
 		JSONArray jsonArray = new JSONArray();
@@ -153,10 +178,12 @@ public class Entry {
 
 	/**
 	 * Returns this entry's collection of Wine objects as a JSONArray object
-	 * which contains only the IDs of the associated Wine objects. For use
-	 * in database storage.
-	 * @return	JSONArray object of this entry's photos.
+	 * which contains only the IDs of the associated Wine objects. For use in
+	 * database storage.
+	 * 
+	 * @return JSONArray object of this entry's photos.
 	 */
+	@SuppressWarnings("unchecked")
 	public JSONArray getWineIdsAsJSONArray()
 	{
 		JSONArray jsonArray = new JSONArray();
@@ -169,7 +196,9 @@ public class Entry {
 
 	/**
 	 * Sets the ID of this entry.
-	 * @param entryId	The ID of this entry.
+	 * 
+	 * @param entryId
+	 *            The ID of this entry.
 	 */
 	public void setEntryId(long entryId)
 	{
@@ -178,7 +207,9 @@ public class Entry {
 
 	/**
 	 * Sets the title of this entry.
-	 * @param title	The entry title.
+	 * 
+	 * @param title
+	 *            The entry title.
 	 */
 	public void setTitle(String title)
 	{
@@ -187,7 +218,9 @@ public class Entry {
 
 	/**
 	 * Sets the textual content of this entry.
-	 * @param content	Textual content to add to this entry.
+	 * 
+	 * @param content
+	 *            Textual content to add to this entry.
 	 */
 	public void setContent(String content)
 	{
@@ -196,23 +229,31 @@ public class Entry {
 
 	/**
 	 * Sets the creation date of this entry.
-	 * @param dateCreated	Date of entry creation.
+	 * 
+	 * @param dateCreated
+	 *            Date of entry creation.
 	 */
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(Date dateCreated)
+	{
 		this.dateCreated = dateCreated;
 	}
 
 	/**
 	 * Sets the last edit date of this entry.
-	 * @param dateLastEdited	Date of entry last edit.
+	 * 
+	 * @param dateLastEdited
+	 *            Date of entry last edit.
 	 */
-	public void setDateLastEdited(Date dateLastEdited) {
+	public void setDateLastEdited(Date dateLastEdited)
+	{
 		this.dateLastEdited = dateLastEdited;
 	}
 
 	/**
 	 * Adds the specified photo to this entry if it does not already exist.
-	 * @param photo	The photo to add to this entry.
+	 * 
+	 * @param photo
+	 *            The photo to add to this entry.
 	 */
 	public void addPhoto(Photo photo)
 	{
@@ -223,7 +264,9 @@ public class Entry {
 	/**
 	 * Adds photos to this entry from a JSONArray object. All existing photos
 	 * associated with this entry object will be removed (if present).
-	 * @param photos	JSONArray object of Photo objects.
+	 * 
+	 * @param photos
+	 *            JSONArray object of Photo objects.
 	 */
 	public void addPhotos(JSONArray photos)
 	{
@@ -232,8 +275,10 @@ public class Entry {
 	/**
 	 * Removes the specified photo from this entry. Returns true if the entry
 	 * contained the specified photo, otherwise false.
-	 * @param photo	Photo to remove from this entry.
-	 * @return		True if the photo was removed.
+	 * 
+	 * @param photo
+	 *            Photo to remove from this entry.
+	 * @return True if the photo was removed.
 	 */
 	public boolean removePhoto(Photo photo)
 	{
@@ -242,7 +287,9 @@ public class Entry {
 
 	/**
 	 * Adds the specified wine to this entry if it does not already exist.
-	 * @param wine	Wine to add to this entry.
+	 * 
+	 * @param wine
+	 *            Wine to add to this entry.
 	 */
 	public void addWine(Wine wine)
 	{
@@ -253,8 +300,10 @@ public class Entry {
 	/**
 	 * Removes the specified wine from this entry's wines. Returns true if the
 	 * entry contained the specified wine, or false otherwise.
-	 * @param wine	Wine object representing wine to be removed.
-	 * @return		True if the wine was removed.
+	 * 
+	 * @param wine
+	 *            Wine object representing wine to be removed.
+	 * @return True if the wine was removed.
 	 */
 	public boolean removeWine(Wine wine)
 	{
