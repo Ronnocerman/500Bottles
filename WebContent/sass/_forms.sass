@@ -1,4 +1,4 @@
-form input, .button
+form input, .button, select
   border-radius: 6px
   text-decoration: none
   display: block
@@ -33,25 +33,32 @@ form input[type="button"], .button
 form
   padding: 2em
 
+  select
+    background-color: white !important
+    -webkit-appearance: none
+    margin-top: 0
 
-  input
+
+  input, select
     font-family: Signika
     font-size: 1.7em
     @include transition(all, 0.4s)
     border:  none
     padding:  3.4% 4% 2% 4%
 
-  input[type="text"], input[type="password"]
-    border: none
-    width:  84%
-    margin-top: -2px
+  input[type="text"], input[type="password"], select
     border:  1px solid rgba(black, 0.1)
-    position: relative
     color: #AAA
     &:hover, &:focus
       color: #333
     &:focus
       outline: 0
+
+  input[type="text"], input[type="password"]
+    width:  92%
+    margin-top: -2px
+    position: relative
+
 
   .person_icon, .password_icon
     position: relative
@@ -61,7 +68,7 @@ form
     display: block
     position: absolute
     left:  0.8em
-    top:  1.1em
+    top:  1.17em
     z-index: 100
     opacity: 0.2
 

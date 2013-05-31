@@ -1,5 +1,11 @@
+html, body
+  position: relative
+  min-height: 100%
+  min-width: 100%
+
 body
   background-image: url('../img/light_wool.png')
+  @include background_image("bg2.jpg", auto, 100%, left, bottom)
   font-family: Roboto
 
 .view

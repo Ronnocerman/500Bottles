@@ -65,8 +65,17 @@
 .center {
   text-align: center; }
 
+html, body {
+  position: relative;
+  min-height: 100%;
+  min-width: 100%; }
+
 body {
   background-image: url("../img/light_wool.png");
+  background: url("../img/bg2.jpg") no-repeat left bottom;
+  background-size: auto 100%;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg2.jpg',sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg2.jpg',sizingMethod='scale')";
   font-family: Roboto; }
 
 .view {
@@ -195,7 +204,7 @@ a.box_arrow {
 .ie .clearfix {
   zoom: 1; }
 
-form input, .button {
+form input, .button, select {
   border-radius: 6px;
   text-decoration: none;
   display: block;
@@ -238,7 +247,11 @@ form input[type="button"], .button {
 
 form {
   padding: 2em; }
-  form input {
+  form select {
+    background-color: white !important;
+    -webkit-appearance: none;
+    margin-top: 0; }
+  form input, form select {
     font-family: Signika;
     font-size: 1.7em;
     -webkit-transition: all 0.4s 0s;
@@ -253,17 +266,17 @@ form {
     transition-timing-function: default;
     border: none;
     padding: 3.4% 4% 2% 4%; }
-  form input[type="text"], form input[type="password"] {
-    border: none;
-    width: 84%;
-    margin-top: -2px;
+  form input[type="text"], form input[type="password"], form select {
     border: 1px solid rgba(0, 0, 0, 0.1);
-    position: relative;
     color: #aaaaaa; }
-    form input[type="text"]:hover, form input[type="text"]:focus, form input[type="password"]:hover, form input[type="password"]:focus {
+    form input[type="text"]:hover, form input[type="text"]:focus, form input[type="password"]:hover, form input[type="password"]:focus, form select:hover, form select:focus {
       color: #333333; }
-    form input[type="text"]:focus, form input[type="password"]:focus {
+    form input[type="text"]:focus, form input[type="password"]:focus, form select:focus {
       outline: 0; }
+  form input[type="text"], form input[type="password"] {
+    width: 92%;
+    margin-top: -2px;
+    position: relative; }
   form .person_icon, form .password_icon {
     position: relative; }
   form .person_icon:before, form .password_icon:before {
@@ -271,7 +284,7 @@ form {
     display: block;
     position: absolute;
     left: 0.8em;
-    top: 1.1em;
+    top: 1.17em;
     z-index: 100;
     opacity: 0.2; }
   form .person_icon:before {
@@ -327,7 +340,6 @@ footer {
   position: fixed;
   height: 100%;
   width: 100%;
-  background: rgba(255, 255, 255, 0.9);
   text-align: center;
   z-index: 100; }
   #view_login .wine_bottle {
@@ -350,16 +362,28 @@ footer {
   #view_login form {
     background: #f5f2f9;
     min-width: 320px;
-    margin: 20% auto 0 auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
-    #view_login form input {
-      padding-left: 12%; }
+    margin: 5% auto 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative; }
+    #view_login form .person_icon input, #view_login form .password_icon input {
+      padding-left: 12%;
+      width: 84%; }
     #view_login form input[type="password"] {
       display: none; }
     #view_login form input[type="button"] {
       width: 100%;
       padding: 2.4% !important;
       margin-top: 4% !important; }
+    #view_login form select {
+      display: inline; }
+    #view_login form:before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      border: 40px solid rgba(0, 0, 0, 0.5);
+      position: absolute;
+      top: -40px;
+      left: -40px; }
   #view_login .forgot_signup {
     padding-top: 0.7em;
     font-size: 0.8em;
@@ -369,6 +393,18 @@ footer {
       right: -22px;
       height: 16px;
       width: 16px; }
+  #view_login .form_group {
+    margin-bottom: 14px; }
+  #view_login .birthday {
+    margin-top: -2px;
+    text-align: center; }
+  #view_login #bday_month {
+    width: 49%; }
+  #view_login #bday_day {
+    width: 19%; }
+  #view_login #bday_year {
+    width: 29%;
+    text-align: center; }
 
 #home .create_account, #home .login {
   width: 90%;
@@ -396,7 +432,7 @@ footer {
     position: absolute;
     top: 1%;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
-    z-index: 1000; }
+    z-index: 50; }
   #home .wine_grid_container:after {
     right: -1px; }
   #home .wine_grid_container:before {
@@ -471,7 +507,10 @@ footer {
 
   .column_100 {
     max-width: 1500px;
-    margin: 0 auto 0; } }
+    margin: 0 auto 0; }
+
+  body {
+    background-size: 100% auto; } }
 @media screen and (min-width: 960px) {
   .column_100.content > *, .column_100 .content,
   .column_66.content > *, .column_66 .content,
