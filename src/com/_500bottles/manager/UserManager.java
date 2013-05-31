@@ -9,7 +9,8 @@ import com._500bottles.object.user.ApplicationUser;
 public class UserManager
 {
 
-	public ApplicationUser getUser(long id) throws UserDoesNotExistException
+	public static ApplicationUser getUser(long id)
+			throws UserDoesNotExistException
 	{
 		ApplicationUser u = null;
 		try
@@ -22,7 +23,8 @@ public class UserManager
 		return u;
 	}
 
-	public void editUser(ApplicationUser u) throws UserDoesNotExistException
+	public static void editUser(ApplicationUser u)
+			throws UserDoesNotExistException
 	{
 		try
 		{
@@ -34,7 +36,7 @@ public class UserManager
 
 	}
 
-	public void removeUser(long id) throws UserDoesNotExistException
+	public static void removeUser(long id) throws UserDoesNotExistException
 	{
 		ApplicationUser u = null;
 		try
@@ -47,7 +49,8 @@ public class UserManager
 		}
 	}
 
-	public void addUser(ApplicationUser u) throws UserAlreadyExistsException
+	public static void addUser(ApplicationUser u)
+			throws UserAlreadyExistsException
 	{
 		try
 		{
