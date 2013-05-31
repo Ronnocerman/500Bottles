@@ -8,6 +8,8 @@ import org.junit.runners.JUnit4;
 
 import com._500bottles.da.internal.WineDAO;
 import com._500bottles.object.geolocation.GeoLocation;
+import com._500bottles.object.wine.Varietal;
+import com._500bottles.object.wine.Vineyard;
 import com._500bottles.object.wine.Wine;
 
 @RunWith(JUnit4.class)
@@ -24,10 +26,21 @@ public class WineDAOTests
 		GeoLocation geo = new GeoLocation();
 		geo.setLat((float) 32.4455);
 		geo.setLon((float) 100.32);
+		Vineyard vineyard = new Vineyard();
+		vineyard.setId(50);
 
+		Varietal varietal = new Varietal();
+		varietal.setId(432);
+
+		wine.setYear(1966);
+		wine.setRating(5);
 		wine.setGeoLocation(geo);
 		wine.setSnoothId("555");
 		wine.setWinecomId(343);
+		wine.setVineyard(vineyard);
+		wine.setVarietal(varietal);
+		wine.setPriceMin(10);
+		wine.setPriceMax(999);
 		/*
 		 * wine.setType(new WineType()); wine.setYear(0);
 		 * wine.setAppellation(new Appellation()); wine.setVarietal(new
@@ -48,7 +61,7 @@ public class WineDAOTests
 	{
 		Wine wine = new Wine();
 		wine.setName("dunnoWineNames");
-		wine.setDescription("If this shows up youre fucked");
+		wine.setDescription("If this shows up youre REALLY fucked");
 		wine.setSnoothId("21");
 
 		GeoLocation geo = new GeoLocation();
@@ -70,9 +83,6 @@ public class WineDAOTests
 		try
 		{
 			WineDAO.deleteWine(wine);
-			// WineDAO.deleteWine(2); // NEED TO ADD A METHOD OVERLOAD FOR
-			// DELETING BY ID
-
 		} catch (Exception e)
 		{
 			fail();
@@ -80,6 +90,7 @@ public class WineDAOTests
 	}
 
 	// tests get AND edit
+
 	@Test
 	public void testEditWine()
 	{
@@ -87,7 +98,7 @@ public class WineDAOTests
 
 		try
 		{
-			wine = WineDAO.getWine(4);
+			wine = WineDAO.getWine(1);
 		} catch (Exception e)
 		{
 			fail();
@@ -95,14 +106,8 @@ public class WineDAOTests
 
 		try
 		{
-			wine.setDescription("The EDITED description of wineId 4!");
-			// wine = WineDAO.editWine(wine); // supposed to return a wine
-			// object
-			// (right
-			// now it's void)
-			// but i am avoiding changing WineDAO because Chris is also updating
-			// it and
-			// i dont want to give him conflicts.
+			wine.setDescription("Chris is awesome");
+			WineDAO.editWine(wine);
 		} catch (Exception e)
 		{
 			fail();
