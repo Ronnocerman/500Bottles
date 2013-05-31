@@ -1,41 +1,54 @@
 package com._500bottles.action;
 
+import com._500bottles.manager.WinebookManager;
+import com._500bottles.object.wine.Wine;
+import com._500bottles.object.winebook.Photo;
+
 public class WinebookAction
 {
-	public void addEntry()
-	{
+	WinebookManager m;
 
+	public void addEntry(long id)
+	{
+		m.addEntry(id);
 	}
 
-	public void getEntry()
+	public void getEntry(long id)
 	{
+		m.getEntry(id);
 	}
 
-	public void removeEntry()
+	public void removeEntry(long id)
 	{
+		m.removeEntry(id);
 	}
 
-	public void editContent()
+	public void editContent(long id)
 	{
+		m.editEntry(id);
 	}
 
-	public void addWine()
+	public void addWine(long id, Wine w)
 	{
+		m.addWine(id, w);
 	}
 
-	public void removeWine()
+	public void removeWine(long id, Wine w)
 	{
+		m.removeWine(id, w);
 	}
 
-	public void addPhoto()
+	public void addPhoto(long id, Photo p)
 	{
+		m.addPhoto(id, p);
 	}
 
-	public void removePhoto()
+	public void removePhoto(long id, Photo p)
 	{
+		m.removePhoto(id, p);
 	}
 
-	public void uploadPhoto()
+	public void uploadPhoto(long id, Photo p)
 	{
 	}
 }
