@@ -1,12 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
-  <display-name>500Bottles</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+    <display-name>500Bottles</display-name>
+
+    <servlet>
+        <servlet-name>500bottles</servlet-name>
+        <servlet-class>com._500bottles.dispatch.MainDispatch</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>500bottles</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- Test Dispatcher -->
+    <servlet>
+        <servlet-name>TestDispatch</servlet-name>
+        <servlet-class>com._500bottles.dispatch.TestDispatch</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestDispatch</servlet-name>
+        <url-pattern>/tests</url-pattern>
+    </servlet-mapping>
+
+    <!-- Cellar Dispatcher -->
+    <servlet>
+        <servlet-name>CellarDispatch</servlet-name>
+        <servlet-class>com._500bottles.dispatch.CellarDispatch</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CellarDispatch</servlet-name>
+        <url-pattern>/cellar</url-pattern>
+    </servlet-mapping>
+
+    <!-- User Dispatcher -->
+    <servlet>
+        <servlet-name>UserDispatch</servlet-name>
+        <servlet-class>com._500bottles.dispatch.UserDispatch</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserDispatch</servlet-name>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+
+    <!-- Winebook Dispatcher -->
+    <servlet>
+        <servlet-name>WinebookDispatch</servlet-name>
+        <servlet-class>com._500bottles.dispatch.WinebookDispatch</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WinebookDispatch</servlet-name>
+        <url-pattern>/winebook</url-pattern>
+    </servlet-mapping>
+
+    <!-- Wine Dispatcher -->
+    <servlet>
+        <servlet-name>WineDispatch</servlet-name>
+        <servlet-class>com._500bottles.dispatch.WineDispatch</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WineDispatch</servlet-name>
+        <url-pattern>/wine</url-pattern>
+    </servlet-mapping>
+
+    <!-- Wine Wizard Dispatcher -->
+    <servlet>
+        <servlet-name>WineWizardDispatch</servlet-name>
+        <servlet-class>com._500bottles.dispatch.WineWizardDispatch</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WineWizardDispatch</servlet-name>
+        <url-pattern>/winewizard</url-pattern>
+    </servlet-mapping>
+
 </web-app>
