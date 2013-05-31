@@ -4,16 +4,12 @@ import com._500bottles.config.Config;
 import com._500bottles.da.external.snooth.exception.InvalidWineDetails;
 
 /**
- * Created with IntelliJ IDEA.
- * User: administrator
- * Date: 5/22/13
- * Time: 11:07 AM
+ * Created with IntelliJ IDEA. User: administrator Date: 5/22/13 Time: 11:07 AM
  * To change this template use File | Settings | File Templates.
  */
 public class WineDetails
 {
-	private final static String BASE_API_URL =
-		"http://api.snooth.com/wine/?";
+	private final static String BASE_API_URL = "http://api.snooth.com/wine/?";
 
 	private final static String API_KEY = Config.getProperty("snoothAPIKey");
 
@@ -36,40 +32,44 @@ public class WineDetails
 	/* The unique code for the requested wine. */
 	private String id;
 
-	/* Inventory. Set this to 1 to return price information for the
-	 * requested wine.
+	/*
+	 * Inventory. Set this to 1 to return price information for the requested
+	 * wine.
 	 */
 	private int i;
 
 	/* Country. Limits price data to wines available in this country. */
 	private Country c;
 
-	/* Zip Code. When combined with certain countries this will return
-	 * local results.
+	/*
+	 * Zip Code. When combined with certain countries this will return local
+	 * results.
 	 */
 	private int z;
 
-	/* Food Pairings. Set this to 1 to return suggested recipe pairings
-	 * for the requested wine.
+	/*
+	 * Food Pairings. Set this to 1 to return suggested recipe pairings for the
+	 * requested wine.
 	 */
 	private int food;
 
 	/* Wine Photos. Set this to 1 to return all images for the wine. */
 	private int photos;
 
-	/* Latitude. When combined with longitude this will return local
-	 * results.
+	/*
+	 * Latitude. When combined with longitude this will return local results.
 	 */
 	private double lat;
 
-	/* Longitude. When combined with latitude this will return local
-	 * results.
+	/*
+	 * Longitude. When combined with latitude this will return local results.
 	 */
 	private double lng;
 
-	/* Language. Return winery supplied content (Winemaker's Notes,
-	 * Vintage Notes, etc) in the specified language. Possible values: en,
-	 * el, fr, de, it, pt, es. (Beta)
+	/*
+	 * Language. Return winery supplied content (Winemaker's Notes, Vintage
+	 * Notes, etc) in the specified language. Possible values: en, el, fr, de,
+	 * it, pt, es. (Beta)
 	 */
 	private Language lang;
 
@@ -89,6 +89,7 @@ public class WineDetails
 		this.setLanguage(DEFAULT_LANGUAGE);
 	}
 
+	@Override
 	public String toString()
 	{
 		String url = BASE_API_URL;

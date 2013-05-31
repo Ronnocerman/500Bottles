@@ -1,16 +1,13 @@
 package com._500bottles.da.external.snooth;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 import java.util.Iterator;
 import java.util.Vector;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 /**
- * Created with IntelliJ IDEA.
- * User: administrator
- * Date: 5/23/13
- * Time: 4:09 PM
+ * Created with IntelliJ IDEA. User: administrator Date: 5/23/13 Time: 4:09 PM
  * To change this template use File | Settings | File Templates.
  */
 public class WineSearchResponse extends Response
@@ -44,9 +41,11 @@ public class WineSearchResponse extends Response
 
 	private void parse_wines_json(JSONArray wines_json)
 	{
-		Iterator<JSONObject> it = wines_json.iterator();
+		@SuppressWarnings("unchecked")
+		Iterator<JSONObject> it = (Iterator<JSONObject>) wines_json.iterator();
 
-		while (it.hasNext()) {
+		while (it.hasNext())
+		{
 			JSONObject item = it.next();
 			SnoothWine wine = new SnoothWine();
 
