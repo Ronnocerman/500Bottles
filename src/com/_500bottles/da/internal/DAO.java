@@ -6,6 +6,8 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com._500bottles.exception.da.ConnectionException;
+
 /**
  * Abstract Data Access Object. This object is extended by all DAO objects to
  * provide easy interfaces to insert, delete, update and select rows from the
@@ -30,10 +32,11 @@ public abstract class DAO
 	 *            The values to insert into the specified columns.
 	 * @return Returns an integer representing the number of rows inserted.
 	 * @throws SQLException
+	 * @throws ConnectionException
 	 * @throws ClassNotFoundException
 	 */
 	protected static int insert(String table, String columns, String values)
-			throws SQLException
+			throws SQLException, ConnectionException
 	{
 		String sql = "INSERT INTO " + table + " ";
 		sql += columns + " ";
@@ -65,8 +68,10 @@ public abstract class DAO
 	 * @return Returns an integer representing the number of rows deleted.
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
+	 * @throws ConnectionException
 	 */
-	protected static int delete(String table, String where) throws SQLException
+	protected static int delete(String table, String where)
+			throws SQLException, ConnectionException
 	{
 		String sql = "DELETE FROM " + table + " WHERE " + where + ";";
 
@@ -83,11 +88,11 @@ public abstract class DAO
 	 * @param where
 	 *            The WHERE clause for the update statement.
 	 * @return Returns an integer representing the number of rows updated.
-	 * @throws ClassNotFoundException
 	 * @throws SQLException
+	 * @throws ConnectionException
 	 */
 	protected static int update(String table, String set, String where)
-			throws SQLException
+			throws SQLException, ConnectionException
 	{
 		String sql = "UPDATE " + table + " SET " + set + " WHERE " + where
 				+ ";";
@@ -106,11 +111,11 @@ public abstract class DAO
 	 * @param where
 	 *            The WHERE clause.
 	 * @return Returns a ResultSet object for the query.
-	 * @throws ClassNotFoundException
 	 * @throws SQLException
+	 * @throws ConnectionException
 	 */
 	protected static ResultSet select(String table, String select, String where)
-			throws SQLException
+			throws SQLException, ConnectionException
 	{
 		String sql = "SELECT " + select + " FROM " + table;
 		sql += " WHERE " + where + ";";
@@ -119,7 +124,7 @@ public abstract class DAO
 	}
 
 	protected static ResultSet select(String table, String select)
-			throws SQLException
+			throws SQLException, ConnectionException
 	{
 		String sql = "SELECT " + select + " FROM " + table + ";";
 

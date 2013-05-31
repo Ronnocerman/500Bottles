@@ -4,11 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com._500bottles.config.Config;
+import com._500bottles.exception.da.ConnectionException;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Favorites;
 import com._500bottles.object.wine.Wine;
 
-public class FavoritesDAO
+public class FavoritesDAO extends DAO
 {
 	private static final String FAVORITES_TABLE = Config
 			.getProperty("favoritesTableName");
@@ -25,12 +26,15 @@ public class FavoritesDAO
 		try
 		{
 			// int i =
-			DAO.insert(FAVORITES_TABLE, columns, values);
+			insert(FAVORITES_TABLE, columns, values);
 			Database.disconnect();
 			// System.out.print("This is what we got: " + i);
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Favorites insertion", e);
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 
 		favorite.setfavoritesId(DAO.getLastInsertId());
@@ -43,11 +47,14 @@ public class FavoritesDAO
 	{
 		try
 		{
-			DAO.delete(FAVORITES_TABLE, "wineId=" + wine.getId());
+			delete(FAVORITES_TABLE, "wineId=" + wine.getId());
 			Database.disconnect();
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Favorites deletion", e);
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 	}
 
@@ -55,12 +62,14 @@ public class FavoritesDAO
 	{
 		try
 		{
-			DAO.delete(FAVORITES_TABLE,
-					"favoritesId=" + favorite.getfavoritesId());
+			delete(FAVORITES_TABLE, "favoritesId=" + favorite.getfavoritesId());
 			Database.disconnect();
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Favorites deletion", e);
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 	}
 
@@ -74,11 +83,14 @@ public class FavoritesDAO
 
 		try
 		{
-			DAO.update(FAVORITES_TABLE, sql, "favoritesId=" + favoritesId);
+			update(FAVORITES_TABLE, sql, "favoritesId=" + favoritesId);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Favorites update", e);
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 	}
 
@@ -89,12 +101,15 @@ public class FavoritesDAO
 
 		try
 		{
-			r = DAO.select(FAVORITES_TABLE, "*", "favoritesId=" + favoritesId);
+			r = select(FAVORITES_TABLE, "*", "favoritesId=" + favoritesId);
 			favorite = createFavorites(r);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
 			throw new DAException("SQL select exception.", e);
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 
 		return favorite;

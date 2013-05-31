@@ -3,14 +3,11 @@ package com._500bottles.da.internal;
 import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Vector;
 
 import com._500bottles.config.Config;
+import com._500bottles.exception.da.ConnectionException;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.geolocation.GeoLocation;
 import com._500bottles.object.wine.Appellation;
@@ -70,6 +67,9 @@ public class WineDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Wine insertion", e);
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 
 		wine.setId(getLastInsertId());
@@ -87,6 +87,9 @@ public class WineDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Wine deletion", e.getCause());
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 
 	}
@@ -120,6 +123,9 @@ public class WineDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Wine update", e);
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 	}
 
@@ -153,6 +159,9 @@ public class WineDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("SQL select exception.", e.getCause());
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 
 		return wine;
@@ -172,42 +181,11 @@ public class WineDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException(e.getMessage(), e.getCause());
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
-
 		return wine;
-	}
-
-	public Vector<Wine> getAllWine(long userId) throws DAException
-	{
-		Vector<Wine> wineVector = null;
-		long cellarId;
-		ResultSet r;
-
-		try
-		{
-			r = select("Cellar", "*", "userId='" + userId + "'");
-			cellarId = r.getInt("cfellarId");
-
-			r = select("CellarItem", "*", "cellarId='" + cellarId + "'");
-
-			Array wineIdArray = r.getArray("wineId");
-			Set<Long> wineIdSet = (Set<Long>) wineIdArray.getArray();
-			Iterator it = wineIdSet.iterator();
-
-			for (int i = 0; i < wineIdSet.size(); i++)
-			{
-				Wine temp = new Wine();
-				temp = getWine((long) it.next());
-				wineVector.add(temp);
-			}
-			Database.disconnect();
-
-		} catch (SQLException e)
-		{
-			throw new DAException(e.getMessage(), e.getCause());
-		}
-
-		return wineVector;
 	}
 
 	private static Wine createWine(ResultSet r) throws SQLException
@@ -290,5 +268,6 @@ public class WineDAO extends DAO
 
 		return wine;
 	}
+	// TODO:Add private varietal/vineyard database methods
 
 }

@@ -12,6 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 
 import com._500bottles.config.Config;
+import com._500bottles.exception.da.ConnectionException;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.winebook.Entry;
@@ -64,6 +65,9 @@ public class WinebookDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Winebook entry insertion.", e);
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 
 		entry.setEntryId(getLastInsertId());
@@ -99,6 +103,9 @@ public class WinebookDAO extends DAO
 		{
 			throw new DAException("Failed Winebook entry deletion.",
 					e.getCause());
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 	}
 
@@ -143,6 +150,9 @@ public class WinebookDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Winebook entry update.", e);
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 	}
 
@@ -158,18 +168,15 @@ public class WinebookDAO extends DAO
 	 * @return Entry object.
 	 * @throws DAException
 	 */
-	public static Entry getEntry(Entry entry) throws DAException,
-			NullPointerException
-	{
-		if (entry == null)
-			throw new NullPointerException("Null Winebook entry.");
-
-		if (entry.getEntryId() == 0)
-			throw new DAException("Entry ID not set.");
-
-		long entryId = entry.getEntryId();
-		return getEntry(entryId);
-	}
+	/*
+	 * public static Entry getEntry(Entry entry) throws DAException,
+	 * NullPointerException { if (entry == null) throw new
+	 * NullPointerException("Null Winebook entry.");
+	 * 
+	 * if (entry.getEntryId() == 0) throw new DAException("Entry ID not set.");
+	 * 
+	 * long entryId = entry.getEntryId(); return getEntry(entryId); }
+	 */
 
 	/**
 	 * Gets and returns an entry object from the database. Throws DAException if
@@ -197,6 +204,9 @@ public class WinebookDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("SQL select exception.", e);
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 
 		return entry;
