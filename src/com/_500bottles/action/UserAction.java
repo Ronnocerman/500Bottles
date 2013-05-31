@@ -10,7 +10,7 @@ import com._500bottles.manager.SessionManager;
 
 public class UserAction
 {
-	public boolean login(String email, char[] password)
+	public static boolean login(String email, char[] password)
 			throws UserDoesNotExistException, LoginException
 	{
 		MessageDigest md5;

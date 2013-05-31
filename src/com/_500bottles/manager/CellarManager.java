@@ -38,6 +38,11 @@ public class CellarManager
 		return c.getById(id);
 	}
 
+	public static CellarItem getByWineId(long id)
+	{
+		return c.getByWineId(id);
+	}
+
 	public static Cellar getCellar()
 	{
 		return c;

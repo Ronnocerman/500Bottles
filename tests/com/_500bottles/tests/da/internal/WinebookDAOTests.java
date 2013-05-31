@@ -213,27 +213,19 @@ public class WinebookDAOTests
 	@Test
 	public void editEntry() throws DAException
 	{
-		/*
-		 * entry3 = new Entry(); entry3.setTitle("Unedited");
-		 * entry3.setContent("Original"); entry3.setDateCreated(new Date());
-		 */
-		Entry entry3 = null;
-		entry3 = WinebookDAO.getEntry(34);
-
-		System.out.println("this is the iD we got from the test: "
-				+ entry3.getEntryId());
+		entry3 = new Entry();
+		entry3.setTitle("Unedited");
+		entry3.setContent("Original");
+		entry3.setDateCreated(new Date());
 
 		try
 		{
-			// WinebookDAO.addEntry(entry3);
-
-			// entry3 = WinebookDAO.getEntry(entry3);
+			WinebookDAO.addEntry(entry3);
 
 			entry3.setTitle("Edited");
 			entry3.setContent("Changed");
 
 			WinebookDAO.editEntry(entry3);
-			fail();
 		} catch (DAException e)
 		{
 			if (test)
@@ -393,7 +385,7 @@ public class WinebookDAOTests
 	}
 
 	@Test
-	public void getEntryAsEntryIdWithNullEntry() throws NullPointerException,
+	public void getEntryByEntryIdWithNullEntry() throws NullPointerException,
 			DAException
 	{
 		try
