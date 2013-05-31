@@ -72,4 +72,15 @@ public class CellarItem
 	{
 		this.cellarId = cellarId;
 	}
+
+	public void incrementQuantity()
+	{
+		quantity++;
+	}
+
+	public void decrementQuantity()
+	{
+		quantity--;
+	}
+
 }
