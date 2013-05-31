@@ -17,59 +17,70 @@ public abstract class ApplicationUser
 	protected String lastName;
 	protected int admin;
 
-	public void setEmail(String emailAddress)
+	public ApplicationUser setEmail(String emailAddress)
 	{
 		this.emailAddress = emailAddress;
+		return this;
 	}
 
-	public void setPassword(byte[] passwordHash)
+	public ApplicationUser setPassword(byte[] passwordHash)
 	{
 		this.passwordHash = passwordHash;
+		return this;
 	}
 
-	public void setFirstName(String firstName)
+	public ApplicationUser setFirstName(String firstName)
 	{
 		this.firstName = firstName;
+		return this;
 	}
 
-	public void setLastName(String lastName)
+	public ApplicationUser setLastName(String lastName)
 	{
 		this.lastName = lastName;
+		return this;
 	}
 
-	public void setDOB(Date dateOfBirth)
+	public ApplicationUser setDOB(Date dateOfBirth)
 	{
 		this.dateOfBirth = dateOfBirth;
+		return this;
 	}
 
-	public void setSex(Sex sex)
+	public ApplicationUser setSex(Sex sex)
 	{
 		this.sex = sex;
+		return this;
 	}
 
-	public void setWeight(double weight)
+	public ApplicationUser setWeight(double weight)
 	{
 		this.weight = weight;
+		return this;
 	}
 
-	public void setHeight(double height)
+	public ApplicationUser setHeight(double height)
 	{
 		this.height = height;
+		return this;
 	}
 
-	public void setRegistrationDate(Date registrationDate)
+	public ApplicationUser setRegistrationDate(Date registrationDate)
 	{
 		this.registrationDate = registrationDate;
+		return this;
 	}
 
-	public void setLastLogin(Date lastLogin)
+	public ApplicationUser setLastLogin(Date lastLogin)
 	{
 		this.lastLogin = lastLogin;
+		return this;
 	}
 
-	public void setUserId(long userId)
+	public ApplicationUser setUserId(long userId)
 	{
 		this.userId = userId;
+		return this;
 	}
 
 	public String getEmail()
@@ -137,8 +148,9 @@ public abstract class ApplicationUser
 		return admin;
 	}
 
-	public void setAdmin(int admin)
+	public ApplicationUser setAdmin(int admin)
 	{
 		this.admin = admin;
+		return this;
 	}
 }
