@@ -25,7 +25,7 @@ public class WineAPIURL
 	private static String filterCategory = "";
 	private static String filterRating = "";
 	private static String filterPrice = "";
-	private static String filterProductId = "";
+	// private static String filterProductId = "";
 
 	private static String otherInStock = "";
 	private static String otherOffset = "";
