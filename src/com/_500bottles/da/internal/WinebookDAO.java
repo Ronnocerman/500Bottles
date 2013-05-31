@@ -26,7 +26,7 @@ public class WinebookDAO extends DAO
 			.getProperty("winebookTableName");
 
 	/**
-	 * Adds a cellar item to the winebook. Returns an entry object with the new
+	 * Adds a cellar item to the Winebook. Returns an entry object with the new
 	 * unique id set. Throws a DAException if the SQL insertion fails.
 	 * 
 	 * @param entry
@@ -83,7 +83,6 @@ public class WinebookDAO extends DAO
 	public static void deleteEntry(Entry entry) throws DAException,
 			NullPointerException
 	{
-		// System.out.println("entryId = " + entry.getEntryId());
 		if (entry == null)
 			throw new NullPointerException("Entry object null.");
 
@@ -125,8 +124,6 @@ public class WinebookDAO extends DAO
 		long entryId = entry.getEntryId();
 		String sql = "";
 
-		System.out.println("yoyotitle: " + entry.getTitle());
-
 		sql += "title='" + escapeXml(entry.getTitle()) + "'";
 		sql += ",userId=" + entry.getUserId();
 		sql += ",dateCreated='" + formatDate(entry.getDateCreated()) + "'";
@@ -138,16 +135,12 @@ public class WinebookDAO extends DAO
 		sql += ",photosJSON='"
 				+ escapeXml(entry.getPhotoIdsAsJSONArray().toString()) + "'";
 
-		System.out.println(sql);
-
 		try
 		{
-			System.out.println("entryId: " + entryId);
 			update(WINEBOOK_TABLE, sql, "entryId=" + entryId);
-			// Database.disconnect();
+			Database.disconnect();
 		} catch (SQLException e)
 		{
-			System.out.println("exception: " + e.getMessage());
 			throw new DAException("Failed Winebook entry update.", e);
 		}
 	}
@@ -191,6 +184,9 @@ public class WinebookDAO extends DAO
 	{
 		ResultSet r;
 		Entry entry = null;
+
+		if (entryId == 0)
+			throw new DAException("Entry ID not set.");
 
 		try
 		{
