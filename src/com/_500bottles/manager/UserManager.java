@@ -36,17 +36,9 @@ public class UserManager
 
 	}
 
-	public static void removeUser(long id) throws UserDoesNotExistException
+	public static boolean removeUser(long id)
 	{
-		ApplicationUser u = null;
-		try
-		{
-			u = UserDAO.getUser(id);
-			UserDAO.deleteUser(u);
-		} catch (DAException e)
-		{
-			throw new UserDoesNotExistException(e);
-		}
+		return UserDAO.deleteUser(id);
 	}
 
 	public static void addUser(ApplicationUser u)

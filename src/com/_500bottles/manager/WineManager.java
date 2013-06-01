@@ -64,15 +64,9 @@ public class WineManager
 	{
 	}
 
-	public static void deleteCustomWine(Wine w)
+	public static boolean deleteCustomWine(Wine w)
 	{
-		try
-		{
-			WineDAO.deleteWine(w);
-		} catch (DAException e)
-		{
-			// TODO:
-		}
+		return WineDAO.deleteWine(w);
 	}
 
 	public static void setRating(int rating)

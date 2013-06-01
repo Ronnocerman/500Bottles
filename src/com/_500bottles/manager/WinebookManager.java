@@ -62,17 +62,9 @@ public class WinebookManager
 		}
 	}
 
-	public void removeEntry(long id)
+	public boolean removeEntry(long id)
 	{
-		Entry ent = null;
-		try
-		{
-			ent = WinebookDAO.getEntry(id);
-			WinebookDAO.deleteEntry(ent);
-		} catch (DAException e)
-		{
-			// TODO
-		}
+		return WinebookDAO.deleteEntry(id);
 	}
 
 	public void addPhoto(long id, Photo p)
