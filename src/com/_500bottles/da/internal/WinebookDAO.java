@@ -81,7 +81,7 @@ public class WinebookDAO extends DAO
 	 * @throws DAException
 	 * @throws NullPointerException
 	 */
-	public static void deleteEntry(Entry entry) throws DAException,
+	public static boolean deleteEntry(Entry entry) throws DAException,
 			NullPointerException
 	{
 		if (entry == null)
@@ -97,9 +97,11 @@ public class WinebookDAO extends DAO
 			Database.disconnect();
 		} catch (SQLException e)
 		{
-			throw new DAException("Failed Winebook entry deletion.",
-					e.getCause());
+			return false;
+			// throw new DAException("Failed Winebook entry deletion.",
+			// e.getCause());
 		}
+		return true;
 	}
 
 	/**

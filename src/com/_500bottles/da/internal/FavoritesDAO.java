@@ -40,7 +40,7 @@ public class FavoritesDAO extends DAO
 	}
 
 	// Might not use one of the deletes
-	public static void deleteFavorite(long userId, Wine wine)
+	public static boolean deleteFavorite(long userId, Wine wine)
 			throws DAException
 	{
 		try
@@ -50,11 +50,13 @@ public class FavoritesDAO extends DAO
 			Database.disconnect();
 		} catch (SQLException e)
 		{
-			throw new DAException("Failed Favorites deletion", e);
+			return false;
+			// throw new DAException("Failed Favorites deletion", e);
 		}
+		return true;
 	}
 
-	public static void deleteFavorite(Favorites favorite) throws DAException
+	public static boolean deleteFavorite(Favorites favorite) throws DAException
 	{
 		try
 		{
@@ -62,8 +64,10 @@ public class FavoritesDAO extends DAO
 			Database.disconnect();
 		} catch (SQLException e)
 		{
-			throw new DAException("Failed Favorites deletion", e);
+			return false;
+			// throw new DAException("Failed Favorites deletion", e);
 		}
+		return true;
 	}
 
 	public static void editFavorite(Favorites favorite) throws DAException

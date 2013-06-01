@@ -74,7 +74,7 @@ public class WineDAO extends DAO
 
 	}
 
-	public static void deleteWine(Wine wine) throws DAException
+	public static boolean deleteWine(Wine wine) throws DAException
 	{
 		try
 		{
@@ -82,8 +82,10 @@ public class WineDAO extends DAO
 			Database.disconnect();
 		} catch (SQLException e)
 		{
-			throw new DAException("Failed Wine deletion", e.getCause());
+			return false;
+			// throw new DAException("Failed Wine deletion", e.getCause());
 		}
+		return true;
 	}
 
 	public static void editWine(Wine wine) throws DAException

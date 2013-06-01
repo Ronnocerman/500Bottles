@@ -84,7 +84,7 @@ public class UserDAO extends DAO
 		return user;
 	}
 
-	public static void deleteUser(long userId) throws DAException
+	public static boolean deleteUser(long userId) throws DAException
 	{
 		try
 		{
@@ -92,8 +92,10 @@ public class UserDAO extends DAO
 			Database.disconnect();
 		} catch (SQLException e)
 		{
-			throw new DAException(e.getMessage(), e);
+			return false;
+			// throw new DAException(e.getMessage(), e);
 		}
+		return true;
 	}
 
 	/*
