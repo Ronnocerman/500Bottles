@@ -185,9 +185,45 @@ public class CellarDAO extends DAO
 	 * null) throw new NullPointerException("Cellar is null."); long
 	 * cellarItemId = item.getId(); return getCellarItem(cellarItemId); }
 	 */
+	// get cellaritem by wineid
+	public static CellarItem getByWineID(long userId, long wineId)
+			throws DAException
+	{
+		CellarItem item = null;
+		ResultSet r;
+
+		if (wineId == 0)
+			throw new DAException("Wine ID not set.");
+
+		try
+		{
+			String where = "wineId = ";
+			where += wineId;
+			where += " and userId = ";
+			where += userId;
+
+			r = select(CELLARITEM_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("CellarItem does not exist.");
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
+		}
+		try
+		{
+			item = createCellarItem(r);
+			Database.disconnect(); // what was that one command that josh used?
+
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception"); // TODO : fix this
+		}
+		return item;
+	}
 
 	public static CellarItem getCellarItem(long cellarItemId)
-			throws ConnectionException, DAException
+			throws DAException
 	{
 		// String table;
 		CellarItem item = null;
@@ -204,6 +240,9 @@ public class CellarDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("CellarItem does not exist.");
+		} catch (ConnectionException e)
+		{
+			throw new DAException("Not connected to database");
 		}
 		try
 		{
