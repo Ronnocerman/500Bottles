@@ -57,15 +57,19 @@ public class FavoritesDAO extends DAO
 
 	public static boolean deleteFavorite(Favorites favorite)
 	{
+		int ret;
 		try
 		{
-			delete(FAVORITES_TABLE, "favoritesId=" + favorite.getfavoritesId());
+			ret = delete(FAVORITES_TABLE,
+					"favoritesId=" + favorite.getfavoritesId());
 			Database.disconnect();
 		} catch (SQLException e)
 		{
 			return false;
 			// throw new DAException("Failed Favorites deletion", e);
 		}
+		if (ret == 0)
+			return false;
 		return true;
 	}
 

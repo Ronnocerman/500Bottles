@@ -86,15 +86,18 @@ public class UserDAO extends DAO
 
 	public static boolean deleteUser(long userId)
 	{
+		int ret;
 		try
 		{
-			delete(USER_TABLE, "userId=" + userId);
+			ret = delete(USER_TABLE, "userId=" + userId);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
 			return false;
 			// throw new DAException(e.getMessage(), e);
 		}
+		if (ret == 0)
+			return false;
 		return true;
 	}
 

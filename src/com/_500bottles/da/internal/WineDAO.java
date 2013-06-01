@@ -76,15 +76,18 @@ public class WineDAO extends DAO
 
 	public static boolean deleteWine(Wine wine)
 	{
+		int ret;
 		try
 		{
-			delete(WINE_TABLE, "wineId=" + wine.getId());
+			ret = delete(WINE_TABLE, "wineId=" + wine.getId());
 			Database.disconnect();
 		} catch (SQLException e)
 		{
 			return false;
 			// throw new DAException("Failed Wine deletion", e.getCause());
 		}
+		if (ret == 0)
+			return false;
 		return true;
 	}
 

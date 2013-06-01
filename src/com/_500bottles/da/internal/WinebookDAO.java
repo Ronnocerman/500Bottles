@@ -91,11 +91,10 @@ public class WinebookDAO extends DAO
 		 * if (entry.getEntryId() == 0) throw new
 		 * DAException("Entry ID not set.");
 		 */
-
+		int ret;
 		try
 		{
-
-			delete(WINEBOOK_TABLE, "entryId=" + entryId);
+			ret = delete(WINEBOOK_TABLE, "entryId=" + entryId);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
@@ -103,6 +102,8 @@ public class WinebookDAO extends DAO
 			// throw new DAException("Failed Winebook entry deletion.",
 			// e.getCause());
 		}
+		if (ret == 0)
+			return false;
 		return true;
 	}
 

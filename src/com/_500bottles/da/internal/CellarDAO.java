@@ -90,14 +90,17 @@ public class CellarDAO extends DAO
 	{
 		// if (cellarItemId == 0)
 		// throw new DAException("CellarItem ID not set.");
+		int ret;
 		try
 		{
-			delete(CELLARITEM_TABLE, "cellarItemId=" + cellarItemId);
+			ret = delete(CELLARITEM_TABLE, "cellarItemId=" + cellarItemId);
 		} catch (SQLException e)
 		{
 			return false;
 			// throw new DAException("Failed CellarItem deletion.", e);
 		}
+		if (ret == 0)
+			return false;
 		return true;
 	}
 
