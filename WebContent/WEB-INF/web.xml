@@ -6,6 +6,16 @@
          version="3.0">
     <display-name>500Bottles</display-name>
 
+     <servlet>
+        <servlet-name>Default</servlet-name>
+        <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Default</servlet-name>
+        <url-pattern>/img/*</url-pattern>
+        <url-pattern>/css/*</url-pattern>
+    </servlet-mapping>
+    
     <servlet>
         <servlet-name>500bottles</servlet-name>
         <servlet-class>com._500bottles.dispatch.MainDispatch</servlet-class>
@@ -76,3 +86,4 @@
     </servlet-mapping>
 
 </web-app>
+
