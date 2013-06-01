@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com._500bottles.config.Config;
+import com._500bottles.exception.da.ConnectionError;
 import com.mysql.jdbc.Statement;
 
 /**
@@ -28,14 +29,24 @@ public class Database
 	 *            Query to execute.
 	 * @return ResultSet object of query result.
 	 * @throws SQLException
+	 * @throws ConnectionException
 	 */
-	public static ResultSet readQuery(String q) throws SQLException
+	public static ResultSet readQuery(String q) throws SQLException,
+			ConnectionError
 	{
 		PreparedStatement p;
 		ResultSet r;
 		// System.out.println("readQuery");
 		if (conn == null)
-			conn = connect();
+		{
+			try
+			{
+				conn = connect();
+			} catch (SQLException e)
+			{
+				throw new ConnectionError("Not connected to database");
+			}
+		}
 		// System.out.println("before prep");
 		p = conn.prepareStatement(q);
 		// System.out.println("btween prep and exe Query");
@@ -52,8 +63,9 @@ public class Database
 	 *            Query to execute.
 	 * @return Numeric result of database query.
 	 * @throws SQLException
+	 * @throws ConnectionException
 	 */
-	public static int modQuery(String q) throws SQLException
+	public static int modQuery(String q) throws SQLException, ConnectionError
 	{
 		PreparedStatement p;
 		int i;
@@ -61,8 +73,15 @@ public class Database
 		try
 		{
 			if (conn == null)
-				conn = connect();
-
+			{
+				try
+				{
+					conn = connect();
+				} catch (SQLException e)
+				{
+					throw new ConnectionError("Not connected to database");
+				}
+			}
 			p = conn.prepareStatement(q);
 			i = p.executeUpdate(q, Statement.RETURN_GENERATED_KEYS);
 			setLastInsertId(p.getGeneratedKeys());
@@ -91,14 +110,8 @@ public class Database
 		dbPassword = Config.getProperty("databasePassword");
 		connectionUrl = getConnectionUrl();
 
-		try
-		{
-			connection = DriverManager.getConnection(connectionUrl, dbUsername,
-					dbPassword);
-		} catch (SQLException e)
-		{
-			throw e;
-		}
+		connection = DriverManager.getConnection(connectionUrl, dbUsername,
+				dbPassword);
 
 		return connection;
 	}

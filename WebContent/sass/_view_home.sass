@@ -1,73 +1,85 @@
 #home
-  .create_account, .login
-    width: 90%
-    margin: 0 auto 0
-    padding-top: 0.5em
-    padding-bottom: 0.5em
+  //@include background_image("bg1.jpg", 100%, 100%, center, top)
+  height: 100%
+  width: 100%
+  position: relative
 
-  .login
-    margin-top: -2px
+.dark_bg
+  background-color: rgba(black, 0.5)
+  color: white
 
-  .login_sidebar .light_bg
-    padding-top: 0.6em
-    padding-bottom: 0.6em
-    position: relative
-    width: 80%
-    margin: 0.5em auto 0
-
-  .wine_grid_container
-    padding: 1em
-    box-shadow: 0 0 3px rgba(black, 0.3) inset
-    overflow: hidden
-    background-image: url("../img/squairy_light.png")
-    position: relative
-
-    h2
-      border-bottom: 1px solid rgba(black, 0.2)
-      margin-top: -0.1em
-      margin-bottom: 0.2em
-      margin-right: 10px
-      margin-left: -30px
-      padding-left: 30px
-
-    .next, .prev
-      @include background_image("icons/arrow.png")
-      height: 100px
-      width: 100px
-      position: absolute
-      top: 40%
-      @include transition(all, 1s)
-      opacity: 0.1
+#login_links
+  margin-right: -1000px
+  ul
+    list-style: none
+    padding: 0.5em 1.2em 0.3em 1.2em
+    margin-top: 1em
+    li
+      display: inline
+      font-family: LeagueGothicRegular
+      font-size: 2.8em
+      text-transform: uppercase
+      padding-right: 0.5em
+      color: white
+      opacity: 0.3
       cursor: pointer
-    .prev
-      @include rotate(-180deg)
-      left: -100px
-    .next
-      right: -100px
+      @include transition(all, 0.35s)
+      &:hover
+        opacity: 0.8
 
-    &:hover
-      .prev, .next
-        opacity: 0.4
-        &:hover
-          opacity: 1
-      .prev
-        left: -30px
-      .next
-        right: -30px
+#popular_wines
+  position: absolute
+  width: 100%
+  bottom: 5%
+  h2
+    padding-left: 0.6em
 
-  #wine_search
-    margin-top: 4.2em
-    input
-      padding: 2% 2% !important
-      @include inline_block
-    input[type="text"]
-      width: 66%
-    input[type="button"]
-      margin-left: 2% !important
-      margin-top: -4px !important
-      width: 27%
-
-  .advanced_link
+.wine_grid_container
+  padding: 1em
+  overflow: hidden
+  position: relative
+  &:before, &:after
+    content: ""
+    width: 1px
+    height: 98%
     position: absolute
-    bottom: 2.2em
-    right: 4.6em
+    top: 1%
+    box-shadow: 0 0 8px rgba(black, 0.6)
+    z-index: 50
+  &:after
+    right: -1px
+  &:before
+    left: -1px
+
+  h2
+    border-bottom: 1px solid rgba(black, 0.2)
+    margin-top: -0.1em
+    margin-bottom: 0.2em
+    margin-right: 10px
+    margin-left: -30px
+    padding-left: 30px
+
+  .next, .prev
+    @include background_image("icons/arrow.png")
+    height: 100px
+    width: 100px
+    position: absolute
+    top: 40%
+    @include transition(all, 1s)
+    opacity: 0.1
+    cursor: pointer
+  .prev
+    @include rotate(-180deg)
+    left: -100px
+  .next
+    right: -100px
+
+  &:hover
+    .prev, .next
+      opacity: 0.4
+      &:hover
+        opacity: 1
+    .prev
+      left: -30px
+    .next
+      right: -30px

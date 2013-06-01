@@ -19,7 +19,7 @@ public abstract class Attribute
 	public void setCategory(String cat) throws InvalidCategory
 	{
 		if (categoryAttributeMap == null)
-			initcategoryAttributeMap();
+			initCategoryAttributeMap();
 
 		if (categoryAttributeMap.get(cat) == null)
 			throw new InvalidCategory(errormsg);
@@ -43,11 +43,11 @@ public abstract class Attribute
 	public String getAttribute()
 	{
 		if (categoryAttributeMap == null)
-			initcategoryAttributeMap();
+			initCategoryAttributeMap();
 
 		return this.categoryAttributeMap.get(this.category);
 	}
 
-	protected abstract void initcategoryAttributeMap();
+	protected abstract void initCategoryAttributeMap();
 
 }

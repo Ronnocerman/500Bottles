@@ -16,7 +16,7 @@ public class Publication extends Attribute
 	}
 
 	@Override
-	protected void initcategoryAttributeMap()
+	protected void initCategoryAttributeMap()
 	{
 		categoryAttributeMap = new HashMap<String, String>();
 		categoryAttributeMap.put("Wine Spectator", "202");

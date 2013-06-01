@@ -1,5 +1,6 @@
 package com._500bottles.manager;
 
+<<<<<<< HEAD
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Vector;
@@ -13,6 +14,17 @@ import com._500bottles.da.external.snooth.WineDetailsResponse;
 import com._500bottles.da.external.snooth.WineSearch;
 import com._500bottles.da.external.snooth.WineSearchResponse;
 import com._500bottles.da.external.snooth.exception.InvalidSort;
+=======
+import java.util.Iterator;
+import java.util.Vector;
+
+import com._500bottles.da.external.snooth.SnoothDAO;
+import com._500bottles.da.external.snooth.SnoothWine;
+import com._500bottles.da.external.snooth.WineDetails;
+import com._500bottles.da.external.snooth.WineDetailsResponse;
+import com._500bottles.da.external.snooth.WineSearch;
+import com._500bottles.da.external.snooth.WineSearchResponse;
+>>>>>>> refs/remotes/origin/master
 import com._500bottles.da.external.snooth.exception.InvalidWineDetails;
 import com._500bottles.da.external.snooth.exception.InvalidWineSearch;
 import com._500bottles.da.external.wine.AppellationArray;
@@ -111,6 +123,7 @@ public class WineQueryManager
 	 * a set of resulting wines.
 	 * 
 	 * @param query
+	 * 
 	 * @return
 	 * @throws InvalidCategory
 	 * @throws InvalidSort

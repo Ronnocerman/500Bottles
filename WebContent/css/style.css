@@ -13,6 +13,24 @@
   -o-animation-delay: 1s;
   animation-delay: 1s; }
 
+.delay_02s {
+  -webkit-animation-delay: 0.2s;
+  -moz-animation-delay: 0.2s;
+  -o-animation-delay: 0.2s;
+  animation-delay: 0.2s; }
+
+.delay_05s {
+  -webkit-animation-delay: 0.5s;
+  -moz-animation-delay: 0.5s;
+  -o-animation-delay: 0.5s;
+  animation-delay: 0.5s; }
+
+.delay_07s {
+  -webkit-animation-delay: 0.7s;
+  -moz-animation-delay: 0.7s;
+  -o-animation-delay: 0.7s;
+  animation-delay: 0.7s; }
+
 .wrapper {
   position: relative;
   max-width: 1500px;
@@ -65,26 +83,49 @@
 .center {
   text-align: center; }
 
+html {
+  height: 100%; }
+
+html, body {
+  position: relative;
+  min-height: 100%;
+  min-width: 100%;
+  overflow-x: hidden; }
+
 body {
-  background-image: url("../img/light_wool.png");
-  font-family: Roboto; }
+  background-color: black;
+  background-size: cover;
+  font-family: Roboto;
+  height: 100%;
+  text-size: 16px;
+  background: url("../img/bg1.jpg") no-repeat center top;
+  background-size: 100% 100%;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg1.jpg',sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg1.jpg',sizingMethod='scale')"; }
 
 .view {
   overflow: hidden; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "LeagueGothicRegular";
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  color: white;
+  opacity: 0.6;
+  letter-spacing: 1px; }
 
 h1 {
-  font-size: 3em;
-  color: black; }
+  font-size: 3em; }
 
 h2 {
   font-size: 2.8em; }
 
 h3 {
   font-size: 2.4em; }
+
+p {
+  font-weight: 100;
+  line-height: 1.3em;
+  padding: 1em; }
 
 .light_bg {
   background-color: white; }
@@ -116,13 +157,13 @@ h3 {
     display: inline-block;
     zoom: 1;
     *display: inline;
-    border: 1px solid #bbbbbb;
+    border: 1px solid #333333;
+    background: rgba(0, 0, 0, 0.4);
     width: 140px;
     height: 140px;
     position: relative;
     margin: 0.3em;
     padding: 6px;
-    background-color: white;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) inset; }
     .wine_grid .wine img {
       width: 100%; }
@@ -195,7 +236,7 @@ a.box_arrow {
 .ie .clearfix {
   zoom: 1; }
 
-form input, .button {
+form input, .button, select {
   border-radius: 6px;
   text-decoration: none;
   display: block;
@@ -238,7 +279,11 @@ form input[type="button"], .button {
 
 form {
   padding: 2em; }
-  form input {
+  form select {
+    background-color: white !important;
+    -webkit-appearance: none;
+    margin-top: 0; }
+  form input, form select {
     font-family: Signika;
     font-size: 1.7em;
     -webkit-transition: all 0.4s 0s;
@@ -253,17 +298,17 @@ form {
     transition-timing-function: default;
     border: none;
     padding: 3.4% 4% 2% 4%; }
-  form input[type="text"], form input[type="password"] {
-    border: none;
-    width: 84%;
-    margin-top: -2px;
+  form input[type="text"], form input[type="password"], form select {
     border: 1px solid rgba(0, 0, 0, 0.1);
-    position: relative;
     color: #aaaaaa; }
-    form input[type="text"]:hover, form input[type="text"]:focus, form input[type="password"]:hover, form input[type="password"]:focus {
+    form input[type="text"]:hover, form input[type="text"]:focus, form input[type="password"]:hover, form input[type="password"]:focus, form select:hover, form select:focus {
       color: #333333; }
-    form input[type="text"]:focus, form input[type="password"]:focus {
+    form input[type="text"]:focus, form input[type="password"]:focus, form select:focus {
       outline: 0; }
+  form input[type="text"], form input[type="password"] {
+    width: 92%;
+    margin-top: -2px;
+    position: relative; }
   form .person_icon, form .password_icon {
     position: relative; }
   form .person_icon:before, form .password_icon:before {
@@ -271,7 +316,7 @@ form {
     display: block;
     position: absolute;
     left: 0.8em;
-    top: 1.1em;
+    top: 1.17em;
     z-index: 100;
     opacity: 0.2; }
   form .person_icon:before {
@@ -327,9 +372,45 @@ footer {
   position: fixed;
   height: 100%;
   width: 100%;
-  background: rgba(255, 255, 255, 0.9);
   text-align: center;
-  z-index: 100; }
+  z-index: 100;
+  background-size: cover; }
+  #view_login .back_arrow {
+    position: absolute;
+    color: white;
+    font-family: "LeagueGothicRegular";
+    font-size: 2em;
+    display: block;
+    position: absolute;
+    top: 0.4em;
+    left: 2em;
+    text-transform: uppercase;
+    opacity: 0.3;
+    cursor: pointer;
+    -webkit-transition: all 0.5s 0s;
+    -moz-transition: all 0.5s 0s;
+    -ms-transition: all 0.5s 0s;
+    -o-transition: all 0.5s 0s;
+    transition: all 0.5s 0s;
+    -webkit-transition-timing-function: default;
+    -moz-transition-timing-function: default;
+    -ms-transition-timing-function: default;
+    -o-transition-timing-function: default;
+    transition-timing-function: default; }
+    #view_login .back_arrow:hover {
+      opacity: 0.5; }
+  #view_login .back_arrow:before {
+    content: "";
+    background: url("../img//icons/arrow-box-white.png") no-repeat center center;
+    background-size: 100% 100%;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img//icons/arrow-box-white.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img//icons/arrow-box-white.png',sizingMethod='scale')";
+    display: block;
+    width: 1em;
+    height: 1em;
+    position: absolute;
+    left: -1.4em;
+    top: -0.12em; }
   #view_login .wine_bottle {
     content: "";
     height: 975px;
@@ -350,53 +431,128 @@ footer {
   #view_login form {
     background: #f5f2f9;
     min-width: 320px;
-    margin: 20% auto 0 auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
-    #view_login form input {
-      padding-left: 12%; }
+    margin: 5% auto 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative; }
+    #view_login form > *:not(.bg) {
+      position: relative;
+      z-index: 100; }
+    #view_login form .person_icon input, #view_login form .password_icon input {
+      padding-left: 12%;
+      width: 84%; }
     #view_login form input[type="password"] {
       display: none; }
     #view_login form input[type="button"] {
       width: 100%;
       padding: 2.4% !important;
       margin-top: 4% !important; }
+    #view_login form select {
+      display: inline; }
+    #view_login form .bg {
+      width: 100%;
+      height: 100%;
+      border: 40px solid rgba(0, 0, 0, 0.5);
+      position: absolute;
+      z-index: 0;
+      top: -40px;
+      left: -40px;
+      z-index: 0; }
+  #view_login #login_form {
+    margin-top: 13%;
+    padding-bottom: 1em; }
   #view_login .forgot_signup {
-    padding-top: 0.7em;
+    padding-top: 1em;
     font-size: 0.8em;
     text-align: right; }
+    #view_login .forgot_signup a {
+      cursor: pointer;
+      margin-right: 1em; }
     #view_login .forgot_signup .box_arrow:after {
       top: 1px;
       right: -22px;
       height: 16px;
       width: 16px; }
+  #view_login .form_group {
+    margin-bottom: 14px; }
+  #view_login .birthday {
+    margin-top: -2px;
+    text-align: center; }
+  #view_login #bday_month {
+    width: 49%; }
+  #view_login #bday_day {
+    width: 19%; }
+  #view_login #bday_year {
+    width: 29%;
+    text-align: center; }
 
-#home .create_account, #home .login {
-  width: 90%;
-  margin: 0 auto 0;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em; }
-#home .login {
-  margin-top: -2px; }
-#home .login_sidebar .light_bg {
-  padding-top: 0.6em;
-  padding-bottom: 0.6em;
-  position: relative;
-  width: 80%;
-  margin: 0.5em auto 0; }
-#home .wine_grid_container {
-  padding: 1em;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) inset;
-  overflow: hidden;
-  background-image: url("../img/squairy_light.png");
+#home {
+  height: 100%;
+  width: 100%;
   position: relative; }
-  #home .wine_grid_container h2 {
+
+.dark_bg {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white; }
+
+#login_links {
+  margin-right: -1000px; }
+  #login_links ul {
+    list-style: none;
+    padding: 0.5em 1.2em 0.3em 1.2em;
+    margin-top: 1em; }
+    #login_links ul li {
+      display: inline;
+      font-family: LeagueGothicRegular;
+      font-size: 2.8em;
+      text-transform: uppercase;
+      padding-right: 0.5em;
+      color: white;
+      opacity: 0.3;
+      cursor: pointer;
+      -webkit-transition: all 0.35s 0s;
+      -moz-transition: all 0.35s 0s;
+      -ms-transition: all 0.35s 0s;
+      -o-transition: all 0.35s 0s;
+      transition: all 0.35s 0s;
+      -webkit-transition-timing-function: default;
+      -moz-transition-timing-function: default;
+      -ms-transition-timing-function: default;
+      -o-transition-timing-function: default;
+      transition-timing-function: default; }
+      #login_links ul li:hover {
+        opacity: 0.8; }
+
+#popular_wines {
+  position: absolute;
+  width: 100%;
+  bottom: 5%; }
+  #popular_wines h2 {
+    padding-left: 0.6em; }
+
+.wine_grid_container {
+  padding: 1em;
+  overflow: hidden;
+  position: relative; }
+  .wine_grid_container:before, .wine_grid_container:after {
+    content: "";
+    width: 1px;
+    height: 98%;
+    position: absolute;
+    top: 1%;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+    z-index: 50; }
+  .wine_grid_container:after {
+    right: -1px; }
+  .wine_grid_container:before {
+    left: -1px; }
+  .wine_grid_container h2 {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     margin-top: -0.1em;
     margin-bottom: 0.2em;
     margin-right: 10px;
     margin-left: -30px;
     padding-left: 30px; }
-  #home .wine_grid_container .next, #home .wine_grid_container .prev {
+  .wine_grid_container .next, .wine_grid_container .prev {
     background: url("../img/icons/arrow.png") no-repeat center center;
     background-size: 100% 100%;
     filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/icons/arrow.png',sizingMethod='scale');
@@ -417,41 +573,23 @@ footer {
     transition-timing-function: default;
     opacity: 0.1;
     cursor: pointer; }
-  #home .wine_grid_container .prev {
+  .wine_grid_container .prev {
     -webkit-transform: rotate(-180deg);
     -moz-transform: rotate(-180deg);
     -ms-transform: rotate(-180deg);
     -o-transform: rotate(-180deg);
     transform: rotate(-180deg);
     left: -100px; }
-  #home .wine_grid_container .next {
+  .wine_grid_container .next {
     right: -100px; }
-  #home .wine_grid_container:hover .prev, #home .wine_grid_container:hover .next {
+  .wine_grid_container:hover .prev, .wine_grid_container:hover .next {
     opacity: 0.4; }
-    #home .wine_grid_container:hover .prev:hover, #home .wine_grid_container:hover .next:hover {
+    .wine_grid_container:hover .prev:hover, .wine_grid_container:hover .next:hover {
       opacity: 1; }
-  #home .wine_grid_container:hover .prev {
+  .wine_grid_container:hover .prev {
     left: -30px; }
-  #home .wine_grid_container:hover .next {
+  .wine_grid_container:hover .next {
     right: -30px; }
-#home #wine_search {
-  margin-top: 4.2em; }
-  #home #wine_search input {
-    padding: 2% 2% !important;
-    display: -moz-inline-stack;
-    display: inline-block;
-    zoom: 1;
-    *display: inline; }
-  #home #wine_search input[type="text"] {
-    width: 66%; }
-  #home #wine_search input[type="button"] {
-    margin-left: 2% !important;
-    margin-top: -4px !important;
-    width: 27%; }
-#home .advanced_link {
-  position: absolute;
-  bottom: 2.2em;
-  right: 4.6em; }
 
 @media screen and (min-width: 1200px) {
   .content_container {

@@ -8,24 +8,25 @@ import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Favorites;
 import com._500bottles.object.wine.Wine;
 
-public class FavoritesDAO
+public class FavoritesDAO extends DAO
 {
 	private static final String FAVORITES_TABLE = Config
 			.getProperty("favoritesTableName");
 
-	public static Favorites addFavorite(Favorites favorite) throws DAException
+	public static Favorites addFavorite(long userId, Favorites favorite)
+			throws DAException
 	{
 		String columns, values;
 		columns = "(`userID`, ";
 		columns += "`wineID`)";
 
 		// TODO:Get userId from session manager
-		values = "('" + "0" + "',";
-		values += "'" + favorite.getWineId() + "'";
+		values = "('" + userId + "',";
+		values += "'" + favorite.getWineId() + "')";
 		try
 		{
 			// int i =
-			DAO.insert(FAVORITES_TABLE, columns, values);
+			insert(FAVORITES_TABLE, columns, values);
 			Database.disconnect();
 			// System.out.print("This is what we got: " + i);
 		} catch (SQLException e)
@@ -39,29 +40,37 @@ public class FavoritesDAO
 	}
 
 	// Might not use one of the deletes
-	public static void deleteFavorite(Wine wine) throws DAException
+	public static boolean deleteFavorite(long userId, Wine wine)
 	{
 		try
 		{
-			DAO.delete(FAVORITES_TABLE, "WHERE wineId=" + wine.getId());
+			delete(FAVORITES_TABLE, "wineId=" + wine.getId() + " and userId="
+					+ userId);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
-			throw new DAException("Failed Favorites deletion", e);
+			return false;
+			// throw new DAException("Failed Favorites deletion", e);
 		}
+		return true;
 	}
 
-	public static void deleteFavorite(Favorites favorite) throws DAException
+	public static boolean deleteFavorite(Favorites favorite)
 	{
+		int ret;
 		try
 		{
-			DAO.delete(FAVORITES_TABLE,
-					"WHERE favoritesId=" + favorite.getfavoritesId());
+			ret = delete(FAVORITES_TABLE,
+					"favoritesId=" + favorite.getfavoritesId());
 			Database.disconnect();
 		} catch (SQLException e)
 		{
-			throw new DAException("Failed Favorites deletion", e);
+			return false;
+			// throw new DAException("Failed Favorites deletion", e);
 		}
+		if (ret == 0)
+			return false;
+		return true;
 	}
 
 	public static void editFavorite(Favorites favorite) throws DAException
@@ -74,7 +83,7 @@ public class FavoritesDAO
 
 		try
 		{
-			DAO.update(FAVORITES_TABLE, sql, "favoritesId=" + favoritesId);
+			update(FAVORITES_TABLE, sql, "favoritesId=" + favoritesId);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
@@ -89,11 +98,15 @@ public class FavoritesDAO
 
 		try
 		{
-			r = DAO.select(FAVORITES_TABLE, "*");
+			// System.out.println(favoritesId);
+			r = select(FAVORITES_TABLE, "*", "favoritesId = " + favoritesId);
+
+			// System.out.println("abc " + r.getLong("favoritesId"));
 			favorite = createFavorites(r);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
+			System.out.println("Message: " + e.getMessage());
 			throw new DAException("SQL select exception.", e);
 		}
 
@@ -109,6 +122,8 @@ public class FavoritesDAO
 			throw new DAException("Favorites Id not set.");
 
 		long favoriteId = favorite.getfavoritesId();
+		System.out.println("favoritesId in getFavorite: "
+				+ favorite.getfavoritesId());
 		return getFavorite(favoriteId);
 	}
 
@@ -118,11 +133,12 @@ public class FavoritesDAO
 
 		long favoritesId, wineId;
 
-		favoritesId = r.getLong("favoritesId");
-		wineId = r.getLong("wineId");
-
 		if (!r.next())
 			return null;
+
+		favoritesId = r.getLong("favoritesId");
+		// System.out.println("break");
+		wineId = r.getLong("wineId");
 
 		f = new Favorites();
 		f.setfavoritesId(favoritesId);

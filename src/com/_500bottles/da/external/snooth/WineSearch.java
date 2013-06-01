@@ -1,24 +1,20 @@
 package com._500bottles.da.external.snooth;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com._500bottles.config.Config;
 import com._500bottles.da.external.snooth.exception.InvalidWineSearch;
 import com._500bottles.da.external.snooth.sort.Sort;
 import com._500bottles.object.wine.WineQuery;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 /**
- * Created with IntelliJ IDEA.
- * User: administrator
- * Date: 5/22/13
- * Time: 11:07 AM
+ * Created with IntelliJ IDEA. User: administrator Date: 5/22/13 Time: 11:07 AM
  * To change this template use File | Settings | File Templates.
  */
 public class WineSearch
 {
-	private final static String BASE_API_URL =
-		"http://api.snooth.com/wines/?";
+	private final static String BASE_API_URL = "http://api.snooth.com/wines/?";
 
 	private final static String API_KEY = Config.getProperty("snoothAPIKey");
 
@@ -65,8 +61,8 @@ public class WineSearch
 	/* Number of results to return, must be 1 - 100 */
 	private int n;
 
-	/* Availability -- set to 0 for all wines, and 1 for only wines
-	 * in-stock.
+	/*
+	 * Availability -- set to 0 for all wines, and 1 for only wines in-stock.
 	 */
 	private int a;
 
@@ -82,14 +78,16 @@ public class WineSearch
 	/* Country -- limits results to wines available in this country. */
 	private Country c;
 
-	/* Zipcode -- when combined with certain countries, it limits the
-	 * results to local results.
+	/*
+	 * Zipcode -- when combined with certain countries, it limits the results to
+	 * local results.
 	 */
 	private int z;
 
-	/* Latitude. When combined with a longitude value, will return local
-	 * results. If a Country parameter is included, this parameter will
-	 * be ignored.
+	/*
+	 * Latitude. When combined with a longitude value, will return local
+	 * results. If a Country parameter is included, this parameter will be
+	 * ignored.
 	 */
 	private double lat;
 
@@ -105,15 +103,17 @@ public class WineSearch
 	/* Maximum product price. */
 	private double xp;
 
-	/* Minimum SnoothRank. Possible values are any rational number
-	 * in the range [0 - 5]
+	/*
+	 * Minimum SnoothRank. Possible values are any rational number in the range
+	 * [0 - 5]
 	 */
 	private double mr;
 
 	/* Maximum SnoothRank (see Minimum SnoothRank). */
 	private double xr;
 
-	/* Language. Only return wines with content in the specified language.
+	/*
+	 * Language. Only return wines with content in the specified language.
 	 * Possible values: en, el, fr, de, it, pt, es. (Beta)
 	 */
 	private Language lang;
@@ -148,15 +148,18 @@ public class WineSearch
 		// TODO: Match the rest of the queries.
 	}
 
+	@Override
 	public String toString()
 	{
 		String url = BASE_API_URL;
 
 		url += "akey=" + API_KEY;
 
-		try {
+		try
+		{
 			url += "&q=" + this.getEncodedQuery();
-		} catch (UnsupportedEncodingException e) {
+		} catch (UnsupportedEncodingException e)
+		{
 			// TODO: do something here to catch encoding exception.
 		}
 
@@ -166,11 +169,11 @@ public class WineSearch
 		if (this.getNumberOfResults() != DEFAULT_NUM_RESULTS)
 			url += "&n=" + this.getNumberOfResults();
 
-		if (this.getAvailable() != DEFAULT_AVAIL) {
+		if (this.getAvailable() != DEFAULT_AVAIL)
+		{
 			if (this.getAvailable())
 				url += "&a=1";
 		}
-
 
 		if (this.getProductType() != DEFAULT_PRODUCT_TYPE)
 			url += "&t=" + this.getProductType().toString();

@@ -4,11 +4,11 @@ import com._500bottles.object.wine.Wine;
 
 public class CellarItem
 {
-	private long cellarId;
 	private long cellarItemId;
 	private int quantity;
 	private String notes;
 	private long wineId;
+	private double userRating;
 
 	public CellarItem(Wine w)
 	{
@@ -63,13 +63,24 @@ public class CellarItem
 				.toString(c.getId())));
 	}
 
-	public long getCellarId()
+	public void incrementQuantity()
 	{
-		return cellarId;
+		quantity++;
 	}
 
-	public void setCellarId(long cellarId)
+	public void decrementQuantity()
 	{
-		this.cellarId = cellarId;
+		quantity--;
 	}
+
+	public double getUserRating()
+	{
+		return userRating;
+	}
+
+	public void setUserRating(double userRating)
+	{
+		this.userRating = userRating;
+	}
+
 }

@@ -32,12 +32,12 @@ public class UserDAO extends DAO
 		dateOfBirth = formatDate(user.getDOB());
 
 		values = "('" + escapeXml(user.getEmail()) + "',";
-		values += "'" + user.getPasswordHash().toString() + "',";
+		values += "'" + escapeXml(user.getPasswordHash().toString()) + "',";
 		values += "'" + registrationDate + "',";
 		values += "'" + lastLogin + "',";
-		values += "'" + user.getFirstName() + "',";
-		values += "'" + user.getLastName() + "',";
-		values += "'" + user.getSex() + "',";
+		values += "'" + escapeXml(user.getFirstName()) + "',";
+		values += "'" + escapeXml(user.getLastName()) + "',";
+		values += "'" + escapeXml(user.getSex().toString()) + "',";
 		values += "'" + dateOfBirth + "',";
 		values += "'" + user.getHeight() + "',";
 		values += "'" + user.getWeight() + "',";
@@ -55,7 +55,7 @@ public class UserDAO extends DAO
 			// System.out.println("after the select");
 			// String b = r.getString("userEmail");
 			// System.out.println("email received is " + b);
-			System.out.println("after the select");
+			// System.out.println("after the select");
 			if (s.next())
 			{
 				throw new DAException("User with email:"
@@ -66,60 +66,69 @@ public class UserDAO extends DAO
 			}
 		} catch (SQLException e1)
 		{
-			e1.printStackTrace();
+			// e1.printStackTrace();
 			// System.out.println("USER DOESN'T EXIST YET, RIGHT BEFORE INSERT");
 			try
 			{
-				System.out.println("does it go in here");
+				// System.out.println("does it go in here");
 				insert(USER_TABLE, columns, values);
 			} catch (SQLException e)
 			{
 				throw new DAException(e.getMessage(), e);
 			}
-			user.setUserId(Database.getLastInsertId());
 
 			return user;
 		}
+		user.setUserId(Database.getLastInsertId());
+		// System.out.println("userIdinAdd: " + user.getUserId());
 		return user;
 	}
 
-	public static void deleteUser(long userId) throws DAException
+	public static boolean deleteUser(long userId)
 	{
+		int ret;
 		try
 		{
-			delete(USER_TABLE, "userId=" + userId);
+			ret = delete(USER_TABLE, "userId=" + userId);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
-			throw new DAException(e.getMessage(), e);
+			return false;
+			// throw new DAException(e.getMessage(), e);
 		}
+		if (ret == 0)
+			return false;
+		return true;
 	}
 
-	public static void deleteUser(ApplicationUser user) throws DAException
-	{
-
-		deleteUser(user.getUserId());
-
-	}
+	/*
+	 * public static void deleteUser(ApplicationUser user) throws DAException {
+	 * // System.out.println("user: " + user.getUserId());
+	 * deleteUser(user.getUserId());
+	 * 
+	 * }
+	 */
 
 	public static void editUser(ApplicationUser user) throws DAException
 	{
 		long userId = user.getUserId();
 		String sql = "";
 
-		sql += "userEmail=" + user.getEmail();
-		sql += ",userPass=" + user.getPasswordHash().toString();
-		sql += ",registrationDate="
-				+ DAO.formatDate(user.getRegistrationDate());
-		sql += ",lastLogin=" + DAO.formatDate(user.getLastLogin());
-		sql += ",firstName=" + user.getFirstName();
-		sql += ",lastName=" + user.getLastName();
-		sql += ",sex=" + user.getSex().toString();
-		sql += ",dateOfBirth=" + user.getDOB();
+		sql += "userEmail='" + escapeXml(user.getEmail()) + "'";
+		sql += ",userPass='" + escapeXml(user.getPasswordHash().toString())
+				+ "'";
+		sql += ",registrationDate='"
+				+ DAO.formatDate(user.getRegistrationDate()) + "'";
+		sql += ",lastLogin='" + DAO.formatDate(user.getLastLogin()) + "'";
+		sql += ",firstName='" + escapeXml(user.getFirstName()) + "'";
+		sql += ",lastName='" + escapeXml(user.getLastName()) + "'";
+		sql += ",sex='" + escapeXml(user.getSex().toString()) + "'";
+		sql += ",dateOfBirth='" + DAO.formatDate(user.getDOB()) + "'";
 		sql += ",height=" + user.getHeight();
 		sql += ",weight=" + user.getWeight();
 		sql += ",admin=" + user.isAdmin();
 
+		System.out.println(sql);
 		try
 		{
 			update(USER_TABLE, sql, "userId=" + userId);
@@ -137,7 +146,8 @@ public class UserDAO extends DAO
 
 		try
 		{
-			r = select(USER_TABLE, "*");
+			r = select(USER_TABLE, "*", "userId=" + userId);
+			// System.out.println("AYYYYYYYY");
 			user = createUser(r);
 			Database.disconnect();
 		} catch (SQLException e)
@@ -154,7 +164,7 @@ public class UserDAO extends DAO
 		ApplicationUser user = null;
 		ResultSet r;
 		String where = "";
-		where += "userEmail=" + email;
+		where += "userEmail='" + unescapeXml(email) + "'";
 		try
 		{
 			r = select(USER_TABLE, "*", where);
@@ -190,32 +200,38 @@ public class UserDAO extends DAO
 		double height, weight;
 
 		int admin;
-
+		boolean real = r.next();
+		System.out.println(real);
 		// Return null if there was no entry in the ResultSet.
-		if (!r.next())
+		if (!real)
 			return null;
 
 		userId = r.getLong("userId");
 		dateOfBirth = r.getDate("dateOfBirth");
+		// System.out.println(dateOfBirth);
+		// System.out.println("got userId");
 
-		userEmail = r.getString("userEmail");
-		firstName = r.getString("firstName");
-		lastName = r.getString("lastName");
-
-		userPass0 = r.getString("userPass").toCharArray();
+		// System.out.println("WHAT AdsafdsafdsafsadBOUT ffdsaHERE?");
+		userEmail = unescapeXml(r.getString("userEmail"));
+		firstName = unescapeXml(r.getString("firstName"));
+		lastName = unescapeXml(r.getString("lastName"));
+		// System.out.println("eheheh");
+		userPass0 = unescapeXml(r.getString("userPass")).toCharArray();
 		byte[] userPass = new byte[userPass0.length];
 		for (int i = 0; i < userPass0.length; i++)
 		{
 			userPass[i] = (byte) userPass0[i];
 
 		}
+		// System.out.println("after password");
 
 		registrationDate = r.getDate("registrationDate");
 		lastLogin = r.getDate("lastLogin");
-
-		sex1 = r.getString("Sex");
+		// System.out.println("right before sex?");
+		sex1 = unescapeXml(r.getString("Sex"));
+		// System.out.println("right after unescape sex");
 		sex = Sex.valueOf(sex1);
-
+		// System.out.println("WHAT ABOUT fdsaHERE?");
 		height = r.getDouble("height");
 		weight = r.getDouble("weight");
 
@@ -231,10 +247,11 @@ public class UserDAO extends DAO
 		user.setLastName(lastName);
 		user.setSex(sex);
 		user.setDOB(dateOfBirth);
+		// System.out.println("dOB = " + user.getDOB());
 		user.setHeight(height);
 		user.setWeight(weight);
 		user.setAdmin(admin);
-
+		// System.out.println("WHAT ABOUT HERE?");
 		return user;
 	}
 }

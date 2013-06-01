@@ -1,6 +1,19 @@
+html
+  height: 100%
+
+html, body
+  position: relative
+  min-height: 100%
+  min-width: 100%
+  overflow-x: hidden
+
 body
-  background-image: url('../img/light_wool.png')
+  background-color: black
+  background-size: cover
   font-family: Roboto
+  height: 100%
+  text-size: 16px
+  @include background_image("bg1.jpg", 100%, 100%, center, top)
 
 .view
   overflow: hidden
@@ -8,16 +21,23 @@ body
 h1, h2, h3, h4, h5, h6
   font-family: "LeagueGothicRegular"
   text-transform: uppercase
+  color: white //#d8dece
+  opacity: 0.6
+  letter-spacing: 1px
 
 h1
   font-size: 3em
-  color: black // #2F3242
 
 h2
   font-size: 2.8em
 
 h3
   font-size: 2.4em
+
+p
+  font-weight: 100
+  line-height: 1.3em
+  padding: 1em
 
 .light_bg
   background-color: white
@@ -38,13 +58,13 @@ h3
 
   .wine
     @include inline_block
-    border: 1px solid #BBB
+    border: 1px solid #333
+    background: rgba(black, 0.4)
     width: 140px
     height: 140px
     position: relative
     margin: 0.3em
     padding: 6px
-    background-color: white
     box-shadow: 0 0 3px rgba(black, 0.2) inset
 
     img

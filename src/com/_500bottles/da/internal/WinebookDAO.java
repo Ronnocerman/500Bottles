@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Vector;
 
@@ -26,7 +27,7 @@ public class WinebookDAO extends DAO
 			.getProperty("winebookTableName");
 
 	/**
-	 * Adds a cellar item to the winebook. Returns an entry object with the new
+	 * Adds a cellar item to the Winebook. Returns an entry object with the new
 	 * unique id set. Throws a DAException if the SQL insertion fails.
 	 * 
 	 * @param entry
@@ -80,26 +81,30 @@ public class WinebookDAO extends DAO
 	 * @throws DAException
 	 * @throws NullPointerException
 	 */
-	public static void deleteEntry(Entry entry) throws DAException,
-			NullPointerException
+	public static boolean deleteEntry(long entryId)
+	// NullPointerException
 	{
-		// System.out.println("entryId = " + entry.getEntryId());
-		if (entry == null)
-			throw new NullPointerException("Entry object null.");
-
-		if (entry.getEntryId() == 0)
-			throw new DAException("Entry ID not set.");
-
+		/*
+		 * if (entry == null) throw new
+		 * NullPointerException("Entry object null.");
+		 * 
+		 * if (entry.getEntryId() == 0) throw new
+		 * DAException("Entry ID not set.");
+		 */
+		int ret;
 		try
 		{
-
-			delete(WINEBOOK_TABLE, "entryId=" + entry.getEntryId());
+			ret = delete(WINEBOOK_TABLE, "entryId=" + entryId);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
-			throw new DAException("Failed Winebook entry deletion.",
-					e.getCause());
+			return false;
+			// throw new DAException("Failed Winebook entry deletion.",
+			// e.getCause());
 		}
+		if (ret == 0)
+			return false;
+		return true;
 	}
 
 	/**
@@ -125,8 +130,6 @@ public class WinebookDAO extends DAO
 		long entryId = entry.getEntryId();
 		String sql = "";
 
-		System.out.println("yoyotitle: " + entry.getTitle());
-
 		sql += "title='" + escapeXml(entry.getTitle()) + "'";
 		sql += ",userId=" + entry.getUserId();
 		sql += ",dateCreated='" + formatDate(entry.getDateCreated()) + "'";
@@ -138,16 +141,12 @@ public class WinebookDAO extends DAO
 		sql += ",photosJSON='"
 				+ escapeXml(entry.getPhotoIdsAsJSONArray().toString()) + "'";
 
-		System.out.println(sql);
-
 		try
 		{
-			System.out.println("entryId: " + entryId);
 			update(WINEBOOK_TABLE, sql, "entryId=" + entryId);
-			// Database.disconnect();
+			Database.disconnect();
 		} catch (SQLException e)
 		{
-			System.out.println("exception: " + e.getMessage());
 			throw new DAException("Failed Winebook entry update.", e);
 		}
 	}
@@ -164,18 +163,15 @@ public class WinebookDAO extends DAO
 	 * @return Entry object.
 	 * @throws DAException
 	 */
-	public static Entry getEntry(Entry entry) throws DAException,
-			NullPointerException
-	{
-		if (entry == null)
-			throw new NullPointerException("Null Winebook entry.");
-
-		if (entry.getEntryId() == 0)
-			throw new DAException("Entry ID not set.");
-
-		long entryId = entry.getEntryId();
-		return getEntry(entryId);
-	}
+	/*
+	 * public static Entry getEntry(Entry entry) throws DAException,
+	 * NullPointerException { if (entry == null) throw new
+	 * NullPointerException("Null Winebook entry.");
+	 * 
+	 * if (entry.getEntryId() == 0) throw new DAException("Entry ID not set.");
+	 * 
+	 * long entryId = entry.getEntryId(); return getEntry(entryId); }
+	 */
 
 	/**
 	 * Gets and returns an entry object from the database. Throws DAException if
@@ -191,6 +187,9 @@ public class WinebookDAO extends DAO
 	{
 		ResultSet r;
 		Entry entry = null;
+
+		if (entryId == 0)
+			throw new DAException("Entry ID not set.");
 
 		try
 		{
@@ -214,6 +213,7 @@ public class WinebookDAO extends DAO
 	 * @return Entry object.
 	 * @throws SQLException
 	 */
+	@SuppressWarnings("unchecked")
 	private static Entry createEntry(ResultSet res) throws SQLException
 	{
 		Entry entry;
@@ -243,8 +243,8 @@ public class WinebookDAO extends DAO
 		photosIds = (JSONArray) JSONValue.parse(photosJSON);
 
 		// TODO: Create the wine and photo objects to add to the entry.
-		wines = new Vector<Wine>(wineIds);
-		photos = new Vector<Photo>(photosIds);
+		wines = new Vector<Wine>((Collection<? extends Wine>) wineIds);
+		photos = new Vector<Photo>((Collection<? extends Photo>) photosIds);
 
 		dateCreated = res.getDate("dateCreated");
 		dateLastEdited = res.getDate("dateLastEdited");
