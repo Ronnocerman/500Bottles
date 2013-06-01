@@ -118,20 +118,19 @@ public class CellarDAO extends DAO
 	 * DAException("Not connected to database"); } }
 	 */
 
-	public static CellarItem editCellarItem(long userId, CellarItem item)
-			throws DAException
+	public static CellarItem editCellarItem(CellarItem item) throws DAException
 	{
 		if (item == null)
 			throw new NullPointerException("CellarItem is null.");
 		long cellarItemId = item.getId();
 		if (cellarItemId == 0)
 			throw new DAException("CellarItem ID not set");
-		if (userId == 0)
-			throw new DAException("User ID not set");
+		// if (userId == 0)
+		// throw new DAException("User ID not set");
 		String sql = "";
 
-		sql += "userID=" + userId;
-		sql += ",wineID=" + item.getWineId();
+		// sql += "userID=" + userId;
+		sql += "wineID=" + item.getWineId();
 		sql += ",quantity=" + item.getQuantity();
 		sql += ",notes='" + escapeXml(item.getNotes()) + "'";
 		sql += ",userRating='" + item.getUserRating() + "'";
@@ -202,6 +201,12 @@ public class CellarDAO extends DAO
 			String where = "cellarItemId = ";
 			where += cellarItemId;
 			r = select(CELLARITEM_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("CellarItem does not exist.");
+		}
+		try
+		{
 			item = createCellarItem(r);
 			Database.disconnect(); // what was that one command that josh used?
 
