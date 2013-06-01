@@ -1,23 +1,23 @@
 package com._500bottles.tests.manager;
 
-import com._500bottles.manager.WineManager;
-import com._500bottles.object.wine.WineQuery;
-import com._500bottles.object.wine.WineQueryResult;
-import org.junit.Before;
-import org.junit.Test;
+import java.util.Iterator;
+
 import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.util.Iterator;
-
-import static org.junit.Assert.*;
+import com._500bottles.manager.WineManager;
+import com._500bottles.object.wine.Wine;
+import com._500bottles.object.wine.WineQuery;
+import com._500bottles.object.wine.WineQueryResult;
 
 /**
  *
  */
 @RunWith(JUnit4.class)
-public class WineManagerTests {
+public class WineManagerTests
+{
 
 	WineQuery q;
 
@@ -32,9 +32,9 @@ public class WineManagerTests {
 	{
 		q = new WineQuery();
 		q.setTextQuery("cabernet");
-	 	WineQueryResult r = WineManager.searchWine(q);
+		WineQueryResult r = WineManager.searchWine(q);
 
-		Iterator it = r.getIterator();
+		Iterator<Wine> it = r.getIterator();
 
 		while (it.hasNext())
 			System.out.println(it.next().toString());

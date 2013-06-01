@@ -191,6 +191,7 @@ public class WineQueryTest
 	@Test
 	public void setMinYear()
 	{
+		@SuppressWarnings("deprecation")
 		Date newDate = new Date(84, 10, 18);
 		query1.setMinYear(newDate);
 
@@ -216,6 +217,7 @@ public class WineQueryTest
 	@Test
 	public void setMaxYear()
 	{
+		@SuppressWarnings("deprecation")
 		Date newDate = new Date(112, 10, 18);
 		query1.setMaxYear(newDate);
 
