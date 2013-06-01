@@ -8,6 +8,7 @@ public class CellarItem
 	private int quantity;
 	private String notes;
 	private long wineId;
+	private double userRating;
 
 	public CellarItem(Wine w)
 	{
@@ -70,6 +71,16 @@ public class CellarItem
 	public void decrementQuantity()
 	{
 		quantity--;
+	}
+
+	public double getUserRating()
+	{
+		return userRating;
+	}
+
+	public void setUserRating(double userRating)
+	{
+		this.userRating = userRating;
 	}
 
 }
