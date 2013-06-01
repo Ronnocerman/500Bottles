@@ -1,24 +1,23 @@
 package com._500bottles.exception.da;
 
-import com._500bottles.exception.NSFWException;
 
 @SuppressWarnings("serial")
-public class ConnectionException extends NSFWException
+public class ConnectionError extends Error
 {
 
-	public ConnectionException(String msg)
+	public ConnectionError(String msg)
 	{
 		super(msg);
 		// TODO Auto-generated constructor stub
 	}
 
-	public ConnectionException(String msg, Throwable cause)
+	public ConnectionError(String msg, Throwable cause)
 	{
 		super(msg, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public ConnectionException(Throwable cause)
+	public ConnectionError(Throwable cause)
 	{
 		super(cause);
 		// TODO Auto-generated constructor stub
