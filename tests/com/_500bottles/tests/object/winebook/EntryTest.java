@@ -114,10 +114,7 @@ public class EntryTest
 	public void getLastDateEdited()
 	{
 		String date;
-		String today;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-		today = sdf.format(d);
 
 		date = sdf.format(entry.getDateLastEdited());
 		assertEquals(date, "2013-05-22");
