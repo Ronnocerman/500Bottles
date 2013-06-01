@@ -5,6 +5,7 @@ import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import com._500bottles.config.Config;
 import com._500bottles.exception.da.DAException;
@@ -255,6 +256,67 @@ public class WineDAO extends DAO
 
 		return wine;
 	}
+
+	@SuppressWarnings("null")
+	public Vector<Wine> getAllWines() throws DAException
+	{
+		Vector<Wine> wineVector = null;
+		ResultSet r;
+
+		try
+		{
+			r = select(WINE_TABLE, "*");
+
+			Vector<Long> wineIdVector = new Vector<Long>();
+			while (r.next())
+			{
+				Long wineId;
+				wineId = new Long(r.getInt("wineId"));
+				wineIdVector.add(wineId);
+			}
+			for (int i = 0; i < wineIdVector.size(); i++)
+			{
+				Wine temp = new Wine();
+				temp = WineDAO.getWine(wineIdVector.elementAt(i).longValue());
+				wineVector.add(temp);
+			}
+			Database.disconnect();
+
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception", e.getCause());
+		}
+
+		return wineVector;
+	}
+
+	@SuppressWarnings("unused")
+	private static Varietal addVarietal(Varietal v) throws DAException
+	{
+		String columns, values;
+
+		columns = "(`varietalId`, `varietalName`)";
+
+		// TODO: get user id from session manager or via user object.
+		// TODO: getGeoLocation and getAppellation
+		values = "('" + v.getId() + "',";
+		values += "'" + escapeXml(v.getGrapeType()) + "')";
+
+		try
+		{
+			insert("Varietals", columns, values);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("Failed Varietal insertion", e);
+		}
+
+		v.setId(getLastInsertId());
+
+		return v;
+
+	}
+	// TODO:Add private varietal/vineyard database methods
 	// TODO:Add private varietal/vineyard database methods
 
 }
