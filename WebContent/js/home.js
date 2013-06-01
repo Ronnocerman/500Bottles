@@ -133,8 +133,8 @@
         var HOME_DELAY_IN = "";
         var HOME_DELAY_TIMER = 1000;
 
-        var ACCOUNT_ANIM_IN = "";
-        var ACCOUNT_ANIM_OUT = "";
+        var ACCOUNT_ANIM_IN = "fadeIn";
+        var ACCOUNT_ANIM_OUT = "fadeOut";
         var ACCOUNT_DELAY_IN = "";
         var ACCOUNT_DELAY_OUT = "";
         var ACCOUNT_DELAY_TIMER = 1000;
@@ -158,6 +158,8 @@
         var signup = document.getElementById("sign_up_link");
         var view_login = document.getElementById("view_login");
         var home = document.getElementById("home");
+
+        var back_to_home = document.getElementById("back_to_home");
 
         var popular_wines = document.getElementById("popular_wines");
         var login_links = document.getElementById("login_links");
@@ -317,7 +319,7 @@
 
         signup.addEventListener("click", show_sign_up_form);
         login.addEventListener("click", show_login_form);
-        view_login.addEventListener("click", hide_account_view);
+        back_to_home.addEventListener("click", hide_account_view);
     }
 
     function on_load()

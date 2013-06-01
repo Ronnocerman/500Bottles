@@ -373,6 +373,42 @@ footer {
   text-align: center;
   z-index: 100;
   background-size: cover; }
+  #view_login .back_arrow {
+    position: absolute;
+    color: white;
+    font-family: "LeagueGothicRegular";
+    font-size: 2em;
+    display: block;
+    position: absolute;
+    top: 0.4em;
+    left: 2em;
+    text-transform: uppercase;
+    opacity: 0.3;
+    cursor: pointer;
+    -webkit-transition: all 0.5s 0s;
+    -moz-transition: all 0.5s 0s;
+    -ms-transition: all 0.5s 0s;
+    -o-transition: all 0.5s 0s;
+    transition: all 0.5s 0s;
+    -webkit-transition-timing-function: default;
+    -moz-transition-timing-function: default;
+    -ms-transition-timing-function: default;
+    -o-transition-timing-function: default;
+    transition-timing-function: default; }
+    #view_login .back_arrow:hover {
+      opacity: 0.5; }
+  #view_login .back_arrow:before {
+    content: "";
+    background: url("../img//icons/arrow-box-white.png") no-repeat center center;
+    background-size: 100% 100%;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img//icons/arrow-box-white.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img//icons/arrow-box-white.png',sizingMethod='scale')";
+    display: block;
+    width: 1em;
+    height: 1em;
+    position: absolute;
+    left: -1.4em;
+    top: -0.12em; }
   #view_login .wine_bottle {
     content: "";
     height: 975px;
@@ -419,10 +455,16 @@ footer {
       top: -40px;
       left: -40px;
       z-index: 0; }
+  #view_login #login_form {
+    margin-top: 13%;
+    padding-bottom: 1em; }
   #view_login .forgot_signup {
-    padding-top: 0.7em;
+    padding-top: 1em;
     font-size: 0.8em;
     text-align: right; }
+    #view_login .forgot_signup a {
+      cursor: pointer;
+      margin-right: 1em; }
     #view_login .forgot_signup .box_arrow:after {
       top: 1px;
       right: -22px;
