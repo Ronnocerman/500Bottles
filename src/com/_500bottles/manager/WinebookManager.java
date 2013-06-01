@@ -8,7 +8,7 @@ import com._500bottles.object.winebook.Photo;
 
 public class WinebookManager
 {
-	public void addEntry(long id)
+	public static void addEntry(long id)
 	{
 		Entry ent = null;
 		try
@@ -21,7 +21,7 @@ public class WinebookManager
 		}
 	}
 
-	public void addWine(long entryid, Wine w)
+	public static void addWine(long entryid, Wine w)
 	{
 		Entry ent = null;
 		try
@@ -35,7 +35,7 @@ public class WinebookManager
 		}
 	}
 
-	public void removeWine(long entryid, Wine w)
+	public static void removeWine(long entryid, Wine w)
 	{
 		Entry ent = null;
 		try
@@ -49,7 +49,7 @@ public class WinebookManager
 		}
 	}
 
-	public void editEntry(long id)
+	public static void editEntry(long id)
 	{
 		Entry ent = null;
 		try
@@ -62,12 +62,12 @@ public class WinebookManager
 		}
 	}
 
-	public boolean removeEntry(long id)
+	public static boolean removeEntry(long id)
 	{
 		return WinebookDAO.deleteEntry(id);
 	}
 
-	public void addPhoto(long id, Photo p)
+	public static void addPhoto(long id, Photo p)
 	{
 		Entry ent = null;
 		try
@@ -81,7 +81,7 @@ public class WinebookManager
 		}
 	}
 
-	public void removePhoto(long id, Photo p)
+	public static void removePhoto(long id, Photo p)
 	{
 		Entry ent = null;
 		try
@@ -95,7 +95,7 @@ public class WinebookManager
 		}
 	}
 
-	public Entry getEntry(long id)
+	public static Entry getEntry(long id)
 	{
 		Entry ent = null;
 		try
