@@ -9,59 +9,33 @@ public class CellarAction
 {
 
 	public void setCellarQuantity(long userID, Wine w, int q)
+			throws CellarException
 	{
-		try
-		{
-			CellarItem ci = CellarManager.getByWineID(userID, w.getId());
-			ci.setQuantity(q);
-			CellarManager.editCellarItem(ci);
-		} catch (CellarException e)
-		{
-			// TODO Cellar doesn't exist
-			e.printStackTrace();
-		}
+		CellarItem ci = CellarManager.getByWineID(userID, w.getId());
+		ci.setQuantity(q);
+		CellarManager.editCellarItem(ci);
 	}
 
-	public void incCellarQuantity(long userID, Wine w)
+	public void incCellarQuantity(long userID, Wine w) throws CellarException
 	{
-		try
-		{
-			CellarItem ci = CellarManager.getByWineID(userID, w.getId());
-			ci.setQuantity(ci.getQuantity() + 1);
-			CellarManager.editCellarItem(ci);
-		} catch (CellarException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		CellarItem ci = CellarManager.getByWineID(userID, w.getId());
+		ci.setQuantity(ci.getQuantity() + 1);
+		CellarManager.editCellarItem(ci);
 	}
 
-	public void decCellarQuantity(long userID, Wine w)
+	public void decCellarQuantity(long userID, Wine w) throws CellarException
 	{
-		try
-		{
-			CellarItem ci = CellarManager.getByWineID(userID, w.getId());
-			ci.setQuantity(ci.getQuantity() - 1);
-			CellarManager.editCellarItem(ci);
-		} catch (CellarException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		CellarItem ci = CellarManager.getByWineID(userID, w.getId());
+		ci.setQuantity(ci.getQuantity() - 1);
+		CellarManager.editCellarItem(ci);
 	}
 
 	public void setCellarNotes(long userID, Wine w, String notes)
+			throws CellarException
 	{
-		try
-		{
-			CellarItem ci = CellarManager.getByWineID(userID, w.getId());
-			ci.setNotes(notes);
-			CellarManager.editCellarItem(ci);
-		} catch (CellarException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		CellarItem ci = CellarManager.getByWineID(userID, w.getId());
+		ci.setNotes(notes);
+		CellarManager.editCellarItem(ci);
 	}
 
 	public String getCellarNotes(long userID, Wine w) throws CellarException
@@ -69,17 +43,10 @@ public class CellarAction
 		return CellarManager.getByWineID(userID, w.getId()).getNotes();
 	}
 
-	public void clearCellarNotes(long userID, Wine w)
+	public void clearCellarNotes(long userID, Wine w) throws CellarException
 	{
-		try
-		{
-			CellarItem ci = CellarManager.getByWineID(userID, w.getId());
-			ci.setNotes("");
-			CellarManager.editCellarItem(ci);
-		} catch (CellarException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		CellarItem ci = CellarManager.getByWineID(userID, w.getId());
+		ci.setNotes("");
+		CellarManager.editCellarItem(ci);
 	}
 }
