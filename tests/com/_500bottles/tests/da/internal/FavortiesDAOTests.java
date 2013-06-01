@@ -102,7 +102,7 @@ public class FavortiesDAOTests
 			assertEquals(FavoritesDAO.getFavorite(fave.getfavoritesId())
 					.getfavoritesId(), faveId);
 			assertEquals(FavoritesDAO.getFavorite(fave.getfavoritesId())
-					.getWineId(), 500);
+					.getWineId(), 250);
 		} catch (DAException e)
 		{
 			fail(e.getMessage());

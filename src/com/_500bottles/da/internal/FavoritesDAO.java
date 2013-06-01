@@ -98,11 +98,15 @@ public class FavoritesDAO extends DAO
 
 		try
 		{
-			r = select(FAVORITES_TABLE, "*", "favoritesId=" + favoritesId);
+			// System.out.println(favoritesId);
+			r = select(FAVORITES_TABLE, "*", "favoritesId = " + favoritesId);
+
+			// System.out.println("abc " + r.getLong("favoritesId"));
 			favorite = createFavorites(r);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
+			System.out.println("Message: " + e.getMessage());
 			throw new DAException("SQL select exception.", e);
 		}
 
@@ -118,6 +122,8 @@ public class FavoritesDAO extends DAO
 			throw new DAException("Favorites Id not set.");
 
 		long favoriteId = favorite.getfavoritesId();
+		System.out.println("favoritesId in getFavorite: "
+				+ favorite.getfavoritesId());
 		return getFavorite(favoriteId);
 	}
 
@@ -127,11 +133,12 @@ public class FavoritesDAO extends DAO
 
 		long favoritesId, wineId;
 
-		favoritesId = r.getLong("favoritesId");
-		wineId = r.getLong("wineId");
-
 		if (!r.next())
 			return null;
+
+		favoritesId = r.getLong("favoritesId");
+		// System.out.println("break");
+		wineId = r.getLong("wineId");
 
 		f = new Favorites();
 		f.setfavoritesId(favoritesId);
