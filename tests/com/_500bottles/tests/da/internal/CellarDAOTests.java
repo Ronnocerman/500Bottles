@@ -56,7 +56,7 @@ public class CellarDAOTests
 
 		try
 		{
-			CellarDAO.deleteCellarItem(2);
+			CellarDAO.deleteCellarItem(item.getId());
 			// CellarDAO.deleteCellarItem(6);
 			// CellarDAO.deleteCellarItem(8);
 		} catch (Exception e)
@@ -67,15 +67,16 @@ public class CellarDAOTests
 	}
 
 	// tests get AND edit
-	@SuppressWarnings("null")
 	@Test
 	public void testEditCellarItem()
 	{
-		CellarItem item = null;
+		Wine wine = new Wine();
+		wine.setId(4);
+		CellarItem item = new CellarItem(wine);
 		item.setNotes("Imma buy 4 moe of these");
 		item.setQuantity(4);
 		item.setUserRating(10);
-		item.setWineId(2);
+		// item.setWineId(2);
 
 		try
 		{
