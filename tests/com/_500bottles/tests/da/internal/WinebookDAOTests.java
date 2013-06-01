@@ -1,6 +1,8 @@
 package com._500bottles.tests.da.internal;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Date;
@@ -127,7 +129,7 @@ public class WinebookDAOTests
 
 		try
 		{
-			WinebookDAO.addEntry(entry1);
+			entry1 = WinebookDAO.addEntry(entry1);
 		} catch (DAException e)
 		{
 			if (test)
@@ -136,17 +138,9 @@ public class WinebookDAOTests
 				fail(e.getMessage());
 			}
 		}
-		try
-		{
-			WinebookDAO.deleteEntry(entry1);
-		} catch (DAException e)
-		{
-			if (test)
-			{
-				System.out.println("In deleteEntry(): " + e.getMessage());
-				fail(e.getMessage());
-			}
-		}
+
+		assertTrue(WinebookDAO.deleteEntry(entry1.getEntryId()));
+
 	}
 
 	@Test
@@ -154,60 +148,27 @@ public class WinebookDAOTests
 	{
 		Entry entry3 = new Entry();
 		entry3.setEntryId(100);
-		try
-		{
-			WinebookDAO.deleteEntry(entry3);
-			fail();
-		} catch (DAException e)
-		{
-			if (test)
-			{
-				System.out.println("In deleteEntryWithNoMatchingEntry(): "
-						+ e.getMessage());
-				fail(e.getMessage());
-			}
-		}
+
+		assertFalse(WinebookDAO.deleteEntry(entry3.getEntryId()));
+
 	}
 
-	@Test
-	public void deleteEntryWithNull() throws NullPointerException, DAException
-	{
-		try
-		{
-			if (nullEntry == null)
-			{
-				WinebookDAO.deleteEntry(nullEntry);
-				fail();
-			}
-		} catch (NullPointerException e)
-		{
-			if (test)
-			{
-				System.out.println("In deleteEntryWithNull(): "
-						+ e.getMessage());
-				fail(e.getMessage());
-			}
-		}
-	}
+	/*
+	 * @Test public void deleteEntryWithNull() throws NullPointerException,
+	 * DAException { try { if (nullEntry == null) {
+	 * WinebookDAO.deleteEntry(nullEntry); fail(); } } catch
+	 * (NullPointerException e) { if (test) {
+	 * System.out.println("In deleteEntryWithNull(): " + e.getMessage());
+	 * fail(e.getMessage()); } } }
+	 */
 
 	@Test
 	public void deleteEntryWithIdZero() throws DAException
 	{
 		entry3 = new Entry(0, "Title", "Content", new Date(), new Date());
-		try
-		{
-			WinebookDAO.deleteEntry(entry3);
-			fail();
 
-		} catch (DAException e)
-		{
-			if (test)
-			{
-				System.out.println("In deleteEntryWithIdZero(): "
-						+ e.getMessage());
-				fail(e.getMessage());
-			}
-		}
+		assertFalse(WinebookDAO.deleteEntry(entry3.getEntryId()));
+
 	}
 
 	@Test
@@ -284,7 +245,7 @@ public class WinebookDAOTests
 		try
 		{
 			WinebookDAO.addEntry(entry3);
-			Entry entry = WinebookDAO.getEntry(entry3);
+			Entry entry = WinebookDAO.getEntry(entry3.getEntryId());
 			assertEquals(entry.getTitle(), "Ramona");
 			assertEquals(entry.getContent(), "Our next Wine Tasting trip...");
 
@@ -298,25 +259,14 @@ public class WinebookDAOTests
 		}
 	}
 
-	@Test
-	public void getEntryWithNullEntry() throws NullPointerException,
-			DAException
-	{
-		try
-		{
-			WinebookDAO.getEntry(nullEntry);
-			fail();
-
-		} catch (NullPointerException e)
-		{
-			if (test)
-			{
-				System.out.println("In getEntryWithNullEntry(): "
-						+ e.getMessage());
-				fail(e.getMessage());
-			}
-		}
-	}
+	/*
+	 * @Test public void getEntryWithNullEntry() throws NullPointerException,
+	 * DAException { try { WinebookDAO.getEntry(nullEntry); fail();
+	 * 
+	 * } catch (NullPointerException e) { if (test) {
+	 * System.out.println("In getEntryWithNullEntry(): " + e.getMessage());
+	 * fail(e.getMessage()); } } }
+	 */
 
 	@Test
 	public void getEntryWithEntryIdZero() throws DAException
@@ -324,7 +274,7 @@ public class WinebookDAOTests
 		entry3 = new Entry(0, "Title", "Content", new Date(), new Date());
 		try
 		{
-			WinebookDAO.getEntry(entry3);
+			WinebookDAO.getEntry(entry3.getEntryId());
 			fail();
 		} catch (DAException e)
 		{
