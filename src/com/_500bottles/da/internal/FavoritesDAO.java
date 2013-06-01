@@ -14,15 +14,16 @@ public class FavoritesDAO extends DAO
 	private static final String FAVORITES_TABLE = Config
 			.getProperty("favoritesTableName");
 
-	public static Favorites addFavorite(Favorites favorite) throws DAException
+	public static Favorites addFavorite(long userId, Favorites favorite)
+			throws DAException
 	{
 		String columns, values;
 		columns = "(`userID`, ";
 		columns += "`wineID`)";
 
 		// TODO:Get userId from session manager
-		values = "('" + "0" + "',";
-		values += "'" + favorite.getWineId() + "'";
+		values = "('" + userId + "',";
+		values += "'" + favorite.getWineId() + "')";
 		try
 		{
 			// int i =
@@ -43,11 +44,13 @@ public class FavoritesDAO extends DAO
 	}
 
 	// Might not use one of the deletes
-	public static void deleteFavorite(Wine wine) throws DAException
+	public static void deleteFavorite(long userId, Wine wine)
+			throws DAException
 	{
 		try
 		{
-			delete(FAVORITES_TABLE, "wineId=" + wine.getId());
+			delete(FAVORITES_TABLE, "wineId=" + wine.getId() + " and userId="
+					+ userId);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
