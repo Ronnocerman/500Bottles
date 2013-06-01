@@ -101,6 +101,8 @@ public class WineDAOTests
 		wine.setSnoothId("50");
 		wine.setWinecomId(340);
 
+		wine = WineDAO.addWine(wine);
+
 		try
 		{
 			wine = WineDAO.getWine(wine.getId());

@@ -16,7 +16,7 @@ public class WineWizardDispatch extends HttpServlet
 	{
 		// TODO Auto-generated method stub
 	}
-
+	
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException
