@@ -15,49 +15,108 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-    <script type="text/javascript">
-
-        function bind_events()
-        {
-            $("#setCellarQuantity").on("click", function() {
-                submit_request("/cellar", "setCellarQuantity");
-            });
-            $("#incCellarQuantity").on("click", function() {
-                submit_request("/cellar", "incCellarQuantity");
-            });
-            $("#decCellarQuantity").on("click", function() {
-                submit_request("/cellar", "decCellarQuantity");
-            });
-            $("#setCellarNotes").on("click", function() {
-                submit_request("/cellar", "setCellarNotes");
-            });
-            $("#getCellarNotes").on("click", function() {
-                submit_request("/cellar", "getCellarNotes");
-            });
-            $("#clearCellarNotes").on("click", function() {
-                submit_request("/cellar", "clearCellarNotes");
-            });
-        }
-
-        function submit_request(url, action)
-        {
-            $.ajax({
-                url: url,
-                data: {"action": action}
-            }).success(function (data, textStatux, jqXHR) {
-                $("#response").text(data);
-            });
-        }
-
-        $(window).on("ready", bind_events);
-
-    </script>
-
 </head>
 <body>
 
     <h1>Welcome to the AJAX Tester!</h1>
 
+    <script type="text/javascript">
+        (function() {
+            function bind_events()
+            {
+                $("#user_login").on("click", function() {
+                    submit_request("/user", "login");
+                });
+                $("#user_logout").on("click", function() {
+                    submit_request("/user", "logout");
+                });
+                $("#user_createAccount").on("click", function() {
+                    submit_request("/user", "createAccount");
+                });
+                $("#user_resetPassword").on("click", function() {
+                    submit_request("/user", "resetPassword");
+                });
+                $("#user_deleteAccount").on("click", function() {
+                    submit_request("/user", "deleteAccount");
+                });
+                $("#user_editUserInfo").on("click", function() {
+                    submit_request("/user", "editUserInfo");
+                });
+            }
+
+            function submit_request(url, action)
+            {
+                $.ajax({
+                    url: url,
+                    data: {"action": action}
+                }).success(function (data, textStatux, jqXHR) {
+                            $("#response_user").text(data);
+                        });
+            }
+
+            $(window).on("ready", bind_events);
+        })();
+    </script>
+
+    <h2>User Tests</h2>
+    <hr/>
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <button id="user_login">Test login</button>
+                <button id="user_logout">Test logout</button>
+                <button id="user_createAccount">Test createAccount</button>
+                <button id="user_resetPassword">Test resetPassword</button>
+                <button id="user_deleteAccount">Test deleteAccount</button>
+                <button id="user_editUserInfo">Test editUserInfo</button>
+            </td>
+            <td>
+                <textarea id="response_user" style="width: 100%; height: 300px;"></textarea>
+            </td>
+        </tr>
+    </table>
+
+    <script type="text/javascript">
+        (function() {
+            function bind_events()
+            {
+                $("#setCellarQuantity").on("click", function() {
+                    submit_request("/cellar", "setCellarQuantity");
+                });
+                $("#incCellarQuantity").on("click", function() {
+                    submit_request("/cellar", "incCellarQuantity");
+                });
+                $("#decCellarQuantity").on("click", function() {
+                    submit_request("/cellar", "decCellarQuantity");
+                });
+                $("#setCellarNotes").on("click", function() {
+                    submit_request("/cellar", "setCellarNotes");
+                });
+                $("#getCellarNotes").on("click", function() {
+                    submit_request("/cellar", "getCellarNotes");
+                });
+                $("#clearCellarNotes").on("click", function() {
+                    submit_request("/cellar", "clearCellarNotes");
+                });
+            }
+
+            function submit_request(url, action)
+            {
+                $.ajax({
+                    url: url,
+                    data: {"action": action}
+                }).success(function (data, textStatux, jqXHR) {
+                            $("#response").text(data);
+                        });
+            }
+
+            $(window).on("ready", bind_events);
+        })();
+
+    </script>
+
+    <h2>Cellar Tests</h2>
+    <hr/>
     <table style="width: 100%">
         <tr>
             <td>

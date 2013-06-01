@@ -12,8 +12,10 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Default</servlet-name>
+        <url-pattern>/js/*</url-pattern>
         <url-pattern>/img/*</url-pattern>
         <url-pattern>/css/*</url-pattern>
+        <url-pattern>/fonts/*</url-pattern>
     </servlet-mapping>
     
     <servlet>

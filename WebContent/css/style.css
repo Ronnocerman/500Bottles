@@ -156,7 +156,8 @@ p {
     display: inline-block;
     zoom: 1;
     *display: inline;
-    border: 1px solid #444444;
+    border: 1px solid #333333;
+    background: rgba(0, 0, 0, 0.4);
     width: 140px;
     height: 140px;
     position: relative;
