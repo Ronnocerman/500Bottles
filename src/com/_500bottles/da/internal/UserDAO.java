@@ -84,7 +84,7 @@ public class UserDAO extends DAO
 		return user;
 	}
 
-	public static boolean deleteUser(long userId) throws DAException
+	public static boolean deleteUser(long userId)
 	{
 		try
 		{

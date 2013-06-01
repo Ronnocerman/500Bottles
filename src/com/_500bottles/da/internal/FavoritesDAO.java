@@ -41,7 +41,6 @@ public class FavoritesDAO extends DAO
 
 	// Might not use one of the deletes
 	public static boolean deleteFavorite(long userId, Wine wine)
-			throws DAException
 	{
 		try
 		{
@@ -56,7 +55,7 @@ public class FavoritesDAO extends DAO
 		return true;
 	}
 
-	public static boolean deleteFavorite(Favorites favorite) throws DAException
+	public static boolean deleteFavorite(Favorites favorite)
 	{
 		try
 		{

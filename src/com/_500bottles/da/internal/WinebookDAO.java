@@ -81,19 +81,21 @@ public class WinebookDAO extends DAO
 	 * @throws DAException
 	 * @throws NullPointerException
 	 */
-	public static boolean deleteEntry(Entry entry) throws DAException,
-			NullPointerException
+	public static boolean deleteEntry(long entryId)
+	// NullPointerException
 	{
-		if (entry == null)
-			throw new NullPointerException("Entry object null.");
-
-		if (entry.getEntryId() == 0)
-			throw new DAException("Entry ID not set.");
+		/*
+		 * if (entry == null) throw new
+		 * NullPointerException("Entry object null.");
+		 * 
+		 * if (entry.getEntryId() == 0) throw new
+		 * DAException("Entry ID not set.");
+		 */
 
 		try
 		{
 
-			delete(WINEBOOK_TABLE, "entryId=" + entry.getEntryId());
+			delete(WINEBOOK_TABLE, "entryId=" + entryId);
 			Database.disconnect();
 		} catch (SQLException e)
 		{

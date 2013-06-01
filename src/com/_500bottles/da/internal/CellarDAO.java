@@ -87,10 +87,9 @@ public class CellarDAO extends DAO
 	 */
 
 	public static boolean deleteCellarItem(long cellarItemId)
-			throws DAException
 	{
-		if (cellarItemId == 0)
-			throw new DAException("CellarItem ID not set.");
+		// if (cellarItemId == 0)
+		// throw new DAException("CellarItem ID not set.");
 		try
 		{
 			delete(CELLARITEM_TABLE, "cellarItemId=" + cellarItemId);

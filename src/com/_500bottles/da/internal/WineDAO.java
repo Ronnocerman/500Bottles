@@ -74,7 +74,7 @@ public class WineDAO extends DAO
 
 	}
 
-	public static boolean deleteWine(Wine wine) throws DAException
+	public static boolean deleteWine(Wine wine)
 	{
 		try
 		{
