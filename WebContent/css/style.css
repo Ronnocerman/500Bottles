@@ -13,6 +13,24 @@
   -o-animation-delay: 1s;
   animation-delay: 1s; }
 
+.delay_02s {
+  -webkit-animation-delay: 0.2s;
+  -moz-animation-delay: 0.2s;
+  -o-animation-delay: 0.2s;
+  animation-delay: 0.2s; }
+
+.delay_05s {
+  -webkit-animation-delay: 0.5s;
+  -moz-animation-delay: 0.5s;
+  -o-animation-delay: 0.5s;
+  animation-delay: 0.5s; }
+
+.delay_07s {
+  -webkit-animation-delay: 0.7s;
+  -moz-animation-delay: 0.7s;
+  -o-animation-delay: 0.7s;
+  animation-delay: 0.7s; }
+
 .wrapper {
   position: relative;
   max-width: 1500px;
@@ -65,35 +83,48 @@
 .center {
   text-align: center; }
 
+html {
+  height: 100%; }
+
 html, body {
   position: relative;
   min-height: 100%;
-  min-width: 100%; }
+  min-width: 100%;
+  overflow-x: hidden; }
 
 body {
-  background-image: url("../img/light_wool.png");
-  background: url("../img/bg2.jpg") no-repeat left bottom;
-  background-size: auto 100%;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg2.jpg',sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg2.jpg',sizingMethod='scale')";
-  font-family: Roboto; }
+  background-color: black;
+  background-size: cover;
+  font-family: Roboto;
+  height: 100%;
+  background: url("../img/bg1.jpg") no-repeat center top;
+  background-size: 100% 100%;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg1.jpg',sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg1.jpg',sizingMethod='scale')"; }
 
 .view {
   overflow: hidden; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "LeagueGothicRegular";
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  color: white;
+  opacity: 0.6;
+  letter-spacing: 1px; }
 
 h1 {
-  font-size: 3em;
-  color: black; }
+  font-size: 3em; }
 
 h2 {
   font-size: 2.8em; }
 
 h3 {
   font-size: 2.4em; }
+
+p {
+  font-weight: 100;
+  line-height: 1.3em;
+  padding: 1em; }
 
 .light_bg {
   background-color: white; }
@@ -125,13 +156,12 @@ h3 {
     display: inline-block;
     zoom: 1;
     *display: inline;
-    border: 1px solid #bbbbbb;
+    border: 1px solid #444444;
     width: 140px;
     height: 140px;
     position: relative;
     margin: 0.3em;
     padding: 6px;
-    background-color: white;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) inset; }
     .wine_grid .wine img {
       width: 100%; }
@@ -341,7 +371,8 @@ footer {
   height: 100%;
   width: 100%;
   text-align: center;
-  z-index: 100; }
+  z-index: 100;
+  background-size: cover; }
   #view_login .wine_bottle {
     content: "";
     height: 975px;
@@ -365,6 +396,9 @@ footer {
     margin: 5% auto 0 auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     position: relative; }
+    #view_login form > *:not(.bg) {
+      position: relative;
+      z-index: 100; }
     #view_login form .person_icon input, #view_login form .password_icon input {
       padding-left: 12%;
       width: 84%; }
@@ -376,14 +410,15 @@ footer {
       margin-top: 4% !important; }
     #view_login form select {
       display: inline; }
-    #view_login form:before {
-      content: "";
+    #view_login form .bg {
       width: 100%;
       height: 100%;
       border: 40px solid rgba(0, 0, 0, 0.5);
       position: absolute;
+      z-index: 0;
       top: -40px;
-      left: -40px; }
+      left: -40px;
+      z-index: 0; }
   #view_login .forgot_signup {
     padding-top: 0.7em;
     font-size: 0.8em;
@@ -406,26 +441,55 @@ footer {
     width: 29%;
     text-align: center; }
 
-#home .create_account, #home .login {
-  width: 90%;
-  margin: 0 auto 0;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em; }
-#home .login {
-  margin-top: -2px; }
-#home .login_sidebar .light_bg {
-  padding-top: 0.6em;
-  padding-bottom: 0.6em;
-  position: relative;
-  width: 80%;
-  margin: 0.5em auto 0; }
-#home .wine_grid_container {
-  padding: 1em;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2) inset;
-  overflow: hidden;
-  background-image: url("../img/squairy_light.png");
+#home {
+  height: 100%;
+  width: 100%;
   position: relative; }
-  #home .wine_grid_container:before, #home .wine_grid_container:after {
+
+.dark_bg {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white; }
+
+#login_links {
+  margin-right: -100px; }
+  #login_links ul {
+    list-style: none;
+    padding: 0.5em 1.2em 0.3em 1.2em;
+    margin-top: 1em; }
+    #login_links ul li {
+      display: inline;
+      font-family: LeagueGothicRegular;
+      font-size: 2.8em;
+      text-transform: uppercase;
+      padding-right: 0.5em;
+      color: white;
+      opacity: 0.3;
+      cursor: pointer;
+      -webkit-transition: all 0.35s 0s;
+      -moz-transition: all 0.35s 0s;
+      -ms-transition: all 0.35s 0s;
+      -o-transition: all 0.35s 0s;
+      transition: all 0.35s 0s;
+      -webkit-transition-timing-function: default;
+      -moz-transition-timing-function: default;
+      -ms-transition-timing-function: default;
+      -o-transition-timing-function: default;
+      transition-timing-function: default; }
+      #login_links ul li:hover {
+        opacity: 0.8; }
+
+#popular_wines {
+  position: absolute;
+  width: 100%;
+  bottom: 5%; }
+  #popular_wines h2 {
+    padding-left: 0.6em; }
+
+.wine_grid_container {
+  padding: 1em;
+  overflow: hidden;
+  position: relative; }
+  .wine_grid_container:before, .wine_grid_container:after {
     content: "";
     width: 1px;
     height: 98%;
@@ -433,18 +497,18 @@ footer {
     top: 1%;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
     z-index: 50; }
-  #home .wine_grid_container:after {
+  .wine_grid_container:after {
     right: -1px; }
-  #home .wine_grid_container:before {
+  .wine_grid_container:before {
     left: -1px; }
-  #home .wine_grid_container h2 {
+  .wine_grid_container h2 {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     margin-top: -0.1em;
     margin-bottom: 0.2em;
     margin-right: 10px;
     margin-left: -30px;
     padding-left: 30px; }
-  #home .wine_grid_container .next, #home .wine_grid_container .prev {
+  .wine_grid_container .next, .wine_grid_container .prev {
     background: url("../img/icons/arrow.png") no-repeat center center;
     background-size: 100% 100%;
     filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/icons/arrow.png',sizingMethod='scale');
@@ -465,41 +529,23 @@ footer {
     transition-timing-function: default;
     opacity: 0.1;
     cursor: pointer; }
-  #home .wine_grid_container .prev {
+  .wine_grid_container .prev {
     -webkit-transform: rotate(-180deg);
     -moz-transform: rotate(-180deg);
     -ms-transform: rotate(-180deg);
     -o-transform: rotate(-180deg);
     transform: rotate(-180deg);
     left: -100px; }
-  #home .wine_grid_container .next {
+  .wine_grid_container .next {
     right: -100px; }
-  #home .wine_grid_container:hover .prev, #home .wine_grid_container:hover .next {
+  .wine_grid_container:hover .prev, .wine_grid_container:hover .next {
     opacity: 0.4; }
-    #home .wine_grid_container:hover .prev:hover, #home .wine_grid_container:hover .next:hover {
+    .wine_grid_container:hover .prev:hover, .wine_grid_container:hover .next:hover {
       opacity: 1; }
-  #home .wine_grid_container:hover .prev {
+  .wine_grid_container:hover .prev {
     left: -30px; }
-  #home .wine_grid_container:hover .next {
+  .wine_grid_container:hover .next {
     right: -30px; }
-#home #wine_search {
-  margin-top: 4.2em; }
-  #home #wine_search input {
-    padding: 2% 2% !important;
-    display: -moz-inline-stack;
-    display: inline-block;
-    zoom: 1;
-    *display: inline; }
-  #home #wine_search input[type="text"] {
-    width: 66%; }
-  #home #wine_search input[type="button"] {
-    margin-left: 2% !important;
-    margin-top: -4px !important;
-    width: 27%; }
-#home .advanced_link {
-  position: absolute;
-  bottom: 2.2em;
-  right: 4.6em; }
 
 @media screen and (min-width: 1200px) {
   .content_container {
@@ -507,10 +553,7 @@ footer {
 
   .column_100 {
     max-width: 1500px;
-    margin: 0 auto 0; }
-
-  body {
-    background-size: 100% auto; } }
+    margin: 0 auto 0; } }
 @media screen and (min-width: 960px) {
   .column_100.content > *, .column_100 .content,
   .column_66.content > *, .column_66 .content,

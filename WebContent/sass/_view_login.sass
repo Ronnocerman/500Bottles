@@ -2,9 +2,10 @@
   position: fixed
   height: 100%
   width: 100%
-  //background: rgba(white, 0.9)
   text-align: center
   z-index: 100
+  //@include background_image("bg2.jpg", 100%, 100%, center, top)
+  background-size: cover
 
   // Large wine bottle.
   .wine_bottle
@@ -30,6 +31,10 @@
     box-shadow: 0 0 10px rgba(black, 0.2)
     position: relative
 
+    &>*:not(.bg)
+      position: relative
+      z-index: 100
+
     .person_icon input, .password_icon input
       padding-left: 12%
       width:  84%
@@ -44,15 +49,16 @@
     select
       display: inline
 
-    &:before
+    .bg
       $BORDER: 40px
-      content: ""
       width: 100%
       height: 100%
       border: $BORDER solid rgba(black, 0.5)
       position: absolute
+      z-index: 0
       top: -$BORDER
       left: -$BORDER
+      z-index: 0
 
 
 

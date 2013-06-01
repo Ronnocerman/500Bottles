@@ -5,7 +5,10 @@
 
 	<!-- Loads typefaces for use in CSS pages -->
 	<link href='http://fonts.googleapis.com/css?family=Signika:300,400' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway+Dots' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:100' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Codystar:300' rel='stylesheet' type='text/css'>
 
 	<!-- Loads CSS files for use on page -->
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
@@ -17,8 +20,9 @@
 
 <body>
 
-<section id="view_login" class="view animated">
-    <form id="login_form" style="display: none">
+<section id="view_login" class="view animated no_display">
+
+    <form id="login_form" class="animated no_display">
         <div class="person_icon">
             <input id="email" type="text" value="email" class="square_bottom" />
         </div>
@@ -27,9 +31,10 @@
             <input id="faux_password" type="text" value="password" class="square_top" />
         </div>
         <input type="button" value="log in"/>
+        <div class="bg"></div>
     </form>
 
-    <form id="create_account_form">
+    <form id="create_account_form" class="animated no_display">
         <div class="form_group">
             <input id="create_account_firstname" type="text" value="first name" class="square_bottom" />
             <input id="create_account_lastname" type="text" value="last name" class="square_top" />
@@ -77,13 +82,100 @@
         </div>
 
         <input type="button" value="sign up"/>
+        <div class="bg"></div>
     </form>
-
-    <div class="forgot_signup">
-        <a class="light_link box_arrow" href="">forgot password</a>
-    </div>
-    <!--<div class="wine_bottle animated bounceInUp delay_1s"></div>-->
 </section>
+
+
+
+<section id="home" class="animated">
+
+    <section class="content_container clearfix">
+
+        <div class="column_66 animated" id="home_headings">
+            <h1 class="animated rotateInDownRight delay_1s" style="opacity: 1; text-shadow: 0 0 20px rgba(0,0,0,1);  font-family: 'Raleway'; font-size: 7em; font-weight: 100 ">The best wine app<br/> period</h1>
+            <p class="dark_bg no_display">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+
+        <div class="column_33">
+            <div class="content">
+
+                <nav class="dark_bg animated" id="login_links">
+                    <ul>
+                        <li id="sign_up_link">sign up</li>
+                        <li id="">about</li>
+                        <li id="log_in_link">log in</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <!--Popular Wines Grid-->
+    <section id="popular_wines" class="animated">
+        <div class="wine_grid_container dark_bg" data-rows="1">
+            <h2>Popular Today</h2>
+            <ul class="wine_grid">
+                <li class="wine">
+                    <img src="img/mockup/label_1.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_2.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_3.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_4.png" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_5.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_6.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_4.png" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_5.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_6.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_1.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_2.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_3.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_4.png" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_5.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_6.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_4.png" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_5.jpeg" />
+                </li>
+                <li class="wine">
+                    <img src="img/mockup/label_6.jpeg" />
+                </li>
+            </ul>
+            <div class="next"></div>
+            <div class="prev"></div>
+        </div>
+    </section>
+</section>  <!--End Home-->
 
 </body>
 </html>
