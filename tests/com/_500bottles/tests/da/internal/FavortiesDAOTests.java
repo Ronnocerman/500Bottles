@@ -1,5 +1,9 @@
 package com._500bottles.tests.da.internal;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import org.junit.Test;
 
 import com._500bottles.da.internal.FavoritesDAO;
@@ -11,11 +15,10 @@ public class FavortiesDAOTests
 {
 
 	@Test
-	public void testAddFavorites()
+	public void addFavorites() throws DAException
 	{
 		Favorites fave = new Favorites();
 
-		// fave.setfavoritesId(44);
 		fave.setWineId(20);
 
 		try
@@ -23,42 +26,29 @@ public class FavortiesDAOTests
 			FavoritesDAO.addFavorite(1, fave);
 		} catch (DAException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail(e.getMessage());
 		}
-
 	}
 
 	@Test
-	public void testDeleteFavorites()
+	public void deleteFavorites() throws DAException
 	{
 		Favorites fave = new Favorites();
 
-		// fave.setfavoritesId(44);
 		fave.setWineId(999);
 
 		try
 		{
 			fave = FavoritesDAO.addFavorite(1, fave);
+			assertTrue(FavoritesDAO.deleteFavorite(fave));
 		} catch (DAException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail(e.getMessage());
 		}
-
-		try
-		{
-			FavoritesDAO.deleteFavorite(fave);
-		} catch (DAException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 
 	@Test
-	public void testDeletebyWine()
+	public void deletebyWine() throws DAException
 	{
 		Wine wine = new Wine();
 		wine.setId(789);
@@ -68,51 +58,76 @@ public class FavortiesDAOTests
 		try
 		{
 			FavoritesDAO.addFavorite(20, fave);
+			assertTrue(FavoritesDAO.deleteFavorite(20, wine));
 		} catch (DAException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try
-		{
-			FavoritesDAO.deleteFavorite(20, wine);
-		} catch (DAException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail(e.getMessage());
 		}
 
 	}
 
 	@Test
-	public void testEditFavorites()
+	public void editFavorites() throws DAException
 	{
 		Favorites fave = new Favorites();
 
-		// fave.setfavoritesId(44);
 		fave.setWineId(30);
 
 		try
 		{
 			fave = FavoritesDAO.addFavorite(1, fave);
+			fave.setWineId(69);
+			FavoritesDAO.editFavorite(fave);
+
+			assertEquals(FavoritesDAO.getFavorite(fave).getWineId(), 69);
 		} catch (DAException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail(e.getMessage());
 		}
+	}
 
-		fave.setWineId(69);
+	@Test
+	public void getFavoritesByFavoritesId()
+	{
+		Favorites fave = new Favorites();
+
+		fave.setWineId(250);
 
 		try
 		{
-			FavoritesDAO.editFavorite(fave);
+			FavoritesDAO.addFavorite(52, fave);
+
+			long faveId = fave.getfavoritesId();
+
+			assertEquals(FavoritesDAO.getFavorite(fave.getfavoritesId())
+					.getfavoritesId(), faveId);
+			assertEquals(FavoritesDAO.getFavorite(fave.getfavoritesId())
+					.getWineId(), 500);
 		} catch (DAException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail(e.getMessage());
 		}
-
 	}
 
+	@Test
+	public void getFavoritesByFavorites()
+	{
+		Favorites fave = new Favorites();
+
+		fave.setWineId(500);
+
+		try
+		{
+			FavoritesDAO.addFavorite(1000, fave);
+
+			long faveId = fave.getfavoritesId();
+
+			assertEquals(FavoritesDAO.getFavorite(fave).getfavoritesId(),
+					faveId);
+			assertEquals(FavoritesDAO.getFavorite(fave).getWineId(), 500);
+		} catch (DAException e)
+		{
+			fail(e.getMessage());
+		}
+	}
 }

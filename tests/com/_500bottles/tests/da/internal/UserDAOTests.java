@@ -1,5 +1,7 @@
 package com._500bottles.tests.da.internal;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Date;
@@ -21,11 +23,14 @@ import com._500bottles.object.user.User;
 @RunWith(JUnit4.class)
 public class UserDAOTests
 {
+	boolean test = false;
+	User nullUser;
+
+	@SuppressWarnings("deprecation")
 	@Test
-	public void testInsertUser()
+	public void addUser() throws DAException
 	{
 		User user = new User();
-		// System.out.println("supsup");
 		Date date = new Date(90, 11, 25);
 		Date regDate = new Date();
 		Date lastLogin = new Date();
@@ -45,32 +50,58 @@ public class UserDAOTests
 		user.setEmail("elisa@gmail.com");
 		user.setFirstName("Rose");
 		user.setLastName("Shaw");
-
-		Sex s = Sex.female;
-
-		user.setSex(s);
+		user.setSex(Sex.female);
 		user.setHeight(52);
 		user.setWeight(110);
 		user.setAdmin(0);
 
-		// System.out.println("hay");
 		try
 		{
 			UserDAO.addUser(user);
 
 		} catch (DAException e)
 		{
-			// e.printStackTrace();
-			// fail();
+			fail(e.getMessage());
 		}
-
 	}
 
 	@Test
-	public void testDeleteUser()
+	public void addUserWithSameEmail() throws DAException
 	{
-		ApplicationUser user = new User(); //
-		// System.out.println("supsup");
+		User user = new User();
+
+		user.setEmail("elisa@gmail.com");
+
+		try
+		{
+			UserDAO.addUser(user);
+			fail();
+
+		} catch (DAException e)
+		{
+			if (test)
+				fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void addNullUser() throws NullPointerException, DAException
+	{
+		try
+		{
+			UserDAO.addUser(nullUser);
+		} catch (NullPointerException e)
+		{
+			if (test)
+				fail(e.getMessage());
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	@Test
+	public void deleteUser() throws DAException
+	{
+		ApplicationUser user = new User();
 		Date date = new Date(90, 11, 25);
 		Date regDate = new Date();
 		Date lastLogin = new Date();
@@ -89,119 +120,48 @@ public class UserDAOTests
 		user.setEmail("fjdksal@gmail.com");
 		user.setFirstName("Chris");
 		user.setLastName("THIS SHIT BETTER NOT BE IN THE DB");
-
-		Sex s = Sex.female;
-
-		user.setSex(s);
+		user.setSex(Sex.female);
 		user.setHeight(52);
 		user.setWeight(110);
 		user.setAdmin(0);
 
-		// System.out.println("hay");
 		try
 		{
-			// System.out.println("NOW ADDING USER");
 			user = UserDAO.addUser(user);
+			assertTrue(UserDAO.deleteUser(user.getUserId()));
 		} catch (DAException e)
 		{
-			e.printStackTrace();
-			fail();
+			if (test)
+				fail(e.getMessage());
 		}
-
-		// System.out.println("userFIRST: " + user.getUserId());
-
-		try
-		{
-			UserDAO.deleteUser(user);
-		} catch (DAException e)
-		{
-			e.printStackTrace();
-			fail();
-		}
-
 	}
 
 	@Test
-	public void testgetDeleteUser()
+	public void deleteNullUser() throws NullPointerException, DAException
 	{
-		// ApplicationUser u1 = null;
-		// ApplicationUser u2 = null;
-		// ApplicationUser u3 = null;
-
 		try
 		{
-			UserDAO.deleteUser(30);
-			UserDAO.deleteUser(31);
-			UserDAO.deleteUser(32);
-		} catch (DAException e)
+			UserDAO.deleteUser(nullUser.getUserId());
+		} catch (NullPointerException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (test)
+			{
+				fail(e.getMessage());
+			}
 		}
-		try
-		{
-			UserDAO.deleteUser(27);
-		} catch (DAException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
-	public void testEditUser()
+	public void editUser() throws DAException
 	{
-		ApplicationUser user = null;
+		ApplicationUser getUser;
 
-		try
-		{
-			user = UserDAO.getUser(82);
-		} catch (DAException e)
-		{
-			fail();
-		}
-
-		// System.out.println("does it go here?");
-		try
-		{
-			Sex sex = Sex.male;
-			user.setSex(sex);
-			// System.out.println("THE DATE 1: " + user.getDOB());
-			user.setLastName("Ngo");
-			Date date = new Date();
-			user.setLastLogin(date);
-			// System.out.println("THE DATE 2: " + user.getDOB());
-		} catch (Exception e)
-		{
-			fail();
-		}
-		// System.out.println("THE DATE: 3 " + user.getDOB());
-		try
-		{
-			UserDAO.editUser(user);
-			// System.out.println("THE DATE 4: " + user.getDOB());
-		} catch (DAException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// TODO: confirm that the user is actually edited by getting user back
-		// and checking with
-		// tests
-
-	}
-
-	@Test
-	public void testgetUserbyEmail()
-	{
-
-		ApplicationUser user = new User();
-		// System.out.println("supsup");
-		Date date = new Date(90, 11, 25);
+		User user = new User();
+		Date date = new Date(84, 10, 18);
 		Date regDate = new Date();
-		Date lastLogin = new Date();
-		char[] pw = new String("password").toCharArray();
+		Date lastLogin = new Date(112, 1, 1);
+		char[] pw = new String("12qw!@QW").toCharArray();
 
 		byte[] password = new byte[pw.length];
 		for (int i = 0; i < pw.length; i++)
@@ -214,44 +174,239 @@ public class UserDAOTests
 		user.setLastLogin(lastLogin);
 		user.setDOB(date);
 		user.setPassword(password);
+		user.setEmail("ysc001@ucsd.edu");
+		user.setFirstName("Yun Sung");
+		user.setLastName("Choi");
+		user.setSex(Sex.male);
+		user.setHeight(55);
+		user.setWeight(140);
+		user.setAdmin(0);
+
+		try
+		{
+			UserDAO.addUser(user);
+			getUser = UserDAO.getUser(user.getUserId());
+
+			char[] pwd = new String("new12QW!@").toCharArray();
+
+			byte[] newPassword = new byte[pw.length];
+			for (int i = 0; i < pwd.length; i++)
+			{
+				newPassword[i] = (byte) pw[i];
+
+			}
+
+			getUser.setLastLogin(new Date());
+			getUser.setDOB(new Date(92, 9, 2));
+			getUser.setPassword(newPassword);
+			getUser.setEmail("new@ucsd.edu");
+			getUser.setFirstName("Y");
+			getUser.setLastName("C");
+			getUser.setSex(Sex.female);
+			getUser.setHeight(72);
+			getUser.setWeight(200);
+
+			UserDAO.editUser(getUser);
+
+			getUser = UserDAO.getUser(getUser.getUserId());
+			assertEquals(getUser.getEmail(), "new@ucsd.edu");
+
+		} catch (DAException e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void editNullUser() throws NullPointerException, DAException
+	{
+		try
+		{
+			UserDAO.editUser(nullUser);
+		} catch (NullPointerException e)
+		{
+			if (test)
+			{
+				fail(e.getMessage());
+			}
+		}
+	}
+
+	@Test
+	public void editUserWithIdZero() throws DAException
+	{
+		ApplicationUser user0 = new User();
+		user0.setUserId(0);
+
+		try
+		{
+			UserDAO.editUser(user0);
+			fail();
+		} catch (DAException e)
+		{
+			if (test)
+			{
+				fail(e.getMessage());
+			}
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	@Test
+	public void getUserById() throws DAException
+	{
+		ApplicationUser getUser;
+
+		User user = new User();
+		Date date = new Date(60, 1, 8);
+		Date regDate = new Date();
+		Date lastLogin = new Date(113, 3, 3);
+		char[] pw = new String("12qw!@QW123").toCharArray();
+
+		byte[] password = new byte[pw.length];
+		for (int i = 0; i < pw.length; i++)
+		{
+			password[i] = (byte) pw[i];
+
+		}
+
+		user.setRegistrationDate(regDate);
+		user.setLastLogin(lastLogin);
+		user.setDOB(date);
+		user.setPassword(password);
+		user.setEmail("old@ucsd.edu");
+		user.setFirstName("Some");
+		user.setLastName("Body");
+		user.setSex(Sex.male);
+		user.setHeight(65);
+		user.setWeight(100);
+		user.setAdmin(0);
+
+		try
+		{
+			UserDAO.addUser(user);
+			getUser = UserDAO.getUser(user.getUserId());
+
+			assertEquals(getUser.getEmail(), "old@ucsd.edu");
+
+		} catch (DAException e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void getUserByIdWithNullUser() throws NullPointerException,
+			DAException
+	{
+		try
+		{
+			UserDAO.getUser(nullUser.getUserId());
+		} catch (NullPointerException e)
+		{
+			if (test)
+			{
+				fail(e.getMessage());
+			}
+		}
+	}
+
+	@Test
+	public void getUserByIdWithIdZero() throws DAException
+	{
+		ApplicationUser user0 = new User();
+		user0.setUserId(0);
+
+		try
+		{
+			UserDAO.getUser(user0.getUserId());
+			fail();
+		} catch (DAException e)
+		{
+			if (test)
+			{
+				fail(e.getMessage());
+			}
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	@Test
+	public void getUserByEmail() throws DAException
+	{
+		ApplicationUser user = new User();
+		Date date = new Date(95, 11, 25);
+		Date regDate = new Date();
+		Date lastLogin = new Date();
+		char[] pw = new String("password95").toCharArray();
+
+		byte[] password = new byte[pw.length];
+		for (int i = 0; i < pw.length; i++)
+		{
+			password[i] = (byte) pw[i];
+		}
+
+		user.setRegistrationDate(regDate);
+		user.setLastLogin(lastLogin);
+		user.setDOB(date);
+		user.setPassword(password);
 		user.setEmail("jess@gmail.com");
-		user.setFirstName("Rose");
-		user.setLastName("Shaw");
+		user.setFirstName("Jane");
+		user.setLastName("D");
 
 		Sex s = Sex.female;
 
 		user.setSex(s);
-		user.setHeight(52);
-		user.setWeight(110);
+		user.setHeight(45);
+		user.setWeight(90);
 		user.setAdmin(0);
 
-		// System.out.println("hay");
 		try
 		{
-			user = UserDAO.addUser(user);
+			UserDAO.addUser(user);
+
+			ApplicationUser getUser = UserDAO.getUserByEmail(user.getEmail());
+
+			assertEquals(getUser.getFirstName(), "Jane");
 
 		} catch (DAException e)
 		{
-			// e.printStackTrace();
-			// fail();
+			fail(e.getMessage());
 		}
-
-		String sexy = new String("jess@gmail.com");
-		ApplicationUser user2 = null;
-		try
-		{
-			user2 = UserDAO.getUserByEmail(sexy);
-		} catch (DAException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		if (user2.getUserId() != user.getUserId())
-		{
-			fail();
-		}
-
 	}
 
+	@Test
+	public void getUserByEmailWithNullUser() throws NullPointerException,
+			DAException
+	{
+		try
+		{
+			UserDAO.getUserByEmail(nullUser.getEmail());
+		} catch (NullPointerException e)
+		{
+			if (test)
+			{
+				fail(e.getMessage());
+			}
+		}
+	}
+
+	@Test
+	public void getUserByEmailWithIdZero() throws DAException
+	{
+		ApplicationUser user0 = new User();
+		user0.setUserId(0);
+
+		try
+		{
+			UserDAO.getUserByEmail(user0.getEmail());
+			fail();
+		} catch (DAException e)
+		{
+			if (test)
+			{
+				fail(e.getMessage());
+			}
+		}
+	}
 }
