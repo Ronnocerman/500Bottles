@@ -6,8 +6,6 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com._500bottles.exception.da.ConnectionException;
-
 /**
  * Abstract Data Access Object. This object is extended by all DAO objects to
  * provide easy interfaces to insert, delete, update and select rows from the
@@ -36,7 +34,7 @@ public abstract class DAO
 	 * @throws ClassNotFoundException
 	 */
 	protected static int insert(String table, String columns, String values)
-			throws SQLException, ConnectionException
+			throws SQLException
 	{
 		String sql = "INSERT INTO " + table + " ";
 		sql += columns + " ";
@@ -70,8 +68,7 @@ public abstract class DAO
 	 * @throws SQLException
 	 * @throws ConnectionException
 	 */
-	protected static int delete(String table, String where)
-			throws SQLException, ConnectionException
+	protected static int delete(String table, String where) throws SQLException
 	{
 		String sql = "DELETE FROM " + table + " WHERE " + where + ";";
 
@@ -92,7 +89,7 @@ public abstract class DAO
 	 * @throws ConnectionException
 	 */
 	protected static int update(String table, String set, String where)
-			throws SQLException, ConnectionException
+			throws SQLException
 	{
 		String sql = "UPDATE " + table + " SET " + set + " WHERE " + where
 				+ ";";
@@ -115,7 +112,7 @@ public abstract class DAO
 	 * @throws ConnectionException
 	 */
 	protected static ResultSet select(String table, String select, String where)
-			throws SQLException, ConnectionException
+			throws SQLException
 	{
 		String sql = "SELECT " + select + " FROM " + table;
 		sql += " WHERE " + where + ";";
@@ -124,7 +121,7 @@ public abstract class DAO
 	}
 
 	protected static ResultSet select(String table, String select)
-			throws SQLException, ConnectionException
+			throws SQLException
 	{
 		String sql = "SELECT " + select + " FROM " + table + ";";
 

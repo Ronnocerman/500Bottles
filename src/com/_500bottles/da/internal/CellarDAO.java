@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import com._500bottles.config.Config;
-import com._500bottles.exception.da.ConnectionException;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.cellar.CellarItem;
 import com._500bottles.object.wine.Wine;
@@ -51,9 +50,6 @@ public class CellarDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed CellarItem insertion.", e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 
 		item.setCellarItemId(getLastInsertId());
@@ -102,9 +98,6 @@ public class CellarDAO extends DAO
 		{
 			return false;
 			// throw new DAException("Failed CellarItem deletion.", e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 		return true;
 	}
@@ -143,9 +136,6 @@ public class CellarDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed CellarItem update.", e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 		return item;
 	}
@@ -206,9 +196,6 @@ public class CellarDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("CellarItem does not exist.");
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 		try
 		{
@@ -240,9 +227,6 @@ public class CellarDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("CellarItem does not exist.");
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 		try
 		{
@@ -330,9 +314,6 @@ public class CellarDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("SQL select exception", e.getCause());
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 
 		return wineVector;

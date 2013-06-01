@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com._500bottles.config.Config;
-import com._500bottles.exception.da.ConnectionException;
+import com._500bottles.exception.da.ConnectionError;
 import com.mysql.jdbc.Statement;
 
 /**
@@ -32,7 +32,7 @@ public class Database
 	 * @throws ConnectionException
 	 */
 	public static ResultSet readQuery(String q) throws SQLException,
-			ConnectionException
+			ConnectionError
 	{
 		PreparedStatement p;
 		ResultSet r;
@@ -44,8 +44,7 @@ public class Database
 				conn = connect();
 			} catch (SQLException e)
 			{
-				throw new ConnectionException(
-						"Connection failed when trying to read.");
+				throw new ConnectionError("Not connected to database");
 			}
 		}
 		// System.out.println("before prep");
@@ -66,8 +65,7 @@ public class Database
 	 * @throws SQLException
 	 * @throws ConnectionException
 	 */
-	public static int modQuery(String q) throws SQLException,
-			ConnectionException
+	public static int modQuery(String q) throws SQLException, ConnectionError
 	{
 		PreparedStatement p;
 		int i;
@@ -81,8 +79,7 @@ public class Database
 					conn = connect();
 				} catch (SQLException e)
 				{
-					throw new ConnectionException(
-							"Connection failed when trying to read.");
+					throw new ConnectionError("Not connected to database");
 				}
 			}
 			p = conn.prepareStatement(q);

@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import com._500bottles.config.Config;
-import com._500bottles.exception.da.ConnectionException;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.user.ApplicationUser;
 import com._500bottles.object.user.Sex;
@@ -76,15 +75,9 @@ public class UserDAO extends DAO
 			} catch (SQLException e)
 			{
 				throw new DAException(e.getMessage(), e);
-			} catch (ConnectionException e)
-			{
-				throw new DAException("Not connected to database");
 			}
 
 			return user;
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 		user.setUserId(Database.getLastInsertId());
 		// System.out.println("userIdinAdd: " + user.getUserId());
@@ -100,9 +93,6 @@ public class UserDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException(e.getMessage(), e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 	}
 
@@ -141,9 +131,6 @@ public class UserDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed User update.", e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 	}
 
@@ -161,9 +148,6 @@ public class UserDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException(e.getMessage(), e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 
 		return user;
@@ -182,9 +166,6 @@ public class UserDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("User with email: " + email + " not found");
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 		try
 		{

@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com._500bottles.config.Config;
-import com._500bottles.exception.da.ConnectionException;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Favorites;
 import com._500bottles.object.wine.Wine;
@@ -33,9 +32,6 @@ public class FavoritesDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Favorites insertion", e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 
 		favorite.setfavoritesId(DAO.getLastInsertId());
@@ -55,9 +51,6 @@ public class FavoritesDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Favorites deletion", e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 	}
 
@@ -70,9 +63,6 @@ public class FavoritesDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Favorites deletion", e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 	}
 
@@ -91,9 +81,6 @@ public class FavoritesDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Favorites update", e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 	}
 
@@ -110,9 +97,6 @@ public class FavoritesDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("SQL select exception.", e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 
 		return favorite;

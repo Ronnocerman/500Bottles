@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com._500bottles.config.Config;
-import com._500bottles.exception.da.ConnectionException;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.geolocation.GeoLocation;
 import com._500bottles.object.wine.Appellation;
@@ -67,9 +66,6 @@ public class WineDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Wine insertion", e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 
 		wine.setId(getLastInsertId());
@@ -87,11 +83,7 @@ public class WineDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Wine deletion", e.getCause());
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
-
 	}
 
 	public static void editWine(Wine wine) throws DAException
@@ -123,9 +115,6 @@ public class WineDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Wine update", e);
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 	}
 
@@ -159,11 +148,7 @@ public class WineDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException("SQL select exception.", e.getCause());
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
-
 		return wine;
 	}
 
@@ -181,9 +166,6 @@ public class WineDAO extends DAO
 		} catch (SQLException e)
 		{
 			throw new DAException(e.getMessage(), e.getCause());
-		} catch (ConnectionException e)
-		{
-			throw new DAException("Not connected to database");
 		}
 		return wine;
 	}
