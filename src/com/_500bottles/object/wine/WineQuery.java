@@ -1,6 +1,5 @@
 package com._500bottles.object.wine;
 
-import java.util.Date;
 import java.util.Vector;
 
 import com._500bottles.object.geolocation.GeoLocation;
@@ -10,22 +9,25 @@ import com._500bottles.object.geolocation.GeoLocation;
  */
 public class WineQuery
 {
-
+	private final static int DEFAULT_OFFSET = 0;
+	private final static int DEFAULT_SIZE = 5;
 	private final static Vector<Long> DEFAULT_IDS = new Vector<Long>();
 	private final static String DEFAULT_TEXT_QUERY = "";
 	private final static String DEFAULT_NAME_CONTAINS = "";
 	private final static String DEFAULT_DESC_CONTAINS = "";
 	private final static GeoLocation DEFAULT_GEOLOCATION = null;
 	private final static int DEFAULT_DISTANCE = -1;
-	private final static WineType DEFAULT_WINE_TYPE = null;
-	private final static Date DEFAULT_MIN_YEAR = null;
-	private final static Date DEFAULT_MAX_YEAR = null;
-	private final static Appellation DEFAULT_APPELLATION = null;
+	private final static Vector<WineType> DEFAULT_WINE_TYPE = new Vector<WineType>();
+	private final static long DEFAULT_MIN_YEAR = 0;
+	private final static long DEFAULT_MAX_YEAR = 0;
+	private final static Vector<Appellation> DEFAULT_APPELLATION = new Vector<Appellation>();
 	private final static Vector<Varietal> DEFAULT_VARIETAL = new Vector<Varietal>();
 	private final static Vector<Vineyard> DEFAULT_VINEYARD = new Vector<Vineyard>();
 	private final static double DEFAULT_MIN_RATING = -1.0;
 	private final static double DEFAULT_MAX_RATING = -1.0;
 
+	private int offset;
+	private int size;
 	/*  */
 	private Vector<Long> ids;
 
@@ -45,16 +47,16 @@ public class WineQuery
 	private int distance;
 
 	/*  */
-	private WineType type;
+	private Vector<WineType> type;
 
 	/*  */
-	private Date minYear;
+	private long minYear;
 
 	/*  */
-	private Date maxYear;
+	private long maxYear;
 
 	/*  */
-	private Appellation appellation;
+	private Vector<Appellation> appellation;
 
 	/*  */
 	private Vector<Varietal> varietal;
@@ -220,7 +222,7 @@ public class WineQuery
 	 * 
 	 * @return WineType for this query or null.
 	 */
-	public WineType getType()
+	public Vector<WineType> getType()
 	{
 		return type;
 	}
@@ -228,11 +230,11 @@ public class WineQuery
 	/**
 	 * Sets the WineType for this query.
 	 * 
-	 * @param type
+	 * @param defaultWineType
 	 */
-	public void setType(WineType type)
+	public void setType(Vector<WineType> defaultWineType)
 	{
-		this.type = type;
+		this.type = defaultWineType;
 	}
 
 	/**
@@ -241,7 +243,7 @@ public class WineQuery
 	 * 
 	 * @return Minimum year for this query or null.
 	 */
-	public Date getMinYear()
+	public long getMinYear()
 	{
 		return minYear;
 	}
@@ -251,7 +253,7 @@ public class WineQuery
 	 * 
 	 * @param minYear
 	 */
-	public void setMinYear(Date minYear)
+	public void setMinYear(long minYear)
 	{
 		this.minYear = minYear;
 	}
@@ -262,7 +264,7 @@ public class WineQuery
 	 * 
 	 * @return Maximum year for this query or null.
 	 */
-	public Date getMaxYear()
+	public long getMaxYear()
 	{
 		return maxYear;
 	}
@@ -272,7 +274,7 @@ public class WineQuery
 	 * 
 	 * @param maxYear
 	 */
-	public void setMaxYear(Date maxYear)
+	public void setMaxYear(long maxYear)
 	{
 		this.maxYear = maxYear;
 	}
@@ -282,7 +284,7 @@ public class WineQuery
 	 * 
 	 * @return Appellation for this query or null.
 	 */
-	public Appellation getAppellation()
+	public Vector<Appellation> getAppellation()
 	{
 		return appellation;
 	}
@@ -290,11 +292,11 @@ public class WineQuery
 	/**
 	 * Sets the Appellation for this query.
 	 * 
-	 * @param appellation
+	 * @param defaultAppellation
 	 */
-	public void setAppellation(Appellation appellation)
+	public void setAppellation(Vector<Appellation> defaultAppellation)
 	{
-		this.appellation = appellation;
+		this.appellation = defaultAppellation;
 	}
 
 	/**
@@ -379,5 +381,25 @@ public class WineQuery
 	public void setMaxRating(double maxRating)
 	{
 		this.maxRating = maxRating;
+	}
+
+	public int getSize()
+	{
+		return size;
+	}
+
+	public void setSize(int size)
+	{
+		this.size = size;
+	}
+
+	public int getOffset()
+	{
+		return offset;
+	}
+
+	public void setOffset(int offset)
+	{
+		this.offset = offset;
 	}
 }

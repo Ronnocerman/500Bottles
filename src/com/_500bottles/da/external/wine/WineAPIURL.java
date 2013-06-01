@@ -83,7 +83,7 @@ public class WineAPIURL
 		otherInStock = o.getString();
 	}
 
-	public void addToUrl(Search o)
+	public void addToURL(Search o)
 	{
 		otherSearch = o.getString();
 	}
@@ -157,4 +157,5 @@ public class WineAPIURL
 		return temp;
 
 	}
+
 }
