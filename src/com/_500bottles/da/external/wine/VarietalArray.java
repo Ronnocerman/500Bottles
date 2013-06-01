@@ -4,18 +4,18 @@ import java.util.HashMap;
 
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 
-public class Varietal extends Attribute
+public class VarietalArray extends Attribute
 {
 	private static String errormsg = "Invalid Varietal";
 
-	public Varietal(String varietal) throws InvalidCategory
+	public VarietalArray(String varietal) throws InvalidCategory
 	{
 		super(errormsg);
 		this.setCategory(varietal);
 	}
 
 	@Override
-	protected void initCategoryAttributeMap()
+	protected void initcategoryAttributeMap()
 	{
 		categoryAttributeMap = new HashMap<String, String>();
 		categoryAttributeMap.put("Cabernet Sauvignon", "139");

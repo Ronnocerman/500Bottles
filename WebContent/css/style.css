@@ -97,6 +97,7 @@ body {
   background-size: cover;
   font-family: Roboto;
   height: 100%;
+  text-size: 16px;
   background: url("../img/bg1.jpg") no-repeat center top;
   background-size: 100% 100%;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg1.jpg',sizingMethod='scale');
@@ -494,7 +495,7 @@ footer {
   color: white; }
 
 #login_links {
-  margin-right: -100px; }
+  margin-right: -1000px; }
   #login_links ul {
     list-style: none;
     padding: 0.5em 1.2em 0.3em 1.2em;

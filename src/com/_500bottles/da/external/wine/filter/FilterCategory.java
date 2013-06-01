@@ -4,18 +4,29 @@ import com._500bottles.da.external.wine.Attribute;
 
 public class FilterCategory extends Filter
 {
-	public FilterCategory(Attribute a)
+	public FilterCategory()
 	{
 		_filter = "categories";
-		_filter = _filter + "(" + a.getAttribute() + ")";
+	}
+
+	public FilterCategory(Attribute a)
+	{
+		if (a.getAttribute() != null)
+		{
+			_filter = "categories";
+			_filter = _filter + "(" + a.getAttribute() + ")";
+		}
 	}
 
 	public void addAttribute(Attribute a)
 	{
-		if (_filter.indexOf('(') == -1)
-			_filter = _filter + "(" + a.getAttribute() + ")";
-		else
-			_filter = _filter.substring(0, _filter.length() - 1) + "+"
-					+ a.getAttribute() + ")";
+		if (a.getAttribute() != null)
+		{
+			if (_filter.indexOf('(') == -1)
+				_filter = _filter + "(" + a.getAttribute() + ")";
+			else
+				_filter = _filter.substring(0, _filter.length() - 1) + "+"
+						+ a.getAttribute() + ")";
+		}
 	}
 }

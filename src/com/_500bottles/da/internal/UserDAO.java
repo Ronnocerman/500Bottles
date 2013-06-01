@@ -128,7 +128,7 @@ public class UserDAO extends DAO
 		sql += ",weight=" + user.getWeight();
 		sql += ",admin=" + user.isAdmin();
 
-		System.out.println(sql);
+		// System.out.println(sql);
 		try
 		{
 			update(USER_TABLE, sql, "userId=" + userId);
@@ -201,7 +201,7 @@ public class UserDAO extends DAO
 
 		int admin;
 		boolean real = r.next();
-		System.out.println(real);
+		// System.out.println(real);
 		// Return null if there was no entry in the ResultSet.
 		if (!real)
 			return null;
