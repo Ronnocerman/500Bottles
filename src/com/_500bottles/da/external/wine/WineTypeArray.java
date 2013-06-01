@@ -14,8 +14,7 @@ public class WineTypeArray extends Attribute
 		this.setCategory(winetype);
 	}
 
-	@Override
-	protected void initcategoryAttributeMap()
+	protected void initCategoryAttributeMap()
 	{
 		categoryAttributeMap = new HashMap<String, String>();
 		categoryAttributeMap.put("all", "490");

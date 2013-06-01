@@ -14,7 +14,7 @@ public class AppellationArray extends Attribute
 		this.setCategory(appellation);
 	}
 
-	protected void initcategoryAttributeMap()
+	protected void initCategoryAttributeMap()
 	{
 		categoryAttributeMap = new HashMap<String, String>();
 
@@ -139,4 +139,5 @@ public class AppellationArray extends Attribute
 		categoryAttributeMap.put("Sardinia", "2315");
 
 	}
+
 }
