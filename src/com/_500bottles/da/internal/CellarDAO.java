@@ -90,7 +90,8 @@ public class CellarDAO extends DAO
 	 * }
 	 */
 
-	public static void deleteCellarItem(long cellarItemId) throws DAException
+	public static boolean deleteCellarItem(long cellarItemId)
+			throws DAException
 	{
 		if (cellarItemId == 0)
 			throw new DAException("CellarItem ID not set.");
@@ -99,11 +100,13 @@ public class CellarDAO extends DAO
 			delete(CELLARITEM_TABLE, "cellarItemId=" + cellarItemId);
 		} catch (SQLException e)
 		{
-			throw new DAException("Failed CellarItem deletion.", e);
+			return false;
+			// throw new DAException("Failed CellarItem deletion.", e);
 		} catch (ConnectionException e)
 		{
 			throw new DAException("Not connected to database");
 		}
+		return true;
 	}
 
 	/*
