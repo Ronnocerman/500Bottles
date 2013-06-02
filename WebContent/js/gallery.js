@@ -2,7 +2,7 @@
  *
  */
 (function(){
-
+  console.log("running gallery...", $(".wine_grid_container"));
   /* Parent of image gallery jQuery selector. */
   var GALLERY_PARENT_SEL = ".wine_grid_container";
 
@@ -38,11 +38,6 @@
 
   /* Max number of images per row. */
   var images_per_row;     // calculated by build_gallery()
-
-  /* Event bindings */
-  $(window).on("ready", build_gallery);
-  $(window).on("ready", bind_events);
-  $(window).on("resize", on_window_resize);
 
   /* Binds button event handlers. */
   function bind_events() {
@@ -164,4 +159,10 @@
     $(GALLERY_CONTAINER_SEL).css("margin-left", gallery_position + "px");
   }
 
+    /* Fire Away! */
+    build_gallery();
+    bind_events();
+//    $(window).on("ready", build_gallery);
+//    $(window).on("ready", bind_events);
+    $(window).on("resize", on_window_resize);
 })();
