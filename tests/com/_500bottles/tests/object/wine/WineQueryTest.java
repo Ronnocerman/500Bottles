@@ -3,10 +3,7 @@ package com._500bottles.tests.object.wine;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Vector;
 
 import org.junit.After;
@@ -25,11 +22,12 @@ public class WineQueryTest
 	Vector<Long> id;
 	Vector<Varietal> varietal;
 	Vector<Vineyard> vineyard;
-	WineType type;
-	Date minYear;
-	Date maxYear;
+	Vector<WineType> wineType;
+	long minYear;
+	long maxYear;
 	Varietal moscato;
 	Vineyard napa;
+	WineType red;
 
 	@Before
 	public void setUp()
@@ -39,26 +37,27 @@ public class WineQueryTest
 		id = new Vector<Long>();
 		varietal = new Vector<Varietal>();
 		vineyard = new Vector<Vineyard>();
-		type = new WineType();
-		minYear = new Date();
-		maxYear = new Date();
+		wineType = new Vector<WineType>();
+		minYear = 0;
+		maxYear = 0;
 		moscato = new Varietal();
 		napa = new Vineyard();
+		red = new WineType("Red");
 
 		id.add(new Long(100));
 		id.add(new Long(101));
-		type.setWineType("White");
 		moscato.setGrapeType("Moscato");
 		varietal.add(moscato);
 		napa.setName("Some place");
 		vineyard.add(napa);
+		wineType.add(red);
 
 		query2.setIds(id);
 		query2.setTextQuery("Something");
 		query2.setNameContains("NSFW");
 		query2.setDescriptionContains("Good");
 		query2.setDistance(20);
-		query2.setType(type);
+		query2.setType(wineType);
 		query2.setMinYear(minYear);
 		query2.setMaxYear(maxYear);
 		query2.setVarietal(varietal);
@@ -90,12 +89,6 @@ public class WineQueryTest
 		ids.add(new Long(12));
 		query1.setIds(ids);
 		assertEquals(query1.getIds().get(0).longValue(), 12);
-	}
-
-	@Test
-	public void setIdWithOther()
-	{
-		fail("Need to check for illegal arguments");
 	}
 
 	@Test
@@ -155,77 +148,50 @@ public class WineQueryTest
 	}
 
 	@Test
-	public void setDistanceWithNegative()
-	{
-		fail("Need to check for illegal arguments");
-	}
-
-	@Test
 	public void getType()
 	{
-		assertEquals(query1.getType(), null);
-		assertEquals(query2.getType().getWineType(), "White");
+		assertTrue(query1.getType().isEmpty());
+		assertEquals(query2.getType().get(0).getWineType(), "Red");
 	}
 
 	@Test
 	public void setType()
 	{
-		WineType red = new WineType();
-		red.setWineType("Red");
-		query1.setType(red);
-		assertEquals(query1.getType().getWineType(), "Red");
+		Vector<WineType> newType = new Vector<WineType>();
+		WineType white = new WineType("White");
+		newType.add(white);
+		query1.setType(newType);
+		assertEquals(query1.getType().get(0).getWineType(), "White");
 	}
 
 	@Test
 	public void getMinYear()
 	{
-		String date;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-
-		assertEquals(query1.getMinYear(), null);
-
-		date = sdf.format(query2.getMinYear());
-		assertEquals(date, "2013");
+		assertEquals(query1.getMinYear(), 0);
+		assertEquals(query2.getMinYear(), 0);
 	}
 
 	@Test
 	public void setMinYear()
 	{
-		@SuppressWarnings("deprecation")
-		Date newDate = new Date(84, 10, 18);
-		query1.setMinYear(newDate);
+		query1.setMinYear(1984);
 
-		String date;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-
-		date = sdf.format(query1.getMinYear());
-		assertEquals(date, "1984");
+		assertEquals(query1.getMinYear(), 1984);
 	}
 
 	@Test
 	public void getMaxYear()
 	{
-		String date;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-
-		assertEquals(query1.getMaxYear(), null);
-
-		date = sdf.format(query2.getMaxYear());
-		assertEquals(date, "2013");
+		assertEquals(query1.getMaxYear(), 0);
+		assertEquals(query2.getMaxYear(), 0);
 	}
 
 	@Test
 	public void setMaxYear()
 	{
-		@SuppressWarnings("deprecation")
-		Date newDate = new Date(112, 10, 18);
-		query1.setMaxYear(newDate);
+		query1.setMaxYear(2012);
 
-		String date;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-
-		date = sdf.format(query1.getMaxYear());
-		assertEquals(date, "2012");
+		assertEquals(query1.getMaxYear(), 2012);
 	}
 
 	@Test
@@ -281,12 +247,6 @@ public class WineQueryTest
 	}
 
 	@Test
-	public void setMinRatingWithOther()
-	{
-		fail("Need to check for illegal arguments");
-	}
-
-	@Test
 	public void getMaxRating()
 	{
 		assertEquals(query1.getMaxRating(), -1.0, 10 ^ -12);
@@ -298,11 +258,5 @@ public class WineQueryTest
 	{
 		query1.setMaxRating(5);
 		assertEquals(query1.getMaxRating(), 5, 10 ^ -12);
-	}
-
-	@Test
-	public void setMaxRatingWithOther()
-	{
-		fail("Need to check for illegal arguments");
 	}
 }

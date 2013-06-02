@@ -4,7 +4,7 @@
 
 <section id="view_login" class="view animated no_display">
 
-    <a class="back_arrow animated" id="back_to_home">Back</a>
+    <a class="back_arrow animated" id="back_to_front">Back</a>
 
     <form id="login_form" class="animated no_display">
         <div class="person_icon">

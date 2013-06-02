@@ -97,13 +97,23 @@ body {
   background-size: cover;
   font-family: Roboto;
   height: 100%;
-  text-size: 16px;
+  text-size: 16px; }
+
+#app_background {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
   background: url("../img/bg1.jpg") no-repeat center top;
   background-size: 100% 100%;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg1.jpg',sizingMethod='scale');
   -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg1.jpg',sizingMethod='scale')"; }
 
 .view {
+  position: relative;
+  z-index: 100;
   overflow: hidden; }
 
 h1, h2, h3, h4, h5, h6 {
@@ -485,7 +495,7 @@ footer {
     width: 29%;
     text-align: center; }
 
-#home {
+#front {
   height: 100%;
   width: 100%;
   position: relative; }
