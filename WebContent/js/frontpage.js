@@ -185,6 +185,17 @@
             $(login_form).addClass(LOGIN_FORM_ANIM_IN);
         }
 
+        function shake_login_form()
+        {
+            $(login_form).removeClass(LOGIN_FORM_ANIM_IN);
+            $(login_form).removeClass(LOGIN_FORM_DELAY_IN);
+            $(login_form).addClass("shake");
+
+            setTimeout(function() {
+                $(login_form).removeClass("shake");
+            }, 1000);
+        }
+
         /**
          * Shows the Account View and displays the sign-up form.
          */
@@ -248,8 +259,10 @@
         /**
          * Hides the account view.
          */
-        function hide_account_view()
+        function hide_account_view(prevent_show_front)
         {
+            prevent_show_front = prevent_show_front || false;
+
             $(view_login).removeClass(ACCOUNT_DELAY_IN);
             $(view_login).removeClass(ACCOUNT_ANIM_IN);;
             $(view_login).addClass(ACCOUNT_DELAY_OUT);
@@ -262,7 +275,8 @@
             hide_sign_up_form();
             hide_login_form();
 
-            show_front();
+            if (!prevent_show_front)
+                show_front();
         }
 
         /**
@@ -329,8 +343,24 @@
         views.front.showFrontpage = hide_account_view;
         views.front.showLoginForm = show_login_form;
         views.front.showSignupForm = show_sign_up_form;
+
+        views.front.shakeLoginForm = shake_login_form;
+
+        views.front.fadeOutFrontpage = function () {
+            hide_account_view(true);
+
+            setTimeout(function() {
+                $(".frontpage").remove();
+                $(front).remove();
+                $(view_login).remove();
+            }, 1000);
+        }
     }
 
+    /**
+     * Initiates the Create Account form for user interaction and account
+     * creation submission.
+     */
     function create_account_init()
     {
         var url = "/user";
@@ -362,6 +392,9 @@
         });
     }
 
+    /**
+     * Initiates the Login form for user interaction and login form submission.
+     */
     function login_init()
     {
         var SUCCESSFUL_LOGIN_ACTION = views.front.showFrontpage;
@@ -391,14 +424,20 @@
         });
     }
 
+    /**
+     * Successful login callback function. Called after a successful login.
+     */
     function successful_login()
     {
-        console.log("successful login!");
+        views.front.fadeOutFrontpage();
     }
 
+    /**
+     * Failed login callback function. Called after a failed login.
+     */
     function failed_login()
     {
-        console.log("failed login!");
+        views.front.shakeLoginForm();
     }
 
     function on_load()
@@ -411,5 +450,6 @@
         create_account_init();
     }
 
-    window.addEventListener("load", on_load);
+    // Call away!
+    on_load();
 })();
