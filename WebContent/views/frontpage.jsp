@@ -1,3 +1,5 @@
+<%@ include file="/views/frontpage/account.jsp" %>
+
 <section id="front" class="view animated">
 
     <section class="content_container clearfix">
@@ -85,3 +87,7 @@
         </div>
     </section>
 </section>
+
+<script class="frontpage" src="js/frontpage.js" type="text/javascript"></script>
+<script class="frontpage" src="js/gallery.js" type="text/javascript"></script>
+
