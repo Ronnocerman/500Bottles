@@ -2,6 +2,7 @@ package com._500bottles.action;
 
 import com._500bottles.manager.WinebookManager;
 import com._500bottles.object.wine.Wine;
+import com._500bottles.object.winebook.Entry;
 import com._500bottles.object.winebook.Photo;
 
 public class WinebookAction
@@ -13,9 +14,9 @@ public class WinebookAction
 	 * @param id
 	 *            ID of the entry to be added to the Winebook
 	 */
-	public void addEntry(long id)
+	public void addEntry(Entry entry)
 	{
-		WinebookManager.addEntry(id);
+		WinebookManager.addEntry(entry);
 	}
 
 	/**
