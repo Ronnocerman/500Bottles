@@ -5,7 +5,6 @@ import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 
 import com._500bottles.config.Config;
 import com._500bottles.exception.da.DAException;
@@ -20,6 +19,10 @@ public class WineDAO extends DAO
 {
 	private final static String WINE_TABLE = Config
 			.getProperty("wineTableName");
+	private final static String VARIETALS_TABLE = Config
+			.getProperty("varietalsTableName");
+	private final static String VINEYARDS_TABLE = Config
+			.getProperty("vineyardsTableName");
 
 	public static Wine addWine(Wine wine) throws DAException
 	{
@@ -257,54 +260,140 @@ public class WineDAO extends DAO
 		return wine;
 	}
 
-	@SuppressWarnings("null")
-	public Vector<Wine> getAllWines() throws DAException
+	/*
+	 * @SuppressWarnings("null") public Vector<Wine> getAllWines() throws
+	 * DAException { Vector<Wine> wineVector = null; ResultSet r;
+	 * 
+	 * try { r = select(WINE_TABLE, "*");
+	 * 
+	 * Vector<Long> wineIdVector = new Vector<Long>(); while (r.next()) { Long
+	 * wineId; wineId = new Long(r.getInt("wineId")); wineIdVector.add(wineId);
+	 * } for (int i = 0; i < wineIdVector.size(); i++) { Wine temp = new Wine();
+	 * temp = WineDAO.getWine(wineIdVector.elementAt(i).longValue());
+	 * wineVector.add(temp); } Database.disconnect();
+	 * 
+	 * } catch (SQLException e) { throw new DAException("SQL select exception",
+	 * e.getCause()); }
+	 * 
+	 * return wineVector; }
+	 */
+
+	public static Vineyard addVineyard(Vineyard v) throws DAException
 	{
-		Vector<Wine> wineVector = null;
-		ResultSet r;
+		String columns, values;
+
+		columns = "(`vineyardId`, `vineyardName`)";
+
+		values = "('" + v.getId() + "',";
+		values += "'" + escapeXml(v.getName()) + "')";
 
 		try
 		{
-			r = select(WINE_TABLE, "*");
-
-			Vector<Long> wineIdVector = new Vector<Long>();
-			while (r.next())
-			{
-				Long wineId;
-				wineId = new Long(r.getInt("wineId"));
-				wineIdVector.add(wineId);
-			}
-			for (int i = 0; i < wineIdVector.size(); i++)
-			{
-				Wine temp = new Wine();
-				temp = WineDAO.getWine(wineIdVector.elementAt(i).longValue());
-				wineVector.add(temp);
-			}
+			insert(VINEYARDS_TABLE, columns, values);
 			Database.disconnect();
-
 		} catch (SQLException e)
 		{
-			throw new DAException("SQL select exception", e.getCause());
+			throw new DAException("Failed Vineyard insertion", e);
 		}
 
-		return wineVector;
+		v.setId(getLastInsertId());
+
+		return v;
 	}
 
-	@SuppressWarnings("unused")
-	private static Varietal addVarietal(Varietal v) throws DAException
+	public static boolean deleteVineyard(long vineyardId)
+	{
+		int ret;
+		try
+		{
+			ret = delete(VINEYARDS_TABLE, "vineyardId=" + vineyardId);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			return false;
+		}
+		if (ret == 0)
+			return false;
+		return true;
+	}
+
+	public static void editVineyard(Vineyard vineyard) throws DAException
+	{
+		if (vineyard == null)
+			throw new NullPointerException("Vineyard object null.");
+
+		long vineyardId = vineyard.getId();
+		if (vineyardId == 0)
+			throw new DAException("Vineyard ID not set.");
+
+		String sql = "";
+
+		sql += "vineyardId=" + vineyardId;
+		sql += "vineyardName='" + escapeXml(vineyard.getName()) + "'";
+
+		try
+		{
+			update(VINEYARDS_TABLE, sql, "vineyardId=" + vineyardId);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("Failed Vineyard update.", e);
+		}
+	}
+
+	public static Vineyard getVineyard(long vineyardId) throws DAException
+	{
+		ResultSet r;
+		Vineyard vineyard = null;
+
+		if (vineyardId == 0)
+			throw new DAException("Vineyard ID not set.");
+
+		try
+		{
+			r = select(VINEYARDS_TABLE, "*", "vineyardId=" + vineyardId);
+			vineyard = createVineyard(r);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.", e);
+		}
+
+		return vineyard;
+	}
+
+	private static Vineyard createVineyard(ResultSet r) throws SQLException
+	{
+		Vineyard vineyard;
+
+		long vineyardId;
+		String vineyardName;
+
+		if (!r.next())
+			return null;
+
+		vineyardId = r.getLong("vineyardId");
+		vineyardName = r.getString("vineyardName");
+
+		vineyard = new Vineyard();
+		vineyard.setId(vineyardId);
+		vineyard.setName(vineyardName);
+
+		return vineyard;
+	}
+
+	public static Varietal addVarietal(Varietal v) throws DAException
 	{
 		String columns, values;
 
 		columns = "(`varietalId`, `varietalName`)";
 
-		// TODO: get user id from session manager or via user object.
-		// TODO: getGeoLocation and getAppellation
 		values = "('" + v.getId() + "',";
 		values += "'" + escapeXml(v.getGrapeType()) + "')";
 
 		try
 		{
-			insert("Varietals", columns, values);
+			insert(VARIETALS_TABLE, columns, values);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
@@ -314,9 +403,87 @@ public class WineDAO extends DAO
 		v.setId(getLastInsertId());
 
 		return v;
-
 	}
-	// TODO:Add private varietal/vineyard database methods
-	// TODO:Add private varietal/vineyard database methods
+
+	public static boolean deleteVarietal(long varietalId)
+	{
+		int ret;
+		try
+		{
+			ret = delete(VARIETALS_TABLE, "varietalId=" + varietalId);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			return false;
+		}
+		if (ret == 0)
+			return false;
+		return true;
+	}
+
+	public static void editVarietal(Varietal varietal) throws DAException
+	{
+		if (varietal == null)
+			throw new NullPointerException("Varietal object null.");
+
+		long varietalId = varietal.getId();
+		if (varietalId == 0)
+			throw new DAException("Varietal ID not set.");
+
+		String sql = "";
+
+		sql += "varietalId=" + varietalId;
+		sql += "varietalName='" + escapeXml(varietal.getGrapeType()) + "'";
+
+		try
+		{
+			update(VARIETALS_TABLE, sql, "varietalId=" + varietalId);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("Failed Varietal update.", e);
+		}
+	}
+
+	public static Varietal getVarietal(long varietalId) throws DAException
+	{
+		ResultSet r;
+		Varietal varietal = null;
+
+		if (varietalId == 0)
+			throw new DAException("Varietal ID not set.");
+
+		try
+		{
+			r = select(VARIETALS_TABLE, "*", "varietalId=" + varietalId);
+			varietal = createVarietal(r);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.", e);
+		}
+
+		return varietal;
+	}
+
+	private static Varietal createVarietal(ResultSet r) throws SQLException
+	{
+		Varietal varietal;
+
+		long varietalId;
+		String grapeType;
+
+		if (!r.next())
+			return null;
+
+		varietalId = r.getLong("varietalId");
+		grapeType = r.getString("varietalName");
+
+		varietal = new Varietal();
+		varietal.setId(varietalId);
+		varietal.setGrapeType(grapeType);
+
+		return varietal;
+	}
 
 }
