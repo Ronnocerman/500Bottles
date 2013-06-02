@@ -509,7 +509,7 @@ public class WineDAOTests
 
 		WineQuery query = new WineQuery();
 
-		// query.setNameContains("BC");
+		query.setNameContains("BC");
 		query.setMaxYear(2000);
 		query.setMinYear(1970);
 

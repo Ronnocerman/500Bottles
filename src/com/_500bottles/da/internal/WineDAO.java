@@ -314,7 +314,7 @@ public class WineDAO extends DAO
 				} else if (exists)
 				{
 					where += " and ";
-					where += "wineType='";
+					where += "(wineType='";
 					where += escapeXml(q.getType().get(i).getWineType());
 					where += "'";
 					exists = false;
