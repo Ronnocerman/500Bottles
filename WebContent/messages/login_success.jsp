@@ -1,1 +1,1 @@
-success!
+{"result": true}

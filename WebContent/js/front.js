@@ -120,14 +120,14 @@
         var LOGIN_DELAY_ANIM = "";
         var LOGIN_FORM_DELAY_IN = "delay_07s";
         var LOGIN_FORM_DELAY_OUT = "";
-        var LOGIN_FORM_OUT_TIMER = 1000;
+        var LOGIN_FORM_OUT_TIMER = 700;
 
         // Signup form animation classes.
         var SIGNUP_FORM_ANIM_IN = "flipInY";
         var SIGNUP_FORM_ANIM_OUT = "fadeOutDown";
         var SIGNUP_FORM_DELAY_IN = "delay_07s";
         var SIGNUP_FORM_DELAY_OUT = "";
-        var SIGNUP_FORM_OUT_TIMER = 1000;
+        var SIGNUP_FORM_OUT_TIMER = 700;
 
 
         var FRONT_ANIM_OUT = "";
@@ -177,6 +177,7 @@
         function show_login_form()
         {
             show_account_view();
+            hide_sign_up_form();
 
             $(login_form).removeClass(NO_DISPLAY);
             $(login_form).removeClass(LOGIN_FORM_ANIM_OUT);
@@ -190,6 +191,7 @@
         function show_sign_up_form()
         {
             show_account_view();
+            hide_login_form();
 
             $(signup_form).removeClass(NO_DISPLAY);
             $(signup_form).removeClass(SIGNUP_FORM_ANIM_OUT);
@@ -362,6 +364,9 @@
 
     function login_init()
     {
+        var SUCCESSFUL_LOGIN_ACTION = views.front.showFrontpage;
+        var FAILED_LOGIN_ACTION = views.front.showSignupForm;
+
         var url = "/user";
         var submit = document.getElementById("login_submit");
 
@@ -369,7 +374,9 @@
             var data = {
                 "action": "login",
                 "email": $("#email").val(),
-                "password": $("#password").val()
+                "password": $("#password").val(),
+                "success": "successful_login",
+                "failed": "failed_login"
             };
 
             var type = "POST";
@@ -379,10 +386,19 @@
                 data: data,
                 type: type
             }).success(function (data, textStatus, jqXHR) {
-                console.log(data);
-                alert(data);
+                    eval(data);
             });
         });
+    }
+
+    function successful_login()
+    {
+        console.log("successful login!");
+    }
+
+    function failed_login()
+    {
+        console.log("failed login!");
     }
 
     function on_load()

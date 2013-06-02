@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("serial")
 public class UserDispatch extends HttpServlet
 {
+	private final String SUCCESS_CALLBACK_FIELD = "success";
+	private final String FAILED_CALLBACK_FIELD = "failed";
 	private final String EMAIL_FIELD = "email";
 	private final String PASSWORD_FIELD = "password";
 	private final String FIRSTNAME_FIELD = "firstname";
@@ -96,14 +98,13 @@ public class UserDispatch extends HttpServlet
 	{
 		ServletContext context = getServletContext();
 
-		RequestDispatcher successDispatcher =
-			context.getRequestDispatcher("/messages/login_success.jsp");
-
-		RequestDispatcher failureDispatcher =
-			context.getRequestDispatcher("/messages/login_failure.jsp");
+		RequestDispatcher dispatcher =
+			context.getRequestDispatcher("/messages/js_callback.jsp");
 
 		String email = request.getParameter(EMAIL_FIELD);
 		String password = request.getParameter(PASSWORD_FIELD);
+		String success = request.getParameter(SUCCESS_CALLBACK_FIELD);
+		String failed = request.getParameter(FAILED_CALLBACK_FIELD);
 
 		boolean passwordCorrect = false;
 
@@ -119,12 +120,12 @@ public class UserDispatch extends HttpServlet
 		}
 
 		try {
-			System.err.println("value of pwd correct: " + passwordCorrect);
-
 			if (passwordCorrect)
-				successDispatcher.forward(request, response);
+				request.setAttribute("callback", success);
 			else
-				failureDispatcher.forward(request, response);
+				request.setAttribute("callback", failed);
+
+			dispatcher.forward(request, response);
 
 		} catch (ServletException | IOException e) {
 
