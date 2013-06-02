@@ -11,6 +11,11 @@ public class SortRating extends Sort
 		super(_sort);
 	}
 
+	public SortRating(double min, double max) throws InvalidSort
+	{
+		super(_sort, min, max);
+	}
+
 	public SortRating(String option) throws InvalidSort
 	{
 		super(_sort, option);

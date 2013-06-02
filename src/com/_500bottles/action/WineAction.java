@@ -30,8 +30,8 @@ public class WineAction
 		WineManager.isFavorite(id);
 	}
 
-	public void setRating(int rating)
+	public void setRating(long id, int rating)
 	{
-		WineManager.setRating(rating);
+		WineManager.setRating(id, rating);
 	}
 }

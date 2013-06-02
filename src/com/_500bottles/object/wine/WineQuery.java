@@ -1,6 +1,5 @@
 package com._500bottles.object.wine;
 
-import java.util.Date;
 import java.util.Vector;
 
 import com._500bottles.object.geolocation.GeoLocation;
@@ -10,22 +9,27 @@ import com._500bottles.object.geolocation.GeoLocation;
  */
 public class WineQuery
 {
+	public final static int DEFAULT_OFFSET = 0;
+	public final static int DEFAULT_SIZE = 5;
+	public final static Vector<Long> DEFAULT_IDS = new Vector<Long>();
+	public final static String DEFAULT_TEXT_QUERY = "";
+	public final static String DEFAULT_NAME_CONTAINS = "";
+	public final static String DEFAULT_DESC_CONTAINS = "";
+	public final static GeoLocation DEFAULT_GEOLOCATION = null;
+	public final static int DEFAULT_DISTANCE = -1;
+	public final static Vector<WineType> DEFAULT_WINE_TYPE = new Vector<WineType>();
+	public final static long DEFAULT_MIN_YEAR = 0;
+	public final static long DEFAULT_MAX_YEAR = 0;
+	public final static Vector<Appellation> DEFAULT_APPELLATION = new Vector<Appellation>();
+	public final static Vector<Varietal> DEFAULT_VARIETAL = new Vector<Varietal>();
+	public final static Vector<Vineyard> DEFAULT_VINEYARD = new Vector<Vineyard>();
+	public final static double DEFAULT_MIN_RATING = -1.0;
+	public final static double DEFAULT_MAX_RATING = -1.0;
+	public final static double DEFAULT_MIN_PRICE = -1.0;
+	public final static double DEFAULT_MAX_PRICE = -1.0;
 
-	private final static Vector<Long> DEFAULT_IDS = new Vector<Long>();
-	private final static String DEFAULT_TEXT_QUERY = "";
-	private final static String DEFAULT_NAME_CONTAINS = "";
-	private final static String DEFAULT_DESC_CONTAINS = "";
-	private final static GeoLocation DEFAULT_GEOLOCATION = null;
-	private final static int DEFAULT_DISTANCE = -1;
-	private final static WineType DEFAULT_WINE_TYPE = null;
-	private final static Date DEFAULT_MIN_YEAR = null;
-	private final static Date DEFAULT_MAX_YEAR = null;
-	private final static Appellation DEFAULT_APPELLATION = null;
-	private final static Vector<Varietal> DEFAULT_VARIETAL = new Vector<Varietal>();
-	private final static Vector<Vineyard> DEFAULT_VINEYARD = new Vector<Vineyard>();
-	private final static double DEFAULT_MIN_RATING = -1.0;
-	private final static double DEFAULT_MAX_RATING = -1.0;
-
+	private int offset;
+	private int size;
 	/*  */
 	private Vector<Long> ids;
 
@@ -45,16 +49,16 @@ public class WineQuery
 	private int distance;
 
 	/*  */
-	private WineType type;
+	private Vector<WineType> type;
 
 	/*  */
-	private Date minYear;
+	private long minYear;
 
 	/*  */
-	private Date maxYear;
+	private long maxYear;
 
 	/*  */
-	private Appellation appellation;
+	private Vector<Appellation> appellation;
 
 	/*  */
 	private Vector<Varietal> varietal;
@@ -67,6 +71,12 @@ public class WineQuery
 
 	/*  */
 	private double maxRating;
+
+	/*  */
+	private double minPrice;
+
+	/*  */
+	private double maxPrice;
 
 	/**
 	 * Default constructor.
@@ -87,6 +97,8 @@ public class WineQuery
 		this.setVineyard(DEFAULT_VINEYARD);
 		this.setMinRating(DEFAULT_MIN_RATING);
 		this.setMaxRating(DEFAULT_MAX_RATING);
+		this.setSize(DEFAULT_SIZE);
+		this.setOffset(DEFAULT_OFFSET);
 	}
 
 	/**
@@ -220,7 +232,7 @@ public class WineQuery
 	 * 
 	 * @return WineType for this query or null.
 	 */
-	public WineType getType()
+	public Vector<WineType> getType()
 	{
 		return type;
 	}
@@ -228,11 +240,11 @@ public class WineQuery
 	/**
 	 * Sets the WineType for this query.
 	 * 
-	 * @param type
+	 * @param defaultWineType
 	 */
-	public void setType(WineType type)
+	public void setType(Vector<WineType> defaultWineType)
 	{
-		this.type = type;
+		this.type = defaultWineType;
 	}
 
 	/**
@@ -241,7 +253,7 @@ public class WineQuery
 	 * 
 	 * @return Minimum year for this query or null.
 	 */
-	public Date getMinYear()
+	public long getMinYear()
 	{
 		return minYear;
 	}
@@ -251,7 +263,7 @@ public class WineQuery
 	 * 
 	 * @param minYear
 	 */
-	public void setMinYear(Date minYear)
+	public void setMinYear(long minYear)
 	{
 		this.minYear = minYear;
 	}
@@ -262,7 +274,7 @@ public class WineQuery
 	 * 
 	 * @return Maximum year for this query or null.
 	 */
-	public Date getMaxYear()
+	public long getMaxYear()
 	{
 		return maxYear;
 	}
@@ -272,7 +284,7 @@ public class WineQuery
 	 * 
 	 * @param maxYear
 	 */
-	public void setMaxYear(Date maxYear)
+	public void setMaxYear(long maxYear)
 	{
 		this.maxYear = maxYear;
 	}
@@ -282,7 +294,7 @@ public class WineQuery
 	 * 
 	 * @return Appellation for this query or null.
 	 */
-	public Appellation getAppellation()
+	public Vector<Appellation> getAppellation()
 	{
 		return appellation;
 	}
@@ -290,11 +302,11 @@ public class WineQuery
 	/**
 	 * Sets the Appellation for this query.
 	 * 
-	 * @param appellation
+	 * @param defaultAppellation
 	 */
-	public void setAppellation(Appellation appellation)
+	public void setAppellation(Vector<Appellation> defaultAppellation)
 	{
-		this.appellation = appellation;
+		this.appellation = defaultAppellation;
 	}
 
 	/**
@@ -379,5 +391,45 @@ public class WineQuery
 	public void setMaxRating(double maxRating)
 	{
 		this.maxRating = maxRating;
+	}
+
+	public double getMinPrice()
+	{
+		return minPrice;
+	}
+
+	public void setMinPrice(double minPrice)
+	{
+		this.minPrice = minPrice;
+	}
+
+	public double getMaxPrice()
+	{
+		return maxPrice;
+	}
+
+	public void setMaxPrice(double maxPrice)
+	{
+		this.maxPrice = maxPrice;
+	}
+
+	public int getSize()
+	{
+		return size;
+	}
+
+	public void setSize(int size)
+	{
+		this.size = size;
+	}
+
+	public int getOffset()
+	{
+		return offset;
+	}
+
+	public void setOffset(int offset)
+	{
+		this.offset = offset;
 	}
 }

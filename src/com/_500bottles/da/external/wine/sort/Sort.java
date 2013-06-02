@@ -30,6 +30,17 @@ public abstract class Sort
 
 	}
 
+	protected Sort(String s, double min, double max) throws InvalidSort
+	{
+		if (min < 0 || max < min)
+			throw new InvalidSort();
+		else
+		{
+			sort = s;
+			sort = sort + "(" + min + "|" + max + ")";
+		}
+	}
+
 	protected void setSort(String sort)
 	{
 		this.sort = sort;

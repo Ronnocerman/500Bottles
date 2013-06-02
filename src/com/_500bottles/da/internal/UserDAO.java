@@ -128,7 +128,7 @@ public class UserDAO extends DAO
 		sql += ",weight=" + user.getWeight();
 		sql += ",admin=" + user.isAdmin();
 
-		System.out.println(sql);
+		// System.out.println(sql);
 		try
 		{
 			update(USER_TABLE, sql, "userId=" + userId);

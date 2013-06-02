@@ -1,5 +1,7 @@
 package com._500bottles.tests.da.internal;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -20,7 +22,7 @@ public class CellarDAOTests
 {
 
 	@Test
-	public void testInsertCellarItem()
+	public void addCellarItem() throws DAException
 	{
 		Wine wine = new Wine();
 		CellarItem item = new CellarItem(wine);
@@ -30,15 +32,15 @@ public class CellarDAOTests
 
 		try
 		{
-			CellarDAO.addCellarItem(10, item);
-		} catch (Exception e)
+			CellarDAO.addCellarItem(46, item);
+		} catch (DAException e)
 		{
-			fail();
+			fail(e.getMessage());
 		}
 	}
 
 	@Test
-	public void testDeleteCellarItem()
+	public void deleteCellarItem() throws DAException
 	{
 		Wine wine = new Wine();
 		CellarItem item = new CellarItem(wine);
@@ -49,59 +51,81 @@ public class CellarDAOTests
 		try
 		{
 			item = CellarDAO.addCellarItem(15, item);
-		} catch (Exception e)
-		{
-			fail();
-		}
 
-		try
+			assertTrue(CellarDAO.deleteCellarItem(item.getId()));
+		} catch (DAException e)
 		{
-			CellarDAO.deleteCellarItem(2);
-			// CellarDAO.deleteCellarItem(6);
-			// CellarDAO.deleteCellarItem(8);
-		} catch (Exception e)
-		{
-			fail();
+			fail(e.getMessage());
 		}
-
 	}
 
-	// tests get AND edit
-	@SuppressWarnings("null")
 	@Test
-	public void testEditCellarItem()
+	public void editCellarItem() throws DAException
 	{
-		CellarItem item = null;
+		Wine wine = new Wine();
+		wine.setId(4);
+		CellarItem item = new CellarItem(wine);
 		item.setNotes("Imma buy 4 moe of these");
 		item.setQuantity(4);
 		item.setUserRating(10);
-		item.setWineId(2);
 
 		try
 		{
 			CellarDAO.addCellarItem(57, item);
-		} catch (DAException e1)
-		{
-			fail();
-		}
 
-		try
-		{
 			item = CellarDAO.getCellarItem(item.getId());
-		} catch (Exception e)
-		{
-			fail();
-		}
-
-		try
-		{
 			item.setNotes("I GOT 8 NOW cus its too good");
 			item.setQuantity(8);
 			item = CellarDAO.editCellarItem(item);
-		} catch (Exception e)
+		} catch (DAException e)
 		{
-			fail();
+			fail(e.getMessage());
 		}
 	}
 
+	@Test
+	public void getByWineId() throws DAException
+	{
+		CellarItem getCellarItem;
+		Wine wine = new Wine();
+		CellarItem item = new CellarItem(wine);
+		item.setQuantity(1);
+		item.setNotes("Testing getByWineId()");
+		item.setWineId(100);
+
+		try
+		{
+			CellarDAO.addCellarItem(46, item);
+
+			getCellarItem = CellarDAO.getByWineID(46, item.getWineId());
+
+			assertEquals(getCellarItem.getNotes(), "Testing getByWineId()");
+		} catch (DAException e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void getCellarItem() throws DAException
+	{
+		Wine wine = new Wine();
+		wine.setId(4);
+		CellarItem item = new CellarItem(wine);
+		item.setNotes("Testing getCellarItem()");
+		item.setQuantity(4);
+		item.setUserRating(10);
+
+		try
+		{
+			CellarDAO.addCellarItem(57, item);
+
+			item = CellarDAO.getCellarItem(item.getId());
+
+			assertEquals(item.getNotes(), "Testing getCellarItem()");
+		} catch (DAException e)
+		{
+			fail(e.getMessage());
+		}
+	}
 }

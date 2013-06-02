@@ -4,17 +4,16 @@ import java.util.HashMap;
 
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 
-public class Appellation extends Attribute
+public class AppellationArray extends Attribute
 {
 	private static String errormsg = "Invalid Appellation";
 
-	public Appellation(String appellation) throws InvalidCategory
+	public AppellationArray(String appellation) throws InvalidCategory
 	{
 		super(errormsg);
 		this.setCategory(appellation);
 	}
 
-	@Override
 	protected void initCategoryAttributeMap()
 	{
 		categoryAttributeMap = new HashMap<String, String>();
@@ -140,4 +139,5 @@ public class Appellation extends Attribute
 		categoryAttributeMap.put("Sardinia", "2315");
 
 	}
+
 }

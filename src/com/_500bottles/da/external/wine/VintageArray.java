@@ -4,11 +4,11 @@ import java.util.HashMap;
 
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 
-public class Vintage extends Attribute
+public class VintageArray extends Attribute
 {
 	private static String errormsg = "Invalid Attribute";
 
-	public Vintage(String vintage) throws InvalidCategory
+	public VintageArray(String vintage) throws InvalidCategory
 	{
 		super(errormsg);
 		this.setCategory(vintage);
@@ -98,4 +98,5 @@ public class Vintage extends Attribute
 		categoryAttributeMap.put("2012", "377");
 
 	}
+
 }

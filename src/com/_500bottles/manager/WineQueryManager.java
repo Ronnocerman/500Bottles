@@ -1,20 +1,39 @@
 package com._500bottles.manager;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Vector;
 
+import org.json.simple.parser.ParseException;
+
 import com._500bottles.da.external.snooth.SnoothDAO;
 import com._500bottles.da.external.snooth.SnoothWine;
-import com._500bottles.da.external.snooth.WineDetails;
-import com._500bottles.da.external.snooth.WineDetailsResponse;
 import com._500bottles.da.external.snooth.WineSearch;
 import com._500bottles.da.external.snooth.WineSearchResponse;
-import com._500bottles.da.external.snooth.exception.InvalidWineDetails;
+import com._500bottles.da.external.snooth.exception.InvalidSort;
 import com._500bottles.da.external.snooth.exception.InvalidWineSearch;
+import com._500bottles.da.external.wine.AppellationArray;
+import com._500bottles.da.external.wine.VarietalArray;
+import com._500bottles.da.external.wine.VintageArray;
+import com._500bottles.da.external.wine.WineAPICall;
+import com._500bottles.da.external.wine.WineAPIURL;
+import com._500bottles.da.external.wine.WineTypeArray;
+import com._500bottles.da.external.wine.exception.InvalidCategory;
+import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
+import com._500bottles.da.external.wine.filter.FilterCategory;
+import com._500bottles.da.external.wine.otherParameters.Offset;
+import com._500bottles.da.external.wine.otherParameters.Search;
+import com._500bottles.da.external.wine.otherParameters.Size;
+import com._500bottles.da.external.wine.sort.SortRating;
 import com._500bottles.da.internal.WineDAO;
+import com._500bottles.exception.da.DAException;
+import com._500bottles.object.wine.Appellation;
+import com._500bottles.object.wine.Varietal;
+import com._500bottles.object.wine.Vineyard;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.wine.WineQuery;
 import com._500bottles.object.wine.WineQueryResult;
+import com._500bottles.object.wine.WineType;
 
 /**
  * WineQueryManager is the glue between the various external API's an the local
@@ -23,7 +42,7 @@ import com._500bottles.object.wine.WineQueryResult;
  * local database so that that particular wine doesn't need to be retrieved from
  * an API repeatedly.
  */
-class WineQueryManager
+public class WineQueryManager
 {
 
 	/**
@@ -50,6 +69,12 @@ class WineQueryManager
 		WineQueryResult result = new WineQueryResult(winesAddedBySnooth);
 
 		return result;
+	}
+
+	private static Vector<Wine> searchLocal(WineQuery query)
+	{
+		return null;
+
 	}
 
 	/**
@@ -80,19 +105,110 @@ class WineQueryManager
 		return res;
 	}
 
-	/*
-	 * /** Searches the Wine.com API using WineDAO and the specified query.
-	 * Returns a set of resulting wines.
+	/**
+	 * Searches the Wine.com API using WineDAO and the specified query. Returns
+	 * a set of resulting wines.
 	 * 
 	 * @param query
 	 * 
 	 * @return
-	 * 
-	 * private static Vector<Wine> searchWineCom(WineQuery query) { Vector<Wine>
-	 * v = null;
-	 * 
-	 * return v; }
+	 * @throws InvalidCategory
+	 * @throws InvalidSort
+	 * @throws InvalidOtherParameters
+	 * @throws ParseException
+	 * @throws IOException
 	 */
+	public static Vector<Wine> searchWineCom(WineQuery query)
+			throws InvalidCategory, InvalidSort, InvalidOtherParameters,
+			IOException, ParseException
+	{
+		Vector<Wine> v = null;
+
+		WineAPIURL url = new WineAPIURL();
+		FilterCategory filtercategory = new FilterCategory();
+		String search = "";
+		Vector<WineType> types = query.getType();
+
+		int offset = query.getOffset();
+		if (offset != 0)
+		{
+			Offset off = new Offset(offset);
+			url.addToURL(off);
+		}
+
+		int size = query.getSize();
+		Size siz = new Size(size);
+		url.addToURL(siz);
+
+		if (query.getTextQuery() != "")
+			search += query.getTextQuery();
+		if (query.getNameContains() != "")
+			search += query.getNameContains();
+		if (query.getDescriptionContains() != "")
+			search += query.getDescriptionContains();
+
+		Vector<Vineyard> vineyards = query.getVineyard();
+		for (int i = 0; i < vineyards.size(); i++)
+			search += vineyards.elementAt(i) + " ";
+
+		if (search != "")
+		{
+			Search sea = new Search(search);
+			url.addToURL(sea);
+		}
+
+		if (types.size() == 0)
+		{
+			WineTypeArray temp = new WineTypeArray("all");
+			filtercategory.addAttribute(temp);
+		}
+		for (int i = 0; i < types.size(); i++)
+		{
+			System.out.println(types.elementAt(i).getWineType());
+			WineTypeArray temp = new WineTypeArray(types.elementAt(i)
+					.getWineType());
+			filtercategory.addAttribute(temp);
+		}
+
+		Vector<Varietal> varietals = query.getVarietal();
+		for (int i = 0; i < varietals.size(); i++)
+		{
+			VarietalArray temp = new VarietalArray(varietals.elementAt(i)
+					.getGrapeType());
+			filtercategory.addAttribute(temp);
+		}
+
+		long min_year = query.getMinYear();
+		long max_year = query.getMaxYear();
+		if (min_year != -1 && max_year != -1)
+			for (int i = (int) min_year; i < max_year - min_year; i++)
+			{
+				VintageArray temp = new VintageArray("" + i);
+				filtercategory.addAttribute(temp);
+			}
+
+		double max_rating = query.getMaxRating();
+		double min_rating = query.getMinRating();
+		if (min_rating != -1 && max_rating != -1)
+		{
+			SortRating temp = new SortRating(min_rating, max_rating);
+			url.addToURL(temp);
+		}
+
+		Vector<Appellation> appellations = query.getAppellation();
+		for (int i = 0; i < appellations.size(); i++)
+		{
+			AppellationArray temp = new AppellationArray(appellations
+					.elementAt(i).getLocation());
+			filtercategory.addAttribute(temp);
+		}
+
+		url.addToURL(filtercategory);
+		WineAPICall call = new WineAPICall();
+		System.out.println(url.getString());
+		v = call.getProducts(url.getString());
+		return v;
+	}
 
 	/**
 	 * Merges the wines resulting from a Snooth search into the database.
@@ -119,7 +235,7 @@ class WineQueryManager
 			Wine w = WineManager.getWineBySnoothId(snoothWine.getCode());
 			if (w == null)
 			{
-				w = addSnoothWineToDatabase(snoothWine);
+				// w = addWineToDatabase(snoothWine);
 			}
 
 			wines.add(w);
@@ -136,31 +252,24 @@ class WineQueryManager
 	 * @param snoothWine
 	 *            The SnoothWine to add to the database.
 	 * @return The corresponding Wine object.
+	 * @throws DAException
 	 */
-	private static Wine addSnoothWineToDatabase(SnoothWine snoothWine)
+	private static Wine addWineToDatabase(Wine wine) throws DAException
 	{
-		Wine wine = null;
+		WineDAO.addWine(wine);
 
-		try
-		{
-			WineDetails details = new WineDetails(snoothWine.getCode());
-			WineDetailsResponse r = SnoothDAO.getWineDetails(details);
-
-			Iterator<SnoothWine> it = r.getWinesIterator();
-
-			while (it.hasNext())
-			{
-				wine = it.next().toWineObject();
-				WineDAO.addWine(wine);
-			}
-
-		} catch (InvalidWineDetails e)
-		{
-			// TODO;
-		} catch (Exception e)
-		{
-			// TODO:
-		}
+		/*
+		 * try { WineDetails details = new WineDetails(snoothWine.getCode());
+		 * WineDetailsResponse r = SnoothDAO.getWineDetails(details);
+		 * 
+		 * Iterator<SnoothWine> it = r.getWinesIterator();
+		 * 
+		 * while (it.hasNext()) { wine = it.next().toWineObject();
+		 * WineDAO.addWine(wine); }
+		 * 
+		 * } catch (InvalidWineDetails e) { // TODO; } catch (Exception e) { //
+		 * TODO: }
+		 */
 
 		return wine;
 	}
