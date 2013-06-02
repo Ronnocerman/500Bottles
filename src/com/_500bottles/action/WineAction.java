@@ -5,23 +5,26 @@ import com._500bottles.object.wine.Wine;
 
 public class WineAction
 {
-	public void createCustomWine(Wine w)
+	public void createCustomWine(long id)
 	{
+		Wine w = WineManager.getWine(id);
 		WineManager.addCustomWine(w);
 	}
 
-	public void editCustomWine(Wine w)
+	public void editCustomWine(long id)
 	{
+		Wine w = WineManager.getWine(id);
 		WineManager.editCustomWine(w);
 	}
 
-	public void deleteCustomWine(Wine w)
+	public void deleteCustomWine(long id)
 	{
-		WineManager.deleteCustomWine(w);
+		WineManager.deleteCustomWine(id);
 	}
 
-	public void setFavorite(Wine w)
+	public void setFavorite(long id)
 	{
+		Wine w = WineManager.getWine(id);
 		WineManager.setFavorite(w);
 	}
 
@@ -30,8 +33,8 @@ public class WineAction
 		WineManager.isFavorite(id);
 	}
 
-	public void setRating(int rating)
+	public void setRating(long id, int rating)
 	{
-		WineManager.setRating(rating);
+		WineManager.setRating(id, rating);
 	}
 }

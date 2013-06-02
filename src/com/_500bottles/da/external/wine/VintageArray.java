@@ -16,7 +16,7 @@ public class VintageArray extends Attribute
 
 	// TODO
 	@Override
-	protected void initcategoryAttributeMap()
+	protected void initCategoryAttributeMap()
 	{
 
 		categoryAttributeMap = new HashMap<String, String>();
@@ -98,4 +98,5 @@ public class VintageArray extends Attribute
 		categoryAttributeMap.put("2012", "377");
 
 	}
+
 }

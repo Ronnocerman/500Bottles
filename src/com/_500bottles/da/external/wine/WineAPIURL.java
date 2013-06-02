@@ -105,10 +105,9 @@ public class WineAPIURL
 
 	public String getString()
 	{
-		System.out.println(url);
 		String temp = url;
 		if (apiformat == "")
-			temp += DEFAULT_APIFORMAT;
+			temp = temp + DEFAULT_APIFORMAT + "/";
 		else
 			temp = temp + apiformat + "/";
 
@@ -121,7 +120,7 @@ public class WineAPIURL
 			temp += DEFAULT_FILTER;
 		else
 		{
-			url += "filter=";
+			temp += "filter=";
 			if (filterCategory != "")
 				temp += filterCategory;
 			if (filterRating != "")
@@ -147,10 +146,10 @@ public class WineAPIURL
 			temp = temp + "&" + otherSize;
 		if (otherState != "")
 			temp = temp + "&" + otherState;
-		if (otherSearch != "")
+		if (otherSearch != "" && otherSearch != null)
 			temp = temp + "&" + otherSearch;
 		if (sort != "")
-			temp += sort;
+			temp = temp + "&" + "SortBy=" + sort;
 
 		temp = temp + "&apikey=" + API_KEY;
 

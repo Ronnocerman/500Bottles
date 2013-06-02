@@ -13,7 +13,7 @@ public class SortRating extends Sort
 
 	public SortRating(double min, double max) throws InvalidSort
 	{
-		super(_sort, "(" + min + "|" + max + ")");
+		super(_sort, min, max);
 	}
 
 	public SortRating(String option) throws InvalidSort

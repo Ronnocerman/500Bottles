@@ -9,22 +9,24 @@ import com._500bottles.object.geolocation.GeoLocation;
  */
 public class WineQuery
 {
-	private final static int DEFAULT_OFFSET = 0;
-	private final static int DEFAULT_SIZE = 5;
-	private final static Vector<Long> DEFAULT_IDS = new Vector<Long>();
-	private final static String DEFAULT_TEXT_QUERY = "";
-	private final static String DEFAULT_NAME_CONTAINS = "";
-	private final static String DEFAULT_DESC_CONTAINS = "";
-	private final static GeoLocation DEFAULT_GEOLOCATION = null;
-	private final static int DEFAULT_DISTANCE = -1;
-	private final static Vector<WineType> DEFAULT_WINE_TYPE = new Vector<WineType>();
-	private final static long DEFAULT_MIN_YEAR = 0;
-	private final static long DEFAULT_MAX_YEAR = 0;
-	private final static Vector<Appellation> DEFAULT_APPELLATION = new Vector<Appellation>();
-	private final static Vector<Varietal> DEFAULT_VARIETAL = new Vector<Varietal>();
-	private final static Vector<Vineyard> DEFAULT_VINEYARD = new Vector<Vineyard>();
-	private final static double DEFAULT_MIN_RATING = -1.0;
-	private final static double DEFAULT_MAX_RATING = -1.0;
+	public final static int DEFAULT_OFFSET = 0;
+	public final static int DEFAULT_SIZE = 5;
+	public final static Vector<Long> DEFAULT_IDS = new Vector<Long>();
+	public final static String DEFAULT_TEXT_QUERY = "";
+	public final static String DEFAULT_NAME_CONTAINS = "";
+	public final static String DEFAULT_DESC_CONTAINS = "";
+	public final static GeoLocation DEFAULT_GEOLOCATION = null;
+	public final static int DEFAULT_DISTANCE = -1;
+	public final static Vector<WineType> DEFAULT_WINE_TYPE = new Vector<WineType>();
+	public final static long DEFAULT_MIN_YEAR = 0;
+	public final static long DEFAULT_MAX_YEAR = 0;
+	public final static Vector<Appellation> DEFAULT_APPELLATION = new Vector<Appellation>();
+	public final static Vector<Varietal> DEFAULT_VARIETAL = new Vector<Varietal>();
+	public final static Vector<Vineyard> DEFAULT_VINEYARD = new Vector<Vineyard>();
+	public final static double DEFAULT_MIN_RATING = -1.0;
+	public final static double DEFAULT_MAX_RATING = -1.0;
+	public final static double DEFAULT_MIN_PRICE = -1.0;
+	public final static double DEFAULT_MAX_PRICE = -1.0;
 
 	private int offset;
 	private int size;
@@ -70,6 +72,12 @@ public class WineQuery
 	/*  */
 	private double maxRating;
 
+	/*  */
+	private double minPrice;
+
+	/*  */
+	private double maxPrice;
+
 	/**
 	 * Default constructor.
 	 */
@@ -89,6 +97,8 @@ public class WineQuery
 		this.setVineyard(DEFAULT_VINEYARD);
 		this.setMinRating(DEFAULT_MIN_RATING);
 		this.setMaxRating(DEFAULT_MAX_RATING);
+		this.setSize(DEFAULT_SIZE);
+		this.setOffset(DEFAULT_OFFSET);
 	}
 
 	/**
@@ -381,6 +391,26 @@ public class WineQuery
 	public void setMaxRating(double maxRating)
 	{
 		this.maxRating = maxRating;
+	}
+
+	public double getMinPrice()
+	{
+		return minPrice;
+	}
+
+	public void setMinPrice(double minPrice)
+	{
+		this.minPrice = minPrice;
+	}
+
+	public double getMaxPrice()
+	{
+		return maxPrice;
+	}
+
+	public void setMaxPrice(double maxPrice)
+	{
+		this.maxPrice = maxPrice;
 	}
 
 	public int getSize()

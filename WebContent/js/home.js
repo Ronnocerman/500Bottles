@@ -1,5 +1,8 @@
-(function()
-{
+(function() {
+    // Grab the views namespace and add the home view object.
+    views = window._500bottles.views;
+    views.home = {};
+
     function login_form_interaction()
     {
         var fp = document.getElementById("faux_password");
@@ -320,6 +323,66 @@
         signup.addEventListener("click", show_sign_up_form);
         login.addEventListener("click", show_login_form);
         back_to_home.addEventListener("click", hide_account_view);
+
+        views.home.showFrontpage = hide_account_view;
+        views.home.showLoginForm = show_login_form;
+        views.home.showSignupForm = show_sign_up_form;
+    }
+
+    function create_account_init()
+    {
+        var url = "/user";
+        var submit = document.getElementById("create_account_submit");
+
+        $(submit).on("click", function() {
+            var data = {
+                "action": "createAccount",
+                "firstname": $("#create_account_firstname").val(),
+                "lastname": $("#create_account_lastname").val(),
+                "email": $("#create_account_email").val(),
+                "password": $("#create_account_pwd").val(),
+                "confPassword": $("#create_account_conf_pwd").val(),
+                "dobDay": $("#bday_day").val(),
+                "dobMonth": $("#bday_month").val(),
+                "dobYear": $("#bday_year").val()
+            };
+
+            var type = "POST";
+
+            $.ajax({
+                url: url,
+                data: data,
+                type: type
+            }).success(function (data, textStatus, jqXHR) {
+                console.log(data);
+                alert("success!");
+            });
+        });
+    }
+
+    function login_init()
+    {
+        var url = "/user";
+        var submit = document.getElementById("login_submit");
+
+        $(submit).on("click", function() {
+            var data = {
+                "action": "login",
+                "email": $("#email").val(),
+                "password": $("#password").val()
+            };
+
+            var type = "POST";
+
+            $.ajax({
+                url: url,
+                data: data,
+                type: type
+            }).success(function (data, textStatus, jqXHR) {
+                console.log(data);
+                alert(data);
+            });
+        });
     }
 
     function on_load()
@@ -327,6 +390,9 @@
         login_form_interaction();
         login_view_interaction();
         sign_up_interaction();
+
+        login_init();
+        create_account_init();
     }
 
     window.addEventListener("load", on_load);

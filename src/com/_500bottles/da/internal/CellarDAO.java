@@ -29,17 +29,17 @@ public class CellarDAO extends DAO
 
 		// table = Config.getProperty("cellarItemTableName");
 
-		columns = "( `userID`,";
-		columns += "`wineID`,";
+		columns = "( `userId`,";
+		columns += "`wineId`,";
 		columns += "`quantity`,";
 		columns += "`notes`,";
-		columns += "`userRating`)";
+		columns += "`cellarItemId`)";
 
 		values = "('" + userId + "',";
 		values += "'" + item.getWineId() + "',";
 		values += "'" + item.getQuantity() + "',";
 		values += "'" + escapeXml(item.getNotes()) + "',";
-		values += "'" + item.getUserRating() + "')";
+		values += "'" + item.getId() + "')";
 
 		try
 		{
@@ -128,7 +128,7 @@ public class CellarDAO extends DAO
 		sql += "wineID=" + item.getWineId();
 		sql += ",quantity=" + item.getQuantity();
 		sql += ",notes='" + escapeXml(item.getNotes()) + "'";
-		sql += ",userRating='" + item.getUserRating() + "'";
+		sql += ",cellarItemId='" + item.getId() + "'";
 
 		System.out.println(sql);
 
@@ -266,7 +266,6 @@ public class CellarDAO extends DAO
 		int quantity;
 		String notes;
 		long wineId;
-		double userRating;
 
 		if (!r.next())
 			return null;
@@ -275,7 +274,6 @@ public class CellarDAO extends DAO
 		wineId = r.getLong("wineId");
 		quantity = r.getInt("quantity");
 		notes = r.getString("notes");
-		userRating = r.getDouble("userRating");
 
 		w = new Wine();
 		w.setId((int) wineId);
@@ -283,7 +281,6 @@ public class CellarDAO extends DAO
 		cellarItem.setQuantity(quantity);
 		cellarItem.setNotes(notes);
 		cellarItem.setCellarItemId(cellarItemId);
-		cellarItem.setUserRating(userRating);
 
 		return cellarItem;
 	}

@@ -95,8 +95,8 @@ public class WineTest
 	@Test
 	public void getRating()
 	{
-		assertEquals(wine1.getRating(), 0);
-		assertEquals(wine2.getRating(), 3);
+		assertEquals(wine1.getRating(), 0, .001);
+		assertEquals(wine2.getRating(), 3, .001);
 	}
 
 	@Test
@@ -194,7 +194,7 @@ public class WineTest
 	public void setRating()
 	{
 		wine1.setRating(10);
-		assertEquals(wine1.getRating(), 10);
+		assertEquals(wine1.getRating(), 10, .001);
 	}
 
 	@Test

@@ -35,7 +35,7 @@ public class WineDAOTests
 		Varietal varietal = new Varietal();
 		varietal.setId(432);
 
-		wine.setYear(1966);
+		wine.setYear(1970);
 		wine.setRating(5);
 		wine.setGeoLocation(geo);
 		wine.setSnoothId("555");
@@ -238,6 +238,118 @@ public class WineDAOTests
 			assertEquals(getWine.getDescription(), "Something");
 
 			WineDAO.deleteWine(wine);
+		} catch (DAException e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void addVineyard() throws DAException
+	{
+		Vineyard vineyard = new Vineyard();
+		vineyard.setName("Wilson Creek");
+
+		try
+		{
+			WineDAO.addVineyard(vineyard);
+		} catch (DAException e)
+		{
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void deleteVineyard() throws DAException
+	{
+		Vineyard vineyard = new Vineyard();
+		vineyard.setName("You should not be able to see this.");
+
+		try
+		{
+			WineDAO.addVineyard(vineyard);
+			assertTrue(WineDAO.deleteVineyard(vineyard.getId()));
+		} catch (DAException e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void editVineyard() throws DAException
+	{
+		Vineyard getVineyard;
+		Vineyard vineyard = new Vineyard();
+		vineyard.setName("You should not be able to see this.");
+
+		try
+		{
+			WineDAO.addVineyard(vineyard);
+			getVineyard = WineDAO.getVineyard(vineyard.getId());
+
+			assertEquals(getVineyard.getName(),
+					"You should not be able to see this.");
+
+			getVineyard.setName("Its visible.");
+
+			WineDAO.editVineyard(getVineyard);
+		} catch (DAException e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void addVarietal() throws DAException
+	{
+		Varietal varietal = new Varietal();
+		varietal.setGrapeType("Red");
+
+		try
+		{
+			WineDAO.addVarietal(varietal);
+		} catch (DAException e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void deleteVarietal() throws DAException
+	{
+		Varietal varietal = new Varietal();
+		varietal.setGrapeType("You should not be able to see this.");
+
+		try
+		{
+			WineDAO.addVarietal(varietal);
+			assertTrue(WineDAO.deleteVarietal(varietal.getId()));
+		} catch (DAException e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void editVarietal() throws DAException
+	{
+		Varietal getVarietal;
+		Varietal varietal = new Varietal();
+		varietal.setGrapeType("You should not be able to see this.");
+
+		try
+		{
+			WineDAO.addVarietal(varietal);
+
+			getVarietal = WineDAO.getVarietal(varietal.getId());
+
+			assertEquals(getVarietal.getGrapeType(),
+					"You should not be able to see this.");
+
+			getVarietal.setGrapeType("Its visible.");
+
+			WineDAO.editVarietal(getVarietal);
 		} catch (DAException e)
 		{
 			fail(e.getMessage());

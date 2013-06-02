@@ -76,11 +76,7 @@ public class WinebookDAOTests
 			assertEquals(newEntry2.getContent(), "CSE 110 Wine Tasting.");
 		} catch (DAException e)
 		{
-			if (test)
-			{
-				System.out.println("In addEntry(): " + e.getMessage());
-				fail(e.getMessage());
-			}
+			fail(e.getMessage());
 		}
 	}
 
@@ -94,7 +90,6 @@ public class WinebookDAOTests
 		{
 			if (test)
 			{
-				System.out.println("In addNullEntry(): " + e.getMessage());
 				fail(e.getMessage());
 			}
 		}
@@ -110,12 +105,7 @@ public class WinebookDAOTests
 			WinebookDAO.addEntry(entry3);
 		} catch (DAException e)
 		{
-			if (test)
-			{
-				System.out
-						.println("In addEntryWithIdZero(): " + e.getMessage());
-				fail(e.getMessage());
-			}
+			fail(e.getMessage());
 		}
 	}
 
@@ -132,11 +122,7 @@ public class WinebookDAOTests
 			entry1 = WinebookDAO.addEntry(entry1);
 		} catch (DAException e)
 		{
-			if (test)
-			{
-				System.out.println("In deleteEntry(): " + e.getMessage());
-				fail(e.getMessage());
-			}
+			fail(e.getMessage());
 		}
 
 		assertTrue(WinebookDAO.deleteEntry(entry1.getEntryId()));
@@ -189,11 +175,7 @@ public class WinebookDAOTests
 			WinebookDAO.editEntry(entry3);
 		} catch (DAException e)
 		{
-			if (test)
-			{
-				System.out.println("In editEntry(): " + e.getMessage());
-				fail(e.getMessage());
-			}
+			fail(e.getMessage());
 		}
 	}
 
@@ -208,7 +190,6 @@ public class WinebookDAOTests
 		{
 			if (test)
 			{
-				System.out.println("In editEntryWithNull(): " + e.getMessage());
 				fail(e.getMessage());
 			}
 		}
@@ -228,8 +209,6 @@ public class WinebookDAOTests
 		{
 			if (test)
 			{
-				System.out.println("In editEntryWithIdZero(): "
-						+ e.getMessage());
 				fail(e.getMessage());
 			}
 		}
@@ -251,11 +230,7 @@ public class WinebookDAOTests
 
 		} catch (DAException e)
 		{
-			if (test)
-			{
-				System.out.println("In getEntryWithEntry(): " + e.getMessage());
-				fail(e.getMessage());
-			}
+			fail(e.getMessage());
 		}
 	}
 
@@ -280,8 +255,6 @@ public class WinebookDAOTests
 		{
 			if (test)
 			{
-				System.out.println("In getEntryWithEntryIdZero(): "
-						+ e.getMessage());
 				fail(e.getMessage());
 			}
 		}
@@ -304,12 +277,7 @@ public class WinebookDAOTests
 			assertEquals(entry.getContent(), "No wine!!!");
 		} catch (DAException e)
 		{
-			if (test)
-			{
-				System.out.println("In getEntryWithEntryId(): "
-						+ e.getMessage());
-				fail(e.getMessage());
-			}
+			fail(e.getMessage());
 		}
 	}
 
@@ -327,8 +295,6 @@ public class WinebookDAOTests
 		{
 			if (test)
 			{
-				System.out.println("In getEntryWithEntryIdSetToZero(): "
-						+ e.getMessage());
 				fail(e.getMessage());
 			}
 		}
@@ -347,8 +313,6 @@ public class WinebookDAOTests
 		{
 			if (test)
 			{
-				System.out.println("In getEntryAsEntryIdWithNullEntry(): "
-						+ e.getMessage());
 				fail(e.getMessage());
 			}
 		}

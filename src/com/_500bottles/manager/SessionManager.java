@@ -9,13 +9,17 @@ import com._500bottles.object.user.ApplicationUser;
 
 public class SessionManager
 {
-	public static boolean login(String email, byte[] passwordHash)
+	public static boolean login(String email, String passwordHash)
 			throws UserDoesNotExistException
 	{
 		try
 		{
 			ApplicationUser user = UserDAO.getUserByEmail(email);
-			return Arrays.equals(user.getPasswordHash(), passwordHash);
+
+			if (user == null)
+				return false;
+
+			return passwordHash.equals(user.getPasswordHash());
 
 		} catch (DAException e)
 		{

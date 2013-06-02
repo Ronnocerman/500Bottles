@@ -29,14 +29,14 @@ public class Database
 	 *            Query to execute.
 	 * @return ResultSet object of query result.
 	 * @throws SQLException
-	 * @throws ConnectionException
+	 * @throws ConnectionError
 	 */
 	public static ResultSet readQuery(String q) throws SQLException,
 			ConnectionError
 	{
 		PreparedStatement p;
 		ResultSet r;
-		// System.out.println("readQuery");
+
 		if (conn == null)
 		{
 			try
@@ -47,11 +47,8 @@ public class Database
 				throw new ConnectionError("Not connected to database");
 			}
 		}
-		// System.out.println("before prep");
 		p = conn.prepareStatement(q);
-		// System.out.println("btween prep and exe Query");
 		r = p.executeQuery(q);
-		// System.out.println("after executeQuery");
 
 		return r;
 	}
@@ -63,7 +60,7 @@ public class Database
 	 *            Query to execute.
 	 * @return Numeric result of database query.
 	 * @throws SQLException
-	 * @throws ConnectionException
+	 * @throws ConnectionError
 	 */
 	public static int modQuery(String q) throws SQLException, ConnectionError
 	{

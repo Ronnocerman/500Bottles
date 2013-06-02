@@ -34,14 +34,7 @@ public class UserDAOTests
 		Date date = new Date(90, 11, 25);
 		Date regDate = new Date();
 		Date lastLogin = new Date();
-		char[] pw = new String("password").toCharArray();
-
-		byte[] password = new byte[pw.length];
-		for (int i = 0; i < pw.length; i++)
-		{
-			password[i] = (byte) pw[i];
-
-		}
+		String password = "password";
 
 		user.setRegistrationDate(regDate);
 		user.setLastLogin(lastLogin);
@@ -105,13 +98,7 @@ public class UserDAOTests
 		Date date = new Date(90, 11, 25);
 		Date regDate = new Date();
 		Date lastLogin = new Date();
-		char[] password0 = new String("password").toCharArray();
-
-		byte[] password = new byte[password0.length];
-		for (int i = 0; i < password0.length; i++)
-		{
-			password[i] = (byte) password0[i];
-		}
+		String password = "password";
 
 		user.setRegistrationDate(regDate);
 		user.setLastLogin(lastLogin);
@@ -161,14 +148,7 @@ public class UserDAOTests
 		Date date = new Date(84, 10, 18);
 		Date regDate = new Date();
 		Date lastLogin = new Date(112, 1, 1);
-		char[] pw = new String("12qw!@QW").toCharArray();
-
-		byte[] password = new byte[pw.length];
-		for (int i = 0; i < pw.length; i++)
-		{
-			password[i] = (byte) pw[i];
-
-		}
+		String password = "12qw!@QW";
 
 		user.setRegistrationDate(regDate);
 		user.setLastLogin(lastLogin);
@@ -187,14 +167,7 @@ public class UserDAOTests
 			UserDAO.addUser(user);
 			getUser = UserDAO.getUser(user.getUserId());
 
-			char[] pwd = new String("new12QW!@").toCharArray();
-
-			byte[] newPassword = new byte[pwd.length];
-			for (int i = 0; i < pwd.length; i++)
-			{
-				newPassword[i] = (byte) pwd[i];
-
-			}
+			String newPassword = "new12QW!@";
 
 			getUser.setLastLogin(new Date());
 			getUser.setDOB(new Date(92, 9, 2));
@@ -261,14 +234,7 @@ public class UserDAOTests
 		Date date = new Date(60, 1, 8);
 		Date regDate = new Date();
 		Date lastLogin = new Date(113, 3, 3);
-		char[] pw = new String("12qw!@QW123").toCharArray();
-
-		byte[] password = new byte[pw.length];
-		for (int i = 0; i < pw.length; i++)
-		{
-			password[i] = (byte) pw[i];
-
-		}
+		String password = "12qw!@QW123";
 
 		user.setRegistrationDate(regDate);
 		user.setLastLogin(lastLogin);
@@ -338,13 +304,7 @@ public class UserDAOTests
 		Date date = new Date(95, 11, 25);
 		Date regDate = new Date();
 		Date lastLogin = new Date();
-		char[] pw = new String("password95").toCharArray();
-
-		byte[] password = new byte[pw.length];
-		for (int i = 0; i < pw.length; i++)
-		{
-			password[i] = (byte) pw[i];
-		}
+		String password = "password95";
 
 		user.setRegistrationDate(regDate);
 		user.setLastLogin(lastLogin);

@@ -14,8 +14,7 @@ public class VarietalArray extends Attribute
 		this.setCategory(varietal);
 	}
 
-	@Override
-	protected void initcategoryAttributeMap()
+	protected void initCategoryAttributeMap()
 	{
 		categoryAttributeMap = new HashMap<String, String>();
 		categoryAttributeMap.put("Cabernet Sauvignon", "139");

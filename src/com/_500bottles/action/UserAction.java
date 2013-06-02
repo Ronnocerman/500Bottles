@@ -12,27 +12,14 @@ import com._500bottles.manager.SessionManager;
 import com._500bottles.manager.UserManager;
 import com._500bottles.object.user.ApplicationUser;
 import com._500bottles.object.user.Sex;
+import com._500bottles.util.Utilities;
 
 public class UserAction
 {
-	public static boolean login(String email, char[] password)
-			throws UserDoesNotExistException, LoginException
+	public static boolean login(String email, String passwordHash)
+			throws UserDoesNotExistException
 	{
-		try
-		{
-			return SessionManager.login(email, hash(password));
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e)
-		{
-			throw new LoginException(e);
-		}
-	}
-
-	private static byte[] hash(char[] in) throws NoSuchAlgorithmException,
-			UnsupportedEncodingException
-	{
-		MessageDigest md5;
-		md5 = MessageDigest.getInstance("MD5");
-		return md5.digest(new String(in).getBytes("UTF-8"));
+		return SessionManager.login(email, passwordHash);
 	}
 
 	public static void logout(String email)
@@ -46,12 +33,12 @@ public class UserAction
 		UserManager.addUser(u);
 	}
 
-	public static void resetPassword(ApplicationUser u, char[] newPassword)
+	public static void resetPassword(ApplicationUser u, String newPassword)
 			throws UserDoesNotExistException
 	{
 		try
 		{
-			u.setPassword(hash(newPassword));
+			u.setPassword(Utilities.hashPassword(newPassword));
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e)
 		{
 			e.printStackTrace();

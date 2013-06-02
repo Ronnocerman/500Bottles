@@ -8,7 +8,7 @@ public abstract class ApplicationUser
 	protected Date registrationDate;
 	protected Date lastLogin;
 	protected String emailAddress;
-	protected byte[] passwordHash;
+	protected String passwordHash;
 	protected double height;
 	protected double weight;
 	protected Date dateOfBirth;
@@ -23,7 +23,7 @@ public abstract class ApplicationUser
 		return this;
 	}
 
-	public ApplicationUser setPassword(byte[] passwordHash)
+	public ApplicationUser setPassword(String passwordHash)
 	{
 		this.passwordHash = passwordHash;
 		return this;
@@ -88,9 +88,9 @@ public abstract class ApplicationUser
 		return emailAddress;
 	}
 
-	public byte[] getPasswordHash()
+	public String getPasswordHash()
 	{
-		return passwordHash.clone();
+		return passwordHash;
 	}
 
 	public String getName()

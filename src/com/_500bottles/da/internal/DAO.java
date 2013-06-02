@@ -38,9 +38,15 @@ public abstract class DAO
 	{
 		String sql = "INSERT INTO " + table + " ";
 		sql += columns + " ";
-		sql += "VALUES " + values + ";";
+		if (!(table.equals("Varietals") || table.equals("Vineyards")))
+		{
+			sql += "VALUES " + values + ";";
+		} else
+		{
+			sql += "VALUE " + values + ";";
+		}
 
-		// System.out.println(sql);
+		System.out.println(sql);
 
 		return Database.modQuery(sql);
 	}
