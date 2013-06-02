@@ -73,9 +73,9 @@
                     url: url,
                     data: data,
                     type: type
-                }).success(function (data, textStatux, jqXHR) {
-                            $("#response_user").text(data);
-                        });
+                }).success(function (data, textStatus, jqXHR) {
+                    $("#response_user").text(data);
+                });
             }
 
             $(window).on("ready", bind_events);

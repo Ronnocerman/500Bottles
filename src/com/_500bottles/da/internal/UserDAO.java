@@ -32,7 +32,7 @@ public class UserDAO extends DAO
 		dateOfBirth = formatDate(user.getDOB());
 
 		values = "('" + escapeXml(user.getEmail()) + "',";
-		values += "'" + escapeXml(user.getPasswordHash().toString()) + "',";
+		values += "'" + escapeXml( user.getPasswordHash() ) + "',";
 		values += "'" + registrationDate + "',";
 		values += "'" + lastLogin + "',";
 		values += "'" + escapeXml(user.getFirstName()) + "',";
@@ -147,7 +147,6 @@ public class UserDAO extends DAO
 		try
 		{
 			r = select(USER_TABLE, "*", "userId=" + userId);
-			// System.out.println("AYYYYYYYY");
 			user = createUser(r);
 			Database.disconnect();
 		} catch (SQLException e)
@@ -191,8 +190,6 @@ public class UserDAO extends DAO
 
 		String userEmail, firstName, lastName, sex1;
 
-		char[] userPass0;
-
 		Date registrationDate, lastLogin, dateOfBirth;
 
 		Sex sex;
@@ -200,38 +197,25 @@ public class UserDAO extends DAO
 		double height, weight;
 
 		int admin;
-		boolean real = r.next();
-		System.out.println(real);
+
 		// Return null if there was no entry in the ResultSet.
-		if (!real)
+		if (!r.next())
 			return null;
 
 		userId = r.getLong("userId");
 		dateOfBirth = r.getDate("dateOfBirth");
-		// System.out.println(dateOfBirth);
-		// System.out.println("got userId");
-
-		// System.out.println("WHAT AdsafdsafdsafsadBOUT ffdsaHERE?");
 		userEmail = unescapeXml(r.getString("userEmail"));
 		firstName = unescapeXml(r.getString("firstName"));
 		lastName = unescapeXml(r.getString("lastName"));
-		// System.out.println("eheheh");
-		userPass0 = unescapeXml(r.getString("userPass")).toCharArray();
-		byte[] userPass = new byte[userPass0.length];
-		for (int i = 0; i < userPass0.length; i++)
-		{
-			userPass[i] = (byte) userPass0[i];
 
-		}
-		// System.out.println("after password");
+		String userPass = unescapeXml(r.getString("userPass"));
 
 		registrationDate = r.getDate("registrationDate");
 		lastLogin = r.getDate("lastLogin");
-		// System.out.println("right before sex?");
 		sex1 = unescapeXml(r.getString("Sex"));
-		// System.out.println("right after unescape sex");
+
 		sex = Sex.valueOf(sex1);
-		// System.out.println("WHAT ABOUT fdsaHERE?");
+
 		height = r.getDouble("height");
 		weight = r.getDouble("weight");
 
@@ -247,11 +231,10 @@ public class UserDAO extends DAO
 		user.setLastName(lastName);
 		user.setSex(sex);
 		user.setDOB(dateOfBirth);
-		// System.out.println("dOB = " + user.getDOB());
 		user.setHeight(height);
 		user.setWeight(weight);
 		user.setAdmin(admin);
-		// System.out.println("WHAT ABOUT HERE?");
+
 		return user;
 	}
 }

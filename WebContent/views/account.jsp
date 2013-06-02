@@ -14,7 +14,7 @@
             <input id="password" type="password" class="square_top" />
             <input id="faux_password" type="text" value="password" class="square_top" />
         </div>
-        <input type="button" value="log in"/>
+        <input id="login_submit" type="button" value="log in"/>
 
         <div class="forgot_signup">
             <a class="box_arrow">forgot password</a>
@@ -84,7 +84,7 @@
             </select>
         </div>
 
-        <input type="button" value="sign up"/>
+        <input id="create_account_submit" type="button" value="sign up"/>
         <div class="bg"></div>
     </form>
 </section>

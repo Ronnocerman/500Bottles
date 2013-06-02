@@ -27,14 +27,7 @@ public class AdminTest
 		admin2.setEmail("test@ucsd.edu");
 		admin2.setDOB(new Date(113, 4, 29));
 
-		char[] password;
-		password = "12qw!@QW".toCharArray();
-		byte[] newPassword = new byte[password.length];
-		for (int i = 0; i < password.length; i++)
-		{
-			newPassword[i] = (byte) password[i];
-
-		}
+		String newPassword = "12qw!@QW";
 
 		admin2.setPassword(newPassword);
 	}
@@ -94,13 +87,7 @@ public class AdminTest
 	public void setPassword()
 	{
 		char[] password;
-		password = "qw12QW!@".toCharArray();
-		byte[] newPassword = new byte[password.length];
-		for (int i = 0; i < password.length; i++)
-		{
-			newPassword[i] = (byte) password[i];
-
-		}
+		String newPassword = "qw12QW!@";
 
 		admin1.setPassword(newPassword);
 		assertEquals(new String(admin1.getPasswordHash()), "qw12QW!@");
