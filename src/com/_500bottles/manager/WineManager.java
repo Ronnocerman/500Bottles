@@ -64,8 +64,9 @@ public class WineManager
 	{
 	}
 
-	public static boolean deleteCustomWine(Wine w)
+	public static boolean deleteCustomWine(long id)
 	{
+		Wine w = getWine(id);
 		return WineDAO.deleteWine(w);
 	}
 
