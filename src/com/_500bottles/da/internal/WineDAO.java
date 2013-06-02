@@ -575,10 +575,9 @@ public class WineDAO extends DAO
 	{
 		String columns, values;
 
-		columns = "(`vineyardId`, `vineyardName`)";
+		columns = "(`vineyardName`)";
 
-		values = "('" + v.getId() + "',";
-		values += "'" + escapeXml(v.getName()) + "')";
+		values = "('" + escapeXml(v.getName()) + "')";
 
 		try
 		{
@@ -679,10 +678,9 @@ public class WineDAO extends DAO
 	{
 		String columns, values;
 
-		columns = "(`varietalId`, `varietalName`)";
+		columns = "(`varietalName`)";
 
-		values = "('" + v.getId() + "',";
-		values += "'" + escapeXml(v.getGrapeType()) + "')";
+		values = "('" + escapeXml(v.getGrapeType()) + "')";
 
 		try
 		{

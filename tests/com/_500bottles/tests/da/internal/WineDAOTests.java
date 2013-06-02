@@ -35,7 +35,7 @@ public class WineDAOTests
 		Varietal varietal = new Varietal();
 		varietal.setId(432);
 
-		wine.setYear(1966);
+		wine.setYear(1970);
 		wine.setRating(5);
 		wine.setGeoLocation(geo);
 		wine.setSnoothId("555");
@@ -255,6 +255,7 @@ public class WineDAOTests
 			WineDAO.addVineyard(vineyard);
 		} catch (DAException e)
 		{
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
