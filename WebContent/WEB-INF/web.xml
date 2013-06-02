@@ -17,7 +17,7 @@
         <url-pattern>/css/*</url-pattern>
         <url-pattern>/fonts/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>500bottles</servlet-name>
         <servlet-class>com._500bottles.dispatch.MainDispatch</servlet-class>

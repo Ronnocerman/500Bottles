@@ -145,7 +145,7 @@ public class WineDAO extends DAO
 
 	public static Wine getWine(long wineId) throws DAException
 	{
-		System.out.println("getWine wineId: " + wineId);
+		// System.out.println("getWine wineId: " + wineId);
 		ResultSet r;
 		Wine wine;
 
@@ -238,7 +238,7 @@ public class WineDAO extends DAO
 		winecomId = r.getLong("winecomId");
 
 		description = unescapeXml(r.getString("description"));
-		System.out.println("after getting everything");
+		// System.out.println(" everything");
 
 		wine = new Wine();
 
@@ -258,7 +258,7 @@ public class WineDAO extends DAO
 		wine.setPriceMin(priceMin);
 		wine.setPriceMax(priceMax);
 		wine.setWinecomId(winecomId);
-		System.out.println("does it go right here");
+		// System.out.println("does it go right here");
 		return wine;
 	}
 
@@ -587,21 +587,21 @@ public class WineDAO extends DAO
 				wineId = new Long(r.getInt("wineId"));
 
 				wineIdVector.add(wineId);
-				System.out.println("wineId is " + wineId);
+				// System.out.println("wineId is " + wineId);
 			}
-			System.out.println("wineIdVector size: " + wineIdVector.size());
+			// System.out.println("wineIdVector size: " + wineIdVector.size());
 			for (int i = 0; i < wineIdVector.size(); i++)
 			{
-				System.out.println("wineIdVectorvalue: "
-						+ wineIdVector.get(i).longValue());
+				// System.out.println("wineIdVectorvalue: "
+				// + wineIdVector.get(i).longValue());
 				Wine temp = new Wine();
 
 				temp = getWine(wineIdVector.get(i).longValue());
-				System.out.println("tempId: " + temp.getId());
+				// System.out.println("tempId: " + temp.getId());
 				// System.out.println("next wineId is "
 				// + wineIdVector.get(i).longValue());
 				ret.add(temp);
-				System.out.println("after the add(temp)");
+				// System.out.println("after the add(temp)");
 
 			}
 			Database.disconnect();

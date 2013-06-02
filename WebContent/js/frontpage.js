@@ -259,10 +259,8 @@
         /**
          * Hides the account view.
          */
-        function hide_account_view(prevent_show_front)
+        function hide_account_view()
         {
-            prevent_show_front = prevent_show_front || false;
-
             $(view_login).removeClass(ACCOUNT_DELAY_IN);
             $(view_login).removeClass(ACCOUNT_ANIM_IN);;
             $(view_login).addClass(ACCOUNT_DELAY_OUT);
@@ -275,8 +273,7 @@
             hide_sign_up_form();
             hide_login_form();
 
-            if (!prevent_show_front)
-                show_front();
+            show_front();
         }
 
         /**
@@ -347,7 +344,12 @@
         views.front.shakeLoginForm = shake_login_form;
 
         views.front.fadeOutFrontpage = function () {
-            hide_account_view(true);
+            $(view_login).removeClass(ACCOUNT_DELAY_IN);
+            $(view_login).removeClass(ACCOUNT_ANIM_IN);;
+            $(view_login).addClass(ACCOUNT_DELAY_OUT);
+            $(view_login).addClass(ACCOUNT_ANIM_OUT);
+
+            $("#frontpage_background").addClass("fadeOut");
 
             setTimeout(function() {
                 $(".frontpage").remove();
@@ -430,6 +432,21 @@
     function successful_login()
     {
         views.front.fadeOutFrontpage();
+
+        var url = "/";
+
+        var data = {
+            "action": "getView",
+            "view": "homepage"
+        };
+
+        $.ajax({
+            url: url,
+            data: data,
+            crossDomain: true
+        }).success(function (data, textStatus, jqXHR) {
+            $("body").append(data);
+        });
     }
 
     /**

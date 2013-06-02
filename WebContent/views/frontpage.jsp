@@ -90,4 +90,5 @@
 
 <script class="frontpage" src="js/frontpage.js" type="text/javascript"></script>
 <script class="frontpage" src="js/gallery.js" type="text/javascript"></script>
+<div class="frontpage animated" id="frontpage_background"></div>
 

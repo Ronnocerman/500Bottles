@@ -29,7 +29,9 @@ public class UserAction
 	public static boolean login(String email, String passwordHash)
 			throws UserDoesNotExistException
 	{
-		return SessionManager.login(email, passwordHash);
+		SessionManager sm = SessionManager.getSessionManager();
+
+		return sm.login(email, passwordHash);
 	}
 
 	public static void logout(String email)
