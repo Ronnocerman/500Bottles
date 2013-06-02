@@ -2,7 +2,12 @@ package com._500bottles.manager;
 
 import java.util.Vector;
 
+import com._500bottles.object.wine.Appellation;
+import com._500bottles.object.wine.Varietal;
+import com._500bottles.object.wine.Vineyard;
 import com._500bottles.object.wine.Wine;
+import com._500bottles.object.wine.WineQuery;
+import com._500bottles.object.wine.WineType;
 
 public class WineWizardManager
 { // note to self add in more list for different phases
@@ -17,71 +22,43 @@ public class WineWizardManager
 
 	@SuppressWarnings("unused")
 	private long userID;
-	private Vector<String> wineType = new Vector<String>();// set for
-															// advance
-															// search
-															// level one
-	private String appellation;// set for advanced search level five
-	private String year;// set for advanced search level three
-	private String varietal;// set for advanced search level two
-	private String vineyard;// set for advanced level four
+	private static Vector<WineType> wineType = new Vector<WineType>();
+	private static Vector<Appellation> appellation = new Vector<Appellation>();// set
+	// for
+	// advanced
+	// search level five
+	private static long minYear;// set for advanced search level three
+	private static long maxYear;
+	private static Vector<Varietal> varietal = new Vector<Varietal>();
+	private static Vector<Vineyard> vineyard = new Vector<Vineyard>();// set for
+	// advanced
+	// level four
+	private static long theID;
 	private String wineName;
 	private boolean fromCellar;// a flag to see if user wants wine from their
 	// cellar
-	private boolean fromOnline;// a flag to see if user wants wine from online
+	private boolean fromWineAPI;// a flag to see if user wants wine from online
+	private boolean fromSnooth;
 	// the list of Rated wines from database
-	private Vector<Wine> wineListRated = new Vector<Wine>();
+	private static Vector<Wine> wineListRated = new Vector<Wine>();
 	// level one list of wines which account for the preferred wine type
-
-	// private Vector<Wine> levelOne = new Vector<Wine>(); // level two list
-	// ofines
-	// which account for the
-	// preferred varietal
-	// private Vector<Wine> levelTwo = new Vector<Wine>(); // level three list
-	// of
-	// wines which account
-	// for the preferred
-	// year
-	// private Vector<Wine> levelThree = new Vector<Wine>(); // level four list
-	// of
-	// wines which
-	// account for
-	// thepreferred
-	// vineyard
-	// private Vector<Wine> levelFour = new Vector<Wine>();
-	// the final list of suggested wines
-	// private Vector<Wine> suggestion = new Vector<Wine>();
-
 	// the list of all rated types
-	private Vector<String> typeList = new Vector<String>();
+	private static Vector<String> typeList = new Vector<String>();
 	// the type rating
-	private Vector<Integer> typeRating = new Vector<Integer>();
+	private static Vector<Integer> typeRating = new Vector<Integer>();
 	// the amount of that type
-	private Vector<Integer> typeAmount = new Vector<Integer>();
+	private static Vector<Integer> typeAmount = new Vector<Integer>();
 	// the list of the appellation that have been rated
-	private Vector<String> appellationList = new Vector<String>();
-	// the list of the appellation rating
-	private Vector<Integer> appellationRating = new Vector<Integer>();
+
 	// the list of the amount of that appellation that have been rated
-	private Vector<Integer> appellationAmount = new Vector<Integer>();
-	// the list of the years that have been rated
-	private Vector<String> yearList = new Vector<String>();
-	// the list of the years ratings
-	private Vector<Integer> yearRating = new Vector<Integer>();
-	// the list of the years amount
-	private Vector<Integer> yearAmount = new Vector<Integer>();
 	// the list of varietals that have been rated
-	private Vector<String> varietalList = new Vector<String>();
+	private static Vector<String> varietalList = new Vector<String>();
 	// the list of the varietals ratings
-	private Vector<Integer> varietalRating = new Vector<Integer>();
+	private static Vector<Integer> varietalRating = new Vector<Integer>();
 	// the list of the varietals amounts
-	private Vector<Integer> varietalAmount = new Vector<Integer>();
+	private static Vector<Integer> varietalAmount = new Vector<Integer>();
+	private static Vector<Integer> varietalID = new Vector<Integer>();
 	// the list of the vineyard that have been rated
-	private Vector<String> vineyardList = new Vector<String>();
-	// the list of the vineyard ratings
-	private Vector<Integer> vineyardRating = new Vector<Integer>();
-	// the list of the vineyard amount
-	private Vector<Integer> vineyardAmount = new Vector<Integer>();
 	// all the wines the user can access will be swaped later for something more
 	// dynamic
 	private Vector<Wine> allTheWines = new Vector<Wine>();// all the wines
@@ -92,7 +69,7 @@ public class WineWizardManager
 	private Vector<Wine> selected = new Vector<Wine>();// the list of
 														// wines to be
 														// returned
-	private Vector<Wine> selectedApi = new Vector<Wine>();
+	private static Vector<Wine> levelOne = new Vector<Wine>();
 	private int userAmount;// the amount that the user wants
 	private double sensitiveType;// the weight of the type
 	private double sensitiveVarietal;// the weight of the varietal
@@ -105,7 +82,8 @@ public class WineWizardManager
 	{
 		this.userID = userID;
 		fromCellar = false;
-		fromOnline = false;
+		fromSnooth = false;
+		fromWineAPI = false;
 		/*
 		 * wineTypeParse = 0; appellationParse = 0; yearParse = 0; varietalParse
 		 * = 0; vineyardParse = 0;
@@ -126,186 +104,51 @@ public class WineWizardManager
 	}
 
 	// sets the wine types that the user wants
-	public void setWineType(Vector<String> wineType)
+	private static void setWineType(Vector<WineType> vector)
 	{
-		this.wineType = wineType;
+		wineType = vector;
 	}
 
 	// gets the wine types the user wants
-	public Vector<String> getWineType()
+	private static Vector<WineType> getWineType()
 	{
 		return wineType;
 	}
 
 	// sets the varietal the user wants
-	public void setVarietal(String varietal)
+	private static void setVarietal(Vector<Varietal> bob)
 	{
-		this.varietal = varietal;
+		varietal = bob;
 	}
 
 	// gets the varietal the user wants
-	public String getVarietal()
+	private static Vector<Varietal> getVarietal()
 	{
 		return varietal;
 	}
 
-	// sets the year the user wants
-	public void setYear(String year)
-	{
-		this.year = year;
-	}
-
-	// gets the year the user wants
-	public String getYear()
-	{
-		return year;
-	}
-
 	// sets the vineyard the user wants
-	public void setVineyard(String vineyard)
+	private static void setVineyard(Vector<Vineyard> vector)
 	{
-		this.vineyard = vineyard;
+		vineyard = vector;
 	}
 
 	// gets the vineyard the user wants
-	public String getVineyard()
+	private static Vector<Vineyard> getVineyard()
 	{
 		return vineyard;
 	}
 
 	// sets the appellation the user wants
-	public void setAppellation(String appellation)
+	private static void setAppellation(Vector<Appellation> vector)
 	{
-		this.appellation = appellation;
+		appellation = vector;
 	}
 
 	// gets the appellation the user wants
-	public String getAppellation()
+	private static Vector<Appellation> getAppellation()
 	{
 		return appellation;
-	}
-
-	/*
-	 * public Wine getSuggestionBeta() { WineDAO winer = new WineDAO(); // this
-	 * while loop is to create an array list full of wine objects with //
-	 * ratings while (true) {// this fills the wineList Vector with all the
-	 * wines that have been // rated Wine temp = winer.getWine();// gets wine
-	 * from database if (temp.getRating() != 0) {// if the wine rating field has
-	 * yet to be entered // then don't put it in the list
-	 * wineListRated.add(temp); } } doLevelOne(true);
-	 * 
-	 * }
-	 */
-	// gets the rating of a certain
-	public int getRating(String s, Vector<String> type)
-	{
-		// account for a list of types that the user has selected
-		if (type.equals(wineType))
-		{
-			return typeList.size();
-		}
-		for (int i = 0; i < type.size(); i++)
-		{
-			if (s.equals(type.get(i)))
-			{
-				return type.size() - i;
-			}
-		}
-		return 0;
-	}
-
-	public void getSuggestionAlpha()
-	{
-
-		for (int i = 0; i < allTheWines.size(); i++)
-		{
-			double sum = 0;// the score of the wine
-			// score of the wine plus the type score
-			sum = sum
-					+ sensitiveType
-					* getRating(allTheWines.get(i).getType().getWineType(),
-							typeList);// create custom weight variables
-			// score of the wine plus the varietal score
-			sum = sum
-					+ sensitiveVarietal
-					* getRating(
-							allTheWines.get(i).getVarietal().getGrapeType(),
-							varietalList);
-			// gets the year that the wine was created
-			Integer r = new Integer((int) allTheWines.get(i).getYear());
-			String s = r.toString();// converts it to a string
-			// score of the wine plus the year score
-			sum = sum + sensitiveYear * getRating(s, yearList);
-			// score of the wine plus vineyard score
-			sum = sum
-					+ sensitiveVineyard
-					* getRating(allTheWines.get(i).getVineyard().getName(),
-							vineyardList);
-			// score of the wine plusthe appellation score
-			sum = sum
-					+ sensitiveAppellation
-					* getRating(allTheWines.get(i).getAppellation()
-							.getLocation(), appellationList);
-			// check to see if wines don't have the required type the user set
-			if (wineType != null)
-			{
-				int test = 0;
-				for (int q = 0; q < wineType.size(); q++)
-				{
-
-					if (allTheWines.get(i).getType().getWineType()
-							.equals(wineType.get(q)))
-					{
-						test = 1;
-					}
-				}
-				if (test != 1)
-				{
-					sum = 0;
-				}
-			}
-			// check to see if wines don't have the required varietal the user
-			// set
-			if (varietal != null)
-			{
-				if (!allTheWines.get(i).getVarietal().getGrapeType()
-						.equals(varietal))
-				{
-					sum = 0;
-				}
-			}
-			// check to see if wines don't have the required year the user set
-			if (year != null)
-			{
-				if (!s.equals(year))
-				{
-					sum = 0;
-				}
-			}
-			// check to see if wines don't have the required vineyard the user
-			// set
-			if (vineyard != null)
-			{
-				if (!allTheWines.get(i).getVineyard().getName()
-						.equals(vineyard))
-				{
-					sum = 0;
-				}
-			}
-			// check to see if wines don't have the required appellation the
-			// user set
-			if (appellation != null)
-			{
-				if (!allTheWines.get(i).getAppellation().getLocation()
-						.equals(appellation))
-				{
-					sum = 0;
-				}
-			}
-			// adds and sort the wine to the list possible cutting it off
-			// depending if list is to long
-			addSort(sum, allTheWines.get(i));
-		}
 	}
 
 	// adds and sort the wine to the list possible cutting it off depending if
@@ -343,69 +186,230 @@ public class WineWizardManager
 			String s = wineListRated.get(d).getType().getWineType();
 			int k = (int) (100 * wineListRated.get(d).getRating());
 			place(s, k, typeList, typeRating, typeAmount);
-			s = wineListRated.get(d).getVarietal().getGrapeType();
-			place(s, k, varietalList, varietalRating, varietalAmount);
-			Integer r = new Integer((int) wineListRated.get(d).getYear());
-			s = r.toString();
-			place(s, k, yearList, yearRating, yearAmount);
-			s = wineListRated.get(d).getVineyard().getName();
-			place(s, k, vineyardList, vineyardRating, vineyardAmount);
-			s = wineListRated.get(d).getAppellation().getLocation();
-			place(s, k, appellationList, appellationRating, appellationAmount);
+			/*
+			 * s = wineListRated.get(d).getVarietal().getGrapeType(); place(s,
+			 * k, varietalList, varietalRating, varietalAmount); Integer r = new
+			 * Integer((int) wineListRated.get(d).getYear()); s = r.toString();
+			 * place(s, k, yearList, yearRating, yearAmount); s =
+			 * wineListRated.get(d).getVineyard().getName(); place(s, k,
+			 * vineyardList, vineyardRating, vineyardAmount); s =
+			 * wineListRated.get(d).getAppellation().getLocation(); place(s, k,
+			 * appellationList, appellationRating, appellationAmount);
+			 */
 		}
 		// averages and sorts the attributes
 		getAverage(typeRating, typeAmount);
 		sort(typeList, typeRating, typeAmount);
-		getAverage(varietalRating, varietalAmount);
-		sort(varietalList, varietalRating, varietalAmount);
-		getAverage(yearRating, yearAmount);
-		sort(yearList, yearRating, yearAmount);
-		getAverage(vineyardRating, vineyardAmount);
-		sort(vineyardList, vineyardRating, vineyardAmount);
-		getAverage(appellationRating, appellationAmount);
-		sort(appellationList, appellationRating, appellationAmount);
+		/*
+		 * getAverage(varietalRating, varietalAmount); sort(varietalList,
+		 * varietalRating, varietalAmount); getAverage(yearRating, yearAmount);
+		 * sort(yearList, yearRating, yearAmount); getAverage(vineyardRating,
+		 * vineyardAmount); sort(vineyardList, vineyardRating, vineyardAmount);
+		 * getAverage(appellationRating, appellationAmount);
+		 * sort(appellationList, appellationRating, appellationAmount);
+		 */
 	}
 
 	// the method called by WineWizardManager to select the Wine
-	public Vector<Wine> selectWine()
+	public static Vector<Wine> selectWine(WineQuery query)
 	{
+		// query object is the user settings
+		WineQuery search = new WineQuery();// the query search for the suggested
+											// wine
+		setAppellation(query.getAppellation());// sets the appellation to the
+												// query vector of the same type
+		setVarietal(query.getVarietal());// sets the varietal to the query
+											// vector of same type
+		setWineType(query.getType());// sets the wine type to the query vector
+										// of the same type
+		setVineyard(query.getVineyard());// sets the vineyard to the query
+											// vector of the same type
+		setMinYear(query.getMinYear());// sets the min year to search
+		setMaxYear(query.getMaxYear());// sets the max year to search for
+
 		// TODO get all rated wines sorted if none then return a bunch of
 		// randoms
 		// TODO get all the wines from cellar and/or online if user selects
 		// neither
-		if (wineListRated.isEmpty())
+		WineQuery getRating = new WineQuery();// the query to get all wines with
+												// a rating of 1 to 5
+		getRating.setMinRating(1);// sets the min rating to 1
+		getRating.setMaxRating(5);// sets the max rating to 5
+		wineListRated = WineManager.searchWine(getRating).getWines();// gets the
+																		// list
+																		// of
+																		// wines
+																		// that
+																		// are
+																		// rated
+		if (!wineListRated.isEmpty())// if wineListRated is empty then don't do
+										// this
 		{
-			for (int i = 0; i < userAmount; i++)
+			getLevelOne();// does level one which in turn does level 2
+			if (varietal.isEmpty())// if varietal is empty then it puts the top
+									// rated varietals in its place
 			{
-				Wine dog = random();
-				if (!selected.contains(dog))
-					selected.add(dog);
+				Vector<Varietal> app = new Vector<Varietal>();// vector of
+																// varietal to
+																// be built
+				for (int i = 0; i < varietalList.size(); i++)// loop that builds
+																// it based of
+																// the
+																// varietalList
+				{
+					Varietal newApp = new Varietal();// varietal to be made
+					newApp.setGrapeType(varietalList.get(i));// gets the
+																// varietal
+																// grape type
+																// and sets it
+																// in newApp
+					newApp.setId(varietalID.get(i).longValue());// gets the
+																// varietal
+																// grape type
+																// and sets it
+																// in newApp
+					app.add(newApp);// adds it to newApp to the search query
+									// list
+				}
+				search.setVarietal(app);// sets the varietal app vector for the
+										// search query
+			} else
+			{
+				search.setVarietal(getVarietal());// sets the varietal if
+													// query's varietal was set
 			}
-		} else
-		{
-			doAverages();
-			// TODO: Grab a few wines from api if specified based on the
-			// averages
-			if (fromCellar)
-				getSuggestionAlpha();
-			if (fromOnline)
-				getApiWines();
+			if (wineType.isEmpty())// if wine type is empty put the suggested
+									// wine
+			{
+				Vector<WineType> app = new Vector<WineType>();// vector to put
+																// the best
+																// wines
+				for (int i = 0; i < typeList.size(); i++)// the for loop that
+															// fills the vector
+															// app
+				{
+					WineType newApp = new WineType();// app filled with the wine
+														// types of choice
+					newApp.setWineType(typeList.get(i));// app fills it with the
+														// typelist
+					app.add(newApp);// puts these new wineTypes into the vector
+				}
+				search.setType(app);// sets search query with the wineTypes
+			} else
+			{
+				search.setType(getWineType());// else sets the vector of the
+												// query type and puts it into
+												// search if it wasn't null
+			}
+			if (minYear != 0)
+			{
+				search.setMinYear(minYear);// sets the min year if it was set
+			}
+			if (maxYear != 0)
+			{
+				search.setMaxYear(maxYear);// sets the max year
+			}
+			if (!vineyard.isEmpty())
+			{
+				search.setVineyard(getVineyard());// sets the vineyard if the
+													// query vineyard was set
+			}
+			if (!appellation.isEmpty())
+			{
+				search.setAppellation(getAppellation());// sets the appellation
+														// if the query vineyard
+														// was set
+			}
 		}
-		return selected;
+		search.setSize(query.getSize());// sets the size of what the user wants
+		return WineManager.searchWine(search).getWines();// searchs for the
+															// wines with the
+															// traits
 	}
 
-	public void getApiWines()
+	private static void getLevelOne()
 	{
-		// TODO: get the api Wines with the top traits
-		if (!wineType.isEmpty())
-		{
 
+		if (varietal.isEmpty())
+		{
+			for (int i = 0; i < wineListRated.size(); i++)
+			{
+				Integer k = (int) ((int) 100 * wineListRated.get(i).getRating());
+				String s = wineListRated.get(i).getType().getWineType();
+				place(s, k.intValue(), typeList, typeRating, typeAmount);
+			}
+			getAverage(typeRating, typeAmount);
+			sort(typeList, typeRating, typeAmount);
+			int j = typeList.size() / 3;
+			while (j < typeList.size())
+			{
+				typeList.remove(typeList.size() - 1);
+			}
+			for (int r = 0; r < wineListRated.size(); r++)
+			{
+				int test = 0;
+				for (int y = 0; y < typeList.size(); y++)
+				{
+					if (wineListRated.get(r).getType().getWineType()
+							.compareTo(typeList.get(y)) == 0)
+						test++;
+				}
+				if (test > 0)
+				{
+					levelOne.add((wineListRated.get(r)));
+				}
+
+			}
+
+		} else
+		{
+			for (int r = 0; r < wineListRated.size(); r++)
+			{
+				int test = 0;
+				for (int y = 0; y < wineType.size(); y++)
+				{
+					if (wineListRated.get(r).getType().getWineType()
+							.compareTo(wineType.get(y).getWineType()) == 0)
+						test++;
+				}
+				if (test > 0)
+				{
+					levelOne.add((wineListRated.get(r)));
+				}
+			}
 		}
+		getLevelTwo();
+	}
+
+	private static void getLevelTwo()
+	{
+
+		if (varietal.isEmpty())
+		{
+			for (int i = 0; i < levelOne.size(); i++)
+			{
+				Integer k = (int) ((int) 100 * levelOne.get(i).getRating());
+				String s = levelOne.get(i).getVarietal().getGrapeType();
+				theID = levelOne.get(i).getVarietal().getId();
+				place(s, k.intValue(), varietalList, varietalRating, varietalID);
+			}
+			getAverage(varietalRating, varietalAmount);
+			sort(varietalList, varietalRating, varietalAmount);
+			while (varietalList.size() > 3)
+			{
+				varietalList.remove(varietalList.size() - 1);
+			}
+		}
+	}
+
+	private static void setMinYear(long l)
+	{
+		minYear = l;
 
 	}
 
 	// sorts the attributes and rating based on rating
-	public void sort(Vector<String> att, Vector<Integer> rating,
+	public static void sort(Vector<String> att, Vector<Integer> rating,
 			Vector<Integer> amount)
 	{
 		for (int i = 0; i < rating.size(); i++)
@@ -429,7 +433,7 @@ public class WineWizardManager
 	}
 
 	// gets the average of an attribute
-	public void getAverage(Vector<Integer> rating, Vector<Integer> amount)
+	public static void getAverage(Vector<Integer> rating, Vector<Integer> amount)
 	{
 		for (int i = 0; i < rating.size(); i++)
 		{
@@ -442,7 +446,7 @@ public class WineWizardManager
 	}
 
 	// places the attribute in the list whether new or already in the list
-	public void place(String attribute, int rat, Vector<String> att,
+	public static void place(String attribute, int rat, Vector<String> att,
 			Vector<Integer> rating, Vector<Integer> amount)
 	{
 		Integer r = new Integer(rat);
@@ -454,6 +458,10 @@ public class WineWizardManager
 			rating.add(r);
 			Integer one = new Integer(1);
 			amount.add(one);
+			if (att.equals(varietalList))
+			{
+				varietalID.add((int) theID);
+			}
 		} else
 		{
 			// System.out.println("gets in here");
@@ -556,14 +564,6 @@ public class WineWizardManager
 		this.sensitiveAppellation = sensitveAppellation;
 	}
 
-	public Vector<Wine> findWineApi()
-	{
-		// TODO do a call to the api with a search with the name specified and
-		// the traits
-
-		return null;
-	}
-
 	public String getWineName()
 	{
 		return wineName;
@@ -584,24 +584,24 @@ public class WineWizardManager
 		this.fromCellar = fromCellar;
 	}
 
-	public boolean isFromOnline()
+	public boolean isFromSnooth()
 	{
-		return fromOnline;
+		return fromSnooth;
 	}
 
-	public void setFromOnline(boolean fromOnline)
+	public void setFromOnline(boolean fromSnooth)
 	{
-		this.fromOnline = fromOnline;
+		this.fromSnooth = fromSnooth;
 	}
 
-	public Vector<Wine> getSelectedApi()
+	public boolean isFromWineAPI()
 	{
-		return selectedApi;
+		return fromWineAPI;
 	}
 
-	public void setSelectedApi(Vector<Wine> selectedApi)
+	public void setFromWineAPI(boolean fromWineAPI)
 	{
-		this.selectedApi = selectedApi;
+		this.fromWineAPI = fromWineAPI;
 	}
 
 	public Vector<Wine> getSelected()
@@ -612,5 +612,15 @@ public class WineWizardManager
 	public void setSelected(Vector<Wine> selected)
 	{
 		this.selected = selected;
+	}
+
+	public long getMaxYear()
+	{
+		return maxYear;
+	}
+
+	public static void setMaxYear(long l)
+	{
+		maxYear = l;
 	}
 }
