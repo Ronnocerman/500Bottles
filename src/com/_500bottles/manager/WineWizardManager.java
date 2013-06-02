@@ -61,7 +61,6 @@ public class WineWizardManager
 	// the list of the vineyard that have been rated
 	// all the wines the user can access will be swaped later for something more
 	// dynamic
-	private Vector<Wine> allTheWines = new Vector<Wine>();// all the wines
 	private Vector<Integer> rate = new Vector<Integer>();// a list to keep
 															// track of the
 															// wines weights
@@ -330,31 +329,60 @@ public class WineWizardManager
 	private static void getLevelOne()
 	{
 
-		if (varietal.isEmpty())
+		if (wineType.isEmpty())// checks to see if wine type is empty
 		{
-			for (int i = 0; i < wineListRated.size(); i++)
+			for (int i = 0; i < wineListRated.size(); i++)//
 			{
-				Integer k = (int) ((int) 100 * wineListRated.get(i).getRating());
-				String s = wineListRated.get(i).getType().getWineType();
-				place(s, k.intValue(), typeList, typeRating, typeAmount);
+				Integer k = (int) ((int) 100 * wineListRated.get(i).getRating());// gets
+																					// rating
+																					// time
+																					// 100
+																					// to
+																					// make
+																					// sure
+																					// no
+																					// numbers
+																					// were
+																					// dropped
+				String s = wineListRated.get(i).getType().getWineType();// gets
+																		// the
+																		// wineType
+				place(s, k.intValue(), typeList, typeRating, typeAmount);// places
+																			// it
+																			// in
+																			// the
+																			// wineTypelist
+																			// along
+																			// with
+																			// rating
 			}
-			getAverage(typeRating, typeAmount);
-			sort(typeList, typeRating, typeAmount);
-			int j = typeList.size() / 3;
-			while (j < typeList.size())
+			getAverage(typeRating, typeAmount);// gets the average of typeRating
+												// by using typeAmount
+			sort(typeList, typeRating, typeAmount);// sorts the typeList based
+													// on rating
+			while (3 < typeList.size())// while the type list is bigger then 3
+										// it decreases it
 			{
-				typeList.remove(typeList.size() - 1);
+				typeList.remove(typeList.size() - 1);// removes last element aka
+														// least favorite
 			}
-			for (int r = 0; r < wineListRated.size(); r++)
+			for (int r = 0; r < wineListRated.size(); r++)// traverse
+															// wineListRated to
+															// find the rated
+															// wines with the 3
+															// types that were
+															// chosen
 			{
-				int test = 0;
+				int test = 0;// checks to see if the wine had at least one type
+								// in common
 				for (int y = 0; y < typeList.size(); y++)
 				{
 					if (wineListRated.get(r).getType().getWineType()
 							.compareTo(typeList.get(y)) == 0)
 						test++;
 				}
-				if (test > 0)
+				if (test > 0)// if wine had at least one in common add it to
+								// levelOne
 				{
 					levelOne.add((wineListRated.get(r)));
 				}
@@ -363,7 +391,11 @@ public class WineWizardManager
 
 		} else
 		{
-			for (int r = 0; r < wineListRated.size(); r++)
+			for (int r = 0; r < wineListRated.size(); r++)// checks to see if
+															// the wines that
+															// are rated have a
+															// wineType that was
+															// selected
 			{
 				int test = 0;
 				for (int y = 0; y < wineType.size(); y++)
@@ -377,25 +409,40 @@ public class WineWizardManager
 					levelOne.add((wineListRated.get(r)));
 				}
 			}
-		}
+		}// calls level 2
 		getLevelTwo();
 	}
 
-	private static void getLevelTwo()
+	private static void getLevelTwo()// checks to make sure
 	{
-
+		// if varietal is empty then do this
 		if (varietal.isEmpty())
 		{
+			// gets the highest rated varietal of the list
 			for (int i = 0; i < levelOne.size(); i++)
 			{
-				Integer k = (int) ((int) 100 * levelOne.get(i).getRating());
-				String s = levelOne.get(i).getVarietal().getGrapeType();
-				theID = levelOne.get(i).getVarietal().getId();
-				place(s, k.intValue(), varietalList, varietalRating, varietalID);
+				Integer k = (int) ((int) 100 * levelOne.get(i).getRating());// gets
+																			// the
+																			// wine
+																			// rating
+				String s = levelOne.get(i).getVarietal().getGrapeType();// gets
+																		// the
+																		// grapetype
+				theID = levelOne.get(i).getVarietal().getId();// sets the id to
+																// a class
+																// variable to
+																// be used in
+																// the place
+																// function
+				place(s, k.intValue(), varietalList, varietalRating,
+						varietalAmount);// places the item in the list
 			}
-			getAverage(varietalRating, varietalAmount);
-			sort(varietalList, varietalRating, varietalAmount);
-			while (varietalList.size() > 3)
+			getAverage(varietalRating, varietalAmount);// sets the variteal
+														// average
+			sort(varietalList, varietalRating, varietalID);// sorts the
+															// varietals lists
+															// including the id
+			while (varietalList.size() > 3)// gets the 3 best varietals only
 			{
 				varietalList.remove(varietalList.size() - 1);
 			}
@@ -412,12 +459,15 @@ public class WineWizardManager
 	public static void sort(Vector<String> att, Vector<Integer> rating,
 			Vector<Integer> amount)
 	{
-		for (int i = 0; i < rating.size(); i++)
+		for (int i = 0; i < rating.size(); i++)// first for loop goes from
+												// beginning to end
 		{
-			for (int j = rating.size() - 1; j > i; j--)
+			for (int j = rating.size() - 1; j > i; j--)// end to other loop
 			{
-				if (rating.get(j) > rating.get(i))
+				if (rating.get(j) > rating.get(i))// if one is less then the
+													// other then switch
 				{
+					//
 					String tempAtt = att.get(i);
 					Integer tempRat = rating.get(i);
 					Integer tempAmount = amount.get(i);
@@ -435,6 +485,7 @@ public class WineWizardManager
 	// gets the average of an attribute
 	public static void getAverage(Vector<Integer> rating, Vector<Integer> amount)
 	{
+		// gets average rating of each one
 		for (int i = 0; i < rating.size(); i++)
 		{
 			int d = rating.get(i).intValue();
@@ -474,22 +525,6 @@ public class WineWizardManager
 			amount.set(k, q);
 
 		}
-	}
-
-	public Wine random()
-	{
-
-		int rand = (int) Math.random() * allTheWines.size();
-		if (allTheWines.get(rand).getRating() == 0)
-		{
-			while (allTheWines.get(rand).getRating() > 2.5)
-			{
-				rand = (int) Math.random() * allTheWines.size();
-				if (allTheWines.get(rand).getRating() == 0)
-					break;
-			}
-		}
-		return allTheWines.get(rand);
 	}
 
 	// gets the user amount of wines to return per suggestion
