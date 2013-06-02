@@ -89,6 +89,8 @@ public class WineQuery
 		this.setVineyard(DEFAULT_VINEYARD);
 		this.setMinRating(DEFAULT_MIN_RATING);
 		this.setMaxRating(DEFAULT_MAX_RATING);
+		this.setSize(DEFAULT_SIZE);
+		this.setOffset(DEFAULT_OFFSET);
 	}
 
 	/**
