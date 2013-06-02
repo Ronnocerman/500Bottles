@@ -329,7 +329,7 @@ public class WineDAO extends DAO
 		String sql = "";
 
 		sql += "vineyardId=" + vineyardId;
-		sql += "vineyardName='" + escapeXml(vineyard.getName()) + "'";
+		sql += ",vineyardName='" + escapeXml(vineyard.getName()) + "'";
 
 		try
 		{
@@ -433,7 +433,7 @@ public class WineDAO extends DAO
 		String sql = "";
 
 		sql += "varietalId=" + varietalId;
-		sql += "varietalName='" + escapeXml(varietal.getGrapeType()) + "'";
+		sql += ",varietalName='" + escapeXml(varietal.getGrapeType()) + "'";
 
 		try
 		{
