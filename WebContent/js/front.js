@@ -1,7 +1,7 @@
 (function() {
-    // Grab the views namespace and add the home view object.
+    // Grab the views namespace and add the front view object.
     views = window._500bottles.views;
-    views.home = {};
+    views.front = {};
 
     function login_form_interaction()
     {
@@ -130,11 +130,11 @@
         var SIGNUP_FORM_OUT_TIMER = 1000;
 
 
-        var HOME_ANIM_OUT = "";
-        var HOME_ANIM_IN = "";
-        var HOME_DELAY_OUT = "";
-        var HOME_DELAY_IN = "";
-        var HOME_DELAY_TIMER = 1000;
+        var FRONT_ANIM_OUT = "";
+        var FRONT_ANIM_IN = "";
+        var FRONT_DELAY_OUT = "";
+        var FRONT_DELAY_IN = "";
+        var FRONT_DELAY_TIMER = 1000;
 
         var ACCOUNT_ANIM_IN = "fadeIn";
         var ACCOUNT_ANIM_OUT = "fadeOut";
@@ -160,13 +160,13 @@
         var login = document.getElementById("log_in_link");
         var signup = document.getElementById("sign_up_link");
         var view_login = document.getElementById("view_login");
-        var home = document.getElementById("home");
+        var front = document.getElementById("front");
 
-        var back_to_home = document.getElementById("back_to_home");
+        var back_to_front = document.getElementById("back_to_front");
 
         var popular_wines = document.getElementById("popular_wines");
         var login_links = document.getElementById("login_links");
-        var home_headings = document.getElementById("home_headings");
+        var front_headings = document.getElementById("front_headings");
 
         var login_form = document.getElementById("login_form");
         var signup_form = document.getElementById("create_account_form");
@@ -240,7 +240,7 @@
             $(view_login).addClass(ACCOUNT_DELAY_IN);
             $(view_login).addClass(ACCOUNT_ANIM_IN);
 
-            hide_home();
+            hide_front();
         }
 
         /**
@@ -260,22 +260,22 @@
             hide_sign_up_form();
             hide_login_form();
 
-            show_home();
+            show_front();
         }
 
         /**
-         * Hides the home view.
+         * Hides the front view.
          */
-        function hide_home()
+        function hide_front()
         {
-            $(home).removeClass(HOME_DELAY_IN);
-            $(home).removeClass(HOME_ANIM_IN);
-            $(home).addClass(HOME_DELAY_OUT);
-            $(home).addClass(HOME_ANIM_OUT);
+            $(front).removeClass(FRONT_DELAY_IN);
+            $(front).removeClass(FRONT_ANIM_IN);
+            $(front).addClass(FRONT_DELAY_OUT);
+            $(front).addClass(FRONT_ANIM_OUT);
 
             setTimeout(function() {
-                $(home).addClass(NO_DISPLAY);
-            }, HOME_DELAY_TIMER);
+                $(front).addClass(NO_DISPLAY);
+            }, FRONT_DELAY_TIMER);
 
             $(popular_wines).removeClass(POPULAR_ANIM_IN);
             $(popular_wines).removeClass(POPULAR_DELAY_IN);
@@ -287,22 +287,22 @@
             $(login_links).addClass(LOGINLINKS_DELAY_OUT);
             $(login_links).addClass(LOGINLINKS_ANIM_OUT);
 
-            $(home_headings).removeClass(HEADINGS_ANIM_IN);
-            $(home_headings).removeClass(HEADINGS_DELAY_IN);
-            $(home_headings).addClass(HEADINGS_DELAY_OUT);
-            $(home_headings).addClass(HEADINGS_ANIM_OUT);
+            $(front_headings).removeClass(HEADINGS_ANIM_IN);
+            $(front_headings).removeClass(HEADINGS_DELAY_IN);
+            $(front_headings).addClass(HEADINGS_DELAY_OUT);
+            $(front_headings).addClass(HEADINGS_ANIM_OUT);
         }
 
         /**
-         * Shows the home view.
+         * Shows the front view.
          */
-        function show_home()
+        function show_front()
         {
-            $(home).removeClass(NO_DISPLAY);
-            $(home).removeClass(HOME_DELAY_OUT);
-            $(home).removeClass(HOME_ANIM_OUT);
-            $(home).addClass(HOME_DELAY_IN);
-            $(home).addClass(HOME_ANIM_IN);
+            $(front).removeClass(NO_DISPLAY);
+            $(front).removeClass(FRONT_DELAY_OUT);
+            $(front).removeClass(FRONT_ANIM_OUT);
+            $(front).addClass(FRONT_DELAY_IN);
+            $(front).addClass(FRONT_ANIM_IN);
 
             $(popular_wines).removeClass(POPULAR_DELAY_OUT);
             $(popular_wines).removeClass(POPULAR_ANIM_OUT);
@@ -314,19 +314,19 @@
             $(login_links).addClass(LOGINLINKS_DELAY_IN);
             $(login_links).addClass(LOGINLINKS_ANIM_IN);
 
-            $(home_headings).removeClass(HEADINGS_ANIM_OUT);
-            $(home_headings).removeClass(HEADINGS_DELAY_OUT);
-            $(home_headings).addClass(HEADINGS_DELAY_IN);
-            $(home_headings).addClass(HEADINGS_ANIM_IN);
+            $(front_headings).removeClass(HEADINGS_ANIM_OUT);
+            $(front_headings).removeClass(HEADINGS_DELAY_OUT);
+            $(front_headings).addClass(HEADINGS_DELAY_IN);
+            $(front_headings).addClass(HEADINGS_ANIM_IN);
         }
 
         signup.addEventListener("click", show_sign_up_form);
         login.addEventListener("click", show_login_form);
-        back_to_home.addEventListener("click", hide_account_view);
+        back_to_front.addEventListener("click", hide_account_view);
 
-        views.home.showFrontpage = hide_account_view;
-        views.home.showLoginForm = show_login_form;
-        views.home.showSignupForm = show_sign_up_form;
+        views.front.showFrontpage = hide_account_view;
+        views.front.showLoginForm = show_login_form;
+        views.front.showSignupForm = show_sign_up_form;
     }
 
     function create_account_init()
