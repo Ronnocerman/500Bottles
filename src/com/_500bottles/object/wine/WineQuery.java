@@ -25,6 +25,8 @@ public class WineQuery
 	public final static Vector<Vineyard> DEFAULT_VINEYARD = new Vector<Vineyard>();
 	public final static double DEFAULT_MIN_RATING = -1.0;
 	public final static double DEFAULT_MAX_RATING = -1.0;
+	public final static double DEFAULT_MIN_PRICE = -1.0;
+	public final static double DEFAULT_MAX_PRICE = -1.0;
 
 	private int offset;
 	private int size;
@@ -69,6 +71,12 @@ public class WineQuery
 
 	/*  */
 	private double maxRating;
+
+	/*  */
+	private double minPrice;
+
+	/*  */
+	private double maxPrice;
 
 	/**
 	 * Default constructor.
@@ -381,6 +389,26 @@ public class WineQuery
 	public void setMaxRating(double maxRating)
 	{
 		this.maxRating = maxRating;
+	}
+
+	public double getMinPrice()
+	{
+		return minPrice;
+	}
+
+	public void setMinPrice(double minPrice)
+	{
+		this.minPrice = minPrice;
+	}
+
+	public double getMaxPrice()
+	{
+		return maxPrice;
+	}
+
+	public void setMaxPrice(double maxPrice)
+	{
+		this.maxPrice = maxPrice;
 	}
 
 	public int getSize()
