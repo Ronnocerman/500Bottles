@@ -64,13 +64,23 @@ public class WineManager
 	{
 	}
 
-	public static boolean deleteCustomWine(Wine w)
+	public static boolean deleteCustomWine(long id)
 	{
+		Wine w = getWine(id);
 		return WineDAO.deleteWine(w);
 	}
 
-	public static void setRating(int rating)
+	public static void setRating(long id, double rating)
 	{
+		Wine w = getWine(id);
+		w.setRating(rating);
+		try
+		{
+			WineDAO.editWine(w);
+		} catch (DAException e)
+		{
+			// TODO Auto-generated catch block
+		}
 	}
 
 	/*

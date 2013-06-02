@@ -14,12 +14,17 @@ import com._500bottles.object.wine.Appellation;
 import com._500bottles.object.wine.Varietal;
 import com._500bottles.object.wine.Vineyard;
 import com._500bottles.object.wine.Wine;
+import com._500bottles.object.wine.WineQuery;
 import com._500bottles.object.wine.WineType;
 
 public class WineDAO extends DAO
 {
 	private final static String WINE_TABLE = Config
 			.getProperty("wineTableName");
+	private final static String VARIETALS_TABLE = Config
+			.getProperty("varietalsTableName");
+	private final static String VINEYARDS_TABLE = Config
+			.getProperty("vineyardsTableName");
 
 	public static Wine addWine(Wine wine) throws DAException
 	{
@@ -147,7 +152,7 @@ public class WineDAO extends DAO
 		try
 		{
 			r = select(WINE_TABLE, "*", "wineId=" + wineId);
-			System.out.println("after the select in getWine");
+			// System.out.println("after the select in getWine");
 			wine = createWine(r);
 			Database.disconnect();
 
@@ -257,54 +262,431 @@ public class WineDAO extends DAO
 		return wine;
 	}
 
+	/*
+	 * @SuppressWarnings("null") public Vector<Wine> getAllWines() throws
+	 * DAException { Vector<Wine> wineVector = null; ResultSet r;
+	 * 
+	 * try { r = select(WINE_TABLE, "*");
+	 * 
+	 * Vector<Long> wineIdVector = new Vector<Long>(); while (r.next()) { Long
+	 * wineId; wineId = new Long(r.getInt("wineId")); wineIdVector.add(wineId);
+	 * } for (int i = 0; i < wineIdVector.size(); i++) { Wine temp = new Wine();
+	 * temp = WineDAO.getWine(wineIdVector.elementAt(i).longValue());
+	 * wineVector.add(temp); } Database.disconnect();
+	 * 
+	 * } catch (SQLException e) { throw new DAException("SQL select exception",
+	 * e.getCause()); }
+	 * 
+	 * return wineVector; }
+	 */
 	@SuppressWarnings("null")
-	public Vector<Wine> getAllWines() throws DAException
+	public static Vector<Wine> getWinesFromQuery(WineQuery q)
+			throws DAException
 	{
-		Vector<Wine> wineVector = null;
+		Vector<Wine> ret = null;
 		ResultSet r;
+		boolean first = true;
+		String where = "";
 
+		if (q == null)
+			throw new NullPointerException("Null Wine Query");
+		if (q.getNameContains() != WineQuery.DEFAULT_NAME_CONTAINS)
+		{
+			where += "wineName";
+			where += " LIKE ";
+			where += "'%" + escapeXml(q.getNameContains()) + "%'";
+		}
+		if (q.getType().size() != WineQuery.DEFAULT_WINE_TYPE.size())
+		{
+			boolean exists = true;
+			for (int i = 0; i < q.getType().size(); i++)
+			{
+
+				if (first)
+				{
+					where += "wineType='";
+					where += escapeXml(q.getType().get(i).getWineType());
+					where += "'";
+					first = false;
+
+				} else if (exists)
+				{
+					where += " and ";
+					where += "wineType='";
+					where += escapeXml(q.getType().get(i).getWineType());
+					where += "'";
+					exists = false;
+				} else
+				{
+					where += " or ";
+					where += "wineType='";
+					where += escapeXml(q.getType().get(i).getWineType());
+					where += "'";
+				}
+
+			}
+		}
+		if (q.getMinYear() != WineQuery.DEFAULT_MIN_YEAR
+				&& q.getMaxYear() != WineQuery.DEFAULT_MAX_YEAR)
+		{
+			if (first)
+			{
+				where += "vintage>=";
+				where += q.getMinYear();
+				where += " and vintage<=";
+				where += q.getMaxYear();
+				first = false;
+			} else
+			{
+				where += " and ";
+				where += "vintage>=";
+				where += q.getMinYear();
+				where += " and ";
+				where += "vintage<=";
+				where += q.getMaxYear();
+			}
+
+		} else if (q.getMinYear() != WineQuery.DEFAULT_MIN_YEAR)
+		{
+			if (first)
+			{
+				where += "vintage<=";
+				where += q.getMaxYear();
+				first = false;
+			} else
+			{
+				where += " and ";
+				where += "vintage<=";
+				where += q.getMaxYear();
+			}
+
+		} else if (q.getMaxYear() != WineQuery.DEFAULT_MAX_YEAR)
+		{
+			if (first)
+			{
+				where += "vintage>=";
+				where += q.getMinYear();
+			} else
+			{
+				where += " and ";
+				where += "vintage>=";
+				where += q.getMinYear();
+			}
+		}
+		if (q.getAppellation().size() != WineQuery.DEFAULT_APPELLATION.size())
+		{
+			boolean exists = true;
+			for (int i = 0; i < q.getAppellation().size(); i++)
+			{
+				if (first)
+				{
+					where += "appellation='";
+					where += escapeXml(q.getAppellation().get(i).getLocation());
+					where += "'";
+					first = false;
+				} else if (exists)
+				{
+					where += " and ";
+					where += "appellation='";
+					where += escapeXml(q.getAppellation().get(i).getLocation());
+					where += "'";
+					exists = false;
+				} else
+				{
+					where += " or ";
+					where += "appellation='";
+					where += escapeXml(q.getAppellation().get(i).getLocation());
+					where += "'";
+				}
+			}
+		}
+
+		if (q.getVarietal().size() != WineQuery.DEFAULT_VARIETAL.size())
+		{
+			boolean exists = true;
+			for (int i = 0; i < q.getVarietal().size(); i++)
+			{
+				if (first)
+				{
+					where += "varietalId=";
+					where += q.getVarietal().get(i).getId();
+					first = false;
+				} else if (exists)
+				{
+					where += " and ";
+					where += "varietalId='";
+					where += q.getVarietal().get(i).getId();
+					where += "'";
+					exists = false;
+				} else
+				{
+					where += " or ";
+					where += "varietalId='";
+					where += q.getVarietal().get(i).getId();
+					where += "'";
+				}
+			}
+		}
+		if (q.getVineyard().size() != WineQuery.DEFAULT_VINEYARD.size())
+		{
+			boolean exists = true;
+			for (int i = 0; i < q.getVineyard().size(); i++)
+			{
+				if (first)
+				{
+					where += "vineyardId=";
+					where += q.getVineyard().get(i).getId();
+					first = false;
+				} else if (exists)
+				{
+					where += " and ";
+					where += "vineyardId='";
+					where += q.getVineyard().get(i).getId();
+					where += "'";
+					exists = false;
+				} else
+				{
+					where += " or ";
+					where += "vineyardId='";
+					where += q.getVarietal().get(i).getId();
+					where += "'";
+				}
+			}
+		}
+		if (q.getMinRating() != WineQuery.DEFAULT_MIN_RATING
+				&& q.getMaxRating() != WineQuery.DEFAULT_MAX_RATING)
+		{
+			if (first)
+			{
+				where += "rating>=";
+				where += q.getMinRating();
+				where += " and rating<=";
+				where += q.getMaxRating();
+				first = false;
+			} else
+			{
+				where += " and ";
+				where += "rating>=";
+				where += q.getMinRating();
+				where += " and ";
+				where += "rating<=";
+				where += q.getMaxRating();
+			}
+
+		} else if (q.getMinRating() != WineQuery.DEFAULT_MIN_RATING)
+		{
+			if (first)
+			{
+				where += "rating<=";
+				where += q.getMaxRating();
+				first = false;
+			} else
+			{
+				where += " and ";
+				where += "rating<=";
+				where += q.getMaxRating();
+			}
+
+		} else if (q.getMaxRating() != WineQuery.DEFAULT_MAX_RATING)
+		{
+			if (first)
+			{
+				where += "rating>=";
+				where += q.getMinRating();
+			} else
+			{
+				where += " and ";
+				where += "rating>=";
+				where += q.getMinRating();
+			}
+		}
+		if (q.getMinPrice() != WineQuery.DEFAULT_MIN_PRICE
+				&& q.getMaxPrice() != WineQuery.DEFAULT_MAX_PRICE)
+		{
+			if (first)
+			{
+				where += "priceMin>=";
+				where += q.getMinPrice();
+				where += " and priceMax<=";
+				where += q.getMaxPrice();
+				first = false;
+			} else
+			{
+				where += " and ";
+				where += "priceMin>=";
+				where += q.getMinPrice();
+				where += " and ";
+				where += "priceMax<=";
+				where += q.getMaxPrice();
+			}
+
+		} else if (q.getMinPrice() != WineQuery.DEFAULT_MIN_PRICE)
+		{
+			if (first)
+			{
+				where += "priceMax<=";
+				where += q.getMaxPrice();
+				first = false;
+			} else
+			{
+				where += " and ";
+				where += "priceMax<=";
+				where += q.getMaxPrice();
+			}
+
+		} else if (q.getMaxPrice() != WineQuery.DEFAULT_MAX_PRICE)
+		{
+			if (first)
+			{
+				where += "priceMin>=";
+				where += q.getMinPrice();
+			} else
+			{
+				where += " and ";
+				where += "priceMin>=";
+				where += q.getMinPrice();
+			}
+		}
 		try
 		{
-			r = select(WINE_TABLE, "*");
-
+			r = select(WINE_TABLE, "*", where);
 			Vector<Long> wineIdVector = new Vector<Long>();
 			while (r.next())
 			{
-				Long wineId;
+				long wineId;
 				wineId = new Long(r.getInt("wineId"));
 				wineIdVector.add(wineId);
 			}
 			for (int i = 0; i < wineIdVector.size(); i++)
 			{
 				Wine temp = new Wine();
-				temp = WineDAO.getWine(wineIdVector.elementAt(i).longValue());
-				wineVector.add(temp);
+				temp = getWine(wineIdVector.get(i).longValue());
+				ret.add(temp);
 			}
 			Database.disconnect();
-
 		} catch (SQLException e)
 		{
-			throw new DAException("SQL select exception", e.getCause());
+			throw new DAException("SQL select exception.", e.getCause());
 		}
-
-		return wineVector;
+		return ret;
 	}
 
-	@SuppressWarnings("unused")
-	private static Varietal addVarietal(Varietal v) throws DAException
+	public static Vineyard addVineyard(Vineyard v) throws DAException
+	{
+		String columns, values;
+
+		columns = "(`vineyardId`, `vineyardName`)";
+
+		values = "('" + v.getId() + "',";
+		values += "'" + escapeXml(v.getName()) + "')";
+
+		try
+		{
+			insert(VINEYARDS_TABLE, columns, values);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("Failed Vineyard insertion", e);
+		}
+
+		v.setId(getLastInsertId());
+
+		return v;
+	}
+
+	public static boolean deleteVineyard(long vineyardId)
+	{
+		int ret;
+		try
+		{
+			ret = delete(VINEYARDS_TABLE, "vineyardId=" + vineyardId);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			return false;
+		}
+		if (ret == 0)
+			return false;
+		return true;
+	}
+
+	public static void editVineyard(Vineyard vineyard) throws DAException
+	{
+		if (vineyard == null)
+			throw new NullPointerException("Vineyard object null.");
+
+		long vineyardId = vineyard.getId();
+		if (vineyardId == 0)
+			throw new DAException("Vineyard ID not set.");
+
+		String sql = "";
+
+		sql += "vineyardId=" + vineyardId;
+		sql += ",vineyardName='" + escapeXml(vineyard.getName()) + "'";
+
+		try
+		{
+			update(VINEYARDS_TABLE, sql, "vineyardId=" + vineyardId);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("Failed Vineyard update.", e);
+		}
+	}
+
+	public static Vineyard getVineyard(long vineyardId) throws DAException
+	{
+		ResultSet r;
+		Vineyard vineyard = null;
+
+		if (vineyardId == 0)
+			throw new DAException("Vineyard ID not set.");
+
+		try
+		{
+			r = select(VINEYARDS_TABLE, "*", "vineyardId=" + vineyardId);
+			vineyard = createVineyard(r);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.", e);
+		}
+
+		return vineyard;
+	}
+
+	private static Vineyard createVineyard(ResultSet r) throws SQLException
+	{
+		Vineyard vineyard;
+
+		long vineyardId;
+		String vineyardName;
+
+		if (!r.next())
+			return null;
+
+		vineyardId = r.getLong("vineyardId");
+		vineyardName = r.getString("vineyardName");
+
+		vineyard = new Vineyard();
+		vineyard.setId(vineyardId);
+		vineyard.setName(vineyardName);
+
+		return vineyard;
+	}
+
+	public static Varietal addVarietal(Varietal v) throws DAException
 	{
 		String columns, values;
 
 		columns = "(`varietalId`, `varietalName`)";
 
-		// TODO: get user id from session manager or via user object.
-		// TODO: getGeoLocation and getAppellation
 		values = "('" + v.getId() + "',";
 		values += "'" + escapeXml(v.getGrapeType()) + "')";
 
 		try
 		{
-			insert("Varietals", columns, values);
+			insert(VARIETALS_TABLE, columns, values);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
@@ -314,9 +696,87 @@ public class WineDAO extends DAO
 		v.setId(getLastInsertId());
 
 		return v;
-
 	}
-	// TODO:Add private varietal/vineyard database methods
-	// TODO:Add private varietal/vineyard database methods
+
+	public static boolean deleteVarietal(long varietalId)
+	{
+		int ret;
+		try
+		{
+			ret = delete(VARIETALS_TABLE, "varietalId=" + varietalId);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			return false;
+		}
+		if (ret == 0)
+			return false;
+		return true;
+	}
+
+	public static void editVarietal(Varietal varietal) throws DAException
+	{
+		if (varietal == null)
+			throw new NullPointerException("Varietal object null.");
+
+		long varietalId = varietal.getId();
+		if (varietalId == 0)
+			throw new DAException("Varietal ID not set.");
+
+		String sql = "";
+
+		sql += "varietalId=" + varietalId;
+		sql += ",varietalName='" + escapeXml(varietal.getGrapeType()) + "'";
+
+		try
+		{
+			update(VARIETALS_TABLE, sql, "varietalId=" + varietalId);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("Failed Varietal update.", e);
+		}
+	}
+
+	public static Varietal getVarietal(long varietalId) throws DAException
+	{
+		ResultSet r;
+		Varietal varietal = null;
+
+		if (varietalId == 0)
+			throw new DAException("Varietal ID not set.");
+
+		try
+		{
+			r = select(VARIETALS_TABLE, "*", "varietalId=" + varietalId);
+			varietal = createVarietal(r);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.", e);
+		}
+
+		return varietal;
+	}
+
+	private static Varietal createVarietal(ResultSet r) throws SQLException
+	{
+		Varietal varietal;
+
+		long varietalId;
+		String grapeType;
+
+		if (!r.next())
+			return null;
+
+		varietalId = r.getLong("varietalId");
+		grapeType = r.getString("varietalName");
+
+		varietal = new Varietal();
+		varietal.setId(varietalId);
+		varietal.setGrapeType(grapeType);
+
+		return varietal;
+	}
 
 }

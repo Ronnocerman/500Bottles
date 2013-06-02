@@ -11,6 +11,8 @@
     "cellarTableName": "Cellar",
     "userAccountTableName": "UserAccount",
     "favoritesTableName": "Favorites",
+    "varietalsTableName": "Varietals",
+    "vineyardsTableName": "Vineyards"
 
     "snoothAPIKey": "jj12t19hqxwp9is104avz5qn92zl2sq0cgaq7v6e4pmfmelq"
     "wineAPIKey": "3ceacf1cf1a36a7e799d5f1460fc7521"
