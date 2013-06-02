@@ -114,7 +114,6 @@ public class CellarDAOTests
 		CellarItem item = new CellarItem(wine);
 		item.setNotes("Testing getCellarItem()");
 		item.setQuantity(4);
-		item.setUserRating(10);
 
 		try
 		{
@@ -123,6 +122,8 @@ public class CellarDAOTests
 			item = CellarDAO.getCellarItem(item.getId());
 
 			assertEquals(item.getNotes(), "Testing getCellarItem()");
+			assertEquals(item.getQuantity(), 4);
+			assertEquals(item.getWineId(), 4);
 		} catch (DAException e)
 		{
 			fail(e.getMessage());
