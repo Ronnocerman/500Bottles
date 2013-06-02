@@ -258,7 +258,7 @@ public class WineDAO extends DAO
 		wine.setPriceMin(priceMin);
 		wine.setPriceMax(priceMax);
 		wine.setWinecomId(winecomId);
-
+		System.out.println("does it go right here");
 		return wine;
 	}
 
@@ -283,7 +283,7 @@ public class WineDAO extends DAO
 	public static Vector<Wine> getWinesFromQuery(WineQuery q)
 			throws DAException
 	{
-		Vector<Wine> ret = null;
+		Vector<Wine> ret = new Vector<Wine>();
 		ResultSet r;
 		boolean first = true;
 		String where = "";
@@ -295,6 +295,7 @@ public class WineDAO extends DAO
 			where += "wineName";
 			where += " LIKE ";
 			where += "'%" + escapeXml(q.getNameContains()) + "%'";
+			first = false;
 		}
 		if (q.getType().size() != WineQuery.DEFAULT_WINE_TYPE.size())
 		{
@@ -304,10 +305,11 @@ public class WineDAO extends DAO
 
 				if (first)
 				{
-					where += "wineType='";
+					where += "(wineType='";
 					where += escapeXml(q.getType().get(i).getWineType());
 					where += "'";
 					first = false;
+					exists = false;
 
 				} else if (exists)
 				{
@@ -323,15 +325,15 @@ public class WineDAO extends DAO
 					where += escapeXml(q.getType().get(i).getWineType());
 					where += "'";
 				}
-
 			}
+			where += ")";
 		}
 		if (q.getMinYear() != WineQuery.DEFAULT_MIN_YEAR
 				&& q.getMaxYear() != WineQuery.DEFAULT_MAX_YEAR)
 		{
 			if (first)
 			{
-				where += "vintage>=";
+				where += "(vintage>=";
 				where += q.getMinYear();
 				where += " and vintage<=";
 				where += q.getMaxYear();
@@ -339,18 +341,19 @@ public class WineDAO extends DAO
 			} else
 			{
 				where += " and ";
-				where += "vintage>=";
+				where += "(vintage>=";
 				where += q.getMinYear();
 				where += " and ";
 				where += "vintage<=";
 				where += q.getMaxYear();
 			}
+			where += ")";
 
 		} else if (q.getMinYear() != WineQuery.DEFAULT_MIN_YEAR)
 		{
 			if (first)
 			{
-				where += "vintage<=";
+				where += "(vintage<=";
 				where += q.getMaxYear();
 				first = false;
 			} else
@@ -359,6 +362,7 @@ public class WineDAO extends DAO
 				where += "vintage<=";
 				where += q.getMaxYear();
 			}
+			where += ")";
 
 		} else if (q.getMaxYear() != WineQuery.DEFAULT_MAX_YEAR)
 		{
@@ -372,7 +376,9 @@ public class WineDAO extends DAO
 				where += "vintage>=";
 				where += q.getMinYear();
 			}
+			where += ")";
 		}
+
 		if (q.getAppellation().size() != WineQuery.DEFAULT_APPELLATION.size())
 		{
 			boolean exists = true;
@@ -380,25 +386,27 @@ public class WineDAO extends DAO
 			{
 				if (first)
 				{
-					where += "appellation='";
+					where += "(appellation='";
 					where += escapeXml(q.getAppellation().get(i).getLocation());
 					where += "'";
 					first = false;
+					exists = false;
 				} else if (exists)
 				{
 					where += " and ";
-					where += "appellation='";
+					where += "(appellation='";
 					where += escapeXml(q.getAppellation().get(i).getLocation());
 					where += "'";
 					exists = false;
 				} else
 				{
 					where += " or ";
-					where += "appellation='";
+					where += "(appellation='";
 					where += escapeXml(q.getAppellation().get(i).getLocation());
 					where += "'";
 				}
 			}
+			where += ")";
 		}
 
 		if (q.getVarietal().size() != WineQuery.DEFAULT_VARIETAL.size())
@@ -408,57 +416,70 @@ public class WineDAO extends DAO
 			{
 				if (first)
 				{
-					where += "varietalId=";
+					where += "(varietalId=";
 					where += q.getVarietal().get(i).getId();
 					first = false;
+					exists = false;
 				} else if (exists)
 				{
 					where += " and ";
-					where += "varietalId='";
+					where += "(varietalId='";
 					where += q.getVarietal().get(i).getId();
 					where += "'";
 					exists = false;
 				} else
 				{
 					where += " or ";
-					where += "varietalId='";
+					where += "(varietalId='";
 					where += q.getVarietal().get(i).getId();
 					where += "'";
 				}
 			}
+			where += ")";
 		}
+
+		// System.out.println("qvineyardsize: " + q.getVineyard().size());
 		if (q.getVineyard().size() != WineQuery.DEFAULT_VINEYARD.size())
 		{
+			// System.out.println("IT IS GOING INTO THE VINEYARD!!!!!");
 			boolean exists = true;
 			for (int i = 0; i < q.getVineyard().size(); i++)
 			{
+				// System.out.println(where);
+				// System.out.println(q.getVineyard().size());
+				// System.out.println(q.getVineyard().get(i).getId());
 				if (first)
 				{
-					where += "vineyardId=";
+					where += "(vineyardId=";
 					where += q.getVineyard().get(i).getId();
 					first = false;
+					exists = false;
 				} else if (exists)
 				{
 					where += " and ";
-					where += "vineyardId='";
+					where += "(vineyardId=";
 					where += q.getVineyard().get(i).getId();
-					where += "'";
 					exists = false;
 				} else
 				{
+					// System.out.println("it should go in here");
 					where += " or ";
-					where += "vineyardId='";
-					where += q.getVarietal().get(i).getId();
-					where += "'";
+					where += "vineyardId=";
+					// System.out.println("ey: " +
+					// q.getVineyard().get(i).getId());
+					where += q.getVineyard().get(i).getId();
+					// System.out.println(where);
 				}
 			}
+			where += ")";
 		}
+
 		if (q.getMinRating() != WineQuery.DEFAULT_MIN_RATING
 				&& q.getMaxRating() != WineQuery.DEFAULT_MAX_RATING)
 		{
 			if (first)
 			{
-				where += "rating>=";
+				where += "(rating>=";
 				where += q.getMinRating();
 				where += " and rating<=";
 				where += q.getMaxRating();
@@ -466,18 +487,19 @@ public class WineDAO extends DAO
 			} else
 			{
 				where += " and ";
-				where += "rating>=";
+				where += "(rating>=";
 				where += q.getMinRating();
 				where += " and ";
 				where += "rating<=";
 				where += q.getMaxRating();
 			}
+			where += ")";
 
 		} else if (q.getMinRating() != WineQuery.DEFAULT_MIN_RATING)
 		{
 			if (first)
 			{
-				where += "rating<=";
+				where += "(rating<=";
 				where += q.getMaxRating();
 				first = false;
 			} else
@@ -486,12 +508,13 @@ public class WineDAO extends DAO
 				where += "rating<=";
 				where += q.getMaxRating();
 			}
+			where += ")";
 
 		} else if (q.getMaxRating() != WineQuery.DEFAULT_MAX_RATING)
 		{
 			if (first)
 			{
-				where += "rating>=";
+				where += "(rating>=";
 				where += q.getMinRating();
 			} else
 			{
@@ -499,13 +522,15 @@ public class WineDAO extends DAO
 				where += "rating>=";
 				where += q.getMinRating();
 			}
+			where += ")";
 		}
+
 		if (q.getMinPrice() != WineQuery.DEFAULT_MIN_PRICE
 				&& q.getMaxPrice() != WineQuery.DEFAULT_MAX_PRICE)
 		{
 			if (first)
 			{
-				where += "priceMin>=";
+				where += "(priceMin>=";
 				where += q.getMinPrice();
 				where += " and priceMax<=";
 				where += q.getMaxPrice();
@@ -513,18 +538,19 @@ public class WineDAO extends DAO
 			} else
 			{
 				where += " and ";
-				where += "priceMin>=";
+				where += "(priceMin>=";
 				where += q.getMinPrice();
 				where += " and ";
 				where += "priceMax<=";
 				where += q.getMaxPrice();
 			}
+			where += ")";
 
 		} else if (q.getMinPrice() != WineQuery.DEFAULT_MIN_PRICE)
 		{
 			if (first)
 			{
-				where += "priceMax<=";
+				where += "(priceMax<=";
 				where += q.getMaxPrice();
 				first = false;
 			} else
@@ -533,12 +559,13 @@ public class WineDAO extends DAO
 				where += "priceMax<=";
 				where += q.getMaxPrice();
 			}
+			where += ")";
 
 		} else if (q.getMaxPrice() != WineQuery.DEFAULT_MAX_PRICE)
 		{
 			if (first)
 			{
-				where += "priceMin>=";
+				where += "(priceMin>=";
 				where += q.getMinPrice();
 			} else
 			{
@@ -546,7 +573,10 @@ public class WineDAO extends DAO
 				where += "priceMin>=";
 				where += q.getMinPrice();
 			}
+			where += ")";
 		}
+
+		// System.out.println("HAHAHEHAHAHEAHEHAEHAHEAHEASUPUSPUPSUPS");
 		try
 		{
 			r = select(WINE_TABLE, "*", where);
@@ -555,13 +585,24 @@ public class WineDAO extends DAO
 			{
 				long wineId;
 				wineId = new Long(r.getInt("wineId"));
+
 				wineIdVector.add(wineId);
+				System.out.println("wineId is " + wineId);
 			}
+			System.out.println("wineIdVector size: " + wineIdVector.size());
 			for (int i = 0; i < wineIdVector.size(); i++)
 			{
+				System.out.println("wineIdVectorvalue: "
+						+ wineIdVector.get(i).longValue());
 				Wine temp = new Wine();
+
 				temp = getWine(wineIdVector.get(i).longValue());
+				System.out.println("tempId: " + temp.getId());
+				// System.out.println("next wineId is "
+				// + wineIdVector.get(i).longValue());
 				ret.add(temp);
+				System.out.println("after the add(temp)");
+
 			}
 			Database.disconnect();
 		} catch (SQLException e)
