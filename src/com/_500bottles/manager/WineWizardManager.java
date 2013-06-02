@@ -64,10 +64,11 @@ public class WineWizardManager
 
 	}
 
-	/*
+	/**
 	 * Sets the wineType vector to vector
 	 * 
-	 * @param vector a vector to set wineType to
+	 * @param vector
+	 *            a vector to set wineType to
 	 */
 	// sets the wine types that the user wants
 	private static void setWineType(Vector<WineType> vector)
@@ -75,7 +76,7 @@ public class WineWizardManager
 		wineType = vector;
 	}
 
-	/*
+	/**
 	 * @return the WineType vector
 	 */
 	// gets the wine types the user wants
@@ -84,10 +85,11 @@ public class WineWizardManager
 		return wineType;
 	}
 
-	/*
+	/**
 	 * sets the varietal vector
 	 * 
-	 * @param bob sets Varietal vector to bob vector
+	 * @param bob
+	 *            sets Varietal vector to bob vector
 	 */
 	// sets the varietal the user wants
 	private static void setVarietal(Vector<Varietal> bob)
@@ -95,7 +97,7 @@ public class WineWizardManager
 		varietal = bob;
 	}
 
-	/*
+	/**
 	 * gets the Varietal vector
 	 * 
 	 * @return varietal vector
@@ -106,10 +108,11 @@ public class WineWizardManager
 		return varietal;
 	}
 
-	/*
+	/**
 	 * sets the vineyard the user wants
 	 * 
-	 * @param vector sets vineyard to vector
+	 * @param vector
+	 *            sets vineyard to vector
 	 */
 	// sets the vineyard the user wants
 	private static void setVineyard(Vector<Vineyard> vector)
@@ -117,7 +120,7 @@ public class WineWizardManager
 		vineyard = vector;
 	}
 
-	/*
+	/**
 	 * gets the vineyard the user wants
 	 * 
 	 * @return vineyard
@@ -127,10 +130,11 @@ public class WineWizardManager
 		return vineyard;
 	}
 
-	/*
+	/**
 	 * sets the appellation the user wants
 	 * 
-	 * @param vector sets appellation to vector
+	 * @param vector
+	 *            sets appellation to vector
 	 */
 	// sets the appellation the user wants
 	private static void setAppellation(Vector<Appellation> vector)
@@ -138,7 +142,7 @@ public class WineWizardManager
 		appellation = vector;
 	}
 
-	/*
+	/**
 	 * returns appellation
 	 * 
 	 * @return gets appellation
@@ -149,10 +153,11 @@ public class WineWizardManager
 		return appellation;
 	}
 
-	/*
+	/**
 	 * the method called by WineWizardManager to select the Wine
 	 * 
-	 * @param query a query that accounts for the traits
+	 * @param query
+	 *            a query that accounts for the traits
 	 * 
 	 * @return returns a vector of suggested wine
 	 */
@@ -258,7 +263,7 @@ public class WineWizardManager
 
 	}
 
-	/*
+	/**
 	 * getLevelOne gets the preferred wineType of the user
 	 */
 	private static void getLevelOne()
@@ -328,7 +333,7 @@ public class WineWizardManager
 		getLevelTwo();
 	}
 
-	/*
+	/**
 	 * getLevelTwo gets the preferred varietal
 	 */
 	private static void getLevelTwo()// checks to make sure
@@ -361,10 +366,11 @@ public class WineWizardManager
 		}
 	}
 
-	/*
+	/**
 	 * gets the MinYear
 	 * 
-	 * @param l a long variable to set the minYear
+	 * @param l
+	 *            a long variable to set the minYear
 	 */
 
 	private static void setMinYear(long l)
@@ -373,14 +379,17 @@ public class WineWizardManager
 
 	}
 
-	/*
+	/**
 	 * sorts the attributes and rating based on rating
 	 * 
-	 * @param att the attribute
+	 * @param att
+	 *            the attribute
 	 * 
-	 * @param rating average rating of the attribute
+	 * @param rating
+	 *            average rating of the attribute
 	 * 
-	 * @param amount the amount of the things that have that trait
+	 * @param amount
+	 *            the amount of the things that have that trait
 	 */
 	// sorts the attributes and rating based on rating
 	public static void sort(Vector<String> att, Vector<Integer> rating,
@@ -409,12 +418,14 @@ public class WineWizardManager
 		}
 	}
 
-	/*
+	/**
 	 * gets the average of the a rating with the amount there
 	 * 
-	 * @param rating the sum of all rating of the attributes
+	 * @param rating
+	 *            the sum of all rating of the attributes
 	 * 
-	 * @param amount the amount to divide the ratings by
+	 * @param amount
+	 *            the amount to divide the ratings by
 	 */
 	public static void getAverage(Vector<Integer> rating, Vector<Integer> amount)
 	{
@@ -429,19 +440,24 @@ public class WineWizardManager
 
 	}
 
-	/*
+	/**
 	 * places the attribute along with its rating and the amount and if it is a
 	 * varieatal adds its ID
 	 * 
-	 * @param attribute the attribute to be put in
+	 * @param attribute
+	 *            the attribute to be put in
 	 * 
-	 * @param rat the rating of that attribute
+	 * @param rat
+	 *            the rating of that attribute
 	 * 
-	 * @param att the attribute vector
+	 * @param att
+	 *            the attribute vector
 	 * 
-	 * @param rating the vector of ratings
+	 * @param rating
+	 *            the vector of ratings
 	 * 
-	 * @param amount the vector with the amount
+	 * @param amount
+	 *            the vector with the amount
 	 */
 	public static void place(String attribute, int rat, Vector<String> att,
 			Vector<Integer> rating, Vector<Integer> amount)
@@ -473,7 +489,7 @@ public class WineWizardManager
 		}
 	}
 
-	/*
+	/**
 	 * getMaxYear
 	 * 
 	 * @return maxYear
@@ -484,10 +500,11 @@ public class WineWizardManager
 		return maxYear;
 	}
 
-	/*
+	/**
 	 * sets max year
 	 * 
-	 * @param l sets maxYear to l
+	 * @param l
+	 *            sets maxYear to l
 	 */
 
 	public static void setMaxYear(long l)
