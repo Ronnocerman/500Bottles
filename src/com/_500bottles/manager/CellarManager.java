@@ -8,6 +8,14 @@ import com._500bottles.object.wine.Wine;
 
 public class CellarManager
 {
+	/**
+	 * Adds specified wine to the users cellar
+	 * 
+	 * @param cellarID
+	 *            ID of the cellar to which the specified wine will be added
+	 * @param w
+	 *            Wine to be added to the specified cellar
+	 */
 	public static void addWine(long cellarID, Wine w)
 	{
 		CellarItem ci = new CellarItem(w);
@@ -21,11 +29,27 @@ public class CellarManager
 		}
 	}
 
+	/**
+	 * Removes the specified cellarItem
+	 * 
+	 * @param ci
+	 *            CellarItem to be removed from the cellar
+	 * @return True if cellarItem successfully removed False if removal
+	 *         unsuccessful
+	 */
 	public static boolean removeCellarItem(CellarItem ci)
 	{
 		return CellarDAO.deleteCellarItem(ci.getId());
 	}
 
+	/**
+	 * Edits the specified CellarItem
+	 * 
+	 * @param ci
+	 *            CellarItem to be edited
+	 * @throws CellarException
+	 *             If specified CellarItem does not exist
+	 */
 	public static void editCellarItem(CellarItem ci) throws CellarException
 	{
 		try
@@ -37,6 +61,15 @@ public class CellarManager
 		}
 	}
 
+	/**
+	 * Gets CellarItem from specified cellarItemID
+	 * 
+	 * @param cellarItemID
+	 *            ID of cellarItem to be returned
+	 * @return CellarItem object of specified cellarItem
+	 * @throws CellarException
+	 *             If specified cellaritem does not exist
+	 */
 	public static CellarItem getCellarItem(long cellarItemID)
 			throws CellarException
 	{
@@ -49,6 +82,17 @@ public class CellarManager
 		}
 	}
 
+	/**
+	 * Gets CellarItem from its wineID
+	 * 
+	 * @param userID
+	 *            ID of the user who's cellar being search through
+	 * @param wineID
+	 *            ID of the wine we are using to obtain the CellarItem from
+	 * @return CellarItem object wineID and userIDis associated with
+	 * @throws CellarException
+	 *             If no cellarItem associated with specified user and wine
+	 */
 	public static CellarItem getByWineID(long userID, long wineID)
 			throws CellarException
 	{
