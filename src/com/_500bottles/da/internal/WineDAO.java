@@ -35,6 +35,11 @@ public class WineDAO extends DAO
 		 * private Vineyard vineyard; private int rating;
 		 */
 
+		if (getVineyard(wine.getVineyard().getName()) == null)
+			addVineyard(wine.getVineyard());
+		if (getVarietal(wine.getVarietal().getGrapeType()) == null)
+			addVarietal(wine.getVarietal());
+
 		String columns, values;
 
 		columns = "(`wineName`, `description`, `longitude`, `latitude`,";
@@ -74,10 +79,6 @@ public class WineDAO extends DAO
 		}
 
 		wine.setId(getLastInsertId());
-		if (getVineyard(wine.getVineyard().getId()) == null)
-			addVineyard(wine.getVineyard());
-		if (getVarietal(wine.getVarietal().getId()) == null)
-			addVarietal(wine.getVarietal());
 
 		return wine;
 
@@ -131,9 +132,9 @@ public class WineDAO extends DAO
 			throw new DAException("Failed Wine update", e);
 		}
 
-		if (getVineyard(wine.getVineyard().getId()) != null)
+		if (getVineyard(wine.getVineyard().getName()) != null)
 			editVineyard(wine.getVineyard());
-		if (getVarietal(wine.getVarietal().getId()) != null)
+		if (getVarietal(wine.getVarietal().getGrapeType()) != null)
 			editVarietal(wine.getVarietal());
 	}
 
@@ -681,17 +682,19 @@ public class WineDAO extends DAO
 		}
 	}
 
-	public static Vineyard getVineyard(long vineyardId) throws DAException
+	// TODO: VINEYARD TAKES IN A STRING AS PARAMETER
+	public static Vineyard getVineyard(String vineyardName) throws DAException
 	{
 		ResultSet r;
 		Vineyard vineyard = null;
 
-		if (vineyardId == 0)
-			throw new DAException("Vineyard ID not set.");
+		if (vineyardName == null)
+			throw new DAException("Vineyard Name not set.");
 
 		try
 		{
-			r = select(VINEYARDS_TABLE, "*", "vineyardId=" + vineyardId);
+			r = select(VINEYARDS_TABLE, "*", "vineyardName="
+					+ escapeXml(vineyardName));
 			vineyard = createVineyard(r);
 			Database.disconnect();
 		} catch (SQLException e)
@@ -784,17 +787,35 @@ public class WineDAO extends DAO
 		}
 	}
 
-	public static Varietal getVarietal(long varietalId) throws DAException
+	// TODO: WINE EXISTS: VINEYARD, VARIETAL, NAME, TYPE, VINTAGE, SNOOTH AND
+	// SWINECOM
+	private static boolean wineExists(Wine wine) throws DAException
+	{
+		if (getVarietal(wine.getVarietal().getGrapeType()) == null)
+		{
+			return false;
+		} else if (getVineyard(wine.getVineyard().getName()) == null)
+		{
+			return false;
+		}
+		// else if (wine.getName() =)
+
+		return false;
+	}
+
+	// TODO: CHANGE THE PARAMETERS TO BE STRINGS
+	public static Varietal getVarietal(String varietalName) throws DAException
 	{
 		ResultSet r;
 		Varietal varietal = null;
 
-		if (varietalId == 0)
-			throw new DAException("Varietal ID not set.");
+		if (varietalName == null)
+			throw new DAException("Varietal Name not set.");
 
 		try
 		{
-			r = select(VARIETALS_TABLE, "*", "varietalId=" + varietalId);
+			r = select(VARIETALS_TABLE, "*", "varietalName="
+					+ escapeXml(varietalName));
 			varietal = createVarietal(r);
 			Database.disconnect();
 		} catch (SQLException e)
