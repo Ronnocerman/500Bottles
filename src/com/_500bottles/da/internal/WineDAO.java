@@ -42,8 +42,7 @@ public class WineDAO extends DAO
 		columns += "`varietalId`,";
 		columns += "`vineyardId`, `rating`, `snoothId` , `priceMin`, `priceMax`, `winecomId` )";
 
-		// TODO: get user id from session manager or via user object.
-		// TODO: getGeoLocation and getAppellation
+		// TODO: Comments!!!!
 		values = "('" + escapeXml(wine.getName()) + "',";
 		values += "'" + escapeXml(wine.getDescription()) + "',";
 		values += "'" + wine.getGeoLocation().getLon() + "',";
@@ -75,6 +74,10 @@ public class WineDAO extends DAO
 		}
 
 		wine.setId(getLastInsertId());
+		if (getVineyard(wine.getVineyard().getId()) == null)
+			addVineyard(wine.getVineyard());
+		if (getVarietal(wine.getVarietal().getId()) == null)
+			addVarietal(wine.getVarietal());
 
 		return wine;
 
@@ -127,6 +130,11 @@ public class WineDAO extends DAO
 		{
 			throw new DAException("Failed Wine update", e);
 		}
+
+		if (getVineyard(wine.getVineyard().getId()) != null)
+			editVineyard(wine.getVineyard());
+		if (getVarietal(wine.getVarietal().getId()) != null)
+			editVarietal(wine.getVarietal());
 	}
 
 	public static Wine getWine(Wine wine) throws DAException
@@ -279,7 +287,6 @@ public class WineDAO extends DAO
 	 * 
 	 * return wineVector; }
 	 */
-	@SuppressWarnings("null")
 	public static Vector<Wine> getWinesFromQuery(WineQuery q)
 			throws DAException
 	{

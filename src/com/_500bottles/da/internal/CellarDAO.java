@@ -285,10 +285,10 @@ public class CellarDAO extends DAO
 		return cellarItem;
 	}
 
-	@SuppressWarnings("null")
-	public Vector<Wine> getAllWinesFromCellar(long userId) throws DAException
+	public static Vector<Wine> getAllWinesFromCellar(long userId)
+			throws DAException
 	{
-		Vector<Wine> wineVector = null;
+		Vector<Wine> wineVector = new Vector<Wine>();
 		ResultSet r;
 
 		try

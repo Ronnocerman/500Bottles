@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Vector;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -127,6 +129,24 @@ public class CellarDAOTests
 		} catch (DAException e)
 		{
 			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testGetAllWinesFromCellar()
+	{
+		Vector<Wine> wines = new Vector<Wine>();
+		try
+		{
+			wines = CellarDAO.getAllWinesFromCellar(57);
+		} catch (DAException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (int i = 0; i < wines.size(); i++)
+		{
+			System.out.println(wines.get(i).getName());
 		}
 	}
 }
