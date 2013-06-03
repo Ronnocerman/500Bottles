@@ -84,9 +84,10 @@ public class UserAction
 	 * @throws UserDoesNotExistException
 	 *             if the user does not exist.
 	 */
-	public static void deleteAccount(long userID)
-			throws UserDoesNotExistException
+	public static void deleteAccount() throws UserDoesNotExistException
 	{
+		long userID = SessionManager.getSessionManager().getLoggedInUser()
+				.getUserId();
 		UserManager.removeUser(userID);
 	}
 
@@ -100,9 +101,11 @@ public class UserAction
 	 * @throws UserDoesNotExistException
 	 *             if the user does not exist.
 	 */
-	public static void editWeight(long userID, double weight)
+	public static void editWeight(double weight)
 			throws UserDoesNotExistException
 	{
+		long userID = SessionManager.getSessionManager().getLoggedInUser()
+				.getUserId();
 		UserManager.editUser(UserManager.getUser(userID).setWeight(weight));
 	}
 
@@ -116,9 +119,11 @@ public class UserAction
 	 * @throws UserDoesNotExistException
 	 *             if the user does not exist.
 	 */
-	public static void editHeight(long userID, double height)
+	public static void editHeight(double height)
 			throws UserDoesNotExistException
 	{
+		long userID = SessionManager.getSessionManager().getLoggedInUser()
+				.getUserId();
 		UserManager.editUser(UserManager.getUser(userID).setHeight(height));
 	}
 
@@ -132,9 +137,10 @@ public class UserAction
 	 * @throws UserDoesNotExistException
 	 *             if the user does not exist.
 	 */
-	public static void editSex(long userID, Sex sex)
-			throws UserDoesNotExistException
+	public static void editSex(Sex sex) throws UserDoesNotExistException
 	{
+		long userID = SessionManager.getSessionManager().getLoggedInUser()
+				.getUserId();
 		UserManager.editUser(UserManager.getUser(userID).setSex(sex));
 	}
 
@@ -148,9 +154,11 @@ public class UserAction
 	 * @throws UserDoesNotExistException
 	 *             if the user does not exist.
 	 */
-	public static void editEmail(long userID, String emailAddress)
+	public static void editEmail(String emailAddress)
 			throws UserDoesNotExistException
 	{
+		long userID = SessionManager.getSessionManager().getLoggedInUser()
+				.getUserId();
 		UserManager
 				.editUser(UserManager.getUser(userID).setEmail(emailAddress));
 	}
@@ -165,9 +173,11 @@ public class UserAction
 	 * @throws UserDoesNotExistException
 	 *             if the user does not exist.
 	 */
-	public static void editDateOfBirth(long userID, Date dateOfBirth)
+	public static void editDateOfBirth(Date dateOfBirth)
 			throws UserDoesNotExistException
 	{
+		long userID = SessionManager.getSessionManager().getLoggedInUser()
+				.getUserId();
 		UserManager.editUser(UserManager.getUser(userID).setDOB(dateOfBirth));
 	}
 }
