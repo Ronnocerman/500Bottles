@@ -1,14 +1,9 @@
 package com._500bottles.manager;
 
-import java.io.IOException;
-
-import org.json.simple.parser.ParseException;
-
-import com._500bottles.da.external.snooth.exception.InvalidSort;
-import com._500bottles.da.external.wine.exception.InvalidCategory;
-import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
+import com._500bottles.da.internal.FavoritesDAO;
 import com._500bottles.da.internal.WineDAO;
 import com._500bottles.exception.da.DAException;
+import com._500bottles.object.wine.Favorites;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.wine.WineQuery;
 import com._500bottles.object.wine.WineQueryResult;
@@ -76,11 +71,13 @@ public class WineManager
 	{
 		WineQueryResult result = null;
 
-		try {
-			result =  WineQueryManager.search(query);
-		} catch (Exception e) {
-//		throws InvalidCategory, InvalidSort, InvalidOtherParameters,
-//		IOException, ParseException, DAException
+		try
+		{
+			result = WineQueryManager.search(query);
+		} catch (Exception e)
+		{
+			// throws InvalidCategory, InvalidSort, InvalidOtherParameters,
+			// IOException, ParseException, DAException
 
 			// TODO: fix this mess of shit.
 		}
@@ -122,13 +119,35 @@ public class WineManager
 	 * 
 	 * public void deleteTastingNotes() { }
 	 */
-	public static void setFavorite(Wine w)
+
+	public static void setFavorite(Wine w) throws DAException
 	{
+		Favorites fave = new Favorites();
+		fave.setWineId(w.getId());
+		long userId = SessionManager.getSessionManager().getLoggedInUser()
+				.getUserId();
+		FavoritesDAO.addFavorite(userId, fave);
+
 	}
 
-	public static boolean isFavorite(long id)
+	/**
+	 * 
+	 * @param id
+	 *            - the wine Id
+	 * @return boolean, if this wine id is in the favorites
+	 * @throws DAException
+	 */
+	public static boolean isFavorite(long wineId) throws DAException
 	{
-		return false;
+		Favorites fave = new Favorites();
+
+		fave = FavoritesDAO.getFavorite(wineId);
+		if (fave == null)
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 }
