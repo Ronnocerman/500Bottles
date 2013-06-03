@@ -825,6 +825,7 @@ public class WineDAO extends DAO
 	// SWINECOM
 	private static boolean wineExists(Wine wine) throws DAException
 	{
+		boolean ret;
 		if (getVarietal(wine.getVarietal().getGrapeType()) == null)
 		{
 			return false;
@@ -847,20 +848,16 @@ public class WineDAO extends DAO
 		try
 		{
 			r = select(WINE_TABLE, "*", where);
-			Database.disconnect();
-		} catch (SQLException e)
-		{
-			throw new DAException(e.getMessage());
-		}
-		try
-		{
+
 			if (!r.next())
-				return false;
+				ret = false;
 			else
-				return true;
+				ret = true;
+
+			Database.disconnect();
+			return ret;
 		} catch (SQLException e)
 		{
-			// TODO: Change exception message
 			throw new DAException(e.getMessage());
 		}
 
