@@ -10,13 +10,20 @@ import com._500bottles.object.wine.WineQueryResult;
 
 public class WineManager
 {
-	public static Wine getWine(long id)
+	/**
+	 * Gets wine by specified ID
+	 * 
+	 * @param id
+	 *            ID of wine to be returned
+	 * @return Wine object of specifed Wine ID
+	 */
+	public static Wine getWine(long wineId)
 	{
 		Wine wine = null;
 
 		try
 		{
-			wine = WineDAO.getWine(id);
+			wine = WineDAO.getWine(wineId);
 		} catch (DAException e)
 		{
 			// TODO:
@@ -26,10 +33,11 @@ public class WineManager
 	}
 
 	/**
-	 * Gets and returns a
+	 * Gets and returns a Wine by snoothId
 	 * 
 	 * @param snoothId
-	 * @return
+	 *            of the wine to be returned
+	 * @return The Wine that will be returned by snoothId
 	 */
 	static Wine getWineBySnoothId(String snoothId)
 	{
@@ -48,24 +56,38 @@ public class WineManager
 		return resultWine;
 	}
 
-	static Wine getWineByWineComId(long id)
+	/**
+	 * Get the Wine associated with the WineComID
+	 * 
+	 * @param id
+	 *            WineComId of the wine to be returned
+	 * @return The wine associated with the WineComId
+	 */
+	static Wine getWineByWineComId(long wineComId)
 	{
 
 		Wine resultWine = null, searchWine = new Wine();
-		searchWine.setWinecomId(id);
+		searchWine.setWinecomId(wineComId);
 
 		try
 		{
 			resultWine = WineDAO.getWine(searchWine);
 		} catch (DAException e)
 		{
-			System.err.print("DA Exception in WineManager::getWineByWineId"
+			System.err.print("DA Exception in WineManager::getWineByWineComId"
 					+ e.getMessage());
 		}
 
 		return resultWine;
 	}
 
+	/**
+	 * Return WineQueryResult from Specified Wine Query
+	 * 
+	 * @param query
+	 *            The WineQuery to be searched with
+	 * @return The WineQueryResult of the WineQuery search
+	 */
 	public static WineQueryResult searchWine(WineQuery query)
 
 	{
@@ -99,6 +121,14 @@ public class WineManager
 		return WineDAO.deleteWine(w);
 	}
 
+	/**
+	 * Set the rating of the specified Wine using the specified rating
+	 * 
+	 * @param id
+	 *            The ID of the wine that will be set with the specified rating
+	 * @param rating
+	 *            The rating of the that specified wine will be set to
+	 */
 	public static void setRating(long id, double rating)
 	{
 		Wine w = getWine(id);
@@ -120,6 +150,13 @@ public class WineManager
 	 * public void deleteTastingNotes() { }
 	 */
 
+	/**
+	 * Set the specified wine to favorite
+	 * 
+	 * @param w
+	 *            The wine to be set to favorite
+	 * @throws DAException
+	 */
 	public static void setFavorite(Wine w) throws DAException
 	{
 		Favorites fave = new Favorites();
