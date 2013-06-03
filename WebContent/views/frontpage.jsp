@@ -1,6 +1,6 @@
 <%@ include file="/views/frontpage/account.jsp" %>
 
-<section id="front" class="view animated no_header">
+<section id="front" class="view animated no_header no_bg fadeInUp">
 
     <section class="content_container clearfix">
 
@@ -86,6 +86,8 @@
             <div class="prev"></div>
         </div>
     </section>
+
+    <div class="clearfix"></div>
 </section>
 
 <script class="frontpage" src="js/frontpage.js" type="text/javascript"></script>

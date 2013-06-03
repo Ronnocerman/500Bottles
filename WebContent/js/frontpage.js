@@ -1,10 +1,13 @@
 (function() {
+    var VIEW_CONTAINER = "#view_container";
+
     // Grab the views namespace and add the front view object.
     views = window._500bottles.views;
     views.front = {};
+
     //Booleans set when views entered
-    loginview = false;
-    signupview = false;
+    login_enter_enable = false;
+    signup_enter_enable = false;
     
     function login_form_interaction()
     {
@@ -179,7 +182,7 @@
          */
         function show_login_form()
         {
-        	loginview = true;
+        	login_enter_enable = true;
             show_account_view();
             hide_sign_up_form();
 
@@ -205,7 +208,7 @@
          */
         function show_sign_up_form()
         {
-        	signupview = true;
+        	signup_enter_enable = true;
             show_account_view();
             hide_login_form();
 
@@ -220,7 +223,7 @@
          */
         function hide_login_form()
         {
-        	loginview = false;
+        	login_enter_enable = false;
             $(login_form).removeClass(LOGIN_FORM_DELAY_IN);
             $(login_form).removeClass(LOGIN_FORM_ANIM_IN);
             $(login_form).addClass(LOGIN_FORM_DELAY_OUT);
@@ -237,7 +240,7 @@
          */
         function hide_sign_up_form()
         {
-        	signupview = false;
+        	signup_enter_enable = false;
             $(signup_form).removeClass(SIGNUP_FORM_ANIM_IN);
             $(signup_form).removeClass(SIGNUP_FORM_DELAY_IN);
             $(signup_form).addClass(SIGNUP_FORM_DELAY_OUT);
@@ -375,20 +378,7 @@
         var url = "/user";
         var submit = document.getElementById("create_account_submit");
 
-        $(submit).on("click", signup());
-        
-        
-        
-        $(document).keypress(function(e) {
-        	
-        		if(e.which == 13 && signupview) {
-                signup();
-                //alert("Enterkey Detected signup success!");
-            }
-        });
-        
-        
-        function signup() {
+        function do_signup() {
             var data = {
                 "action": "createAccount",
                 "firstname": $("#create_account_firstname").val(),
@@ -408,14 +398,17 @@
                 data: data,
                 type: type
             }).success(function (data, textStatus, jqXHR) {
-                console.log(data);
-                alert("success!");
-            });
+                    console.log(data);
+                    alert("success!");
+                });
         }
-        
-        
-        
-        
+
+        $(submit).on("click", do_signup);
+
+        $(document).keypress(function(e) {
+        	if(e.which == 13 && signup_enter_enable)
+                do_signup();
+        });
     }
 
     /**
@@ -429,20 +422,7 @@
         var url = "/user";
         var submit = document.getElementById("login_submit");
 
-        $(submit).on("click", login());
-        
-       
-        
-        
-        $(document).keypress(function(e) {
-        	
-        		if(e.which == 13 && loginview) {
-                login();
-                //alert("Enterkey Detected login success!");
-            }
-        });
-        
-        function login() {
+        function do_login() {
             var data = {
                 "action": "login",
                 "email": $("#email").val(),
@@ -458,12 +438,16 @@
                 data: data,
                 type: type
             }).success(function (data, textStatus, jqXHR) {
-                    eval(data);
+                eval(data);
             });
         }
-        
-        
-        
+
+        $(submit).on("click", do_login);
+
+        $(document).keypress(function(e) {
+        	if(e.which == 13 && login_enter_enable)
+                do_login();
+        });
     }
 
     /**
@@ -485,7 +469,10 @@
             data: data,
             crossDomain: true
         }).success(function (data, textStatus, jqXHR) {
-            $("body").append(data);
+            $(VIEW_CONTAINER).append(data);
+
+            // set the body height
+            $("body").height($("#home").height());
         });
     }
 

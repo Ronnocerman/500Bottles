@@ -1,6 +1,6 @@
 <%@ include file="/inc/header.jsp" %>
 
-<section class="wrapper clearfix view animated" id="home">
+<section class="wrapper clearfix view animated fadeInUp" id="home">
 
     <!-- Popular Wines Section -->
     <div class="wine_grid_container" data-rows="1">
@@ -154,6 +154,8 @@
         <div class="next"></div>
         <div class="prev"></div>
     </div>
+
+    <div class="clearfix"></div>
 
 </section>
 

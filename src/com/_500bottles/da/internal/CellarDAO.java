@@ -296,11 +296,10 @@ public class CellarDAO extends DAO
 			r = select(CELLARITEM_TABLE, "*", "userId=" + userId + "");
 
 			Vector<Long> wineIdVector = new Vector<Long>();
+
 			while (r.next())
 			{
-				Long wineId;
-				wineId = new Long(r.getInt("wineId"));
-				wineIdVector.add(wineId);
+				wineIdVector.add(r.getLong("wineId"));
 			}
 			for (int i = 0; i < wineIdVector.size(); i++)
 			{

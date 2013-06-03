@@ -21,3 +21,4 @@
 </head>
 
 <body>
+    <div id="view_container">
