@@ -76,7 +76,6 @@ public class WineManager
 		{
 			System.err.print("DA Exception in WineManager::getWineByWineComId"
 					+ e.getMessage());
-			System.out.println("penispenispenispenis");
 		}
 
 		return resultWine;
