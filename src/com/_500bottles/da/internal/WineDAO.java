@@ -50,7 +50,7 @@ public class WineDAO extends DAO
 			columns = "(`wineName`, `description`, `longitude`, `latitude`,";
 			columns += "`wineType`, `vintage`,";
 			columns += "`varietalId`,";
-			columns += "`vineyardId`, `rating`, `snoothId` , `priceMin`, `priceMax`, `winecomId` )";
+			columns += "`vineyardId`, `rating`, `snoothId` , `priceMin`, `priceMax`, `winecomId`, `imageUrl` )";
 
 			// TODO: Comments!!!!
 			values = "('" + escapeXml(wine.getName()) + "',";
@@ -72,7 +72,8 @@ public class WineDAO extends DAO
 			values += "'" + wine.getPriceMin() + "',";
 			values += "'" + wine.getPriceMax() + "',";
 
-			values += "'" + wine.getWinecomId() + "')";
+			values += "'" + wine.getWinecomId() + "',";
+			values += "'" + escapeXml(wine.getImage()) + "')";
 
 			try
 			{
@@ -134,6 +135,7 @@ public class WineDAO extends DAO
 			sql += ",latitude=" + wine.getGeoLocation().getLat();
 			sql += ",winecomId=" + wine.getWinecomId();
 			sql += ",snoothId=' " + escapeXml(wine.getSnoothId()) + "'";
+			sql += ",imageUrl=' " + escapeXml(wine.getImage()) + "'";
 
 			try
 			{
@@ -232,7 +234,7 @@ public class WineDAO extends DAO
 		double rating, priceMin, priceMax;
 		float lon, lat;
 
-		String name, description, typeString, appellationString, snoothId;
+		String name, description, typeString, appellationString, snoothId, image;
 		WineType type;
 		GeoLocation geoLocation;
 		Appellation appellation;
@@ -283,6 +285,8 @@ public class WineDAO extends DAO
 		description = unescapeXml(r.getString("description"));
 		// System.out.println(" everything");
 
+		image = unescapeXml(r.getString("imageUrl"));
+
 		wine = new Wine();
 
 		// Set all properties of Wine
@@ -301,6 +305,7 @@ public class WineDAO extends DAO
 		wine.setPriceMin(priceMin);
 		wine.setPriceMax(priceMax);
 		wine.setWinecomId(winecomId);
+		wine.setImage(image);
 		// System.out.println("does it go right here");
 		return wine;
 	}
@@ -952,5 +957,4 @@ public class WineDAO extends DAO
 
 		return varietal;
 	}
-
 }

@@ -33,6 +33,7 @@ public class Wine
 		this.setVarietal(new Varietal());
 		this.setVineyard(new Vineyard());
 		this.setRating(0);
+		this.setImage("");
 	}
 
 	/**
