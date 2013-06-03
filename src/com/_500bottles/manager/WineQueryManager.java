@@ -73,7 +73,7 @@ public class WineQueryManager
 		try
 		{
 			wines = searchLocal(query);
-			System.out.println(wines.size());
+
 			if (wines.size() < 5)
 			{
 				wines = mergeExternalResults(searchSnooth(query),
@@ -260,6 +260,7 @@ public class WineQueryManager
 	private static Vector<Wine> mergeExternalResults(
 			WineSearchResponse response, Vector<Wine> wineComWines)
 	{
+		System.out.println(wineComWines.size());
 		Vector<Wine> wines = new Vector<Wine>();
 		Iterator<SnoothWine> it = response.getWinesIterator();
 
@@ -343,8 +344,6 @@ public class WineQueryManager
 			WineDAO.addWine(wine);
 		} catch (DAException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 		/*
