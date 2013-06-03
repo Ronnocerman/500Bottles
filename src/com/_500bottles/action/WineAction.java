@@ -1,5 +1,6 @@
 package com._500bottles.action;
 
+import com._500bottles.exception.da.DAException;
 import com._500bottles.manager.WineManager;
 import com._500bottles.object.wine.Wine;
 
@@ -50,7 +51,14 @@ public class WineAction
 	public void setFavorite(long id)
 	{
 		Wine w = WineManager.getWine(id);
-		WineManager.setFavorite(w);
+		try
+		{
+			WineManager.setFavorite(w);
+		} catch (DAException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -61,7 +69,14 @@ public class WineAction
 	 */
 	public void getFavorite(long id)
 	{
-		WineManager.isFavorite(id);
+		try
+		{
+			WineManager.isFavorite(id);
+		} catch (DAException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
