@@ -91,7 +91,7 @@ public class FavoritesDAO extends DAO
 		}
 	}
 
-	public static Favorites getFavorite(long favoritesId) throws DAException
+	public static Favorites getFavorite(long wineId) throws DAException
 	{
 		ResultSet r;
 		Favorites favorite = null;
@@ -99,7 +99,7 @@ public class FavoritesDAO extends DAO
 		try
 		{
 			// System.out.println(favoritesId);
-			r = select(FAVORITES_TABLE, "*", "favoritesId = " + favoritesId);
+			r = select(FAVORITES_TABLE, "*", "wineId = " + wineId);
 
 			// System.out.println("abc " + r.getLong("favoritesId"));
 			favorite = createFavorites(r);
