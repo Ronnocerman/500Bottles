@@ -727,8 +727,8 @@ public class WineDAO extends DAO
 
 		try
 		{
-			r = select(VINEYARDS_TABLE, "*", "vineyardName="
-					+ escapeXml(vineyardName));
+			r = select(VINEYARDS_TABLE, "*", "vineyardName='"
+					+ escapeXml(vineyardName) + "'");
 			vineyard = createVineyard(r);
 			Database.disconnect();
 		} catch (SQLException e)
@@ -877,8 +877,8 @@ public class WineDAO extends DAO
 
 		try
 		{
-			r = select(VARIETALS_TABLE, "*", "varietalName="
-					+ escapeXml(varietalName));
+			r = select(VARIETALS_TABLE, "*", "varietalName='"
+					+ escapeXml(varietalName) + "'");
 			varietal = createVarietal(r);
 			Database.disconnect();
 		} catch (SQLException e)
