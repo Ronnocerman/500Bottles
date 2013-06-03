@@ -292,8 +292,6 @@ public class WineWizardManager
 		if (doug == null)
 			return null;
 		Vector<Wine> returnWineVector = doug.getWines();
-		if (returnWineVector.size() == 0)
-			return null;
 		return returnWineVector;
 
 	}
