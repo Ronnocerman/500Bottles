@@ -1,7 +1,14 @@
 package com._500bottles.manager;
 
+import java.io.IOException;
 import java.util.Vector;
 
+import org.json.simple.parser.ParseException;
+
+import com._500bottles.da.external.snooth.exception.InvalidSort;
+import com._500bottles.da.external.wine.exception.InvalidCategory;
+import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
+import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Appellation;
 import com._500bottles.object.wine.Varietal;
 import com._500bottles.object.wine.Vineyard;
@@ -160,8 +167,14 @@ public class WineWizardManager
 	 *            a query that accounts for the traits
 	 * 
 	 * @return returns a vector of suggested wine
+	 * @throws ParseException 
+	 * @throws IOException 
+	 * @throws InvalidOtherParameters 
+	 * @throws InvalidSort 
+	 * @throws InvalidCategory 
+	 * @throws DAException 
 	 */
-	public static Vector<Wine> selectWine(WineQuery query)
+	public static Vector<Wine> selectWine(WineQuery query) throws DAException, InvalidCategory, InvalidSort, InvalidOtherParameters, IOException, ParseException
 	{
 		// query object is the user settings
 		WineQuery search = new WineQuery();// the query search for the suggested
