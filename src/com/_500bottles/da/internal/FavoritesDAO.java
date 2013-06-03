@@ -118,13 +118,13 @@ public class FavoritesDAO extends DAO
 	{
 		if (favorite == null)
 			throw new NullPointerException("Null Favorite.");
-		if (favorite.getfavoritesId() == 0)
-			throw new DAException("Favorites Id not set.");
+		if (favorite.getWineId() == 0)
+			throw new DAException("Favorite not set.");
 
-		long favoriteId = favorite.getfavoritesId();
-		System.out.println("favoritesId in getFavorite: "
-				+ favorite.getfavoritesId());
-		return getFavorite(favoriteId);
+		long wineId = favorite.getWineId();
+		// System.out.println("favoritesId in getFavorite: "
+		// + favorite.getfavoritesId());
+		return getFavorite(wineId);
 	}
 
 	private static Favorites createFavorites(ResultSet r) throws SQLException
