@@ -53,8 +53,18 @@ public class WineAPICall
 			jsonObject = (JSONObject) jsonArray.get(i);
 
 			String s = (String) jsonObject.get("Name");
-			temp.setName(s);
-			temp.setYear(Long.valueOf(s.substring(s.length() - 4, s.length())));
+
+			try
+			{
+				int num = Integer.parseInt(s.substring(s.length() - 4,
+						s.length()));
+				temp.setYear((long) num);
+				temp.setName(s.substring(0, s.length() - 5));
+			} catch (NumberFormatException e)
+			{
+
+				temp.setName(s);
+			}
 
 			temp.setWinecomId((long) jsonObject.get("Id"));
 

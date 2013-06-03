@@ -54,26 +54,40 @@ public class WineQueryManager
 	 * 
 	 * @param query
 	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws InvalidOtherParameters
+	 * @throws InvalidSort
+	 * @throws InvalidCategory
+	 * @throws DAException
 	 */
 	public static WineQueryResult search(WineQuery query)
+			throws InvalidCategory, InvalidSort, InvalidOtherParameters,
+			IOException, ParseException, DAException
 	{
 		// Perform the query on the local DB.
 
 		// Adapt the query for external API's
 
 		// Perform the query on Snooth.
-		Vector<Wine> winesAddedBySnooth;
+		Vector<Wine> wines;
 
-		winesAddedBySnooth = mergeExternalResults(searchSnooth(query));
+		wines = searchLocal(query);
 
-		WineQueryResult result = new WineQueryResult(winesAddedBySnooth);
+		if (wines.size() < 5)
+		{
+			wines = mergeExternalResults(searchSnooth(query),
+					searchWineCom(query));
+		}
+		WineQueryResult result = new WineQueryResult(wines);
 
 		return result;
 	}
 
-	private static Vector<Wine> searchLocal(WineQuery query)
+	private static Vector<Wine> searchLocal(WineQuery query) throws DAException
 	{
-		return null;
+
+		return WineDAO.getWinesFromQuery(query);
 
 	}
 
@@ -84,7 +98,7 @@ public class WineQueryManager
 	 * @param query
 	 * @return
 	 */
-	private static WineSearchResponse searchSnooth(WineQuery query)
+	public static WineSearchResponse searchSnooth(WineQuery query)
 	{
 		WineSearchResponse res = null;
 
@@ -205,7 +219,6 @@ public class WineQueryManager
 
 		url.addToURL(filtercategory);
 		WineAPICall call = new WineAPICall();
-		System.out.println(url.getString());
 		v = call.getProducts(url.getString());
 		return v;
 	}
@@ -216,8 +229,11 @@ public class WineQueryManager
 	 * @param response
 	 *            Response from Snooth wine search.
 	 * @return Returns the wines added to the database as a result of the merge.
+	 * @throws DAException
 	 */
-	private static Vector<Wine> mergeExternalResults(WineSearchResponse response)
+	private static Vector<Wine> mergeExternalResults(
+			WineSearchResponse response, Vector<Wine> wineComWines)
+			throws DAException
 	{
 		Vector<Wine> wines = new Vector<Wine>();
 		Iterator<SnoothWine> it = response.getWinesIterator();
@@ -232,13 +248,31 @@ public class WineQueryManager
 
 			// Find out if the Snooth wine exists in the database.
 			// If not, then get the details and add it to the database.
-			Wine w = WineManager.getWineBySnoothId(snoothWine.getCode());
-			if (w == null)
+			// Wine w = WineManager.getWineBySnoothId(snoothWine.getCode());
+			// if (w == null)
+			// {
+			// w = addWineToDatabase(snoothWine);
+			// }
+			boolean match = false;
+			for (int i = 0; i < wineComWines.size(); i++)
 			{
-				// w = addWineToDatabase(snoothWine);
+				if (snoothWine.getName() == wineComWines.elementAt(i).getName()
+						&& Long.parseLong(snoothWine.getVintage()) == wineComWines
+								.elementAt(i).getYear())
+					match = true;
 			}
+			if (match == false)
+				wines.add(snoothWine.toWineObject());
+		}
 
-			wines.add(w);
+		for (int i = 0; i < wines.size(); i++)
+		{
+			Wine w = WineManager.getWineBySnoothId(wines.elementAt(i)
+					.getSnoothId());
+			Wine v = WineManager.getWineByWineComId(wines.elementAt(i)
+					.getWinecomId());
+			if (w == null && v == null)
+				addWineToDatabase(wines.elementAt(i));
 		}
 
 		return wines;

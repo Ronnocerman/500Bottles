@@ -1,5 +1,12 @@
 package com._500bottles.manager;
 
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
+import com._500bottles.da.external.snooth.exception.InvalidSort;
+import com._500bottles.da.external.wine.exception.InvalidCategory;
+import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
 import com._500bottles.da.internal.WineDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Wine;
@@ -46,14 +53,39 @@ public class WineManager
 		return resultWine;
 	}
 
-	static Wine getWineByWineComId()
+	static Wine getWineByWineComId(long id)
 	{
-		return null;
+
+		Wine resultWine = null, searchWine = new Wine();
+		searchWine.setWinecomId(id);
+
+		try
+		{
+			resultWine = WineDAO.getWine(searchWine);
+		} catch (DAException e)
+		{
+			System.err.print("DA Exception in WineManager::getWineByWineId"
+					+ e.getMessage());
+		}
+
+		return resultWine;
 	}
 
 	public static WineQueryResult searchWine(WineQuery query)
+
 	{
-		return WineQueryManager.search(query);
+		WineQueryResult result = null;
+
+		try {
+			result =  WineQueryManager.search(query);
+		} catch (Exception e) {
+//		throws InvalidCategory, InvalidSort, InvalidOtherParameters,
+//		IOException, ParseException, DAException
+
+			// TODO: fix this mess of shit.
+		}
+
+		return result;
 	}
 
 	public static void addCustomWine(Wine w)
@@ -98,4 +130,5 @@ public class WineManager
 	{
 		return false;
 	}
+
 }

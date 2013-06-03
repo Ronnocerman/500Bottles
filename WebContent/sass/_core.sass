@@ -40,8 +40,15 @@ p
   line-height: 1.3em
   padding: 1em
 
+.dark_bg
+  background-color: rgba(black, 0.5)
+  color: white
+
 .light_bg
   background-color: white
+  &>*:not(.bg)
+    position: relative
+    z-index: 10
 
 .squairy_bg
   background-image: url("../img/squairy_light.png")
@@ -119,3 +126,55 @@ a.box_arrow
 // For IE 6/7 (trigger hasLayout)
 .ie .clearfix
   zoom: 1
+
+
+
+// Wine Grid Styling
+.wine_grid_container
+  padding: 1em
+  overflow: hidden
+  position: relative
+  &:before, &:after
+    content: ""
+    width: 1px
+    height: 98%
+    position: absolute
+    top: 1%
+    box-shadow: 0 0 8px rgba(black, 0.6)
+    z-index: 50
+  &:after
+    right: -1px
+  &:before
+    left: -1px
+
+  h2
+    border-bottom: 1px solid rgba(black, 0.2)
+    margin-top: -0.1em
+    margin-bottom: 0.2em
+    margin-right: 6%
+    margin-left: -30px
+    padding-left: 30px
+
+  .next, .prev
+    @include background_image("icons/arrow.png")
+    height: 100px
+    width: 100px
+    position: absolute
+    top: 40%
+    @include transition(all, 1s)
+    opacity: 0.1
+    cursor: pointer
+  .prev
+    @include rotate(-180deg)
+    left: -100px
+  .next
+    right: -100px
+  &:hover
+    .prev, .next
+      opacity: 0.4
+      &:hover
+        opacity: 1
+    .prev
+      left: -30px
+    .next
+      right: -30px

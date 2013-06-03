@@ -181,15 +181,14 @@ public class WineDAOTests
 	{
 		Vineyard getVineyard;
 		Vineyard vineyard = new Vineyard();
-		vineyard.setName("You should not be able to see this.");
+		vineyard.setName("vineyard1");
 
 		try
 		{
 			WineDAO.addVineyard(vineyard);
-			getVineyard = WineDAO.getVineyard(vineyard.getId());
+			getVineyard = WineDAO.getVineyard(vineyard.getName());
 
-			assertEquals(getVineyard.getName(),
-					"You should not be able to see this.");
+			assertEquals(getVineyard.getName(), "v");
 
 			getVineyard.setName("Its visible.");
 
@@ -236,16 +235,15 @@ public class WineDAOTests
 	{
 		Varietal getVarietal;
 		Varietal varietal = new Varietal();
-		varietal.setGrapeType("You should not be able to see this.");
+		varietal.setGrapeType("Red");
 
 		try
 		{
 			WineDAO.addVarietal(varietal);
 
-			getVarietal = WineDAO.getVarietal(varietal.getId());
+			getVarietal = WineDAO.getVarietal(varietal.getGrapeType());
 
-			assertEquals(getVarietal.getGrapeType(),
-					"You should not be able to see this.");
+			assertEquals(getVarietal.getGrapeType(), "Red");
 
 			getVarietal.setGrapeType("Its visible.");
 

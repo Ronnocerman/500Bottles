@@ -1,12 +1,18 @@
 package com._500bottles.tests.manager;
 
+import java.io.IOException;
 import java.util.Iterator;
 
+import org.json.simple.parser.ParseException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import com._500bottles.da.external.snooth.exception.InvalidSort;
+import com._500bottles.da.external.wine.exception.InvalidCategory;
+import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
+import com._500bottles.exception.da.DAException;
 import com._500bottles.manager.WineManager;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.wine.WineQuery;
@@ -27,8 +33,10 @@ public class WineManagerTests
 
 	}
 
+	// TODO
 	@Test
-	public void searchWineTest()
+	public void searchWineTest() throws DAException, InvalidCategory,
+			InvalidSort, InvalidOtherParameters, IOException, ParseException
 	{
 		q = new WineQuery();
 		q.setTextQuery("cabernet");
