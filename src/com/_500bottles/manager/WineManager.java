@@ -72,10 +72,20 @@ public class WineManager
 	}
 
 	public static WineQueryResult searchWine(WineQuery query)
-			throws InvalidCategory, InvalidSort, InvalidOtherParameters,
-			IOException, ParseException, DAException
+
 	{
-		return WineQueryManager.search(query);
+		WineQueryResult result = null;
+
+		try {
+			result =  WineQueryManager.search(query);
+		} catch (Exception e) {
+//		throws InvalidCategory, InvalidSort, InvalidOtherParameters,
+//		IOException, ParseException, DAException
+
+			// TODO: fix this mess of shit.
+		}
+
+		return result;
 	}
 
 	public static void addCustomWine(Wine w)
