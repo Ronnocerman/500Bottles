@@ -73,6 +73,7 @@ public class WineQueryManager
 		try
 		{
 			wines = searchLocal(query);
+			System.out.println(wines.size());
 			if (wines.size() < 5)
 			{
 				wines = mergeExternalResults(searchSnooth(query),
@@ -280,13 +281,30 @@ public class WineQueryManager
 			boolean match = false;
 			for (int i = 0; i < wineComWines.size(); i++)
 			{
-				if (snoothWine.getName() == wineComWines.elementAt(i).getName()
-						&& Long.parseLong(snoothWine.getVintage()) == wineComWines
-								.elementAt(i).getYear())
+				if (snoothWine.getName() == wineComWines.elementAt(i).getName())// TODO
+					/*
+					 * && Long.parseLong(snoothWine.getVintage()) ==
+					 * wineComWines .elementAt(i).getYear())
+					 */
 					match = true;
 			}
 			if (match == false)
 				wines.add(snoothWine.toWineObject());
+		}
+
+		for (int i = 0; i < wineComWines.size(); i++)
+		{
+			boolean match2 = false;
+			for (int j = 0; j < wines.size(); j++)
+				if (wineComWines.elementAt(i).getName() == wines.elementAt(j)
+						.getName())// TODO
+					/*
+					 * && wineComWines.elementAt(i).getYear() == wines
+					 * .elementAt(j).getYear())
+					 */
+					match2 = true;
+			if (match2 == false)
+				wines.add(wineComWines.elementAt(i));
 		}
 
 		for (int i = 0; i < wines.size(); i++)
@@ -297,19 +315,6 @@ public class WineQueryManager
 					.getWinecomId());
 			if (w == null && v == null)
 				addWineToDatabase(wines.elementAt(i));
-		}
-
-		for (int i = 0; i < wines.size(); i++)
-		{
-			System.out.println("Name: " + wines.get(i).getName() + "\nYear: "
-					+ wines.get(i).getYear() + "\nID: "
-					+ wines.get(i).getWinecomId() + "\nAppellation: "
-					+ wines.get(i).getAppellation().getLocation()
-					+ "\nVarietal: "
-					+ wines.get(i).getVarietal().getGrapeType()
-					+ "\nWineType: " + wines.get(i).getType().getWineType()
-					+ "\nVineyard: " + wines.get(i).getVineyard().getName()
-					+ "\nRating: " + wines.get(i).getRating() + "\n");
 		}
 
 		return wines;

@@ -332,7 +332,9 @@ public class SnoothWine
 		// w.setGeoLocation();
 		WineType type = new WineType(this.getType());
 		w.setType(type);
-		w.setYear(Long.valueOf(this.getVintage()));
+		// TODO THE MOST IMPORTANT SHIT IN THE WORLD TO DO, fix snooth wine get
+		// vintage, penis
+		// w.setYear(Long.valueOf(this.getVintage()));
 
 		// Appellation appellation = new Appellation(this.getAppellation());
 		// w.setAppellation();
@@ -341,7 +343,7 @@ public class SnoothWine
 
 		Vineyard vineyard = new Vineyard(this.getWinery());
 		w.setVineyard(vineyard);
-		// w.setRating();
+		// w.setRating(this.getRating());
 
 		return w;
 	}

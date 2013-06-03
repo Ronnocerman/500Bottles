@@ -41,6 +41,7 @@ public class WineManager
 	 */
 	static Wine getWineBySnoothId(String snoothId)
 	{
+		System.out.println("looking for snooth's " + snoothId);
 		Wine resultWine = null, searchWine = new Wine();
 		searchWine.setSnoothId(snoothId);
 
@@ -65,6 +66,7 @@ public class WineManager
 	 */
 	static Wine getWineByWineComId(long wineComId)
 	{
+		System.out.println("Looking for winecom's " + wineComId);
 
 		Wine resultWine = null, searchWine = new Wine();
 		searchWine.setWinecomId(wineComId);
