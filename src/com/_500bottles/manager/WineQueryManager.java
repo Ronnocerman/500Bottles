@@ -62,8 +62,6 @@ public class WineQueryManager
 	 * @throws DAException
 	 */
 	public static WineQueryResult search(WineQuery query)
-			throws InvalidCategory, InvalidSort, InvalidOtherParameters,
-			IOException, ParseException, DAException
 	{
 		// Perform the query on the local DB.
 
@@ -72,16 +70,24 @@ public class WineQueryManager
 		// Perform the query on Snooth.
 		Vector<Wine> wines;
 
-		wines = searchLocal(query);
-
-		if (wines.size() < 5)
+		try
 		{
-			wines = mergeExternalResults(searchSnooth(query),
-					searchWineCom(query));
-		}
-		WineQueryResult result = new WineQueryResult(wines);
+			wines = searchLocal(query);
+			if (wines.size() < 5)
+			{
+				wines = mergeExternalResults(searchSnooth(query),
+						searchWineCom(query));
+			}
+			WineQueryResult result = new WineQueryResult(wines);
 
-		return result;
+			return result;
+		} catch (DAException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 	private static Vector<Wine> searchLocal(WineQuery query) throws DAException
@@ -133,94 +139,113 @@ public class WineQueryManager
 	 * @throws IOException
 	 */
 	public static Vector<Wine> searchWineCom(WineQuery query)
-			throws InvalidCategory, InvalidSort, InvalidOtherParameters,
-			IOException, ParseException
 	{
-		Vector<Wine> v = null;
-
-		WineAPIURL url = new WineAPIURL();
-		FilterCategory filtercategory = new FilterCategory();
-		String search = "";
-		Vector<WineType> types = query.getType();
-
-		int offset = query.getOffset();
-		if (offset != 0)
+		try
 		{
-			Offset off = new Offset(offset);
-			url.addToURL(off);
-		}
+			Vector<Wine> v = null;
 
-		int size = query.getSize();
-		Size siz = new Size(size);
-		url.addToURL(siz);
+			WineAPIURL url = new WineAPIURL();
+			FilterCategory filtercategory = new FilterCategory();
+			String search = "";
+			Vector<WineType> types = query.getType();
 
-		if (query.getTextQuery() != "")
-			search += query.getTextQuery();
-		if (query.getNameContains() != "")
-			search += query.getNameContains();
-		if (query.getDescriptionContains() != "")
-			search += query.getDescriptionContains();
-
-		Vector<Vineyard> vineyards = query.getVineyard();
-		for (int i = 0; i < vineyards.size(); i++)
-			search += vineyards.elementAt(i) + " ";
-
-		if (search != "")
-		{
-			Search sea = new Search(search);
-			url.addToURL(sea);
-		}
-
-		if (types.size() == 0)
-		{
-			WineTypeArray temp = new WineTypeArray("all");
-			filtercategory.addAttribute(temp);
-		}
-		for (int i = 0; i < types.size(); i++)
-		{
-			System.out.println(types.elementAt(i).getWineType());
-			WineTypeArray temp = new WineTypeArray(types.elementAt(i)
-					.getWineType());
-			filtercategory.addAttribute(temp);
-		}
-
-		Vector<Varietal> varietals = query.getVarietal();
-		for (int i = 0; i < varietals.size(); i++)
-		{
-			VarietalArray temp = new VarietalArray(varietals.elementAt(i)
-					.getGrapeType());
-			filtercategory.addAttribute(temp);
-		}
-
-		long min_year = query.getMinYear();
-		long max_year = query.getMaxYear();
-		if (min_year != -1 && max_year != -1)
-			for (int i = (int) min_year; i < max_year - min_year; i++)
+			int offset = query.getOffset();
+			if (offset != 0)
 			{
-				VintageArray temp = new VintageArray("" + i);
+				Offset off = new Offset(offset);
+				url.addToURL(off);
+			}
+
+			int size = query.getSize();
+			Size siz = new Size(size);
+			url.addToURL(siz);
+
+			if (query.getTextQuery() != "")
+				search += query.getTextQuery();
+			if (query.getNameContains() != "")
+				search += query.getNameContains();
+			if (query.getDescriptionContains() != "")
+				search += query.getDescriptionContains();
+
+			Vector<Vineyard> vineyards = query.getVineyard();
+			for (int i = 0; i < vineyards.size(); i++)
+				search += vineyards.elementAt(i) + " ";
+
+			if (search != "")
+			{
+				Search sea = new Search(search);
+				url.addToURL(sea);
+			}
+
+			if (types.size() == 0)
+			{
+				WineTypeArray temp = new WineTypeArray("all");
 				filtercategory.addAttribute(temp);
 			}
 
-		double max_rating = query.getMaxRating();
-		double min_rating = query.getMinRating();
-		if (min_rating != -1 && max_rating != -1)
-		{
-			SortRating temp = new SortRating(min_rating, max_rating);
-			url.addToURL(temp);
-		}
+			for (int i = 0; i < types.size(); i++)
+			{
+				System.out.println(types.elementAt(i).getWineType());
+				WineTypeArray temp = new WineTypeArray(types.elementAt(i)
+						.getWineType());
+				filtercategory.addAttribute(temp);
+			}
 
-		Vector<Appellation> appellations = query.getAppellation();
-		for (int i = 0; i < appellations.size(); i++)
-		{
-			AppellationArray temp = new AppellationArray(appellations
-					.elementAt(i).getLocation());
-			filtercategory.addAttribute(temp);
-		}
+			Vector<Varietal> varietals = query.getVarietal();
+			for (int i = 0; i < varietals.size(); i++)
+			{
+				VarietalArray temp = new VarietalArray(varietals.elementAt(i)
+						.getGrapeType());
+				filtercategory.addAttribute(temp);
+			}
 
-		url.addToURL(filtercategory);
-		WineAPICall call = new WineAPICall();
-		v = call.getProducts(url.getString());
-		return v;
+			long min_year = query.getMinYear();
+			long max_year = query.getMaxYear();
+			if (min_year != -1 && max_year != -1)
+				for (int i = (int) min_year; i < max_year - min_year; i++)
+				{
+					VintageArray temp = new VintageArray("" + i);
+					filtercategory.addAttribute(temp);
+				}
+
+			double max_rating = query.getMaxRating();
+			double min_rating = query.getMinRating();
+			if (min_rating != -1 && max_rating != -1)
+			{
+				SortRating temp = new SortRating(min_rating, max_rating);
+				url.addToURL(temp);
+			}
+
+			Vector<Appellation> appellations = query.getAppellation();
+			for (int i = 0; i < appellations.size(); i++)
+			{
+				AppellationArray temp = new AppellationArray(appellations
+						.elementAt(i).getLocation());
+				filtercategory.addAttribute(temp);
+			}
+
+			url.addToURL(filtercategory);
+			WineAPICall call = new WineAPICall();
+			v = call.getProducts(url.getString());
+			return v;
+		} catch (InvalidCategory e)
+		{
+			e.printStackTrace();
+		} catch (InvalidSort e)
+		{
+			e.printStackTrace();
+		} catch (InvalidOtherParameters e)
+		{
+			e.printStackTrace();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		} catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 	/**
@@ -233,7 +258,6 @@ public class WineQueryManager
 	 */
 	private static Vector<Wine> mergeExternalResults(
 			WineSearchResponse response, Vector<Wine> wineComWines)
-			throws DAException
 	{
 		Vector<Wine> wines = new Vector<Wine>();
 		Iterator<SnoothWine> it = response.getWinesIterator();
@@ -288,9 +312,16 @@ public class WineQueryManager
 	 * @return The corresponding Wine object.
 	 * @throws DAException
 	 */
-	private static Wine addWineToDatabase(Wine wine) throws DAException
+	private static Wine addWineToDatabase(Wine wine)
 	{
-		WineDAO.addWine(wine);
+		try
+		{
+			WineDAO.addWine(wine);
+		} catch (DAException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		/*
 		 * try { WineDetails details = new WineDetails(snoothWine.getCode());

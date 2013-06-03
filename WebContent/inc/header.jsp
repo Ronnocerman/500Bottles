@@ -9,5 +9,5 @@
             <li id="nav_winebook">Winebook</li>
         </ul>
     </nav>
-
+<a id="logout" href="#">Logout</a>
 </header>
