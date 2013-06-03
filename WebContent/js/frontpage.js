@@ -2,7 +2,10 @@
     // Grab the views namespace and add the front view object.
     views = window._500bottles.views;
     views.front = {};
-
+    //Booleans set when views entered
+    loginview = false;
+    signupview = false;
+    
     function login_form_interaction()
     {
         var fp = document.getElementById("faux_password");
@@ -176,6 +179,7 @@
          */
         function show_login_form()
         {
+        	loginview = true;
             show_account_view();
             hide_sign_up_form();
 
@@ -201,6 +205,7 @@
          */
         function show_sign_up_form()
         {
+        	signupview = true;
             show_account_view();
             hide_login_form();
 
@@ -215,6 +220,7 @@
          */
         function hide_login_form()
         {
+        	loginview = false;
             $(login_form).removeClass(LOGIN_FORM_DELAY_IN);
             $(login_form).removeClass(LOGIN_FORM_ANIM_IN);
             $(login_form).addClass(LOGIN_FORM_DELAY_OUT);
@@ -231,6 +237,7 @@
          */
         function hide_sign_up_form()
         {
+        	signupview = false;
             $(signup_form).removeClass(SIGNUP_FORM_ANIM_IN);
             $(signup_form).removeClass(SIGNUP_FORM_DELAY_IN);
             $(signup_form).addClass(SIGNUP_FORM_DELAY_OUT);
@@ -368,7 +375,20 @@
         var url = "/user";
         var submit = document.getElementById("create_account_submit");
 
-        $(submit).on("click", function() {
+        $(submit).on("click", signup());
+        
+        
+        
+        $(document).keypress(function(e) {
+        	
+        		if(e.which == 13 && signupview) {
+                signup();
+                //alert("Enterkey Detected signup success!");
+            }
+        });
+        
+        
+        function signup() {
             var data = {
                 "action": "createAccount",
                 "firstname": $("#create_account_firstname").val(),
@@ -391,7 +411,11 @@
                 console.log(data);
                 alert("success!");
             });
-        });
+        }
+        
+        
+        
+        
     }
 
     /**
@@ -405,7 +429,20 @@
         var url = "/user";
         var submit = document.getElementById("login_submit");
 
-        $(submit).on("click", function() {
+        $(submit).on("click", login());
+        
+       
+        
+        
+        $(document).keypress(function(e) {
+        	
+        		if(e.which == 13 && loginview) {
+                login();
+                //alert("Enterkey Detected login success!");
+            }
+        });
+        
+        function login() {
             var data = {
                 "action": "login",
                 "email": $("#email").val(),
@@ -423,7 +460,10 @@
             }).success(function (data, textStatus, jqXHR) {
                     eval(data);
             });
-        });
+        }
+        
+        
+        
     }
 
     /**
