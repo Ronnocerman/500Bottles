@@ -291,9 +291,16 @@ public class WineWizardManager
 		WineQueryResult doug = WineManager.searchWine(search);
 		if (doug == null)
 			return null;
-		Vector<Wine> returnWineVector = doug.getWines();
+		Vector<Wine> frog = doug.getWines();
+		Vector<Wine> returnWineVector = new Vector<Wine>();
+		for (int i = 0; i < frog.size(); i++)
+		{
+			if (!returnWineVector.contains(frog.get(i)))
+			{
+				returnWineVector.add(frog.get(i));
+			}
+		}
 		return returnWineVector;
-
 	}
 
 	/**
