@@ -34,8 +34,7 @@
 .wrapper {
   position: relative;
   max-width: 1500px;
-  margin: 0 auto 0;
-  min-height: 100%; }
+  margin: 0 auto 0; }
   .wrapper .content {
     padding: 1em;
     position: relative; }
@@ -93,16 +92,18 @@ html, body {
   overflow-x: hidden; }
 
 body {
-  background-color: black;
+  background-color: white;
   background-size: cover;
   font-family: Roboto;
   min-height: 100%;
   text-size: 16px; }
 
 #view_container {
-  position: relative; }
+  position: relative;
+  min-height: 100%; }
 
 .view {
+  background-image: url("../img/fabric_of_squares_gray.png");
   position: absolute;
   top: 0px;
   width: 100%;
@@ -111,11 +112,16 @@ body {
   padding-top: 80px; }
   .view.no_header {
     padding-top: 0; }
+  .view.no_bg {
+    background-image: none; }
+  .view h1, .view h2, .view h3, .view h4, .view h5, .view h6 {
+    color: black;
+    opacity: 1;
+    text-shadow: 1px 1px 0px white; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "LeagueGothicRegular";
   text-transform: uppercase;
-  color: white;
   opacity: 0.6;
   letter-spacing: 1px; }
 
@@ -615,6 +621,11 @@ footer {
   height: 100%;
   width: 100%;
   position: relative; }
+  #front h1, #front h2, #front h3, #front h4, #front h5, #front h6 {
+    font-family: "LeagueGothicRegular";
+    text-transform: uppercase;
+    color: white;
+    text-shadow: none; }
 
 #frontpage_background {
   position: fixed;
@@ -657,53 +668,49 @@ footer {
         opacity: 0.8; }
 
 #popular_wines {
-  width: 100%; }
+  width: 100%;
+  margin-top: 2em; }
   #popular_wines h2 {
-    padding-left: 0.6em; }
+    padding-left: 0.6em;
+    opacity: 0.6; }
 
-#home {
-  background-image: url("../img/fabric_of_squares_gray.png"); }
-  #home .bg {
-    width: 100%;
-    height: 100%;
-    border: 20px solid rgba(0, 0, 0, 0.05);
-    position: absolute;
-    z-index: 0;
-    top: -20px;
-    left: -20px;
-    z-index: 0; }
-  #home .wine {
-    background-color: rgba(0, 0, 0, 0.1);
-    border: none; }
-  #home .light_bg h3 {
-    padding: 18px; }
-  #home .light_bg.with_border {
-    position: relative;
-    margin: 1em; }
-  #home h1, #home h2, #home h3, #home h4, #home h5, #home h6 {
-    color: black;
-    opacity: 1;
-    text-shadow: 1px 1px 0px white; }
-  #home .advanced_link {
-    margin-right: 3em; }
-  #home #wine_search {
-    padding-top: 1.4em;
-    padding-bottom: 0.5em;
-    padding-left: 18px;
-    padding-right: 18px; }
-    #home #wine_search input {
-      display: -moz-inline-stack;
-      display: inline-block;
-      zoom: 1;
-      *display: inline;
-      padding: 2.5% 4% 2.5% 4% !important; }
-    #home #wine_search input[type="text"] {
-      width: 67%;
-      padding-left: 2% !important; }
-    #home #wine_search input[type="button"] {
-      width: 23%;
-      margin-left: 2% !important;
-      margin-top: -4px !important; }
+#home .bg {
+  width: 100%;
+  height: 100%;
+  border: 20px solid rgba(0, 0, 0, 0.05);
+  position: absolute;
+  z-index: 0;
+  top: -20px;
+  left: -20px;
+  z-index: 0; }
+#home .wine {
+  background-color: rgba(0, 0, 0, 0.1);
+  border: none; }
+#home .light_bg h3 {
+  padding: 18px; }
+#home .light_bg.with_border {
+  position: relative;
+  margin: 1em; }
+#home .advanced_link {
+  margin-right: 3em; }
+#home #wine_search {
+  padding-top: 1.4em;
+  padding-bottom: 0.5em;
+  padding-left: 18px;
+  padding-right: 18px; }
+  #home #wine_search input {
+    display: -moz-inline-stack;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    padding: 2.5% 4% 2.5% 4% !important; }
+  #home #wine_search input[type="text"] {
+    width: 67%;
+    padding-left: 2% !important; }
+  #home #wine_search input[type="button"] {
+    width: 23%;
+    margin-left: 2% !important;
+    margin-top: -4px !important; }
 
 @media screen and (min-width: 1200px) {
   .content_container {

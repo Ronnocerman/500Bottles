@@ -1,6 +1,6 @@
 <%@ include file="/views/frontpage/account.jsp" %>
 
-<section id="front" class="view animated no_header">
+<section id="front" class="view animated no_header no_bg fadeInUp">
 
     <section class="content_container clearfix">
 
