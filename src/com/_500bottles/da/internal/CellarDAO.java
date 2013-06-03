@@ -293,7 +293,7 @@ public class CellarDAO extends DAO
 
 		try
 		{
-			r = select(CELLARITEM_TABLE, "*", "userId='" + userId + "'");
+			r = select(CELLARITEM_TABLE, "*", "userId=" + userId + "");
 
 			Vector<Long> wineIdVector = new Vector<Long>();
 			while (r.next())
