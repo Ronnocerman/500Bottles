@@ -99,18 +99,6 @@ body {
   height: 100%;
   text-size: 16px; }
 
-#app_background {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0px;
-  left: 0px;
-  z-index: 0;
-  background: url("../img/bg1.jpg") no-repeat center top;
-  background-size: 100% 100%;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg1.jpg',sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg1.jpg',sizingMethod='scale')"; }
-
 .view {
   position: relative;
   z-index: 100;
@@ -500,6 +488,18 @@ footer {
   width: 100%;
   position: relative; }
 
+#frontpage_background {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
+  background: url("../img/bg1.jpg") no-repeat center top;
+  background-size: 100% 100%;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg1.jpg',sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg1.jpg',sizingMethod='scale')"; }
+
 .dark_bg {
   background-color: rgba(0, 0, 0, 0.5);
   color: white; }
@@ -600,6 +600,12 @@ footer {
     left: -30px; }
   .wine_grid_container:hover .next {
     right: -30px; }
+
+#home {
+  background-image: url("../img/light_wool.png"); }
+  #home h1, #home h2, #home h3, #home h4, #home h5, #home h6 {
+    color: black;
+    opacity: 1; }
 
 @media screen and (min-width: 1200px) {
   .content_container {

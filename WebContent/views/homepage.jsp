@@ -1,34 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>500bottles.com &raquo; home</title>
-
-    <!-- Loads typefaces for use in CSS pages -->
-    <link href='http://fonts.googleapis.com/css?family=Signika:300,400' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Raleway+Dots' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Raleway:100' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Codystar:300' rel='stylesheet' type='text/css'>
-
-    <!-- Loads CSS files for use on page -->
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    <script src="js/core.js" type="text/javascript"></script>
-    <script src="js/frontpage.js" type="text/javascript"></script>
-    <script src="js/gallery.js" type="text/javascript"></script>
-
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script src="js/cellar_chart.js" type="text/javascript"></script>
-</head>
-
-<body>
-
-<section class="wrapper clearfix" id="home">
+<section id="home" class="clearfix">
 
     <!-- Popular Wines Section -->
-	<div class="column_100">
-		<div class="content">
+    <div class="column_100">
+        <div class="content">
             <div class="light_bg curved wine_grid_container" data-rows="1">
                 <h2>Your Cellar</h2>
                 <ul class="wine_grid">
@@ -90,8 +64,8 @@
                 <div class="next"></div>
                 <div class="prev"></div>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
 
     <div class="column_66">
         <div class="content" >
@@ -183,7 +157,5 @@
 
 </section>
 
-<footer></footer>
-
-</body>
-</html>
+<script src="js/gallery.js" type="text/javascript"></script>
+<script src="js/cellar_chart.js" type="text/javascript"></script>

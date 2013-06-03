@@ -17,12 +17,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    <script src="js/views.js" type="text/javascript"></script>
-    <script src="js/front.js" type="text/javascript"></script>
-    <script src="js/gallery.js" type="text/javascript"></script>
-
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script src="js/cellar_chart.js" type="text/javascript"></script>
+    <script src="js/core.js" type="text/javascript"></script>
 </head>
 
 <body>

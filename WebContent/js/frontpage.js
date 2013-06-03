@@ -185,6 +185,17 @@
             $(login_form).addClass(LOGIN_FORM_ANIM_IN);
         }
 
+        function shake_login_form()
+        {
+            $(login_form).removeClass(LOGIN_FORM_ANIM_IN);
+            $(login_form).removeClass(LOGIN_FORM_DELAY_IN);
+            $(login_form).addClass("shake");
+
+            setTimeout(function() {
+                $(login_form).removeClass("shake");
+            }, 1000);
+        }
+
         /**
          * Shows the Account View and displays the sign-up form.
          */
@@ -329,8 +340,29 @@
         views.front.showFrontpage = hide_account_view;
         views.front.showLoginForm = show_login_form;
         views.front.showSignupForm = show_sign_up_form;
+
+        views.front.shakeLoginForm = shake_login_form;
+
+        views.front.fadeOutFrontpage = function () {
+            $(view_login).removeClass(ACCOUNT_DELAY_IN);
+            $(view_login).removeClass(ACCOUNT_ANIM_IN);;
+            $(view_login).addClass(ACCOUNT_DELAY_OUT);
+            $(view_login).addClass(ACCOUNT_ANIM_OUT);
+
+            $("#frontpage_background").addClass("fadeOut");
+
+            setTimeout(function() {
+                $(".frontpage").remove();
+                $(front).remove();
+                $(view_login).remove();
+            }, 1000);
+        }
     }
 
+    /**
+     * Initiates the Create Account form for user interaction and account
+     * creation submission.
+     */
     function create_account_init()
     {
         var url = "/user";
@@ -362,6 +394,9 @@
         });
     }
 
+    /**
+     * Initiates the Login form for user interaction and login form submission.
+     */
     function login_init()
     {
         var SUCCESSFUL_LOGIN_ACTION = views.front.showFrontpage;
@@ -391,14 +426,35 @@
         });
     }
 
+    /**
+     * Successful login callback function. Called after a successful login.
+     */
     function successful_login()
     {
-        console.log("successful login!");
+        views.front.fadeOutFrontpage();
+
+        var url = "/";
+
+        var data = {
+            "action": "getView",
+            "view": "homepage"
+        };
+
+        $.ajax({
+            url: url,
+            data: data,
+            crossDomain: true
+        }).success(function (data, textStatus, jqXHR) {
+            $("body").append(data);
+        });
     }
 
+    /**
+     * Failed login callback function. Called after a failed login.
+     */
     function failed_login()
     {
-        console.log("failed login!");
+        views.front.shakeLoginForm();
     }
 
     function on_load()
@@ -411,5 +467,6 @@
         create_account_init();
     }
 
-    window.addEventListener("load", on_load);
+    // Call away!
+    on_load();
 })();

@@ -20,7 +20,7 @@ public class WineWizardManagerTest
 	public void setUp()
 	{
 		wineAmount = 22;
-		wizardManager = new WineWizardManager(wineAmount, 55);
+		wizardManager = new WineWizardManager();
 		animals = new Vector<String>();
 		animalsNum = new Vector<Integer>();
 		animalsCount = new Vector<Integer>();
@@ -52,7 +52,7 @@ public class WineWizardManagerTest
 	@Test
 	public void sort()
 	{
-		wizardManager.sort(animals, animalsNum, animalsCount);
+		WineWizardManager.sort(animals, animalsNum, animalsCount);
 		for (int q = 0; q < animals.size(); q++)
 		{
 			System.out.println(animals.get(q));
