@@ -1,6 +1,6 @@
-<%@ include file="/views/header.jsp" %>
+<%@ include file="/inc/header.jsp" %>
 
-<section class="wrapper clearfix view" id="home">
+<section class="wrapper clearfix view animated" id="home">
 
     <!-- Popular Wines Section -->
     <div class="wine_grid_container" data-rows="1">
@@ -157,5 +157,5 @@
 
 </section>
 
+<script src="js/homepage.js" type="text/javascript"></script>
 <script src="js/gallery.js" type="text/javascript"></script>
-<script src="js/cellar_chart.js" type="text/javascript"></script>
