@@ -1,5 +1,7 @@
 package com._500bottles.action;
 
+import com._500bottles.exception.winebook.EntryDoesExistException;
+import com._500bottles.exception.winebook.EntryDoesNotExistException;
 import com._500bottles.manager.WinebookManager;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.winebook.Entry;
@@ -13,8 +15,9 @@ public class WinebookAction
 	 * 
 	 * @param id
 	 *            ID of the entry to be added to the Winebook
+	 * @throws EntryDoesExistException
 	 */
-	public void addEntry(Entry entry)
+	public void addEntry(Entry entry) throws EntryDoesExistException
 	{
 		WinebookManager.addEntry(entry);
 	}
@@ -24,8 +27,9 @@ public class WinebookAction
 	 * 
 	 * @param id
 	 *            ID of the entry to be added the winebook
+	 * @throws EntryDoesNotExistException
 	 */
-	public void getEntry(long id)
+	public void getEntry(long id) throws EntryDoesNotExistException
 	{
 		WinebookManager.getEntry(id);
 	}
@@ -46,8 +50,9 @@ public class WinebookAction
 	 * 
 	 * @param id
 	 *            ID of the winebook entry to be edited
+	 * @throws EntryDoesNotExistException
 	 */
-	public void editContent(long id)
+	public void editContent(long id) throws EntryDoesNotExistException
 	{
 		WinebookManager.editEntry(id);
 	}

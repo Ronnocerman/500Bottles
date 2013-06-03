@@ -2,6 +2,8 @@ package com._500bottles.manager;
 
 import com._500bottles.da.internal.WinebookDAO;
 import com._500bottles.exception.da.DAException;
+import com._500bottles.exception.winebook.EntryDoesExistException;
+import com._500bottles.exception.winebook.EntryDoesNotExistException;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.winebook.Entry;
 import com._500bottles.object.winebook.Photo;
@@ -14,14 +16,14 @@ public class WinebookManager
 	 * @param id
 	 *            The ID of the wine
 	 */
-	public static void addEntry(Entry ent)
+	public static void addEntry(Entry ent) throws EntryDoesExistException
 	{
 		try
 		{
 			WinebookDAO.addEntry(ent);
 		} catch (DAException e)
 		{
-			// TODO Auto-generated catch block
+			throw new EntryDoesExistException(e);
 		}
 	}
 
@@ -77,7 +79,7 @@ public class WinebookManager
 	 * @param id
 	 *            The ID of the Entry to update
 	 */
-	public static void editEntry(long id)
+	public static void editEntry(long id) throws EntryDoesNotExistException
 	{
 		Entry ent = null;
 		try
@@ -86,7 +88,7 @@ public class WinebookManager
 			WinebookDAO.editEntry(ent);
 		} catch (DAException e)
 		{
-			// TODO
+			throw new EntryDoesNotExistException(e);
 		}
 	}
 
@@ -157,7 +159,7 @@ public class WinebookManager
 	 * 
 	 * @return The entry corresponding to the id
 	 */
-	public static Entry getEntry(long id)
+	public static Entry getEntry(long id) throws EntryDoesNotExistException
 	{
 		Entry ent = null;
 		try
@@ -165,7 +167,7 @@ public class WinebookManager
 			ent = WinebookDAO.getEntry(id);
 		} catch (DAException e)
 		{
-			// TODO
+			throw new EntryDoesNotExistException(e);
 		}
 
 		return ent;
