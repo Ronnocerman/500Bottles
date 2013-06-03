@@ -156,8 +156,7 @@ public class Database
 		dbHost = Config.getProperty("databaseHost");
 		dbName = Config.getProperty("databaseName");
 
-		connectionUrl = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName
-				+ "?";
+		connectionUrl = "jdbc:mysql://" + dbHost + ":3306" + "/" + dbName + "?";
 
 		return connectionUrl;
 	}
