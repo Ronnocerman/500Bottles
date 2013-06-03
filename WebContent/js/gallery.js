@@ -2,7 +2,6 @@
  *
  */
 (function(){
-  console.log("running gallery...", $(".wine_grid_container"));
   /* Parent of image gallery jQuery selector. */
   var GALLERY_PARENT_SEL = ".wine_grid_container";
 
@@ -60,15 +59,16 @@
   }
 
   /* Builds internal representation of gallery. */
-  function build_gallery() {
+  function build_gallery(gallery_parent_selector) {
     var i, j,               // loop index
         start_index,        // start index for adding images to rows
         end_index;     // count of images per row
 
-    NUM_OF_ROWS = $(GALLERY_PARENT_SEL).data("rows") || NUM_OF_ROWS;
+    //NUM_OF_ROWS = $(GALLERY_PARENT_SEL).data("rows") || NUM_OF_ROWS;
+    NUM_OF_ROWS = $(gallery_parent_selector).data("rows") || NUM_OF_ROWS;
 
     // get all the images
-    images = $(GALLERY_CONTAINER_SEL).children(IMAGE_ELEMENT_SEL);
+    images = $(gallery_parent_selector + " " + GALLERY_CONTAINER_SEL).children(IMAGE_ELEMENT_SEL);
 
     // calculate the number of images for each row
     images_per_row = Math.ceil(images.length / NUM_OF_ROWS);
@@ -92,29 +92,31 @@
       }
 
       // add this row container to the gallery container
-      $(GALLERY_CONTAINER_SEL).append(image_rows[i]);
+      $(gallery_parent_selector + " " + GALLERY_CONTAINER_SEL).append(image_rows[i]);
     }
 
     // position and size the gallery
-    position_gallery();
+    position_gallery(gallery_parent_selector + " " + GALLERY_CONTAINER_SEL);
+
+    bind_events();
   }
 
   /* Positions images within the gallery container. */
-  function position_gallery() {
+  function position_gallery(selector) {
     var image_width,
         image_height,
         image_selector;
 
     image_selector = "." + GALLERY_CLASS_PREFIX + "row " + IMAGE_ELEMENT_SEL;
 
-    image_width = $(image_selector).outerWidth(true);
+    // TODO: why do I have to add 5px here when the number of images increases?
+    image_width = $(image_selector).outerWidth(true) + 5;
     image_height = $(image_selector).outerHeight(true);
 
-    $(GALLERY_CONTAINER_SEL).css({
+    $(selector).css({
       "width": image_width * images_per_row,
       "height": image_height * NUM_OF_ROWS
     });
-
   }
 
   /* Scrolls gallery to next page. */
@@ -160,9 +162,12 @@
   }
 
     /* Fire Away! */
-    build_gallery();
-    bind_events();
-//    $(window).on("ready", build_gallery);
-//    $(window).on("ready", bind_events);
+    //build_gallery();
+    //bind_events();
     $(window).on("resize", on_window_resize);
+
+    window._500bottles = window._500bottles || {};
+    window._500bottles.gallery = window._500bottles.gallery || {};
+    window._500bottles.gallery.buildGallery = window._500bottles.gallery.buildGallery || build_gallery;
+
 })();

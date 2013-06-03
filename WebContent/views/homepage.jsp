@@ -2,9 +2,9 @@
 
 <section class="wrapper clearfix view animated fadeInUp" id="home">
 
-    <!-- Popular Wines Section -->
-    <div class="wine_grid_container" data-rows="1">
-        <h2>Suggested Wines</h2>
+    <!-- Your Celler Wines -->
+    <div id="cellar_preview_wine_grid" class="wine_grid_container" data-rows="1">
+        <h2>Your Cellar</h2>
         <ul class="wine_grid">
             <li class="wine">
                 <img src="img/mockup/label_1.jpeg" />
@@ -93,7 +93,7 @@
 
     <div class="clearfix"></div>
 
-    <div class="wine_grid_container" data-rows="1">
+    <div id="suggested_wine_grid" class="wine_grid_container" data-rows="1">
         <h2>Suggested Wines</h2>
         <ul class="wine_grid">
             <li class="wine">
@@ -156,6 +156,11 @@
     </div>
 
     <div class="clearfix"></div>
+
+    <script type="text/javascript">
+        _500bottles.gallery.buildGallery("#cellar_preview_wine_grid");
+        _500bottles.gallery.buildGallery("#suggested_wine_grid");
+    </script>
 
 </section>
 

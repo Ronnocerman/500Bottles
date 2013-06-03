@@ -255,8 +255,6 @@
         var header_height = $("header").height();
         var content_height = $(view).height();
 
-        console.log("new height: ", content_height + header_height);
-
         $("body").height(content_height + header_height);
     }
 
