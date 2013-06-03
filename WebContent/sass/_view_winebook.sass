@@ -1,0 +1,56 @@
+#winebook
+  .bg
+    $BORDER: 20px
+    width: 100%
+    height: 100%
+    border: $BORDER solid rgba(black, 0.05)
+    position: absolute
+    z-index: 0
+    top: -$BORDER
+    left: -$BORDER
+    z-index: 0
+    @include transition(all, 1s)
+
+  .light_bg
+    h3
+      padding: 18px
+    &.with_border
+      position: relative
+      margin: 1em
+
+
+  .winebook_entry
+    min-height: 7.8em
+    margin-bottom: 4em !important
+    cursor: pointer
+
+    &:hover .bg
+      border-color: rgba(black, 0.2)
+
+    .date
+      float: left
+      text-transform: uppercase
+      font-family: leaguegothicregular
+      margin-top: 1em
+      margin-left: 1em
+      .year, .month, .day
+        display: block
+      .year
+        font-size: 4.48em
+        @include rotate(-90deg)
+        position: absolute
+        left: -13px
+        top: 13px
+        opacity: 0.2
+      .day, .month
+        position: absolute
+        left: 0.72em
+      .month
+        font-size: 2.3em
+        top: 1.8em
+        left: 1.7em
+      .day
+        font-size: 5em
+
+    .excerpt
+      margin-left: 12%

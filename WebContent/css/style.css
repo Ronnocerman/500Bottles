@@ -712,6 +712,77 @@ footer {
     margin-left: 2% !important;
     margin-top: -4px !important; }
 
+#cellar .bg {
+  width: 100%;
+  height: 100%;
+  border: 20px solid rgba(0, 0, 0, 0.05);
+  position: absolute;
+  z-index: 0;
+  top: -20px;
+  left: -20px;
+  z-index: 0; }
+
+#winebook .bg {
+  width: 100%;
+  height: 100%;
+  border: 20px solid rgba(0, 0, 0, 0.05);
+  position: absolute;
+  z-index: 0;
+  top: -20px;
+  left: -20px;
+  z-index: 0;
+  -webkit-transition: all 1s 0s;
+  -moz-transition: all 1s 0s;
+  -ms-transition: all 1s 0s;
+  -o-transition: all 1s 0s;
+  transition: all 1s 0s;
+  -webkit-transition-timing-function: default;
+  -moz-transition-timing-function: default;
+  -ms-transition-timing-function: default;
+  -o-transition-timing-function: default;
+  transition-timing-function: default; }
+#winebook .light_bg h3 {
+  padding: 18px; }
+#winebook .light_bg.with_border {
+  position: relative;
+  margin: 1em; }
+#winebook .winebook_entry {
+  min-height: 7.8em;
+  margin-bottom: 4em !important;
+  cursor: pointer; }
+  #winebook .winebook_entry:hover .bg {
+    border-color: rgba(0, 0, 0, 0.2); }
+  #winebook .winebook_entry .date {
+    float: left;
+    text-transform: uppercase;
+    font-family: leaguegothicregular;
+    margin-top: 1em;
+    margin-left: 1em; }
+    #winebook .winebook_entry .date .year, #winebook .winebook_entry .date .month, #winebook .winebook_entry .date .day {
+      display: block; }
+    #winebook .winebook_entry .date .year {
+      font-size: 4.48em;
+      -webkit-transform: rotate(-90deg);
+      -moz-transform: rotate(-90deg);
+      -ms-transform: rotate(-90deg);
+      -o-transform: rotate(-90deg);
+      transform: rotate(-90deg);
+      position: absolute;
+      left: -13px;
+      top: 13px;
+      opacity: 0.2; }
+    #winebook .winebook_entry .date .day, #winebook .winebook_entry .date .month {
+      position: absolute;
+      left: 0.72em; }
+    #winebook .winebook_entry .date .month {
+      font-size: 2.3em;
+      top: 1.8em;
+      left: 1.7em; }
+    #winebook .winebook_entry .date .day {
+      font-size: 5em; }
+  #winebook .winebook_entry .excerpt {
+    margin-left: 12%; }
+
 @media screen and (min-width: 1200px) {
   .content_container {
     width: 1200px; }

@@ -90,7 +90,7 @@
     <div class="clearfix"></div>
 
     <script type="text/javascript">
-        _500bottles.gallery.buildGallery($("#popular_wines .wine_grid_container"));
+        _500bottles.gallery.buildGallery("#popular_wines .wine_grid_container");
     </script>
 
 </section>

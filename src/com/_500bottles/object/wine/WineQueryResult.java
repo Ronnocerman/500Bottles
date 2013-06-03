@@ -16,6 +16,7 @@ public class WineQueryResult {
 
 	public WineQueryResult(Vector<Wine> wines)
 	{
+		results = wines.size();
 		this.wines = wines;
 	}
 
