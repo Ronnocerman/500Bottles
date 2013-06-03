@@ -73,6 +73,7 @@ public class WineQueryManager
 		try
 		{
 			wines = searchLocal(query);
+			System.out.println(wines.size());
 			if (wines.size() < 5)
 			{
 				wines = mergeExternalResults(searchSnooth(query),
@@ -280,13 +281,36 @@ public class WineQueryManager
 			boolean match = false;
 			for (int i = 0; i < wineComWines.size(); i++)
 			{
-				if (snoothWine.getName() == wineComWines.elementAt(i).getName()
-						&& Long.parseLong(snoothWine.getVintage()) == wineComWines
-								.elementAt(i).getYear())
+				if (snoothWine.getName() == wineComWines.elementAt(i).getName())// TODO
+				{ /*
+				 * && Long.parseLong(snoothWine.getVintage()) == wineComWines
+				 * .elementAt(i).getYear())
+				 */
 					match = true;
+					System.out
+							.println("Found a duplicate wine from snooth and winecom");
+				}
 			}
 			if (match == false)
 				wines.add(snoothWine.toWineObject());
+		}
+
+		for (int i = 0; i < wineComWines.size(); i++)
+		{
+			boolean match2 = false;
+			for (int j = 0; j < wines.size(); j++)
+				if (wineComWines.elementAt(i).getName() == wines.elementAt(j)
+						.getName())// TODO
+				{
+					/*
+					 * && wineComWines.elementAt(i).getYear() == wines
+					 * .elementAt(j).getYear())
+					 */System.out
+							.println("Found a duplicate wine from snooth and winecom");
+					match2 = true;
+				}
+			if (match2 == false)
+				wines.add(wineComWines.elementAt(i));
 		}
 
 		for (int i = 0; i < wines.size(); i++)
