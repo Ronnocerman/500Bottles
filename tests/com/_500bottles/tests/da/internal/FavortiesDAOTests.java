@@ -98,11 +98,14 @@ public class FavortiesDAOTests
 			FavoritesDAO.addFavorite(52, fave);
 
 			long faveId = fave.getfavoritesId();
+			// System.out.println(FavoritesDAO.getFavorite(fave.getfavoritesId())
 
-			assertEquals(FavoritesDAO.getFavorite(fave.getfavoritesId())
-					.getfavoritesId(), faveId);
-			assertEquals(FavoritesDAO.getFavorite(fave.getfavoritesId())
-					.getWineId(), 250);
+			// THERE WILL BE NO METHOD THAT WILL GET A FAVORITE BY FAVORITESID
+			// assertEquals(FavoritesDAO.getFavorite(fave.getWineId() ),
+			// 250);
+
+			assertEquals(
+					FavoritesDAO.getFavorite(fave.getWineId()).getWineId(), 250);
 		} catch (DAException e)
 		{
 			fail(e.getMessage());
