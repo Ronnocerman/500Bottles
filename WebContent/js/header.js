@@ -57,6 +57,41 @@
     function on_logo_click(){
         animate_in_view(home);
     }
+    
+    /**
+     * Called on main navigation "Logout" button click.
+     */
+    function on_nav_logout_click()
+    {
+        //var SUCCESSFUL_LOGIN_ACTION = views.front.showFrontpage;
+        //var FAILED_LOGIN_ACTION = views.front.showSignupForm;
+
+        var url = "/user";
+        //var submit = document.getElementById("logout_submit");
+
+            var data = {
+                "action": "logout",
+                "email": $("#email").val(),
+                //"password": $("#password").val(),
+                //"success": "successful_login",
+                //"failed": "failed_login"
+            };
+
+            var type = "GET";
+
+            $.ajax({
+                url: url,
+                data: data,
+                type: type
+            }).success(function (data, textStatus, jqXHR) {
+                eval(data);
+            });
+        
+
+       // $(submit).on("click", do_logout);
+
+    }
+    
 
     /**
      * Called on main navigation "Wine" button click.
@@ -231,4 +266,5 @@
     $(nav_wizard).on("click", on_nav_wizard_click);
     $(nav_cellar).on("click", on_nav_cellar_click);
     $(nav_winebook).on("click", on_nav_winebook_click);
+    $(logout).on("click", on_nav_logout_click);
 })();

@@ -1,11 +1,12 @@
 package com._500bottles.manager;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import com._500bottles.da.internal.UserDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.exception.user.UserDoesNotExistException;
 import com._500bottles.object.user.ApplicationUser;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 public class SessionManager
 {
@@ -27,10 +28,12 @@ public class SessionManager
 		if (logged_in_user_id == -1)
 			return null;
 
-		try {
+		try
+		{
 			user = UserDAO.getUser(logged_in_user_id);
 
-		} catch (DAException e) {
+		} catch (DAException e)
+		{
 			// TODO: error handling...
 		}
 
@@ -74,20 +77,34 @@ public class SessionManager
 	}
 
 	/**
-	 * Checks if a user is logged in, and if-so, sets the appropriate
-	 * private variable to the user object.
+	 * Set userId to null to logout
+	 */
+	public void logout()
+	{
+
+		session.setAttribute("userId", null);
+
+	}
+
+	/**
+	 * Checks if a user is logged in, and if-so, sets the appropriate private
+	 * variable to the user object.
 	 */
 	private void checkForLoggedInUser()
 	{
 		if (session.getAttribute("userId") == null)
+		{
+			// Set logged in false
+			logged_in_user_id = -1;
 			return;
+		}
 
 		String userId = session.getAttribute("userId").toString();
 		logged_in_user_id = Long.parseLong(userId);
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public static SessionManager getSessionManager()
@@ -99,11 +116,12 @@ public class SessionManager
 	}
 
 	/**
-	 *
+	 * 
 	 * @param request
 	 * @return
 	 */
-	public static SessionManager initiateSessionManager(HttpServletRequest request)
+	public static SessionManager initiateSessionManager(
+			HttpServletRequest request)
 	{
 		if (sessionManager == null)
 			sessionManager = new SessionManager(request);
@@ -112,6 +130,5 @@ public class SessionManager
 
 		return sessionManager;
 	}
-
 
 }

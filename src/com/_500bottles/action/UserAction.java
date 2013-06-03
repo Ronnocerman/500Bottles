@@ -34,9 +34,17 @@ public class UserAction
 		return sm.login(email, passwordHash);
 	}
 
+	/**
+	 * Call SessionManager and Logout
+	 * 
+	 * @param email
+	 *            Not used, kept for possible future implementation
+	 */
 	public static void logout(String email)
 	{
+		SessionManager sm = SessionManager.getSessionManager();
 
+		sm.logout();
 	}
 
 	/**
