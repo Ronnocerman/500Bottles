@@ -71,8 +71,8 @@
                 <div class="bg"></div>
                 <h3>Search for wine</h3>
                 <form id="wine_search">
-                    <input type="text" />
-                    <input type="button" value="search" />
+                    <input id="wine_search_text" type="text" />
+                    <input id="wine_search_submit" type="button" value="search" />
                 </form>
                 <div class="align_right advanced_link">
                     <a class="light_link box_arrow" href="#">advanced search options</a>
