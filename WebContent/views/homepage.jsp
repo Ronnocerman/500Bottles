@@ -157,5 +157,6 @@
 
 </section>
 
+<script src="js/header.js" type="text/javascript"></script>
 <script src="js/homepage.js" type="text/javascript"></script>
 <script src="js/gallery.js" type="text/javascript"></script>
