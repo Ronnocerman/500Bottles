@@ -341,7 +341,7 @@ public class WineWizardManager
 												// by using typeAmount
 			sort(typeList, typeRating, typeAmount);// sorts the typeList based
 													// on rating
-			while (3 < typeList.size())// while the type list is bigger then 3
+			while (1 < typeList.size())// while the type list is bigger then 3
 										// it decreases it
 			{
 				typeList.remove(typeList.size() - 1);// removes last element aka

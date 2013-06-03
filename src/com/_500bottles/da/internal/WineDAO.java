@@ -339,6 +339,53 @@ public class WineDAO extends DAO
 			where += "'%" + escapeXml(q.getNameContains()) + "%'";
 			first = false;
 		}
+
+		if (q.getDescriptionContains() != WineQuery.DEFAULT_DESC_CONTAINS)
+		{
+			boolean exists = true;
+			if (first)
+			{
+				where += "description";
+				where += " LIKE ";
+				where += "'%" + escapeXml(q.getDescriptionContains()) + "%'";
+				first = false;
+			} else
+			{
+				where += "and ";
+				where += "description";
+				where += " LIKE ";
+				where += "'%" + escapeXml(q.getDescriptionContains()) + "%'";
+				first = false;
+			}
+		}
+
+		if (q.getTextQuery() != WineQuery.DEFAULT_TEXT_QUERY)
+		{
+			boolean exists = true;
+			if (first)
+			{
+				where += "description";
+				where += " LIKE ";
+				where += "'%" + escapeXml(q.getTextQuery()) + "%'";
+				where += " or ";
+				where += "wineName ";
+				where += " LIKE ";
+				where += "'%" + escapeXml(q.getTextQuery()) + "%'";
+				first = false;
+			} else
+			{
+				where += "and ";
+				where += "description";
+				where += " LIKE ";
+				where += "'%" + escapeXml(q.getTextQuery()) + "%'";
+				where += " or ";
+				where += "wineName ";
+				where += " LIKE ";
+				where += "'%" + escapeXml(q.getTextQuery()) + "%'";
+				first = false;
+			}
+		}
+
 		if (q.getType().size() != WineQuery.DEFAULT_WINE_TYPE.size())
 		{
 			boolean exists = true;
