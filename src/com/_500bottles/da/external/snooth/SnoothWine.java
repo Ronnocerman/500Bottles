@@ -1,6 +1,9 @@
 package com._500bottles.da.external.snooth;
 
+import com._500bottles.object.wine.Varietal;
+import com._500bottles.object.wine.Vineyard;
 import com._500bottles.object.wine.Wine;
+import com._500bottles.object.wine.WineType;
 
 /**
  * Created with IntelliJ IDEA. User: administrator Date: 5/24/13 Time: 5:35 PM
@@ -327,11 +330,17 @@ public class SnoothWine
 		w.setDescription(this.getWineMakerNotes());
 		w.setSnoothId(this.getCode());
 		// w.setGeoLocation();
-		// w.setType();
-		// w.setYear();
+		WineType type = new WineType(this.getType());
+		w.setType(type);
+		w.setYear(Long.valueOf(this.getVintage()));
+
+		// Appellation appellation = new Appellation(this.getAppellation());
 		// w.setAppellation();
-		// w.setVarietal();
-		// w.setVineyard();
+		Varietal varietal = new Varietal(this.getVarietal());
+		w.setVarietal(varietal);
+
+		Vineyard vineyard = new Vineyard(this.getWinery());
+		w.setVineyard(vineyard);
 		// w.setRating();
 
 		return w;

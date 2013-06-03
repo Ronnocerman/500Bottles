@@ -299,6 +299,19 @@ public class WineQueryManager
 				addWineToDatabase(wines.elementAt(i));
 		}
 
+		for (int i = 0; i < wines.size(); i++)
+		{
+			System.out.println("Name: " + wines.get(i).getName() + "\nYear: "
+					+ wines.get(i).getYear() + "\nID: "
+					+ wines.get(i).getWinecomId() + "\nAppellation: "
+					+ wines.get(i).getAppellation().getLocation()
+					+ "\nVarietal: "
+					+ wines.get(i).getVarietal().getGrapeType()
+					+ "\nWineType: " + wines.get(i).getType().getWineType()
+					+ "\nVineyard: " + wines.get(i).getVineyard().getName()
+					+ "\nRating: " + wines.get(i).getRating() + "\n");
+		}
+
 		return wines;
 	}
 
