@@ -1,9 +1,11 @@
 (function() {
+    var VIEW_CONTAINER = "#view_container";
+
     /**
      * Main navigation link elements.
      * @type {HTMLElement}
      */
-
+    var logo = document.getElementById("logo");
     var nav_wine = document.getElementById("nav_wines");
     var nav_wizard = document.getElementById("nav_wizard");
     var nav_cellar = document.getElementById("nav_cellar");
@@ -51,6 +53,10 @@
     var update_wizard_flag = false;
     var update_cellar_flag = false;
     var update_winebook_flag = false;
+
+    function on_logo_click(){
+        animate_in_view(home);
+    }
 
     /**
      * Called on main navigation "Wine" button click.
@@ -157,7 +163,7 @@
      */
     function add_view(view_contents)
     {
-        $("body").append(view_contents);
+        $(VIEW_CONTAINER).append(view_contents);
     }
 
     /**
@@ -201,10 +207,26 @@
         setTimeout(function() {
             $(active_view).addClass(VIEW_NO_DISPLAY);
             active_view = view;
+            fix_body_height(view);
         }, VIEW_ANIM_TIMER);
+
+        $("body").animate({
+            scrollTop: 0
+        }, 500);
+    }
+
+    function fix_body_height(view)
+    {
+        var header_height = $("header").height();
+        var content_height = $(view).height();
+
+        console.log("new height: ", content_height + header_height);
+
+        $("body").height(content_height + header_height);
     }
 
     // Attach the header event listeners.
+    $(logo).on("click", on_logo_click);
     $(nav_wine).on("click", on_nav_wine_click);
     $(nav_wizard).on("click", on_nav_wizard_click);
     $(nav_cellar).on("click", on_nav_cellar_click);

@@ -96,12 +96,16 @@ body {
   background-color: black;
   background-size: cover;
   font-family: Roboto;
-  height: 100%;
+  min-height: 100%;
   text-size: 16px; }
+
+#view_container {
+  position: relative; }
 
 .view {
   position: absolute;
   top: 0px;
+  width: 100%;
   z-index: 100;
   overflow: hidden;
   padding-top: 80px; }
@@ -436,6 +440,8 @@ header {
     width: 160px;
     height: 80px;
     opacity: 0.8; }
+    header #logo:hover {
+      cursor: pointer; }
   header nav {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -651,9 +657,7 @@ footer {
         opacity: 0.8; }
 
 #popular_wines {
-  position: absolute;
-  width: 100%;
-  bottom: 5%; }
+  width: 100%; }
   #popular_wines h2 {
     padding-left: 0.6em; }
 

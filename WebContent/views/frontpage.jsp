@@ -86,6 +86,8 @@
             <div class="prev"></div>
         </div>
     </section>
+
+    <div class="clearfix"></div>
 </section>
 
 <script class="frontpage" src="js/frontpage.js" type="text/javascript"></script>
