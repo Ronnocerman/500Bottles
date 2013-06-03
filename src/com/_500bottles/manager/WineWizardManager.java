@@ -14,6 +14,7 @@ import com._500bottles.object.wine.Varietal;
 import com._500bottles.object.wine.Vineyard;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.wine.WineQuery;
+import com._500bottles.object.wine.WineQueryResult;
 import com._500bottles.object.wine.WineType;
 
 public class WineWizardManager
@@ -185,6 +186,7 @@ public class WineWizardManager
 											// vector of same type
 		setWineType(query.getType());// sets the wine type to the query vector
 										// of the same type
+
 		setVineyard(query.getVineyard());// sets the vineyard to the query
 											// vector of the same type
 		setMinYear(query.getMinYear());// sets the min year to search
@@ -200,9 +202,34 @@ public class WineWizardManager
 		getRating.setMaxRating(5);// sets the max rating to 5
 		// gets the list of wines that are rated
 		wineListRated = WineManager.searchWine(getRating).getWines();
+		// System.out.println("a Varietal "
+		// + wineListRated.get(0).getVarietal().getGrapeType());
+		// System.out.println("the number of wineListRated "
+		// + wineListRated.size());
 		if (!wineListRated.isEmpty())// if wineListRated is empty then don't do
 										// this
 		{
+			// If varietal is empty and wineType is empty
+			if (!varietal.isEmpty() && wineType.isEmpty())
+			{
+				int i = 0;
+				while (i < wineListRated.size())
+				{
+					int test = 0;
+					for (int d = 0; d < varietal.size(); d++)
+					{
+						if (varietal.get(d).getId() == wineListRated.get(i)
+								.getVarietal().getId())
+							test++;
+					}
+					if (test == 0)
+						wineListRated.remove(i);
+					else
+					{
+						i++;
+					}
+				}
+			}
 			getLevelOne();// does level one which in turn does level 2
 			if (varietal.isEmpty())// if varietal is empty then it puts the top
 									// rated varietals in its place
@@ -270,10 +297,23 @@ public class WineWizardManager
 				search.setAppellation(getAppellation());
 			}
 		}
-		search.setSize(query.getSize());// sets the size of what the user wants
+		search.setSize(wineListRated.size());// sets the size of what the user
+												// wants
 		// searchs for the wines with the traits
-		return WineManager.searchWine(search).getWines();
-
+		// System.out.println(typeList.size());
+		WineQueryResult doug = WineManager.searchWine(search);
+		if (doug == null)
+			return null;
+		Vector<Wine> frog = doug.getWines();
+		Vector<Wine> returnWineVector = new Vector<Wine>();
+		for (int i = 0; i < frog.size(); i++)
+		{
+			if (!returnWineVector.contains(frog.get(i)))
+			{
+				returnWineVector.add(frog.get(i));
+			}
+		}
+		return returnWineVector;
 	}
 
 	/**
@@ -287,6 +327,9 @@ public class WineWizardManager
 			for (int i = 0; i < wineListRated.size(); i++)//
 			{
 				// gets rating time 100 to make sure no numbers were dropped
+				// System.out.println("the number of wineListRated "+
+				// wineListRated.size());
+				// System.out.println("the number it fails at is " + i);
 				Integer k = (int) ((int) 100 * wineListRated.get(i).getRating());
 				// gets the wineType
 				String s = wineListRated.get(i).getType().getWineType();

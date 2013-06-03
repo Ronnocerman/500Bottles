@@ -2,7 +2,7 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.GregorianCalendar" %>
 
-<section id="view_login" class="view animated no_display no_header">
+<section id="view_login" class="view animated no_display no_header no_bg">
 
     <a class="back_arrow animated" id="back_to_front">Back</a>
 

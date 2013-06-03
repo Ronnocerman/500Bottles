@@ -8,25 +8,36 @@ html, body
   overflow-x: hidden
 
 body
-  background-color: black
+  background-color: white
   background-size: cover
   font-family: Roboto
-  height: 100%
+  min-height: 100%
   text-size: 16px
 
+#view_container
+  position: relative
+  min-height: 100%
+
 .view
+  background-image: url("../img/fabric_of_squares_gray.png")
   position: absolute
   top: 0px
+  width: 100%
   z-index: 100
   overflow: hidden
   padding-top: $HEADER_HEIGHT
   &.no_header
     padding-top: 0
+  &.no_bg
+    background-image: none
+  h1, h2, h3, h4, h5, h6
+    color: black
+    opacity: 1
+    text-shadow: 1px 1px 0px white
 
 h1, h2, h3, h4, h5, h6
   font-family: "LeagueGothicRegular"
   text-transform: uppercase
-  color: white //#d8dece
   opacity: 0.6
   letter-spacing: 1px
 
