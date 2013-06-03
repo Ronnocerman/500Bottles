@@ -230,7 +230,6 @@
             $(login_form).addClass(LOGIN_FORM_ANIM_OUT);
 
             setTimeout(function() {
-                console.log("adding no display to login form.");
                 $(login_form).addClass(NO_DISPLAY);
             }, LOGIN_FORM_OUT_TIMER);
         }
@@ -247,7 +246,6 @@
             $(signup_form).addClass(SIGNUP_FORM_ANIM_OUT);
 
             setTimeout(function() {
-                console.log("adding no display to signup form.");
                 $(signup_form).addClass(NO_DISPLAY);
             }, SIGNUP_FORM_OUT_TIMER);
         }

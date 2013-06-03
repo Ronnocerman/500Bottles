@@ -176,14 +176,14 @@ p {
     display: inline-block;
     zoom: 1;
     *display: inline;
-    border: 1px solid #333333;
-    background: rgba(0, 0, 0, 0.4);
     width: 140px;
     height: 140px;
     position: relative;
     margin: 0.3em;
     padding: 6px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) inset; }
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) inset;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none; }
     .wine_grid .wine img {
       width: 100%; }
 
@@ -673,6 +673,9 @@ footer {
   #popular_wines h2 {
     padding-left: 0.6em;
     opacity: 0.6; }
+  #popular_wines .wine {
+    border: 1px solid #333333;
+    background: rgba(0, 0, 0, 0.4); }
 
 #home .bg {
   width: 100%;
@@ -683,9 +686,6 @@ footer {
   top: -20px;
   left: -20px;
   z-index: 0; }
-#home .wine {
-  background-color: rgba(0, 0, 0, 0.1);
-  border: none; }
 #home .light_bg h3 {
   padding: 18px; }
 #home .light_bg.with_border {
