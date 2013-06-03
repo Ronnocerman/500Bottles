@@ -1,5 +1,5 @@
 <%@ page import="com._500bottles.manager.SessionManager" %>
-<%@ include file="/inc/header.jsp" %>
+<%@ include file="/inc/head.jsp" %>
 
 <%
     SessionManager sm = SessionManager.getSessionManager();

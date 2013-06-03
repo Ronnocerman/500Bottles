@@ -1,4 +1,6 @@
-<section id="home" class="clearfix wrapper">
+<%@ include file="/views/header.jsp" %>
+
+<section class="wrapper clearfix view" id="home">
 
     <!-- Popular Wines Section -->
     <div class="wine_grid_container" data-rows="1">
