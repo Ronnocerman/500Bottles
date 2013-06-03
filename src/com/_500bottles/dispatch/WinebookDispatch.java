@@ -33,16 +33,16 @@ public class WinebookDispatch extends HttpServlet
 		switch (action)
 		{
 		case "addEntry":
-			out.println("addEntry clicked");
+			addEntry(request, response);
 			break;
 		case "getEntry":
 			out.println("getEntry clicked");
 			break;
 		case "removeEntry":
-			out.println("removeEntry clicked");
+			removeEntry(request, response);
 			break;
 		case "editContent":
-			out.println("editContent clicked");
+			editEntry(request, response);
 			break;
 		case "addWine":
 			out.println("addWine clicked");
