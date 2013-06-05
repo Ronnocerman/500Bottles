@@ -40,6 +40,8 @@ public class WineManagerTests
 	{
 		q = new WineQuery();
 		q.setTextQuery("merlot");
+		q.setOffset(2);
+		q.setSize(5);
 		WineQueryResult r = WineManager.searchWine(q);
 
 		Iterator<Wine> it = r.getIterator();
