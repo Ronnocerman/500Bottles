@@ -99,17 +99,25 @@ body {
   text-size: 16px; }
 
 #view_container {
-  position: relative;
-  min-height: 100%; }
+  min-height: 100%;
+  position: relative; }
+
+#blackout {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 12000; }
 
 .view {
   background-image: url("../img/fabric_of_squares_gray.png");
   position: absolute;
-  top: 0px;
+  top: 80px;
   width: 100%;
   z-index: 100;
-  overflow: hidden;
-  padding-top: 80px; }
+  overflow: hidden; }
   .view.no_header {
     padding-top: 0; }
   .view.no_bg {
@@ -186,6 +194,12 @@ p {
     border: none; }
     .wine_grid .wine img {
       width: 100%; }
+    .wine_grid .wine .wine_image {
+      background-size: cover;
+      background-position: center center;
+      height: 138px;
+      width: 138px;
+      border: 1px solid rgba(255, 255, 255, 0.6); }
 
 a.light_link {
   text-decoration: none;
@@ -424,7 +438,7 @@ header {
   left: 0px;
   height: 80px;
   background: rgba(255, 255, 255, 0.6);
-  z-index: 100000;
+  z-index: 10000;
   width: 100%;
   -webkit-transition: all 1s 0s;
   -moz-transition: all 1s 0s;
@@ -531,6 +545,7 @@ footer {
   width: 100%;
   text-align: center;
   z-index: 100;
+  top: 0px;
   background-size: cover; }
   #view_login .back_arrow {
     position: absolute;
@@ -645,7 +660,8 @@ footer {
 #front {
   height: 100%;
   width: 100%;
-  position: relative; }
+  position: relative;
+  top: 0px; }
   #front h1, #front h2, #front h3, #front h4, #front h5, #front h6 {
     font-family: "LeagueGothicRegular";
     text-transform: uppercase;
@@ -736,38 +752,9 @@ footer {
     width: 23%;
     margin-left: 2% !important;
     margin-top: -4px !important; }
-#home #quick_search_results {
-  position: absolute;
-  width: 90%;
-  z-index: 2000;
-  left: 5%;
-  top: 14%;
-  background: white;
-  box-shadow: 0px 0px 12px black;
+
+#quick_search_results {
   text-align: center; }
-  #home #quick_search_results .wine {
-    display: block;
-    float: left;
-    height: 100px;
-    width: 28%;
-    padding: 1%;
-    position: relative;
-    margin: 1em;
-    text-align: left; }
-    #home #quick_search_results .wine .image {
-      display: block;
-      width: 100px;
-      height: 100px;
-      background-size: cover;
-      float: left;
-      position: absolute;
-      left: 5px;
-      top: 10px; }
-    #home #quick_search_results .wine .name {
-      font-size: 1em;
-      padding-left: 120px;
-      display: block;
-      padding-top: 30px; }
 
 #cellar .bg {
   width: 100%;

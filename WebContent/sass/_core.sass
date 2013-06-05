@@ -15,17 +15,26 @@ body
   text-size: 16px
 
 #view_container
-  position: relative
   min-height: 100%
+  position: relative
+
+#blackout
+  position: fixed
+  height: 100%
+  width: 100%
+  left: 0px
+  top: 0px
+  background: rgba(black, 0.3)
+  z-index: 12000
 
 .view
   background-image: url("../img/fabric_of_squares_gray.png")
   position: absolute
-  top: 0px
+  top: $HEADER_HEIGHT
   width: 100%
   z-index: 100
   overflow: hidden
-  padding-top: $HEADER_HEIGHT
+  //margin-top: $HEADER_HEIGHT
   &.no_header
     padding-top: 0
   &.no_bg
@@ -91,6 +100,12 @@ p
     border: none
     img
       width: 100%
+    .wine_image
+      background-size: cover
+      background-position: center center
+      height: 138px
+      width: 138px
+      border: 1px solid rgba(white, 0.6)
 
 
 a.light_link
