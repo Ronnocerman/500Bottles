@@ -82,6 +82,8 @@ public class WineQueryManager
 				wines = mergeExternalResults(searchSnooth(query),
 						searchWineCom(query));
 			}
+
+			wines.setSize(query.getSize());
 			WineQueryResult result = new WineQueryResult(wines);
 
 			return result;
@@ -261,7 +263,6 @@ public class WineQueryManager
 	private static Vector<Wine> mergeExternalResults(
 			WineSearchResponse response, Vector<Wine> wineComWines)
 	{
-		System.out.println(wineComWines.size());
 		Vector<Wine> wines = new Vector<Wine>();
 		Iterator<SnoothWine> it = response.getWinesIterator();
 
