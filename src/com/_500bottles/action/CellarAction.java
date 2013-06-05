@@ -4,7 +4,6 @@ import com._500bottles.exception.cellar.CellarException;
 import com._500bottles.manager.CellarManager;
 import com._500bottles.manager.SessionManager;
 import com._500bottles.object.cellar.CellarItem;
-import com._500bottles.object.wine.Wine;
 
 public class CellarAction
 {
@@ -20,12 +19,11 @@ public class CellarAction
 	 * @throws CellarException
 	 *             if the user does not exist.
 	 */
-	public void setCellarQuantity(Wine wine, int quantity)
-			throws CellarException
+	public static void setCellarQuantity(long id, int quantity) throws CellarException
 	{
 		long userID = SessionManager.getSessionManager().getLoggedInUser()
 				.getUserId();
-		CellarItem ci = CellarManager.getByWineID(userID, wine.getId());
+		CellarItem ci = CellarManager.getByWineID(userID, id);
 		ci.setQuantity(quantity);
 		CellarManager.editCellarItem(ci);
 	}
@@ -40,11 +38,11 @@ public class CellarAction
 	 * @throws CellarException
 	 *             if the user does not exist.
 	 */
-	public void incCellarQuantity(Wine wine) throws CellarException
+	public static void incCellarQuantity(long id) throws CellarException
 	{
 		long userID = SessionManager.getSessionManager().getLoggedInUser()
 				.getUserId();
-		CellarItem ci = CellarManager.getByWineID(userID, wine.getId());
+		CellarItem ci = CellarManager.getByWineID(userID, id);
 		ci.setQuantity(ci.getQuantity() + 1);
 		CellarManager.editCellarItem(ci);
 	}
@@ -59,11 +57,11 @@ public class CellarAction
 	 * @throws CellarException
 	 *             if the user does not exist.
 	 */
-	public void decCellarQuantity(Wine wine) throws CellarException
+	public static void decCellarQuantity(long id) throws CellarException
 	{
 		long userID = SessionManager.getSessionManager().getLoggedInUser()
 				.getUserId();
-		CellarItem ci = CellarManager.getByWineID(userID, wine.getId());
+		CellarItem ci = CellarManager.getByWineID(userID, id);
 		ci.setQuantity(ci.getQuantity() - 1);
 		CellarManager.editCellarItem(ci);
 	}
@@ -80,11 +78,11 @@ public class CellarAction
 	 * @throws CellarException
 	 *             if the user does not exist.
 	 */
-	public void setCellarNotes(Wine wine, String notes) throws CellarException
+	public static void setCellarNotes(long id, String notes) throws CellarException
 	{
 		long userID = SessionManager.getSessionManager().getLoggedInUser()
 				.getUserId();
-		CellarItem ci = CellarManager.getByWineID(userID, wine.getId());
+		CellarItem ci = CellarManager.getByWineID(userID, id);
 		ci.setNotes(notes);
 		CellarManager.editCellarItem(ci);
 	}
@@ -100,11 +98,11 @@ public class CellarAction
 	 * @throws CellarException
 	 *             if the user does not exist.
 	 */
-	public String getCellarNotes(Wine wine) throws CellarException
+	public static String getCellarNotes(long id) throws CellarException
 	{
 		long userID = SessionManager.getSessionManager().getLoggedInUser()
 				.getUserId();
-		return CellarManager.getByWineID(userID, wine.getId()).getNotes();
+		return CellarManager.getByWineID(userID, id).getNotes();
 	}
 
 	/**
@@ -117,11 +115,11 @@ public class CellarAction
 	 * @throws CellarException
 	 *             if the user does not exist.
 	 */
-	public void clearCellarNotes(Wine wine) throws CellarException
+	public static void clearCellarNotes(long id) throws CellarException
 	{
 		long userID = SessionManager.getSessionManager().getLoggedInUser()
 				.getUserId();
-		CellarItem ci = CellarManager.getByWineID(userID, wine.getId());
+		CellarItem ci = CellarManager.getByWineID(userID, id);
 		ci.setNotes("");
 		CellarManager.editCellarItem(ci);
 	}
