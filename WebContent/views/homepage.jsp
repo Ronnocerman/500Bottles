@@ -1,10 +1,6 @@
 <%@ include file="/inc/header.jsp" %>
 
-<section class="wrapper clearfix view animated fadeInUp" id="home">
-
-    <div id="quick_search_results">
-
-    </div>
+<section class="wrapper clearfix view animated fadeInUp" id="home" data-anim-in="fadeInLeftBig" data-anim-out="fadeOutLeftBig">
 
     <!-- Your Celler Wines -->
     <div id="cellar_preview_wine_grid" class="wine_grid_container" data-rows="1">
