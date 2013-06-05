@@ -49,16 +49,36 @@ public class WineDAO extends DAO
 			if (getVineyard(wine.getVineyard().getName()) == null)
 				addVineyard(wine.getVineyard());
 			else
-				vineyard = getVineyard(wine.getVineyard().getName());
+			{
+				try
+				{
+					vineyard = getVineyard(wine.getVineyard().getName());
+				} catch (DAException e)
+				{
+				}
+			}
 			if (getVarietal(wine.getVarietal().getGrapeType()) == null)
 				addVarietal(wine.getVarietal());
 			else
-				varietal = getVarietal(wine.getVarietal().getGrapeType());
+			{
+				try
+				{
+					varietal = getVarietal(wine.getVarietal().getGrapeType());
+				} catch (DAException e)
+				{
+				}
+			}
 			if (getWineType(wine.getType().getWineType()) == null)
 				addWineType(wine.getType());
 			else
-				wineType = getWineType(wine.getType().getWineType());
-
+			{
+				try
+				{
+					wineType = getWineType(wine.getType().getWineType());
+				} catch (DAException e)
+				{
+				}
+			}
 			String columns, values;
 
 			columns = "(`wineName`, `description`, `longitude`, `latitude`,";
