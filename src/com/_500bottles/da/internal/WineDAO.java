@@ -42,16 +42,45 @@ public class WineDAO extends DAO
 
 			// Check if Vineyard/Varietal already exist. If not, add them to
 			// their respective tables
+			Varietal varietal = new Varietal();
+			Vineyard vineyard = new Vineyard();
+			WineType wineType = new WineType();
+			try
+			{
+				vineyard = getVineyard(wine.getVineyard().getName());
+			} catch (DAException e)
+			{
+			}
+			try
+			{
+				varietal = getVarietal(wine.getVarietal().getGrapeType());
+			} catch (DAException e)
+			{
+			}
+			try
+			{
+				wineType = getWineType(wine.getType().getWineType());
+			} catch (DAException e)
+			{
+			}
 
-			if (getVineyard(wine.getVineyard().getName()) == null)
+			if (vineyard == null)
 				addVineyard(wine.getVineyard());
-
-			if (getVarietal(wine.getVarietal().getGrapeType()) == null)
+			if (varietal == null)
 				addVarietal(wine.getVarietal());
-
-			if (getWineType(wine.getType().getWineType()) == null)
+			if (wineType == null)
 				addWineType(wine.getType());
 
+			/*
+			 * if (getVineyard(wine.getVineyard().getName()) == null)
+			 * addVineyard(wine.getVineyard());
+			 * 
+			 * if (getVarietal(wine.getVarietal().getGrapeType()) == null)
+			 * addVarietal(wine.getVarietal());
+			 * 
+			 * if (getWineType(wine.getType().getWineType()) == null)
+			 * addWineType(wine.getType());
+			 */
 			String columns, values;
 
 			columns = "(`wineName`, `description`, `longitude`, `latitude`,";
@@ -66,13 +95,22 @@ public class WineDAO extends DAO
 			values += "'" + wine.getGeoLocation().getLon() + "',";
 			values += "'" + wine.getGeoLocation().getLat() + "',";
 			// Get type...
-			values += "'" + wine.getType().getWineTypeId() + "',";
+			if (wineType == null)
+				values += "'" + wine.getType().getWineTypeId() + "',";
+			else
+				values += "'" + wineType.getWineTypeId() + "',";
 			// Get year...
 			values += "'" + wine.getYear() + "',";
 			// Get varietal
-			values += "'" + wine.getVarietal().getId() + "',";
+			if (varietal == null)
+				values += "'" + wine.getVarietal().getId() + "',";
+			else
+				values += "'" + varietal.getId() + "',";
 			// Get vineyard
-			values += "'" + wine.getVineyard().getId() + "',";
+			if (vineyard == null)
+				values += "'" + wine.getVineyard().getId() + "',";
+			else
+				values += "'" + vineyard.getId() + "',";
 			// Get rating...
 			values += "'" + wine.getRating() + "',";
 			values += "'" + wine.getSnoothId() + "',";
@@ -406,8 +444,9 @@ public class WineDAO extends DAO
 
 				if (first)
 				{
-					where += "(wineType='";
-					where += escapeXml(q.getType().get(i).getWineType());
+					where += "(wineTypeId='";
+					where += getWineType(q.getType().get(i).getWineType())
+							.getWineTypeId();
 					where += "'";
 					first = false;
 					exists = false;
@@ -415,15 +454,17 @@ public class WineDAO extends DAO
 				} else if (exists)
 				{
 					where += " and ";
-					where += "(wineType='";
-					where += escapeXml(q.getType().get(i).getWineType());
+					where += "(wineTypeId='";
+					where += getWineType(q.getType().get(i).getWineType())
+							.getWineTypeId();
 					where += "'";
 					exists = false;
 				} else
 				{
 					where += " or ";
-					where += "wineType='";
-					where += escapeXml(q.getType().get(i).getWineType());
+					where += "wineTypeId='";
+					where += getWineType(q.getType().get(i).getWineType())
+							.getWineTypeId();
 					where += "'";
 				}
 			}
@@ -518,21 +559,24 @@ public class WineDAO extends DAO
 				if (first)
 				{
 					where += "(varietalId=";
-					where += q.getVarietal().get(i).getId();
+					where += getVarietal(q.getVarietal().get(i).getGrapeType())
+							.getId();
 					first = false;
 					exists = false;
 				} else if (exists)
 				{
 					where += " and ";
 					where += "(varietalId='";
-					where += q.getVarietal().get(i).getId();
+					where += getVarietal(q.getVarietal().get(i).getGrapeType())
+							.getId();
 					where += "'";
 					exists = false;
 				} else
 				{
 					where += " or ";
 					where += "(varietalId='";
-					where += q.getVarietal().get(i).getId();
+					where += getVarietal(q.getVarietal().get(i).getGrapeType())
+							.getId();
 					where += "'";
 				}
 			}
@@ -552,14 +596,16 @@ public class WineDAO extends DAO
 				if (first)
 				{
 					where += "(vineyardId=";
-					where += q.getVineyard().get(i).getId();
+					where += getVineyard(q.getVineyard().get(i).getName())
+							.getId();
 					first = false;
 					exists = false;
 				} else if (exists)
 				{
 					where += " and ";
 					where += "(vineyardId=";
-					where += q.getVineyard().get(i).getId();
+					where += getVineyard(q.getVineyard().get(i).getName())
+							.getId();
 					exists = false;
 				} else
 				{
@@ -568,7 +614,8 @@ public class WineDAO extends DAO
 					where += "vineyardId=";
 					// System.out.println("ey: " +
 					// q.getVineyard().get(i).getId());
-					where += q.getVineyard().get(i).getId();
+					where += getVineyard(q.getVineyard().get(i).getName())
+							.getId();
 					// System.out.println(where);
 				}
 			}
@@ -688,7 +735,7 @@ public class WineDAO extends DAO
 		}
 
 		where += q.getSize(); // 5 or greater.
-
+		System.out.println(where);
 		try
 		{
 			r = select(WINE_TABLE, "*", where);
