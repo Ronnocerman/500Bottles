@@ -1,5 +1,7 @@
 package com._500bottles.action;
 
+import com._500bottles.da.internal.WineDAO;
+import com._500bottles.exception.da.DAException;
 import com._500bottles.exception.winebook.EntryDoesExistException;
 import com._500bottles.exception.winebook.EntryDoesNotExistException;
 import com._500bottles.manager.WinebookManager;
@@ -64,9 +66,11 @@ public class WinebookAction
 	 *            ID of the winebook entry to add the specifed wine to
 	 * @param w
 	 *            Wine to be added to the specified winebook entry
+	 * @throws DAException
 	 */
-	public static void addWine(long id, Wine w)
+	public static void addWine(long id, long wid) throws DAException
 	{
+		Wine w = WineDAO.getWine(wid);
 		WinebookManager.addWine(id, w);
 	}
 
@@ -78,9 +82,11 @@ public class WinebookAction
 	 *            removed from
 	 * @param w
 	 *            Wine to be removed from the specified winebook entry
+	 * @throws DAException
 	 */
-	public static void removeWine(long id, Wine w)
+	public static void removeWine(long id, long wid) throws DAException
 	{
+		Wine w = WineDAO.getWine(wid);
 		WinebookManager.removeWine(id, w);
 	}
 

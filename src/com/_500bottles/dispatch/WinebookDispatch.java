@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com._500bottles.action.WinebookAction;
+import com._500bottles.exception.da.DAException;
 import com._500bottles.exception.winebook.EntryDoesExistException;
 import com._500bottles.exception.winebook.EntryDoesNotExistException;
 import com._500bottles.object.winebook.Entry;
@@ -21,6 +22,7 @@ public class WinebookDispatch extends HttpServlet
 	private final String TITLE_FIELD = "title";
 	private final String CONTENT_FIELD = "content";
 	private final String ID_FIELD = "id";
+	private final String WINEID_FIELD = "wineid";
 
 	@Override
 	protected void doGet(HttpServletRequest request,
@@ -45,10 +47,10 @@ public class WinebookDispatch extends HttpServlet
 			editEntry(request, response);
 			break;
 		case "addWine":
-			out.println("addWine clicked");
+			addWine(request, response);
 			break;
 		case "removeWine":
-			out.println("removeWine clicked");
+			removeWine(request, response);
 			break;
 		case "addPhoto":
 			out.println("addPhoto clicked");
@@ -111,8 +113,7 @@ public class WinebookDispatch extends HttpServlet
 		RequestDispatcher dispatcher = context
 				.getRequestDispatcher("/messages/js_callback.jsp");
 
-		String id = request.getParameter(ID_FIELD);
-		long eid = Long.parseLong(id);
+		long eid = Long.parseLong(request.getParameter(ID_FIELD));
 
 		try
 		{
@@ -138,8 +139,7 @@ public class WinebookDispatch extends HttpServlet
 		RequestDispatcher dispatcher = context
 				.getRequestDispatcher("/messages/js_callback.jsp");
 
-		String id = request.getParameter(ID_FIELD);
-		long eid = Long.parseLong(id);
+		long eid = Long.parseLong(request.getParameter(ID_FIELD));
 
 		try
 		{
@@ -157,4 +157,55 @@ public class WinebookDispatch extends HttpServlet
 		}
 	}
 
+	private void addWine(HttpServletRequest request,
+			HttpServletResponse response)
+	{
+		ServletContext context = getServletContext();
+
+		RequestDispatcher dispatcher = context
+				.getRequestDispatcher("/messages/js_callback.jsp");
+
+		long eid = Long.parseLong(request.getParameter(ID_FIELD));
+		long wid = Long.parseLong(request.getParameter(WINEID_FIELD));
+		try
+		{
+			WinebookAction.addWine(eid, wid);
+		} catch (DAException e)
+		{
+			// TODO
+		}
+		try
+		{
+			dispatcher.forward(request, response);
+		} catch (ServletException | IOException e)
+		{
+
+		}
+	}
+
+	private void removeWine(HttpServletRequest request,
+			HttpServletResponse response)
+	{
+		ServletContext context = getServletContext();
+
+		RequestDispatcher dispatcher = context
+				.getRequestDispatcher("/messages/js_callback.jsp");
+
+		long eid = Long.parseLong(request.getParameter(ID_FIELD));
+		long wid = Long.parseLong(request.getParameter(WINEID_FIELD));
+		try
+		{
+			WinebookAction.removeWine(eid, wid);
+		} catch (DAException e)
+		{
+			// TODO
+		}
+		try
+		{
+			dispatcher.forward(request, response);
+		} catch (ServletException | IOException e)
+		{
+
+		}
+	}
 }
