@@ -86,7 +86,7 @@
             <div class="light_bg shadow with_border">
                 <div class="bg"></div>
                 <h3>What's in your cellar</h3>
-                <div id="chart_div"></div>
+                <div id="canvas" height="200" width="200"></div>
             </div>
         </div>
     </div>
@@ -167,3 +167,24 @@
 <script src="js/header.js" type="text/javascript"></script>
 <script src="js/homepage.js" type="text/javascript"></script>
 <script src="js/gallery.js" type="text/javascript"></script>
+<script src="js/chart.js" type="text/javascript"></script>
+
+<script>
+	var doughnutData = [{
+						 value: 130,
+						 color:"#A60000"},
+					
+						{
+						 value : 80,
+						 color : "#DEDEDE"},
+					
+						{
+						 value : 100,
+						 color : "#FFB6C1"},
+					
+						{
+						 value : 40,
+						 color : "#372C2C"}];
+
+	var myDoughnut = new Chart(document.getElementById("canvas").getContext("2d")).Doughnut(doughnutData);
+</script>
