@@ -671,6 +671,17 @@ public class WineDAO extends DAO
 		}
 
 		// System.out.println("HAHAHEHAHAHEAHEHAEHAHEAHEASUPUSPUPSUPS");
+
+		where += " LIMIT ";
+
+		if (q.getOffset() != WineQuery.DEFAULT_OFFSET)
+		{
+			where += q.getOffset();
+			where += ",";
+		}
+
+		where += q.getSize(); // 5 or greater.
+
 		try
 		{
 			r = select(WINE_TABLE, "*", where);
