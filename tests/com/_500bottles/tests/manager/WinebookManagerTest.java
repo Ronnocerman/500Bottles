@@ -42,14 +42,12 @@ public class WinebookManagerTest
 
 			WinebookManager.addEntry(entry2);
 			ent = WinebookManager.getEntry(entry2.getEntryId());
-			System.out.println("Checkpoint");
 			ent.setTitle("New Title");
 			ent.setContent("New Content");
 
 			WinebookManager.editEntry(ent.getEntryId());
 		} catch (Exception e)
 		{
-			System.err.println(e.getMessage());
 			fail(e.getMessage());
 		}
 	}
