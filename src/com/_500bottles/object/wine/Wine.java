@@ -299,7 +299,17 @@ public class Wine
 
 		str += "ID: " + this.getId() + "\n";
 		str += "Name: " + this.getName() + "\n";
+		str += "Year: " + this.getYear() + "\n";
+		str += "Snooth ID: " + this.getSnoothId() + "\n";
+		str += "WineCom ID: " + this.getWinecomId() + "\n";
+		str += "Varietal: " + this.getVarietal().getGrapeType() + "\n";
+		str += "Vineyard: " + this.getVineyard().getName() + "\n";
+		str += "Appellation: " + this.getAppellation().toString() + "\n";
+		str += "PriceMin: " + this.getPriceMin() + "\n";
+		str += "PriceMax: " + this.getPriceMax() + "\n";
+		str += "Rating: " + this.getRating() + "\n";
 		str += "Description: " + this.getDescription() + "\n";
+		str += "Imageurl: " + this.getImage() + "\n";
 
 		return str;
 	}
