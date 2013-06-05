@@ -17,7 +17,7 @@ public class WinebookAction
 	 *            ID of the entry to be added to the Winebook
 	 * @throws EntryDoesExistException
 	 */
-	public void addEntry(Entry entry) throws EntryDoesExistException
+	public static void addEntry(Entry entry) throws EntryDoesExistException
 	{
 		WinebookManager.addEntry(entry);
 	}
@@ -29,7 +29,7 @@ public class WinebookAction
 	 *            ID of the entry to be added the winebook
 	 * @throws EntryDoesNotExistException
 	 */
-	public void getEntry(long id) throws EntryDoesNotExistException
+	public static void getEntry(long id) throws EntryDoesNotExistException
 	{
 		WinebookManager.getEntry(id);
 	}
@@ -40,7 +40,7 @@ public class WinebookAction
 	 * @param id
 	 *            ID of the winebook entry to be removed
 	 */
-	public void removeEntry(long id)
+	public static void removeEntry(long id) throws EntryDoesNotExistException
 	{
 		WinebookManager.removeEntry(id);
 	}
@@ -52,7 +52,7 @@ public class WinebookAction
 	 *            ID of the winebook entry to be edited
 	 * @throws EntryDoesNotExistException
 	 */
-	public void editContent(long id) throws EntryDoesNotExistException
+	public static void editContent(long id) throws EntryDoesNotExistException
 	{
 		WinebookManager.editEntry(id);
 	}
@@ -65,7 +65,7 @@ public class WinebookAction
 	 * @param w
 	 *            Wine to be added to the specified winebook entry
 	 */
-	public void addWine(long id, Wine w)
+	public static void addWine(long id, Wine w)
 	{
 		WinebookManager.addWine(id, w);
 	}
@@ -79,7 +79,7 @@ public class WinebookAction
 	 * @param w
 	 *            Wine to be removed from the specified winebook entry
 	 */
-	public void removeWine(long id, Wine w)
+	public static void removeWine(long id, Wine w)
 	{
 		WinebookManager.removeWine(id, w);
 	}
@@ -92,7 +92,7 @@ public class WinebookAction
 	 * @param p
 	 *            Photo to be added to the specified winebook entry
 	 */
-	public void addPhoto(long id, Photo p)
+	public static void addPhoto(long id, Photo p)
 	{
 		WinebookManager.addPhoto(id, p);
 	}
@@ -105,7 +105,7 @@ public class WinebookAction
 	 * @param p
 	 *            Photo to be removed from the specified winebook entry
 	 */
-	public void removePhoto(long id, Photo p)
+	public static void removePhoto(long id, Photo p)
 	{
 		WinebookManager.removePhoto(id, p);
 	}
@@ -118,7 +118,7 @@ public class WinebookAction
 	 * @param p
 	 *            Photo to be uploaded
 	 */
-	public void uploadPhoto(long id, Photo p)
+	public static void uploadPhoto(long id, Photo p)
 	{
 	}
 }
