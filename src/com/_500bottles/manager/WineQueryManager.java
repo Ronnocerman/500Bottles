@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Vector;
 
+import com._500bottles.da.external.snooth.*;
+import com._500bottles.da.external.snooth.exception.InvalidWineDetails;
 import org.json.simple.parser.ParseException;
 
-import com._500bottles.da.external.snooth.SnoothDAO;
-import com._500bottles.da.external.snooth.SnoothWine;
-import com._500bottles.da.external.snooth.WineSearch;
-import com._500bottles.da.external.snooth.WineSearchResponse;
 import com._500bottles.da.external.snooth.exception.InvalidSort;
 import com._500bottles.da.external.snooth.exception.InvalidWineSearch;
 import com._500bottles.da.external.wine.AppellationArray;
@@ -273,11 +271,11 @@ public class WineQueryManager
 
 			// Find out if the Snooth wine exists in the database.
 			// If not, then get the details and add it to the database.
-			// Wine w = WineManager.getWineBySnoothId(snoothWine.getCode());
-			// if (w == null)
-			// {
-			// w = addWineToDatabase(snoothWine);
-			// }
+			Wine w = WineManager.getWineBySnoothId(snoothWine.getCode());
+
+			if (w == null)
+				w = addWineToDatabase(snoothWine);
+
 			boolean match = false;
 			for (int i = 0; i < wineComWines.size(); i++)
 			{
@@ -330,9 +328,8 @@ public class WineQueryManager
 	 * Adds a snooth wine to the database. It first retrieves all the wine
 	 * details from Snooth, then adds the specified wine to the DB. It returns
 	 * the Wine object added to the database.
-	 * 
-	 * @param snoothWine
-	 *            The SnoothWine to add to the database.
+	 *
+	 * @param wine The SnoothWine to add to the database.
 	 * @return The corresponding Wine object.
 	 * @throws DAException
 	 */
@@ -350,15 +347,45 @@ public class WineQueryManager
 		/*
 		 * try { WineDetails details = new WineDetails(snoothWine.getCode());
 		 * WineDetailsResponse r = SnoothDAO.getWineDetails(details);
-		 * 
+		 *
 		 * Iterator<SnoothWine> it = r.getWinesIterator();
-		 * 
+		 *
 		 * while (it.hasNext()) { wine = it.next().toWineObject();
 		 * WineDAO.addWine(wine); }
-		 * 
+		 *
 		 * } catch (InvalidWineDetails e) { // TODO; } catch (Exception e) { //
 		 * TODO: }
 		 */
+
+		return wine;
+	}
+
+	/**
+	 * Adds a snooth wine to the database. It first retrieves all the wine
+	 * details from Snooth, then adds the specified wine to the DB. It returns
+	 * the Wine object added to the database.
+	 *
+	 * @param snoothWine 	The SnoothWine to add to the database.
+	 * @return 		The corresponding Wine object.
+	 * @throws DAException
+	 */
+	private static Wine addWineToDatabase(SnoothWine snoothWine)
+	{
+		Wine wine = null;
+
+		try { WineDetails details = new WineDetails(snoothWine.getCode());
+			WineDetailsResponse r = SnoothDAO.getWineDetails(details);
+
+			Iterator<SnoothWine> it = r.getWinesIterator();
+
+			while (it.hasNext()) {
+				wine = it.next().toWineObject();
+				WineDAO.addWine(wine);
+			}
+
+		} catch (InvalidWineDetails | DAException e) {
+
+		}
 
 		return wine;
 	}

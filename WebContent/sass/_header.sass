@@ -21,11 +21,26 @@ header
     &:hover
       cursor: pointer
 
+  #account_links
+    position: absolute
+    top: 0px
+    right: 16px
+    a
+      font-size: 0.7em
+      margin-right: 0.9em
+      @include inline_block
+      opacity: 0.5
+      cursor: pointer
+      @include transition(all, 0.35s)
+      &:hover
+        opacity: 1
+
+    
   nav
     @include prevent_selection
     position: absolute
-    right: 1em
-    top: $HEADER_HEIGHT / 4
+    right: 0px
+    top: $HEADER_HEIGHT / 3.6
     ul
       li
         font-family: LeagueGothicRegular

@@ -91,7 +91,7 @@ public class WineWizardManagerTest
 		query.setType(no);
 		query.setMinYear(1978);
 		query.setMaxYear(1979);
-		testWine = WineWizardManager.selectWine(query);
+		//testWine = WineWizardManager.selectWine(query);
 		if (testWine == null)
 			return;
 		System.out.println("This is the wine vector size: " + testWine.size());

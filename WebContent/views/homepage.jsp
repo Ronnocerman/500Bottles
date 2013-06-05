@@ -2,6 +2,10 @@
 
 <section class="wrapper clearfix view animated fadeInUp" id="home">
 
+    <div id="quick_search_results">
+
+    </div>
+
     <!-- Your Celler Wines -->
     <div id="cellar_preview_wine_grid" class="wine_grid_container" data-rows="1">
         <h2>Your Cellar</h2>
@@ -85,7 +89,7 @@
         <div class="content">
             <div class="light_bg shadow with_border">
                 <div class="bg"></div>
-                <h3>What's in your cellar</h3>
+                <h3>Cellar Summary</h3>
                 <div id="chart_div"></div>
             </div>
         </div>

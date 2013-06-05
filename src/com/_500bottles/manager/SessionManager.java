@@ -92,15 +92,19 @@ public class SessionManager
 	 */
 	private void checkForLoggedInUser()
 	{
-		if (session.getAttribute("userId") == null)
-		{
-			// Set logged in false
-			logged_in_user_id = -1;
-			return;
-		}
+		try {
+			Object userId = session.getAttribute("userId");
 
-		String userId = session.getAttribute("userId").toString();
-		logged_in_user_id = Long.parseLong(userId);
+			if (userId == null) {
+				logged_in_user_id = -1;
+				return;
+			}
+
+			logged_in_user_id = Long.parseLong(userId.toString());
+
+		} catch (IllegalStateException e) {
+			logged_in_user_id = -1;
+		}
 	}
 
 	/**

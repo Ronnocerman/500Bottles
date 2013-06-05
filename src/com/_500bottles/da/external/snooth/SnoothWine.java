@@ -332,6 +332,9 @@ public class SnoothWine
 		// w.setGeoLocation();
 		WineType type = new WineType(this.getType());
 		w.setType(type);
+
+		w.setImage(this.getImage());
+
 		// TODO THE MOST IMPORTANT SHIT IN THE WORLD TO DO, fix snooth wine get
 		// vintage, penis
 		// w.setYear(Long.valueOf(this.getVintage()));

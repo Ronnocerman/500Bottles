@@ -448,6 +448,31 @@ header {
     opacity: 0.8; }
     header #logo:hover {
       cursor: pointer; }
+  header #account_links {
+    position: absolute;
+    top: 0px;
+    right: 16px; }
+    header #account_links a {
+      font-size: 0.7em;
+      margin-right: 0.9em;
+      display: -moz-inline-stack;
+      display: inline-block;
+      zoom: 1;
+      *display: inline;
+      opacity: 0.5;
+      cursor: pointer;
+      -webkit-transition: all 0.35s 0s;
+      -moz-transition: all 0.35s 0s;
+      -ms-transition: all 0.35s 0s;
+      -o-transition: all 0.35s 0s;
+      transition: all 0.35s 0s;
+      -webkit-transition-timing-function: default;
+      -moz-transition-timing-function: default;
+      -ms-transition-timing-function: default;
+      -o-transition-timing-function: default;
+      transition-timing-function: default; }
+      header #account_links a:hover {
+        opacity: 1; }
   header nav {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -456,8 +481,8 @@ header {
     -ms-user-select: none;
     user-select: none;
     position: absolute;
-    right: 1em;
-    top: 20px; }
+    right: 0px;
+    top: 22.22222px; }
     header nav ul li {
       font-family: LeagueGothicRegular;
       font-size: 2em;
@@ -669,7 +694,7 @@ footer {
 
 #popular_wines {
   width: 100%;
-  margin-top: 2em; }
+  margin-top: 7em; }
   #popular_wines h2 {
     padding-left: 0.6em;
     opacity: 0.6; }
@@ -711,6 +736,38 @@ footer {
     width: 23%;
     margin-left: 2% !important;
     margin-top: -4px !important; }
+#home #quick_search_results {
+  position: absolute;
+  width: 90%;
+  z-index: 2000;
+  left: 5%;
+  top: 14%;
+  background: white;
+  box-shadow: 0px 0px 12px black;
+  text-align: center; }
+  #home #quick_search_results .wine {
+    display: block;
+    float: left;
+    height: 100px;
+    width: 28%;
+    padding: 1%;
+    position: relative;
+    margin: 1em;
+    text-align: left; }
+    #home #quick_search_results .wine .image {
+      display: block;
+      width: 100px;
+      height: 100px;
+      background-size: cover;
+      float: left;
+      position: absolute;
+      left: 5px;
+      top: 10px; }
+    #home #quick_search_results .wine .name {
+      font-size: 1em;
+      padding-left: 120px;
+      display: block;
+      padding-top: 30px; }
 
 #cellar .bg {
   width: 100%;
@@ -746,6 +803,62 @@ footer {
 #winebook .light_bg.with_border {
   position: relative;
   margin: 1em; }
+#winebook #winebook_nav {
+  display: block;
+  position: absolute;
+  height: 100px;
+  width: 240px;
+  background: rgba(255, 255, 255, 0.3);
+  right: -180px;
+  top: 100px;
+  z-index: 1000;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.8);
+  -webkit-transition: all 0.35s 0s;
+  -moz-transition: all 0.35s 0s;
+  -ms-transition: all 0.35s 0s;
+  -o-transition: all 0.35s 0s;
+  transition: all 0.35s 0s;
+  -webkit-transition-timing-function: default;
+  -moz-transition-timing-function: default;
+  -ms-transition-timing-function: default;
+  -o-transition-timing-function: default;
+  transition-timing-function: default; }
+  #winebook #winebook_nav:hover {
+    background: rgba(255, 255, 255, 0.9);
+    right: -10px; }
+  #winebook #winebook_nav #add_winebook_entry {
+    font-family: LeagueGothicRegular;
+    font-size: 2em;
+    text-transform: uppercase;
+    padding-left: 100px;
+    padding-top: 20px;
+    display: block;
+    cursor: pointer;
+    opacity: 0.7;
+    -webkit-transition: all 0.35s 0s;
+    -moz-transition: all 0.35s 0s;
+    -ms-transition: all 0.35s 0s;
+    -o-transition: all 0.35s 0s;
+    transition: all 0.35s 0s;
+    -webkit-transition-timing-function: default;
+    -moz-transition-timing-function: default;
+    -ms-transition-timing-function: default;
+    -o-transition-timing-function: default;
+    transition-timing-function: default; }
+    #winebook #winebook_nav #add_winebook_entry:hover {
+      opacity: 1; }
+    #winebook #winebook_nav #add_winebook_entry:before {
+      content: "";
+      width: 80px;
+      height: 80px;
+      background: url("../img/icons/plus-black.png") no-repeat center center;
+      background-size: 100% 100%;
+      filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/icons/plus-black.png',sizingMethod='scale');
+      -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/icons/plus-black.png',sizingMethod='scale')";
+      display: block;
+      top: 10px;
+      left: 10px;
+      position: absolute; }
 #winebook .winebook_entry {
   min-height: 7.8em;
   margin-bottom: 4em !important;
