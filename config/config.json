@@ -12,7 +12,7 @@
     "userAccountTableName": "UserAccount",
     "favoritesTableName": "Favorites",
     "varietalsTableName": "Varietals",
-    "vineyardsTableName": "Vineyards",
+    "vineyardsTableName": "Vineyards"
     "wineTypeTableName": "WineType"
 
     "snoothAPIKey": "jj12t19hqxwp9is104avz5qn92zl2sq0cgaq7v6e4pmfmelq"
