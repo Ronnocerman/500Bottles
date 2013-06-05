@@ -232,18 +232,21 @@
         if (view == active_view)
             return;
 
-        $(active_view).removeClass(VIEW_ANIM_IN_CLASS);
-        $(active_view).addClass(VIEW_ANIM_OUT_CLASS);
+        _500bottles.animate_in({
+            element: view,
+            animation_class_out: VIEW_ANIM_OUT_CLASS,
+            animation_class_in: VIEW_ANIM_IN_CLASS
+        });
 
-        $(view).removeClass(VIEW_NO_DISPLAY);
-        $(view).removeClass(VIEW_ANIM_OUT_CLASS);
-        $(view).addClass(VIEW_ANIM_IN_CLASS);
-
-        setTimeout(function() {
-            $(active_view).addClass(VIEW_NO_DISPLAY);
-            active_view = view;
-            fix_body_height(view);
-        }, VIEW_ANIM_TIMER);
+        _500bottles.animate_out({
+            element: active_view,
+            callback: function() {
+                fix_body_height(view);
+                active_view = view;
+            },
+            animation_class_out: VIEW_ANIM_OUT_CLASS,
+            animation_class_in: VIEW_ANIM_IN_CLASS
+        });
 
         $("body").animate({
             scrollTop: 0
@@ -252,10 +255,11 @@
 
     function fix_body_height(view)
     {
-        var header_height = $("header").height();
-        var content_height = $(view).height();
-
+        var header_height = $("header").outerHeight(true);
+        var content_height = $(view).outerHeight(true);
+        //console.log("setting height! ", content_height + );
         $("body").height(content_height + header_height);
+        $("#view_container").height(content_height + header_height);
     }
 
     // Attach the header event listeners.

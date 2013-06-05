@@ -81,6 +81,7 @@ public class WineDispatch extends HttpServlet
 
 		WineQuery query = new WineQuery();
 		query.setTextQuery(textWineSearch);
+		query.setSize(20);
 
 		WineQueryResult result = WineAction.searchWine(query);
 		request.setAttribute("search_result", result);
