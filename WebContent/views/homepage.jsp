@@ -1,6 +1,6 @@
 <%@ include file="/inc/header.jsp" %>
 
-<section class="wrapper clearfix view animated fadeInUp" id="home">
+<section class="wrapper clearfix view animated fadeInUp" id="home" data-anim-in="fadeInLeftBig" data-anim-out="fadeOutLeftBig">
 
     <!-- Your Celler Wines -->
     <div id="cellar_preview_wine_grid" class="wine_grid_container" data-rows="1">
@@ -85,8 +85,10 @@
         <div class="content">
             <div class="light_bg shadow with_border">
                 <div class="bg"></div>
+
                 <h3>What's in your cellar</h3>
                 <div id="canvas" height="200" width="200"></div>
+
             </div>
         </div>
     </div>

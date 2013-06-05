@@ -2,6 +2,10 @@
     <section class="column_100 clearfix">
         <div class="content">
 
+            <nav id="winebook_nav">
+                <a id="add_winebook_entry">Add new entry</a>
+            </nav>
+
             <div class="winebook_entry light_bg with_border">
                 <div class="bg"></div>
                 <div class="date">

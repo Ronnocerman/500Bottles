@@ -6,13 +6,19 @@
 <%
     WineQueryResult result = (WineQueryResult) request.getAttribute("search_result");
 
-//    Iterator<Wine> it = result.getIterator();
-//
-//    Wine w;
-//    PrintWriter writer = response.getWriter();
-//
-//    while(it.hasNext()) {
-//        w = it.next();
-//        writer.println(w.getName());
-//    }
+    Iterator<Wine> it = result.getIterator();
+
+    Wine w;
+    PrintWriter writer = response.getWriter();
+
+    int max_results = 9, i = 0;
+
+    while(it.hasNext() && i++ < max_results) {
+        w = it.next();
+
+        writer.print("<div class=\"wine\">");
+        writer.println("<span class=\"name\">" + w.getName() + "</span>");
+        writer.println("<div class=\"image\" style=\"background-image: url('" + w.getImage() + "');\"></div>");
+        writer.println("</div>");
+    }
 %>

@@ -16,7 +16,10 @@
             url: url,
             data: data
         }).success(function (data, textStatus, jqXHR) {
-            console.log("response" + data);
+            $("#quick_search_results").append(data);
+            $("#quick_search_results").on("click", function() {
+                $("#quick_search_results>*").remove();
+            });
         });
     }
 
