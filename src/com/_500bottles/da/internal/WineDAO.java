@@ -54,7 +54,8 @@ public class WineDAO extends DAO
 			columns = "(`wineName`, `description`, `longitude`, `latitude`,";
 			columns += "`wineTypeId`, `vintage`,";
 			columns += "`varietalId`,";
-			columns += "`vineyardId`, `rating`, `snoothId` , `priceMin`, `priceMax`, `winecomId` )";
+			columns += "`vineyardId`, `rating`, `snoothId` , `priceMin`, `priceMax`, `winecomId`,";
+			columns += "`imageUrl` )";
 
 			// TODO: Comments!!!!
 			values = "('" + escapeXml(wine.getName()) + "',";
@@ -76,7 +77,8 @@ public class WineDAO extends DAO
 			values += "'" + wine.getPriceMin() + "',";
 			values += "'" + wine.getPriceMax() + "',";
 
-			values += "'" + wine.getWinecomId() + "')";
+			values += "'" + wine.getWinecomId() + "',";
+			values += "'" + wine.getImage() + "')";
 
 			try
 			{
@@ -137,6 +139,7 @@ public class WineDAO extends DAO
 			sql += ",latitude=" + wine.getGeoLocation().getLat();
 			sql += ",winecomId=" + wine.getWinecomId();
 			sql += ",snoothId=' " + escapeXml(wine.getSnoothId()) + "'";
+			sql += ",imageUrl='" + escapeXml(wine.getImage()) + "'";
 
 			try
 			{
@@ -237,7 +240,7 @@ public class WineDAO extends DAO
 		double rating, priceMin, priceMax;
 		float lon, lat;
 
-		String name, description, appellationString, snoothId;
+		String name, description, appellationString, snoothId, imageUrl;
 		WineType type;
 		GeoLocation geoLocation;
 		Appellation appellation;
@@ -285,6 +288,7 @@ public class WineDAO extends DAO
 		winecomId = r.getLong("winecomId");
 
 		description = unescapeXml(r.getString("description"));
+		imageUrl = unescapeXml(r.getString("imageUrl"));
 		// System.out.println(" everything");
 
 		wine = new Wine();
@@ -305,6 +309,8 @@ public class WineDAO extends DAO
 		wine.setPriceMin(priceMin);
 		wine.setPriceMax(priceMax);
 		wine.setWinecomId(winecomId);
+		wine.setImage(imageUrl);
+
 		// System.out.println("does it go right here");
 		return wine;
 	}
@@ -923,6 +929,7 @@ public class WineDAO extends DAO
 
 	}
 
+	// TODO: getVarietal by id
 	// TODO: CHANGE THE PARAMETERS TO BE STRINGS
 	public static Varietal getVarietal(String varietalName) throws DAException
 	{
