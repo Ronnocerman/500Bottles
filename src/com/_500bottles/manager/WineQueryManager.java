@@ -8,9 +8,11 @@ import org.json.simple.parser.ParseException;
 
 import com._500bottles.da.external.snooth.SnoothDAO;
 import com._500bottles.da.external.snooth.SnoothWine;
+import com._500bottles.da.external.snooth.WineDetails;
 import com._500bottles.da.external.snooth.WineSearch;
 import com._500bottles.da.external.snooth.WineSearchResponse;
 import com._500bottles.da.external.snooth.exception.InvalidSort;
+import com._500bottles.da.external.snooth.exception.InvalidWineDetails;
 import com._500bottles.da.external.snooth.exception.InvalidWineSearch;
 import com._500bottles.da.external.wine.AppellationArray;
 import com._500bottles.da.external.wine.VarietalArray;
@@ -113,7 +115,6 @@ public class WineQueryManager
 		{
 			// Convert the WineQuery to a Snooth WineSearch object.
 			WineSearch s = new WineSearch(query);
-
 			// Do the Snooth query and get the response object.
 			res = SnoothDAO.doSearch(s);
 
@@ -231,19 +232,18 @@ public class WineQueryManager
 			return v;
 		} catch (InvalidCategory e)
 		{
-			e.printStackTrace();
+
 		} catch (InvalidSort e)
 		{
-			e.printStackTrace();
+
 		} catch (InvalidOtherParameters e)
 		{
-			e.printStackTrace();
+
 		} catch (IOException e)
 		{
-			e.printStackTrace();
+
 		} catch (ParseException e)
 		{
-			e.printStackTrace();
 		}
 		return null;
 
@@ -293,7 +293,19 @@ public class WineQueryManager
 				}
 			}
 			if (match == false)
-				wines.add(snoothWine.toWineObject());
+			{
+				try
+				{
+					WineDetails d = new WineDetails(snoothWine.getCode());
+					wines.add(SnoothDAO.getWineDetails(d).getWines()
+							.elementAt(0).toWineObject());
+					System.out.println(snoothWine.toWineObject()
+							.getDescription());
+				} catch (InvalidWineDetails e)
+				{
+				}
+
+			}
 		}
 
 		for (int i = 0; i < wineComWines.size(); i++)
@@ -311,17 +323,20 @@ public class WineQueryManager
 					match2 = true;
 				}
 			if (match2 == false)
+			{
 				wines.add(wineComWines.elementAt(i));
+			}
 		}
 
 		for (int i = 0; i < wines.size(); i++)
 		{
-			Wine w = WineManager.getWineBySnoothId(wines.elementAt(i)
-					.getSnoothId());
-			Wine v = WineManager.getWineByWineComId(wines.elementAt(i)
-					.getWinecomId());
-			if (w == null && v == null)
-				addWineToDatabase(wines.elementAt(i));
+			/*
+			 * Wine w = WineManager.getWineBySnoothId(wines.elementAt(i)
+			 * .getSnoothId()); Wine v =
+			 * WineManager.getWineByWineComId(wines.elementAt(i)
+			 * .getWinecomId()); if (w == null && v == null)
+			 */
+			addWineToDatabase(wines.elementAt(i));
 		}
 
 		return wines;

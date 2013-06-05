@@ -1,5 +1,6 @@
 package com._500bottles.da.external.wine;
 
+import com._500bottles.config.Config;
 import com._500bottles.da.external.wine.exception.InvalidSetting;
 import com._500bottles.da.external.wine.filter.FilterCategory;
 import com._500bottles.da.external.wine.filter.FilterPrice;
@@ -16,7 +17,7 @@ public class WineAPIURL
 	private final static String DEFAULT_APIFORMAT = "json";
 	private final static String DEFAULT_RESOURCE = "catalog?";
 	private final static String DEFAULT_FILTER = "filter=categories(490)";
-	private final static String API_KEY = "3ceacf1cf1a36a7e799d5f1460fc7521";// Config.getProperty("wineAPIKey");
+	private final static String API_KEY = Config.getProperty("wineAPIKey");
 
 	private static String apiformat = "";
 	private static String resource = "";
