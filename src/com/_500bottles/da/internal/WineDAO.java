@@ -42,12 +42,22 @@ public class WineDAO extends DAO
 
 			// Check if Vineyard/Varietal already exist. If not, add them to
 			// their respective tables
+			Varietal varietal = new Varietal();
+			Vineyard vineyard = new Vineyard();
+			WineType wineType = new WineType();
+
 			if (getVineyard(wine.getVineyard().getName()) == null)
 				addVineyard(wine.getVineyard());
+			else
+				vineyard = getVineyard(wine.getVineyard().getName());
 			if (getVarietal(wine.getVarietal().getGrapeType()) == null)
 				addVarietal(wine.getVarietal());
+			else
+				varietal = getVarietal(wine.getVarietal().getGrapeType());
 			if (getWineType(wine.getType().getWineType()) == null)
 				addWineType(wine.getType());
+			else
+				wineType = getWineType(wine.getType().getWineType());
 
 			String columns, values;
 
@@ -63,13 +73,23 @@ public class WineDAO extends DAO
 			values += "'" + wine.getGeoLocation().getLon() + "',";
 			values += "'" + wine.getGeoLocation().getLat() + "',";
 			// Get type...
+			if (wineType != null)
+				values += "'" + wineType.getWineTypeId() + "',";
+			else
+				values += "'" + wine.getType().getWineTypeId() + "',";
 			values += "'" + wine.getType().getWineTypeId() + "',";
 			// Get year...
 			values += "'" + wine.getYear() + "',";
 			// Get varietal
-			values += "'" + wine.getVarietal().getId() + "',";
+			if (varietal != null)
+				values += "'" + varietal.getId() + "',";
+			else
+				values += "'" + wine.getVarietal().getId() + "',";
 			// Get vineyard
-			values += "'" + wine.getVineyard().getId() + "',";
+			if (vineyard != null)
+				values += "'" + vineyard.getId() + "',";
+			else
+				values += "'" + wine.getVineyard().getId() + "',";
 			// Get rating...
 			values += "'" + wine.getRating() + "',";
 			values += "'" + wine.getSnoothId() + "',";
