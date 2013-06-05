@@ -87,7 +87,13 @@
                 <div class="bg"></div>
 
                 <h3>What's in your cellar</h3>
-                <div id="canvas" height="200" width="200"></div>
+                <canvas id="canvas" height="200" width="200"></canvas>
+                <div id="chartSide">
+					<span class="tooltip"><a class="red">red</a><div class="tooltipContent">130 bottles (37%)</div></span> | 
+					<span class="tooltip"><a class="white">white</a><div class="tooltipContent">80 bottles (23%)</div></span> | 
+					<span class="tooltip"><a class="rose">ros&eacute;</a><div class="tooltipContent">100 bottles (29%)</div></span> | 
+					<span class="tooltip"><a class="other">other</a><div class="tooltipContent">40 bottles (11%)</div></span>
+				</div>
 
             </div>
         </div>
@@ -189,4 +195,23 @@
 						 color : "#372C2C"}];
 
 	var myDoughnut = new Chart(document.getElementById("canvas").getContext("2d")).Doughnut(doughnutData);
+	
+	$(function() {
+		$(".tooltip").hover(function() {
+			var tooltip = $("> div", this).show();
+			var pos = tooltip.offset();
+			tooltip.hide();
+			var right = pos.left + tooltip.width();
+			var pageWidth = $(document).width();
+			if (pos.left < 0) {
+				tooltip.css("marginLeft", "+=" + (-pos.left) + "px");
+			}
+			else if (right > pageWidth) {
+				tooltip.css("marginLeft", "-=" + (right - pageWidth));
+			}
+			tooltip.fadeIn();
+		}, function() {
+			$("> div", this).fadeOut(function() {$(this).css("marginLeft", "");});
+		});
+	});
 </script>
