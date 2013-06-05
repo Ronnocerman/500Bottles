@@ -84,6 +84,7 @@ public class WineQueryManager
 			}
 
 			wines.setSize(query.getSize());
+			System.out.println("wines vector size is " + wines.size());
 			WineQueryResult result = new WineQueryResult(wines);
 
 			return result;

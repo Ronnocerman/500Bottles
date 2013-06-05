@@ -39,8 +39,7 @@ public class WineManagerTests
 			InvalidSort, InvalidOtherParameters, IOException, ParseException
 	{
 		q = new WineQuery();
-		q.setTextQuery("merlot");
-		q.setOffset(2);
+		q.setTextQuery("syrah");
 		q.setSize(20);
 		WineQueryResult r = WineManager.searchWine(q);
 
