@@ -65,6 +65,7 @@ public class WineSearchResponse extends Response
 			wine.setAvailable((Long) item.get("available"));
 			wine.setNum_merchants((Long) item.get("num_merchants"));
 			wine.setNum_reviews((Long) item.get("num_reviews"));
+			wine.setWineMakerNotes((String) item.get("wm_notes"));
 
 			wines.add(wine);
 		}

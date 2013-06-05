@@ -41,17 +41,17 @@ public class WineManager
 	 */
 	static Wine getWineBySnoothId(String snoothId)
 	{
-		System.out.println("looking for snooth's " + snoothId);
 		Wine resultWine = null, searchWine = new Wine();
 		searchWine.setSnoothId(snoothId);
 
 		try
 		{
 			resultWine = WineDAO.getWine(searchWine);
+			System.out.println("found a snooth");
 		} catch (DAException e)
 		{
-			System.err.print("DA Exception in WineManager::getWineBySnoothId"
-					+ e.getMessage());
+			System.out.println("did not find a snooth");
+			return null;
 		}
 
 		return resultWine;
@@ -66,18 +66,17 @@ public class WineManager
 	 */
 	static Wine getWineByWineComId(long wineComId)
 	{
-		System.out.println("Looking for winecom's " + wineComId);
-
 		Wine resultWine = null, searchWine = new Wine();
 		searchWine.setWinecomId(wineComId);
 
 		try
 		{
 			resultWine = WineDAO.getWine(searchWine);
+			System.out.println("found a winecom");
 		} catch (DAException e)
 		{
-			System.err.print("DA Exception in WineManager::getWineByWineComId"
-					+ e.getMessage());
+			System.out.println("Did not find winecom");
+			return null;
 		}
 
 		return resultWine;
