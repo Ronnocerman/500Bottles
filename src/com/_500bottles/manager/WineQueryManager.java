@@ -66,40 +66,32 @@ public class WineQueryManager
 	 */
 	public static WineQueryResult search(WineQuery query)
 	{
-		// Perform the query on the local DB.
-
-		// Adapt the query for external API's
-
-		// Perform the query on Snooth.
 		Vector<Wine> wines;
+		WineQueryResult result = null;
 
-		try
-		{
+		try {
 			wines = searchLocal(query);
-			if (wines.size() < query.getSize())
-			{
-				wines = mergeExternalResults(searchSnooth(query),
-						searchWineCom(query));
-				System.out.println(wines.size());
+
+			if (wines.size() < query.getSize()) {
+				searchSnooth(query);
+
+				searchWineCom(query);
+
+				wines = searchLocal(query);
 			}
 
-			wines.setSize(query.getSize());
-			System.out.println("wines vector size is " + wines.size());
-			WineQueryResult result = new WineQueryResult(wines);
+			result = new WineQueryResult(wines);
 
-			return result;
-		} catch (DAException e)
-		{
+		} catch (DAException e) {
+			System.err.println("WineQueryManager: DAException in search()");
 		}
-		return null;
 
+		return result;
 	}
 
 	private static Vector<Wine> searchLocal(WineQuery query) throws DAException
 	{
-
 		return WineDAO.getWinesFromQuery(query);
-
 	}
 
 	/**
@@ -109,7 +101,7 @@ public class WineQueryManager
 	 * @param query
 	 * @return
 	 */
-	public static WineSearchResponse searchSnooth(WineQuery query)
+	public static void searchSnooth(WineQuery query)
 	{
 		WineSearchResponse res = null;
 
@@ -125,8 +117,7 @@ public class WineQueryManager
 			// TODO
 		}
 
-		// Return the vector of Wines.
-		return res;
+		processSnoothResponse(res);
 	}
 
 	/**
@@ -142,13 +133,12 @@ public class WineQueryManager
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public static Vector<Wine> searchWineCom(WineQuery query)
+	public static void searchWineCom(WineQuery query)
 	{
+		Vector<Wine> v = null;
+
 		try
 		{
-
-			Vector<Wine> v = null;
-
 			WineAPIURL url = new WineAPIURL();
 			FilterCategory filtercategory = new FilterCategory();
 			String search = "";
@@ -233,25 +223,20 @@ public class WineQueryManager
 			WineAPICall call = new WineAPICall();
 			v = call.getProducts(url.getString());
 
-			return v;
-		} catch (InvalidCategory e)
-		{
 
-		} catch (InvalidSort e)
-		{
-
-		} catch (InvalidOtherParameters e)
-		{
-
-		} catch (IOException e)
-		{
-
-		} catch (ParseException e)
-		{
-
+		} catch (InvalidCategory e) {
+			System.err.println("WineQueryManager: InvalidCategory Exception");
+		} catch (InvalidSort e) {
+			System.err.println("WineQueryManager: InvalidSort Exception");
+		} catch (InvalidOtherParameters e) {
+			System.err.println("WineQueryManager: InvalidOtherParameters Exception");
+		} catch (IOException e) {
+			System.err.println("WineQueryManager: IOException Exception");
+		} catch (ParseException e) {
+			System.err.println("WineQueryManager: ParseException Exception");
 		}
-		return null;
 
+		processesWineComWine(v);
 	}
 
 	/**
@@ -265,55 +250,52 @@ public class WineQueryManager
 	private static Vector<Wine> mergeExternalResults(
 			WineSearchResponse response, Vector<Wine> wineComWines)
 	{
-		System.out.println("winecomwines size is " + wineComWines.size());
+		// Vector of wines to populate and return.
 		Vector<Wine> wines = new Vector<Wine>();
+
+		// Vector of resultant snooth wines.
 		Vector<SnoothWine> snoothWines = response.getWines();
 
-		System.out.println("snooth wines size is " + snoothWines.size());
-
+		// Getting the details for each Snooth Wine.
 		WineDetails d;
 		try
 		{
 			for (int i = 0; i < snoothWines.size(); i++)
 			{
 				d = new WineDetails(snoothWines.elementAt(i).getCode());
-				wines.add(SnoothDAO.getWineDetails(d).getWines().elementAt(0)
-						.toWineObject());
-
+				wines.add(SnoothDAO.getWineDetails(d).getWines().elementAt(0).toWineObject());
 			}
-		} catch (InvalidWineDetails e)
-		{
+		} catch (InvalidWineDetails e) {
+			System.err.println("WineQueryManager: InvalidWineDetails Exception");
 		}
 
+		// Adding all wine.com results to the return.
 		for (int j = 0; j < wineComWines.size(); j++)
 			wines.add(wineComWines.elementAt(j));
 
 		return wines;
-		/*
-		 * for (int h = 0; h < snoothWines.size(); h++) { boolean match = false;
-		 * for (int i = 0; i < wineComWines.size(); i++) if
-		 * (snoothWines.elementAt(i).getName() == wineComWines
-		 * .elementAt(i).getName())// TODO match = true;
-		 * 
-		 * if (match == false) { WineDetails d; try { d = new
-		 * WineDetails(snoothWines.elementAt(h).getCode());
-		 * wines.add(SnoothDAO.getWineDetails(d).getWines()
-		 * .elementAt(0).toWineObject()); } catch (InvalidWineDetails e) { } } }
-		 * for (int i = 0; i < wineComWines.size(); i++) { boolean match2 =
-		 * false; for (int j = 0; j < wines.size(); j++) if
-		 * (wineComWines.elementAt(i).getName() == wines.elementAt(j)
-		 * .getName())// TODO match2 = true; if (match2 == false)
-		 * wines.add(wineComWines.elementAt(i)); }
-		 * 
-		 * for (int i = 0; i < wines.size(); i++) { System.out.println("hello");
-		 * Wine w = WineManager.getWineBySnoothId(wines.elementAt(i)
-		 * .getSnoothId()); Wine v =
-		 * WineManager.getWineByWineComId(wines.elementAt(i) .getWinecomId());
-		 * 
-		 * if (w == null && v == null) addWineToDatabase(wines.elementAt(i)); }
-		 * 
-		 * return wines;
-		 */
+	}
+
+	/**
+	 * Processes query results from Snooth API.
+	 * @param response
+	 */
+	private static void processSnoothResponse(WineSearchResponse response)
+	{
+		Iterator<SnoothWine> it = response.getWinesIterator();
+
+		while (it.hasNext())
+			addWineToDatabase(it.next());
+	}
+
+	/**
+	 * Processes query results from Wine.com API.
+	 * @param wines
+	 */
+	private static void processesWineComWine(Vector<Wine> wines)
+	{
+		for (int i = 0; i < wines.size(); i++)
+			addWineToDatabase(wines.elementAt(i));
 	}
 
 	/**
@@ -372,14 +354,12 @@ public class WineQueryManager
 
 			Iterator<SnoothWine> it = r.getWinesIterator();
 
-			while (it.hasNext())
-			{
+			while (it.hasNext()) {
 				wine = it.next().toWineObject();
 				WineDAO.addWine(wine);
 			}
 
-		} catch (InvalidWineDetails | DAException e)
-		{
+		} catch (InvalidWineDetails | DAException e) {
 
 		}
 
