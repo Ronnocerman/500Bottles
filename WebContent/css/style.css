@@ -765,27 +765,38 @@ footer {
 #quick_search_results {
   text-align: center; }
 
-#chartSide a.red {
-  color: #a60000; }
-#chartSide a.white {
-  color: #a1a1a1; }
-#chartSide a.rose {
-  color: #fa7085; }
-#chartSide a.other {
-  color: #372c2c; }
-#chartSide .tooltip {
-  position: relative; }
-#chartSide .tooltip > div {
-  display: none;
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -150px; }
-#chartSide .tooltipContent {
-  border: none;
-  padding: 5px;
-  background-color: rgba(0, 0, 0, 0.05);
+#cellar_summary {
   text-align: center; }
+  #cellar_summary h4 {
+    font-size: 1.6em;
+    padding: 18px 18px 8px 18px; }
+
+#canvas {
+  height: 190px; }
+
+#chartSide {
+  padding-bottom: 10px; }
+  #chartSide a.red {
+    color: #a60000; }
+  #chartSide a.white {
+    color: #a1a1a1; }
+  #chartSide a.rose {
+    color: #fa7085; }
+  #chartSide a.other {
+    color: #372c2c; }
+  #chartSide .tooltip {
+    position: relative; }
+  #chartSide .tooltip > div {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -150px; }
+  #chartSide .tooltipContent {
+    border: none;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.05);
+    text-align: center; }
 
 #cellar .bg {
   width: 100%;

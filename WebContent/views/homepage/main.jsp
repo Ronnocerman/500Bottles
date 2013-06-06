@@ -78,13 +78,13 @@
         </div>
     </div>
 
-    <div class="column_33" style="z-index: 100">
+    <div class="column_33" id="cellar_summary" style="z-index: 100">
         <div class="content">
             <div class="light_bg shadow with_border">
                 <div class="bg"></div>
 
-                <h3>What's in your cellar</h3>
-                <canvas id="canvas" height="200" width="200"></canvas>
+                <h4>What's in your cellar</h4>
+                <canvas id="canvas" height="190" width="200"></canvas>
                 <div id="chartSide">
                     <span class="tooltip"><a class="red">red</a><div class="tooltipContent">130 bottles (37%)</div></span> |
                     <span class="tooltip"><a class="white">white</a><div class="tooltipContent">80 bottles (23%)</div></span> |
