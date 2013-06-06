@@ -470,7 +470,9 @@
             $(VIEW_CONTAINER).append(data);
 
             // set the body height
-            $("body").height($("#home").height());
+            setTimeout(function() {
+                _500bottles.views.fix_body_height($("#home"));
+            }, 1000);
         });
     }
 

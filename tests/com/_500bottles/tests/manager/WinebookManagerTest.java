@@ -39,9 +39,9 @@ public class WinebookManagerTest
 
 		try
 		{
+
 			WinebookManager.addEntry(entry2);
 			ent = WinebookManager.getEntry(entry2.getEntryId());
-
 			ent.setTitle("New Title");
 			ent.setContent("New Content");
 

@@ -3,6 +3,7 @@ package com._500bottles.manager;
 import com._500bottles.da.internal.FavoritesDAO;
 import com._500bottles.da.internal.WineDAO;
 import com._500bottles.exception.da.DAException;
+import com._500bottles.object.wine.CustomWine;
 import com._500bottles.object.wine.Favorites;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.wine.WineQuery;
@@ -104,12 +105,26 @@ public class WineManager
 		return result;
 	}
 
-	public static void addCustomWine(Wine w)
+	public static void addCustomWine(CustomWine w)
 	{
+		try
+		{
+			WineDAO.addWine(w);
+		} catch (DAException e)
+		{
+			// TODO Auto-generated catch block
+		}
 	}
 
-	public static void editCustomWine(Wine w)
+	public static void editCustomWine(CustomWine w)
 	{
+		try
+		{
+			WineDAO.editWine(w);
+		} catch (DAException e)
+		{
+			// TODO Auto-generated catch block
+		}
 	}
 
 	public static boolean deleteCustomWine(long id)

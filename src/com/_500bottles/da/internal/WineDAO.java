@@ -25,6 +25,8 @@ public class WineDAO extends DAO
 			.getProperty("varietalsTableName");
 	private final static String VINEYARDS_TABLE = Config
 			.getProperty("vineyardsTableName");
+	private final static String WINETYPE_TABLE = Config
+			.getProperty("wineTypeTableName");
 
 	public static Wine addWine(Wine wine) throws DAException
 	{
@@ -40,31 +42,78 @@ public class WineDAO extends DAO
 
 			// Check if Vineyard/Varietal already exist. If not, add them to
 			// their respective tables
-			if (getVineyard(wine.getVineyard().getName()) == null)
-				addVineyard(wine.getVineyard());
-			if (getVarietal(wine.getVarietal().getGrapeType()) == null)
-				addVarietal(wine.getVarietal());
+			Varietal varietal = new Varietal();
+			Vineyard vineyard = new Vineyard();
+			WineType wineType = new WineType();
+			try
+			{
+				vineyard = getVineyard(wine.getVineyard().getName());
+			} catch (DAException e)
+			{
+			}
+			try
+			{
+				varietal = getVarietal(wine.getVarietal().getGrapeType());
+			} catch (DAException e)
+			{
+			}
+			try
+			{
+				wineType = getWineType(wine.getType().getWineType());
+			} catch (DAException e)
+			{
+			}
 
+			// If vineyard, varietal, winetype dont exist, then add a new one
+			if (vineyard == null)
+				addVineyard(wine.getVineyard());
+			if (varietal == null)
+				addVarietal(wine.getVarietal());
+			if (wineType == null)
+				addWineType(wine.getType());
+
+			/*
+			 * if (getVineyard(wine.getVineyard().getName()) == null)
+			 * addVineyard(wine.getVineyard());
+			 * 
+			 * if (getVarietal(wine.getVarietal().getGrapeType()) == null)
+			 * addVarietal(wine.getVarietal());
+			 * 
+			 * if (getWineType(wine.getType().getWineType()) == null)
+			 * addWineType(wine.getType());
+			 */
 			String columns, values;
 
 			columns = "(`wineName`, `description`, `longitude`, `latitude`,";
-			columns += "`wineType`, `vintage`,";
+			columns += "`wineTypeId`, `vintage`,";
 			columns += "`varietalId`,";
-			columns += "`vineyardId`, `rating`, `snoothId` , `priceMin`, `priceMax`, `winecomId`, `imageUrl` )";
+			columns += "`vineyardId`, `rating`, `snoothId` , `priceMin`, `priceMax`, `winecomId`,";
+			columns += "`imageUrl` )";
 
-			// TODO: Comments!!!!
 			values = "('" + escapeXml(wine.getName()) + "',";
 			values += "'" + escapeXml(wine.getDescription()) + "',";
 			values += "'" + wine.getGeoLocation().getLon() + "',";
 			values += "'" + wine.getGeoLocation().getLat() + "',";
 			// Get type...
-			values += "'" + wine.getType().getWineType() + "',";
+			if (wineType == null)
+				values += "'" + wine.getType().getWineTypeId() + "',";
+			else
+			{
+				values += "'" + wineType.getWineTypeId() + "',";
+				// System.out.println(wineType.getWineTypeId());
+			}
 			// Get year...
 			values += "'" + wine.getYear() + "',";
 			// Get varietal
-			values += "'" + wine.getVarietal().getId() + "',";
+			if (varietal == null)
+				values += "'" + wine.getVarietal().getId() + "',";
+			else
+				values += "'" + varietal.getId() + "',";
 			// Get vineyard
-			values += "'" + wine.getVineyard().getId() + "',";
+			if (vineyard == null)
+				values += "'" + wine.getVineyard().getId() + "',";
+			else
+				values += "'" + vineyard.getId() + "',";
 			// Get rating...
 			values += "'" + wine.getRating() + "',";
 			values += "'" + wine.getSnoothId() + "',";
@@ -73,7 +122,7 @@ public class WineDAO extends DAO
 			values += "'" + wine.getPriceMax() + "',";
 
 			values += "'" + wine.getWinecomId() + "',";
-			values += "'" + escapeXml(wine.getImage()) + "')";
+			values += "'" + wine.getImage() + "')";
 
 			try
 			{
@@ -118,14 +167,12 @@ public class WineDAO extends DAO
 			long wineId = wine.getId();
 			String sql = "";
 
-			// sql += "entryID=" + entry.getEntryId();
 			sql += "vineyardId=" + wine.getVineyard().getId();
 			sql += ",varietalId=" + wine.getVarietal().getId();
 			sql += ",appellation='"
 					+ escapeXml(wine.getAppellation().getLocation()) + "'";
 			sql += ",wineName='" + escapeXml(wine.getName()) + "'";
-			sql += ",wineType='" + escapeXml(wine.getType().getWineType())
-					+ "'";
+			sql += ",wineTypeId=" + wine.getType().getWineTypeId();
 			sql += ",vintage=" + wine.getYear();
 			sql += ",description='" + escapeXml(wine.getDescription()) + "'";
 			sql += ",priceMin=" + wine.getPriceMin();
@@ -135,7 +182,7 @@ public class WineDAO extends DAO
 			sql += ",latitude=" + wine.getGeoLocation().getLat();
 			sql += ",winecomId=" + wine.getWinecomId();
 			sql += ",snoothId=' " + escapeXml(wine.getSnoothId()) + "'";
-			sql += ",imageUrl=' " + escapeXml(wine.getImage()) + "'";
+			sql += ",imageUrl='" + escapeXml(wine.getImage()) + "'";
 
 			try
 			{
@@ -147,9 +194,13 @@ public class WineDAO extends DAO
 			}
 
 			if (getVineyard(wine.getVineyard().getName()) != null)
-				editVineyard(wine.getVineyard());
+				addVineyard(wine.getVineyard());
+			// System.out.println(wine.getVineyard().getName());
+			// System.out.println(wine.getVarietal().getGrapeType());
 			if (getVarietal(wine.getVarietal().getGrapeType()) != null)
-				editVarietal(wine.getVarietal());
+				addVarietal(wine.getVarietal());
+			if (getWineType(wine.getType().getWineType()) != null)
+				addWineType(wine.getType());
 		} else
 		{
 			throw new DAException("Wine does not exist in the database.");
@@ -230,11 +281,11 @@ public class WineDAO extends DAO
 	{
 		Wine wine;
 
-		long wineId, year, varId, vineId, winecomId;
+		long wineId, year, varId, vineId, winecomId, wineTypeId;
 		double rating, priceMin, priceMax;
 		float lon, lat;
 
-		String name, description, typeString, appellationString, snoothId, image;
+		String name, description, appellationString, snoothId, imageUrl;
 		WineType type;
 		GeoLocation geoLocation;
 		Appellation appellation;
@@ -252,10 +303,14 @@ public class WineDAO extends DAO
 		description = unescapeXml(r.getString("description"));
 		year = r.getLong("vintage");
 
-		typeString = unescapeXml(r.getString("wineType"));
-
+		wineTypeId = r.getLong("wineTypeId");
 		type = new WineType();
-		type.setWineType(typeString);
+		type.setWineTypeId(wineTypeId);
+		/*
+		 * try { wineType = getWineTypeById(wineTypeId).getWineType(); } catch
+		 * (DAException e) { throw new SQLException(e.getMessage()); } if
+		 * (wineType != null) type.setWineType(wineType);
+		 */
 
 		appellationString = unescapeXml(r.getString("appellation"));
 		appellation = new Appellation();
@@ -269,13 +324,23 @@ public class WineDAO extends DAO
 		geoLocation.setLon(lon);
 
 		varId = r.getLong("varietalId");
+
 		varietal = new Varietal();
 		varietal.setId(varId);
-
+		/*
+		 * try { grapeType = getVarietalById(varId).getGrapeType(); } catch
+		 * (DAException e) { throw new SQLException(e.getMessage()); } if
+		 * (grapeType != null) varietal.setGrapeType(grapeType);
+		 */
 		vineId = r.getLong("vineyardId");
+
 		vineyard = new Vineyard();
 		vineyard.setId(vineId);
-
+		/*
+		 * try { vineyardName = getVineyardNameById(vineId).getName(); } catch
+		 * (DAException e) { throw new SQLException(e.getMessage()); } if
+		 * (vineyardName != null) vineyard.setName(vineyardName);
+		 */
 		rating = r.getDouble("rating");
 		priceMin = r.getDouble("priceMin");
 		priceMax = r.getDouble("priceMax");
@@ -283,9 +348,8 @@ public class WineDAO extends DAO
 		winecomId = r.getLong("winecomId");
 
 		description = unescapeXml(r.getString("description"));
+		imageUrl = unescapeXml(r.getString("imageUrl"));
 		// System.out.println(" everything");
-
-		image = unescapeXml(r.getString("imageUrl"));
 
 		wine = new Wine();
 
@@ -305,7 +369,8 @@ public class WineDAO extends DAO
 		wine.setPriceMin(priceMin);
 		wine.setPriceMax(priceMax);
 		wine.setWinecomId(winecomId);
-		wine.setImage(image);
+		wine.setImage(imageUrl);
+
 		// System.out.println("does it go right here");
 		return wine;
 	}
@@ -327,6 +392,49 @@ public class WineDAO extends DAO
 	 * 
 	 * return wineVector; }
 	 */
+
+	public static WineType getWineTypeById(long wineTypeId) throws DAException
+	{
+		ResultSet r;
+		WineType wineType = null;
+
+		if (wineTypeId == 0)
+			throw new DAException("WineType ID not set.");
+
+		try
+		{
+			r = select(WINETYPE_TABLE, "*", "wineTypeId='" + wineTypeId + "'");
+			wineType = createWineType(r);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.", e);
+		}
+
+		return wineType;
+	}
+
+	public static Vineyard getVineyardNameById(long vineId) throws DAException
+	{
+		ResultSet r;
+		Vineyard vineyard = null;
+
+		if (vineId == 0)
+			throw new DAException("Vineyard ID not set.");
+
+		try
+		{
+			r = select(VINEYARDS_TABLE, "*", "vineyardId='" + vineId + "'");
+			vineyard = createVineyard(r);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.", e);
+		}
+
+		return vineyard;
+	}
+
 	public static Vector<Wine> getWinesFromQuery(WineQuery q)
 			throws DAException
 	{
@@ -347,7 +455,6 @@ public class WineDAO extends DAO
 
 		if (q.getDescriptionContains() != WineQuery.DEFAULT_DESC_CONTAINS)
 		{
-			boolean exists = true;
 			if (first)
 			{
 				where += "description";
@@ -366,7 +473,6 @@ public class WineDAO extends DAO
 
 		if (q.getTextQuery() != WineQuery.DEFAULT_TEXT_QUERY)
 		{
-			boolean exists = true;
 			if (first)
 			{
 				where += "description";
@@ -399,8 +505,9 @@ public class WineDAO extends DAO
 
 				if (first)
 				{
-					where += "(wineType='";
-					where += escapeXml(q.getType().get(i).getWineType());
+					where += "(wineTypeId='";
+					where += getWineType(q.getType().get(i).getWineType())
+							.getWineTypeId();
 					where += "'";
 					first = false;
 					exists = false;
@@ -408,15 +515,17 @@ public class WineDAO extends DAO
 				} else if (exists)
 				{
 					where += " and ";
-					where += "(wineType='";
-					where += escapeXml(q.getType().get(i).getWineType());
+					where += "(wineTypeId='";
+					where += getWineType(q.getType().get(i).getWineType())
+							.getWineTypeId();
 					where += "'";
 					exists = false;
 				} else
 				{
 					where += " or ";
-					where += "wineType='";
-					where += escapeXml(q.getType().get(i).getWineType());
+					where += "wineTypeId='";
+					where += getWineType(q.getType().get(i).getWineType())
+							.getWineTypeId();
 					where += "'";
 				}
 			}
@@ -511,21 +620,24 @@ public class WineDAO extends DAO
 				if (first)
 				{
 					where += "(varietalId=";
-					where += q.getVarietal().get(i).getId();
+					where += getVarietal(q.getVarietal().get(i).getGrapeType())
+							.getId();
 					first = false;
 					exists = false;
 				} else if (exists)
 				{
 					where += " and ";
 					where += "(varietalId='";
-					where += q.getVarietal().get(i).getId();
+					where += getVarietal(q.getVarietal().get(i).getGrapeType())
+							.getId();
 					where += "'";
 					exists = false;
 				} else
 				{
 					where += " or ";
 					where += "(varietalId='";
-					where += q.getVarietal().get(i).getId();
+					where += getVarietal(q.getVarietal().get(i).getGrapeType())
+							.getId();
 					where += "'";
 				}
 			}
@@ -545,14 +657,16 @@ public class WineDAO extends DAO
 				if (first)
 				{
 					where += "(vineyardId=";
-					where += q.getVineyard().get(i).getId();
+					where += getVineyard(q.getVineyard().get(i).getName())
+							.getId();
 					first = false;
 					exists = false;
 				} else if (exists)
 				{
 					where += " and ";
 					where += "(vineyardId=";
-					where += q.getVineyard().get(i).getId();
+					where += getVineyard(q.getVineyard().get(i).getName())
+							.getId();
 					exists = false;
 				} else
 				{
@@ -561,7 +675,8 @@ public class WineDAO extends DAO
 					where += "vineyardId=";
 					// System.out.println("ey: " +
 					// q.getVineyard().get(i).getId());
-					where += q.getVineyard().get(i).getId();
+					where += getVineyard(q.getVineyard().get(i).getName())
+							.getId();
 					// System.out.println(where);
 				}
 			}
@@ -681,7 +796,7 @@ public class WineDAO extends DAO
 		}
 
 		where += q.getSize(); // 5 or greater.
-
+		// System.out.println(where);
 		try
 		{
 			r = select(WINE_TABLE, "*", where);
@@ -779,7 +894,6 @@ public class WineDAO extends DAO
 		}
 	}
 
-	// TODO: VINEYARD TAKES IN A STRING AS PARAMETER
 	public static Vineyard getVineyard(String vineyardName) throws DAException
 	{
 		ResultSet r;
@@ -884,8 +998,6 @@ public class WineDAO extends DAO
 		}
 	}
 
-	// TODO: WINE EXISTS: NAME, TYPE, VINTAGE, SNOOTH AND
-	// SWINECOM
 	private static boolean wineExists(Wine wine) throws DAException
 	{
 		boolean ret;
@@ -895,13 +1007,14 @@ public class WineDAO extends DAO
 		} else if (getVineyard(wine.getVineyard().getName()) == null)
 		{
 			return false;
+		} else if (getWineType(wine.getType().getWineType()) == null)
+		{
+			return false;
 		}
 
 		ResultSet r;
 		String where = "";
 		where += "wineName='" + escapeXml(wine.getName()) + "'";
-		where += " and wineType='" + escapeXml(wine.getType().getWineType())
-				+ "'";
 		where += " and vintage=" + wine.getYear();
 		where += " and ( ";
 		where += "snoothId='" + escapeXml(wine.getSnoothId()) + "'";
@@ -926,7 +1039,6 @@ public class WineDAO extends DAO
 
 	}
 
-	// TODO: CHANGE THE PARAMETERS TO BE STRINGS
 	public static Varietal getVarietal(String varietalName) throws DAException
 	{
 		ResultSet r;
@@ -939,6 +1051,27 @@ public class WineDAO extends DAO
 		{
 			r = select(VARIETALS_TABLE, "*", "varietalName='"
 					+ escapeXml(varietalName) + "'");
+			varietal = createVarietal(r);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.", e);
+		}
+
+		return varietal;
+	}
+
+	public static Varietal getVarietalById(long varId) throws DAException
+	{
+		ResultSet r;
+		Varietal varietal = null;
+
+		if (varId == 0)
+			throw new DAException("Varietal ID not set.");
+
+		try
+		{
+			r = select(VARIETALS_TABLE, "*", "varietalId='" + varId + "'");
 			varietal = createVarietal(r);
 			Database.disconnect();
 		} catch (SQLException e)
@@ -967,5 +1100,366 @@ public class WineDAO extends DAO
 		varietal.setGrapeType(grapeType);
 
 		return varietal;
+	}
+
+	public static WineType addWineType(WineType w) throws DAException
+	{
+		String columns, values;
+
+		columns = "(`type`)";
+
+		values = "('" + escapeXml(w.getWineType()) + "')";
+
+		try
+		{
+			insert(WINETYPE_TABLE, columns, values);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("Failed WineType insertion", e);
+		}
+
+		w.setWineTypeId(getLastInsertId());
+
+		return w;
+	}
+
+	public static boolean deleteWineType(long wineTypeId)
+	{
+		int ret;
+		try
+		{
+			ret = delete(WINETYPE_TABLE, "wineTypeId=" + wineTypeId);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			return false;
+		}
+		if (ret == 0)
+			return false;
+		return true;
+	}
+
+	public static void editWineType(WineType wineType) throws DAException
+	{
+		if (wineType == null)
+			throw new NullPointerException("WineType object null.");
+
+		long wineTypeId = wineType.getWineTypeId();
+		if (wineTypeId == 0)
+			throw new DAException("WineType ID not set.");
+
+		String sql = "";
+
+		sql += "wineTypeId=" + wineTypeId;
+		sql += ",type='" + escapeXml(wineType.getWineType()) + "'";
+
+		try
+		{
+			update(WINETYPE_TABLE, sql, "wineTypeId=" + wineTypeId);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("Failed WineType update.", e);
+		}
+	}
+
+	public static WineType getWineType(String type) throws DAException
+	{
+		ResultSet r;
+		WineType wineType = null;
+
+		if (type == null)
+			throw new DAException("WineType Name not set.");
+
+		try
+		{
+			r = select(WINETYPE_TABLE, "*", "type='" + escapeXml(type) + "'");
+			wineType = createWineType(r);
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.", e);
+		}
+
+		return wineType;
+	}
+
+	private static WineType createWineType(ResultSet r) throws SQLException
+	{
+		WineType wineType;
+
+		long wineTypeId;
+		String type;
+
+		if (!r.next())
+			return null;
+
+		wineTypeId = r.getLong("wineTypeId");
+		type = r.getString("type");
+
+		wineType = new WineType();
+		wineType.setWineTypeId(wineTypeId);
+		wineType.setWineType(type);
+
+		return wineType;
+	}
+
+	// Return vector of wineIds
+	private Vector<Long> getWineIdByVarietal(String s, int offset, int size)
+			throws DAException, SQLException
+	{
+		Vector<Long> ret = new Vector<Long>();
+		Vector<Long> varId = new Vector<Long>();
+		ResultSet r;
+		String where = "";
+		where += "varietalName LIKE" + "'%" + escapeXml(s) + "%'";
+		// Find matches to the passed in string
+		try
+		{
+			r = select(VARIETALS_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.");
+		}
+		// Iterate through the results and add the varietal IDs to the varId
+		// vector
+		while (r.next())
+		{
+			varId.add((long) r.getInt("varietalId"));
+		}
+		// Get the wineIDs from the wine table which have the matching
+		// varietalId and add to return vector of longs.
+		for (int i = 0; i < varId.size(); i++)
+		{
+			where = "";
+			where += "varietalId=" + varId.get(i);
+			where += " LIMIT ";
+
+			if (offset != WineQuery.DEFAULT_OFFSET)
+			{
+				where += offset;
+				where += ",";
+			}
+
+			where += size;
+			try
+			{
+				r = select(WINE_TABLE, "*", where);
+			} catch (SQLException e)
+			{
+				throw new DAException("SQL select exception.");
+			}
+			while (r.next())
+			{
+				ret.add(r.getLong("wineId"));
+			}
+		}
+
+		return ret;
+	}
+
+	private Vector<Long> getWineIdByVineyard(String s, int offset, int size)
+			throws DAException, SQLException
+	{
+		Vector<Long> ret = new Vector<Long>();
+		Vector<Long> vineId = new Vector<Long>();
+		ResultSet r;
+		String where = "";
+		where += "vineyardName LIKE" + "'%" + escapeXml(s) + "%'";
+		if (offset != WineQuery.DEFAULT_OFFSET)
+		{
+			where += offset;
+			where += ",";
+		}
+
+		where += size;
+		// Find matches to the passed in string
+		try
+		{
+			r = select(VINEYARDS_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.");
+		}
+		// Iterate through the results and add the varietal IDs to the varId
+		// vector
+		while (r.next())
+		{
+			vineId.add((long) r.getInt("vineyardId"));
+		}
+		// Get the wineIDs from the wine table which have the matching
+		// varietalId and add to return vector of longs.
+		for (int i = 0; i < vineId.size(); i++)
+		{
+			where = "";
+			where += "vineyardId=" + vineId.get(i);
+			try
+			{
+				r = select(WINE_TABLE, "*", where);
+			} catch (SQLException e)
+			{
+				throw new DAException("SQL select exception.");
+			}
+			while (r.next())
+			{
+				ret.add(r.getLong("wineId"));
+			}
+		}
+		return ret;
+	}
+
+	private Vector<Long> getWineIdByWineType(String s, int offset, int size)
+			throws DAException, SQLException
+	{
+		Vector<Long> ret = new Vector<Long>();
+		Vector<Long> wineTypeId = new Vector<Long>();
+		ResultSet r;
+		String where = "";
+		where += "type LIKE" + "'%" + escapeXml(s) + "%'";
+		if (offset != WineQuery.DEFAULT_OFFSET)
+		{
+			where += offset;
+			where += ",";
+		}
+
+		where += size;
+		// Find matches to the passed in string
+		try
+		{
+			r = select(WINETYPE_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.");
+		}
+		// Iterate through the results and add the varietal IDs to the varId
+		// vector
+		while (r.next())
+		{
+			wineTypeId.add((long) r.getInt("wineTypeId"));
+		}
+		// Get the wineIDs from the wine table which have the matching
+		// varietalId and add to return vector of longs.
+		for (int i = 0; i < wineTypeId.size(); i++)
+		{
+			where = "";
+			where += "wineTypeId=" + wineTypeId.get(i);
+			try
+			{
+				r = select(WINE_TABLE, "*", where);
+			} catch (SQLException e)
+			{
+				throw new DAException("SQL select exception.");
+			}
+			while (r.next())
+			{
+				ret.add(r.getLong("wineId"));
+			}
+		}
+		return ret;
+	}
+
+	private Vector<Long> getWineIdByWineName(String s, int offset, int size)
+			throws DAException, SQLException
+	{
+		Vector<Long> ret = new Vector<Long>();
+		ResultSet r;
+		String where = "";
+		where += "wineName LIKE" + "'%" + escapeXml(s) + "%'";
+		if (offset != WineQuery.DEFAULT_OFFSET)
+		{
+			where += offset;
+			where += ",";
+		}
+
+		where += size;
+		// Find matches to the passed in string
+		try
+		{
+			r = select(WINE_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.");
+		}
+		// Iterate through the results and add the wine IDs to the return
+		// vector
+		while (r.next())
+		{
+			ret.add((long) r.getInt("wineId"));
+		}
+		return ret;
+	}
+
+	private Vector<Long> getWineIdByDescription(String s, int offset, int size)
+			throws DAException, SQLException
+	{
+		Vector<Long> ret = new Vector<Long>();
+		ResultSet r;
+		String where = "";
+		where += "description LIKE" + "'%" + escapeXml(s) + "%'";
+		if (offset != WineQuery.DEFAULT_OFFSET)
+		{
+			where += offset;
+			where += ",";
+		}
+
+		where += size;
+		// Find matches to the passed in string
+		try
+		{
+			r = select(WINE_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.");
+		}
+		// Iterate through the results and add the wine IDs to the return
+		// vector
+		while (r.next())
+		{
+			ret.add((long) r.getInt("wineId"));
+		}
+		return ret;
+	}
+
+	private Vector<Long> getWineIdByVintage(String s, int offset, int size)
+			throws DAException, SQLException
+	{
+		Vector<Long> ret = new Vector<Long>();
+		int vintage = 0;
+		ResultSet r;
+		try
+		{
+			vintage = Integer.parseInt(s);
+		} catch (NumberFormatException e)
+		{
+		}
+		String where = "";
+		if (vintage != 0)
+		{
+			where += "vintage=" + vintage;
+			if (offset != WineQuery.DEFAULT_OFFSET)
+			{
+				where += offset;
+				where += ",";
+			}
+
+			where += size;
+		} else
+			return ret;
+		// Find matches to the passed in string
+		try
+		{
+			r = select(WINE_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.");
+		}
+		// Iterate through the results and add the wine IDs to the return
+		// vector
+		while (r.next())
+		{
+			ret.add((long) r.getInt("wineId"));
+		}
+		return ret;
 	}
 }
