@@ -82,7 +82,7 @@ public class WineQueryManager
 						searchWineCom(query));
 				System.out.println(wines.size());
 			}
-			System.out.println("hellopenis " + query.getSize());
+
 			wines.setSize(query.getSize());
 			System.out.println("wines vector size is " + wines.size());
 			WineQueryResult result = new WineQueryResult(wines);
@@ -90,8 +90,6 @@ public class WineQueryManager
 			return result;
 		} catch (DAException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return null;
 

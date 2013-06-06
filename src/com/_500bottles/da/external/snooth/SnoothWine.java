@@ -338,7 +338,8 @@ public class SnoothWine
 		w.setPriceMax(Double.parseDouble(this.getPrice().replace(",", "")));
 		// TODO THE MOST IMPORTANT SHIT IN THE WORLD TO DO, fix snooth wine get
 		// vintage, penis
-		w.setYear(Long.valueOf(this.getVintage()));
+		if (this.getVintage() != "")
+			w.setYear(Long.valueOf(this.getVintage()));
 
 		// Appellation appellation = new Appellation(this.getAppellation());
 		// w.setAppellation();
