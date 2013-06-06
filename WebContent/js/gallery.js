@@ -39,9 +39,9 @@
   var images_per_row;     // calculated by build_gallery()
 
   /* Binds button event handlers. */
-  function bind_events() {
+  function bind_events(gallery_parent_selector) {
 
-      $(GALLERY_PARENT_SEL).each(function(index, el) {
+      $(gallery_parent_selector).each(function(index, el) {
 
           $(el).children(NEXT_PAGE_BTN).on("click", function() {
               return (function(e) {
@@ -55,6 +55,12 @@
               })(el);
           });
 
+      });
+
+      $(gallery_parent_selector + " " + IMAGE_ELEMENT_SEL).hover(function() {
+          $(this).addClass("flipped");
+      }, function() {
+          $(this).removeClass("flipped");
       });
   }
 
@@ -108,7 +114,7 @@
 
 
 
-    bind_events();
+    bind_events(gallery_parent_selector);
   }
 
   /* Positions images within the gallery container. */
