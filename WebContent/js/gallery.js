@@ -57,11 +57,10 @@
 
       });
 
-      $(gallery_parent_selector + " " + IMAGE_ELEMENT_SEL).on("click", function() {
-        if ($(this).hasClass("flipped"))
-            $(this).removeClass("flipped");
-        else
-            $(this).addClass("flipped");
+      $(gallery_parent_selector + " " + IMAGE_ELEMENT_SEL).hover(function() {
+          $(this).addClass("flipped");
+      }, function() {
+          $(this).removeClass("flipped");
       });
   }
 
