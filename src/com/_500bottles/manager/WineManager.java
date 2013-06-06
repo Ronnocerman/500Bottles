@@ -14,7 +14,7 @@ public class WineManager
 	/**
 	 * Gets wine by specified ID
 	 * 
-	 * @param id
+	 * @param wineId
 	 *            ID of wine to be returned
 	 * @return Wine object of specifed Wine ID
 	 */
@@ -59,7 +59,7 @@ public class WineManager
 	/**
 	 * Get the Wine associated with the WineComID
 	 * 
-	 * @param id
+	 * @param wineComId
 	 *            WineComId of the wine to be returned
 	 * @return The wine associated with the WineComId
 	 */
@@ -96,10 +96,7 @@ public class WineManager
 			result = WineQueryManager.search(query);
 		} catch (Exception e)
 		{
-			// throws InvalidCategory, InvalidSort, InvalidOtherParameters,
-			// IOException, ParseException, DAException
-
-			// TODO: fix this mess of shit.
+			System.err.println(e.getMessage());
 		}
 
 		return result;
@@ -181,7 +178,7 @@ public class WineManager
 
 	/**
 	 * 
-	 * @param id
+	 * @param wineId
 	 *            - the wine Id
 	 * @return boolean, if this wine id is in the favorites
 	 * @throws DAException
