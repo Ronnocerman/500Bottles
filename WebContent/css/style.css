@@ -111,11 +111,13 @@ body {
   background: rgba(0, 0, 0, 0.3);
   z-index: 12000; }
 
+.view, .subview {
+  position: absolute;
+  width: 100%; }
+
 .view {
   background-image: url("../img/fabric_of_squares_gray.png");
-  position: absolute;
   top: 80px;
-  width: 100%;
   z-index: 100;
   overflow: hidden; }
   .view.no_header {
@@ -248,6 +250,13 @@ a.box_arrow {
 
 .no_display {
   display: none; }
+
+.no_transition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important; }
 
 .align_right {
   text-align: right; }
@@ -755,6 +764,27 @@ footer {
 
 #quick_search_results {
   text-align: center; }
+
+#chartSide a.red {
+  color: #a60000; }
+#chartSide a.white {
+  color: #a1a1a1; }
+#chartSide a.rose {
+  color: #fa7085; }
+#chartSide a.other {
+  color: #372c2c; }
+#chartSide .tooltip {
+  position: relative; }
+#chartSide .tooltip > div {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -150px;
+  width: 300px; }
+#chartSide .tooltipContent {
+  border: none;
+  padding: 5px; }
 
 #cellar .bg {
   width: 100%;
