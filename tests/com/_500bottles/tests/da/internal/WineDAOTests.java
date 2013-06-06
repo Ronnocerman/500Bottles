@@ -289,6 +289,29 @@ public class WineDAOTests
 
 	}
 
+	@Test
+	public void testWineQuerySearch()
+	{
+		WineQuery query = new WineQuery();
+		query.setTextQuery("something");
+		Vector<Wine> wines = new Vector<Wine>();
+
+		try
+		{
+			wines = WineDAO.getWinesFromQuerySearch(query);
+		} catch (DAException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// System.out.println("wine size: " + wines.size());
+		//
+		for (int i = 0; i < wines.size(); i++)
+		{
+			System.out.println("wines: " + wines.get(i).getName());
+		}
+	}
+
 	private Wine createWine(String name, String type, long vintage,
 			String varietal, String vineyardName, double rating,
 			double minPrice, double maxPrice)
