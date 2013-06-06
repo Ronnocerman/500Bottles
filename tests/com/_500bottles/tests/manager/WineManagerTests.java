@@ -42,9 +42,7 @@ public class WineManagerTests
 		q.setTextQuery("syrah");
 		q.setSize(20);
 		WineQueryResult r = WineManager.searchWine(q);
-
 		Iterator<Wine> it = r.getIterator();
-
 		while (it.hasNext())
 			System.out.println(it.next().toString());
 	}
