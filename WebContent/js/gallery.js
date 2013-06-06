@@ -41,7 +41,7 @@
   /* Binds button event handlers. */
   function bind_events(gallery_parent_selector) {
 
-      $(gallery_parent_selector + " " + GALLERY_PARENT_SEL).each(function(index, el) {
+      $(gallery_parent_selector).each(function(index, el) {
 
           $(el).children(NEXT_PAGE_BTN).on("click", function() {
               return (function(e) {
