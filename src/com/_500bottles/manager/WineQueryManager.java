@@ -76,13 +76,13 @@ public class WineQueryManager
 		try
 		{
 			wines = searchLocal(query);
-
 			if (wines.size() < query.getSize())
 			{
 				wines = mergeExternalResults(searchSnooth(query),
 						searchWineCom(query));
+				System.out.println(wines.size());
 			}
-			System.out.println(query.getSize());
+			System.out.println("hellopenis " + query.getSize());
 			wines.setSize(query.getSize());
 			System.out.println("wines vector size is " + wines.size());
 			WineQueryResult result = new WineQueryResult(wines);
@@ -267,81 +267,55 @@ public class WineQueryManager
 	private static Vector<Wine> mergeExternalResults(
 			WineSearchResponse response, Vector<Wine> wineComWines)
 	{
+		System.out.println("winecomwines size is " + wineComWines.size());
 		Vector<Wine> wines = new Vector<Wine>();
-		Iterator<SnoothWine> it = response.getWinesIterator();
+		Vector<SnoothWine> snoothWines = response.getWines();
 
-		SnoothWine snoothWine;
+		System.out.println("snooth wines size is " + snoothWines.size());
 
-		// Iterate through each SnoothWine
-		while (it.hasNext())
+		WineDetails d;
+		try
 		{
-			snoothWine = it.next();
-
-			// Find out if the Snooth wine exists in the database.
-			// If not, then get the details and add it to the database.
-			Wine w = WineManager.getWineBySnoothId(snoothWine.getCode());
-
-			if (w == null)
-				w = addWineToDatabase(snoothWine);
-			System.out.println("hello1");
-			boolean match = false;
-			for (int i = 0; i < wineComWines.size(); i++)
+			for (int i = 0; i < snoothWines.size(); i++)
 			{
-				if (snoothWine.getName() == wineComWines.elementAt(i).getName())// TODO
-				{ /*
-				 * && Long.parseLong(snoothWine.getVintage()) == wineComWines
-				 * .elementAt(i).getYear())
-				 */
-					match = true;
-					System.out
-							.println("Found a duplicate wine from snooth and winecom");
-				}
-			}
-			if (match == false)
-			{
-				try
-				{
-					WineDetails d = new WineDetails(snoothWine.getCode());
-					wines.add(SnoothDAO.getWineDetails(d).getWines()
-							.elementAt(0).toWineObject());
-				} catch (InvalidWineDetails e)
-				{
-				}
+				d = new WineDetails(snoothWines.elementAt(i).getCode());
+				wines.add(SnoothDAO.getWineDetails(d).getWines().elementAt(0)
+						.toWineObject());
 
 			}
-		}
-		for (int i = 0; i < wineComWines.size(); i++)
+		} catch (InvalidWineDetails e)
 		{
-			boolean match2 = false;
-			for (int j = 0; j < wines.size(); j++)
-				if (wineComWines.elementAt(i).getName() == wines.elementAt(j)
-						.getName())// TODO
-				{
-					/*
-					 * && wineComWines.elementAt(i).getYear() == wines
-					 * .elementAt(j).getYear())
-					 */System.out
-							.println("Found a duplicate wine from snooth and winecom");
-					match2 = true;
-				}
-			if (match2 == false)
-			{
-				wines.add(wineComWines.elementAt(i));
-			}
 		}
 
-		for (int i = 0; i < wines.size(); i++)
-		{
-			/*
-			 * Wine w = WineManager.getWineBySnoothId(wines.elementAt(i)
-			 * .getSnoothId()); Wine v =
-			 * WineManager.getWineByWineComId(wines.elementAt(i)
-			 * .getWinecomId()); if (w == null && v == null)
-			 */
-			addWineToDatabase(wines.elementAt(i));
-		}
+		for (int j = 0; j < wineComWines.size(); j++)
+			wines.add(wineComWines.elementAt(j));
 
 		return wines;
+		/*
+		 * for (int h = 0; h < snoothWines.size(); h++) { boolean match = false;
+		 * for (int i = 0; i < wineComWines.size(); i++) if
+		 * (snoothWines.elementAt(i).getName() == wineComWines
+		 * .elementAt(i).getName())// TODO match = true;
+		 * 
+		 * if (match == false) { WineDetails d; try { d = new
+		 * WineDetails(snoothWines.elementAt(h).getCode());
+		 * wines.add(SnoothDAO.getWineDetails(d).getWines()
+		 * .elementAt(0).toWineObject()); } catch (InvalidWineDetails e) { } } }
+		 * for (int i = 0; i < wineComWines.size(); i++) { boolean match2 =
+		 * false; for (int j = 0; j < wines.size(); j++) if
+		 * (wineComWines.elementAt(i).getName() == wines.elementAt(j)
+		 * .getName())// TODO match2 = true; if (match2 == false)
+		 * wines.add(wineComWines.elementAt(i)); }
+		 * 
+		 * for (int i = 0; i < wines.size(); i++) { System.out.println("hello");
+		 * Wine w = WineManager.getWineBySnoothId(wines.elementAt(i)
+		 * .getSnoothId()); Wine v =
+		 * WineManager.getWineByWineComId(wines.elementAt(i) .getWinecomId());
+		 * 
+		 * if (w == null && v == null) addWineToDatabase(wines.elementAt(i)); }
+		 * 
+		 * return wines;
+		 */
 	}
 
 	/**

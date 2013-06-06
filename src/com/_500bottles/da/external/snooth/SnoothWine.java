@@ -334,8 +334,8 @@ public class SnoothWine
 		w.setType(type);
 
 		w.setImage(this.getImage());
-		w.setPriceMin(Double.parseDouble(this.getPrice()));
-
+		w.setPriceMin(Double.parseDouble(this.getPrice().replace(",", "")));
+		w.setPriceMax(Double.parseDouble(this.getPrice().replace(",", "")));
 		// TODO THE MOST IMPORTANT SHIT IN THE WORLD TO DO, fix snooth wine get
 		// vintage, penis
 		w.setYear(Long.valueOf(this.getVintage()));
@@ -348,7 +348,6 @@ public class SnoothWine
 		Vineyard vineyard = new Vineyard(this.getWinery());
 		w.setVineyard(vineyard);
 		// w.setRating(this.getRating());
-
 		return w;
 	}
 }
