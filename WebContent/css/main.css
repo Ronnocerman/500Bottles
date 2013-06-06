@@ -2,7 +2,6 @@ body{
 	font-family: 'Roboto';
 	font-size: 1em;
 	font-weight: lighter;
-	color: #222222;
 }
 
 .chartSide{
@@ -11,7 +10,7 @@ body{
 }
 
 a.red{
-	color: #A60000;
+	color: #A60000
 }
 
 a.white{
@@ -47,4 +46,12 @@ a.other{
     padding: 5px;
     background-color: rgba(0, 0, 0, .05);
     text-align: center;
+}
+
+form{
+	width: 25%;
+}
+
+input[type="checkbox"]{
+	display: inline;
 }
