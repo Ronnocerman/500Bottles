@@ -19,7 +19,7 @@
 
         var data = {
             "action": "wineSearch",
-            "textWineSearch": $(wine_search_text).val()
+            "textWineSearch": encodeURIComponent($(wine_search_text).val())
         };
 
         $.ajax({
