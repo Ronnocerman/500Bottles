@@ -27,14 +27,15 @@ body
   background: rgba(black, 0.3)
   z-index: 12000
 
+.view, .subview
+  position: absolute
+  width: 100%
+
 .view
   background-image: url("../img/fabric_of_squares_gray.png")
-  position: absolute
   top: $HEADER_HEIGHT
-  width: 100%
   z-index: 100
   overflow: hidden
-  //margin-top: $HEADER_HEIGHT
   &.no_header
     padding-top: 0
   &.no_bg
@@ -135,6 +136,13 @@ a.box_arrow
 
 .no_display
   display: none
+
+.no_transition
+  -webkit-transition: none !important
+  -moz-transition: none !important
+  -ms-transition: none !important
+  -o-transition: none !important
+  transition: none !important
 
 .align_right
   text-align: right
