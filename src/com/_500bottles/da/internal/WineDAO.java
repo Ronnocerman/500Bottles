@@ -64,6 +64,7 @@ public class WineDAO extends DAO
 			{
 			}
 
+			// If vineyard, varietal, winetype dont exist, then add a new one
 			if (vineyard == null)
 				addVineyard(wine.getVineyard());
 			if (varietal == null)
@@ -89,7 +90,6 @@ public class WineDAO extends DAO
 			columns += "`vineyardId`, `rating`, `snoothId` , `priceMin`, `priceMax`, `winecomId`,";
 			columns += "`imageUrl` )";
 
-			// TODO: Comments!!!!
 			values = "('" + escapeXml(wine.getName()) + "',";
 			values += "'" + escapeXml(wine.getDescription()) + "',";
 			values += "'" + wine.getGeoLocation().getLon() + "',";
@@ -167,7 +167,6 @@ public class WineDAO extends DAO
 			long wineId = wine.getId();
 			String sql = "";
 
-			// sql += "entryID=" + entry.getEntryId();
 			sql += "vineyardId=" + wine.getVineyard().getId();
 			sql += ",varietalId=" + wine.getVarietal().getId();
 			sql += ",appellation='"
@@ -895,7 +894,6 @@ public class WineDAO extends DAO
 		}
 	}
 
-	// TODO: VINEYARD TAKES IN A STRING AS PARAMETER
 	public static Vineyard getVineyard(String vineyardName) throws DAException
 	{
 		ResultSet r;
@@ -1000,8 +998,6 @@ public class WineDAO extends DAO
 		}
 	}
 
-	// TODO: WINE EXISTS: NAME, TYPE, VINTAGE, SNOOTH AND
-	// SWINECOM
 	private static boolean wineExists(Wine wine) throws DAException
 	{
 		boolean ret;
@@ -1043,8 +1039,6 @@ public class WineDAO extends DAO
 
 	}
 
-	// TODO: getVarietal by id
-	// TODO: CHANGE THE PARAMETERS TO BE STRINGS
 	public static Varietal getVarietal(String varietalName) throws DAException
 	{
 		ResultSet r;
@@ -1067,8 +1061,6 @@ public class WineDAO extends DAO
 		return varietal;
 	}
 
-	// TODO: getVarietal by id
-	// TODO: CHANGE THE PARAMETERS TO BE STRINGS
 	public static Varietal getVarietalById(long varId) throws DAException
 	{
 		ResultSet r;
@@ -1213,4 +1205,261 @@ public class WineDAO extends DAO
 		return wineType;
 	}
 
+	// Return vector of wineIds
+	private Vector<Long> getWineIdByVarietal(String s, int offset, int size)
+			throws DAException, SQLException
+	{
+		Vector<Long> ret = new Vector<Long>();
+		Vector<Long> varId = new Vector<Long>();
+		ResultSet r;
+		String where = "";
+		where += "varietalName LIKE" + "'%" + escapeXml(s) + "%'";
+		// Find matches to the passed in string
+		try
+		{
+			r = select(VARIETALS_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.");
+		}
+		// Iterate through the results and add the varietal IDs to the varId
+		// vector
+		while (r.next())
+		{
+			varId.add((long) r.getInt("varietalId"));
+		}
+		// Get the wineIDs from the wine table which have the matching
+		// varietalId and add to return vector of longs.
+		for (int i = 0; i < varId.size(); i++)
+		{
+			where = "";
+			where += "varietalId=" + varId.get(i);
+			where += " LIMIT ";
+
+			if (offset != WineQuery.DEFAULT_OFFSET)
+			{
+				where += offset;
+				where += ",";
+			}
+
+			where += size;
+			try
+			{
+				r = select(WINE_TABLE, "*", where);
+			} catch (SQLException e)
+			{
+				throw new DAException("SQL select exception.");
+			}
+			while (r.next())
+			{
+				ret.add(r.getLong("wineId"));
+			}
+		}
+
+		return ret;
+	}
+
+	private Vector<Long> getWineIdByVineyard(String s, int offset, int size)
+			throws DAException, SQLException
+	{
+		Vector<Long> ret = new Vector<Long>();
+		Vector<Long> vineId = new Vector<Long>();
+		ResultSet r;
+		String where = "";
+		where += "vineyardName LIKE" + "'%" + escapeXml(s) + "%'";
+		if (offset != WineQuery.DEFAULT_OFFSET)
+		{
+			where += offset;
+			where += ",";
+		}
+
+		where += size;
+		// Find matches to the passed in string
+		try
+		{
+			r = select(VINEYARDS_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.");
+		}
+		// Iterate through the results and add the varietal IDs to the varId
+		// vector
+		while (r.next())
+		{
+			vineId.add((long) r.getInt("vineyardId"));
+		}
+		// Get the wineIDs from the wine table which have the matching
+		// varietalId and add to return vector of longs.
+		for (int i = 0; i < vineId.size(); i++)
+		{
+			where = "";
+			where += "vineyardId=" + vineId.get(i);
+			try
+			{
+				r = select(WINE_TABLE, "*", where);
+			} catch (SQLException e)
+			{
+				throw new DAException("SQL select exception.");
+			}
+			while (r.next())
+			{
+				ret.add(r.getLong("wineId"));
+			}
+		}
+		return ret;
+	}
+
+	private Vector<Long> getWineIdByWineType(String s, int offset, int size)
+			throws DAException, SQLException
+	{
+		Vector<Long> ret = new Vector<Long>();
+		Vector<Long> wineTypeId = new Vector<Long>();
+		ResultSet r;
+		String where = "";
+		where += "type LIKE" + "'%" + escapeXml(s) + "%'";
+		if (offset != WineQuery.DEFAULT_OFFSET)
+		{
+			where += offset;
+			where += ",";
+		}
+
+		where += size;
+		// Find matches to the passed in string
+		try
+		{
+			r = select(WINETYPE_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.");
+		}
+		// Iterate through the results and add the varietal IDs to the varId
+		// vector
+		while (r.next())
+		{
+			wineTypeId.add((long) r.getInt("wineTypeId"));
+		}
+		// Get the wineIDs from the wine table which have the matching
+		// varietalId and add to return vector of longs.
+		for (int i = 0; i < wineTypeId.size(); i++)
+		{
+			where = "";
+			where += "wineTypeId=" + wineTypeId.get(i);
+			try
+			{
+				r = select(WINE_TABLE, "*", where);
+			} catch (SQLException e)
+			{
+				throw new DAException("SQL select exception.");
+			}
+			while (r.next())
+			{
+				ret.add(r.getLong("wineId"));
+			}
+		}
+		return ret;
+	}
+
+	private Vector<Long> getWineIdByWineName(String s, int offset, int size)
+			throws DAException, SQLException
+	{
+		Vector<Long> ret = new Vector<Long>();
+		ResultSet r;
+		String where = "";
+		where += "wineName LIKE" + "'%" + escapeXml(s) + "%'";
+		if (offset != WineQuery.DEFAULT_OFFSET)
+		{
+			where += offset;
+			where += ",";
+		}
+
+		where += size;
+		// Find matches to the passed in string
+		try
+		{
+			r = select(WINE_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.");
+		}
+		// Iterate through the results and add the wine IDs to the return
+		// vector
+		while (r.next())
+		{
+			ret.add((long) r.getInt("wineId"));
+		}
+		return ret;
+	}
+
+	private Vector<Long> getWineIdByDescription(String s, int offset, int size)
+			throws DAException, SQLException
+	{
+		Vector<Long> ret = new Vector<Long>();
+		ResultSet r;
+		String where = "";
+		where += "description LIKE" + "'%" + escapeXml(s) + "%'";
+		if (offset != WineQuery.DEFAULT_OFFSET)
+		{
+			where += offset;
+			where += ",";
+		}
+
+		where += size;
+		// Find matches to the passed in string
+		try
+		{
+			r = select(WINE_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.");
+		}
+		// Iterate through the results and add the wine IDs to the return
+		// vector
+		while (r.next())
+		{
+			ret.add((long) r.getInt("wineId"));
+		}
+		return ret;
+	}
+
+	private Vector<Long> getWineIdByVintage(String s, int offset, int size)
+			throws DAException, SQLException
+	{
+		Vector<Long> ret = new Vector<Long>();
+		int vintage = 0;
+		ResultSet r;
+		try
+		{
+			vintage = Integer.parseInt(s);
+		} catch (NumberFormatException e)
+		{
+		}
+		String where = "";
+		if (vintage != 0)
+		{
+			where += "vintage=" + vintage;
+			if (offset != WineQuery.DEFAULT_OFFSET)
+			{
+				where += offset;
+				where += ",";
+			}
+
+			where += size;
+		} else
+			return ret;
+		// Find matches to the passed in string
+		try
+		{
+			r = select(WINE_TABLE, "*", where);
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.");
+		}
+		// Iterate through the results and add the wine IDs to the return
+		// vector
+		while (r.next())
+		{
+			ret.add((long) r.getInt("wineId"));
+		}
+		return ret;
+	}
 }
