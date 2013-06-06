@@ -1,6 +1,6 @@
 body{
 	font-family: 'Roboto';
-	font-size: 24px;
+	font-size: 1em;
 	font-weight: lighter;
 	color: #222222;
 }
@@ -29,12 +29,17 @@ a.other{
 .tooltip{
     position: relative;
 }
+
+.tooltip:hover{
+	cursor: pointer;
+}
+
 .tooltip > div{
     display: none;
     position: absolute;
     bottom: 100%;
-    left: 50%;
-    margin-left: -150px;
+    left: -150%;
+    width: 9em;
 }
 
 .tooltipContent{

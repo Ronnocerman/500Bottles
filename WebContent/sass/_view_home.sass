@@ -67,13 +67,16 @@
 
   .tooltip
     position: relative
+    
+  .tooltip:hover
+    cursor: pointer
         
   .tooltip > div
     display: none
     position: absolute
     bottom: 100%
-    left: 50%
-    margin-left: -150px
+    left: -150%
+    width: 9em
 
   .tooltipContent
     border: none

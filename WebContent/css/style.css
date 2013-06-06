@@ -786,12 +786,14 @@ footer {
     color: #372c2c; }
   #chartSide .tooltip {
     position: relative; }
+  #chartSide .tooltip:hover {
+    cursor: pointer; }
   #chartSide .tooltip > div {
     display: none;
     position: absolute;
     bottom: 100%;
-    left: 50%;
-    margin-left: -150px; }
+    left: -150%;
+    width: 9em; }
   #chartSide .tooltipContent {
     border: none;
     padding: 5px;
