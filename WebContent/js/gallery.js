@@ -64,6 +64,9 @@
         start_index,        // start index for adding images to rows
         end_index;     // count of images per row
 
+    // Remove transitions.
+    $(gallery_parent_selector + " " + GALLERY_CONTAINER_SEL).addClass("no_transition");
+
     //NUM_OF_ROWS = $(GALLERY_PARENT_SEL).data("rows") || NUM_OF_ROWS;
     NUM_OF_ROWS = $(gallery_parent_selector).data("rows") || NUM_OF_ROWS;
 
@@ -98,6 +101,13 @@
     // position and size the gallery
     position_gallery(gallery_parent_selector + " " + GALLERY_CONTAINER_SEL);
 
+    // Replace transitions.
+      setTimeout(function() {
+          $(gallery_parent_selector + " " + GALLERY_CONTAINER_SEL).removeClass("no_transition");
+      }, 500);
+
+
+
     bind_events();
   }
 
@@ -110,7 +120,7 @@
     image_selector = "." + GALLERY_CLASS_PREFIX + "row " + IMAGE_ELEMENT_SEL;
 
     // TODO: why do I have to add 5px here when the number of images increases?
-    image_width = $(image_selector).outerWidth(true) + 5;
+    image_width = $(image_selector).outerWidth(true);
     image_height = $(image_selector).outerHeight(true);
 
     $(selector).css({

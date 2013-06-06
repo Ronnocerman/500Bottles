@@ -471,7 +471,7 @@
 
             // set the body height
             setTimeout(function() {
-                _500bottles.fix_body_height($("#home"));
+                _500bottles.views.fix_body_height($("#home"));
             }, 1000);
         });
     }

@@ -1,11 +1,14 @@
 (function() {
 
     var home = document.getElementById("home");
+    var home_subview = document.getElementById("home_subview");
     var wine_search_text = document.getElementById("wine_search_text");
     var wine_search_submit = document.getElementById("wine_search_submit");
 
-    var HOME_ANIM_OUT = "fadeOutLeftBig";
-    var HOME_ANIM_IN = "fadeInLeftBig";
+    _500bottles.views.fix_height(home, home_subview);
+    setTimeout(function() {
+        _500bottles.views.fix_height(home, home_subview);
+    }, 1000);
 
     function execute_wine_search()
     {
@@ -27,14 +30,14 @@
 
     function show_search_results(data, textStatus, jqXHR)
     {
-        _500bottles.animate_out({element: home});
-        _500bottles.add_view(data);
+        _500bottles.anim.animate_out({element: home_subview});
+        _500bottles.views.add_subview(home, data, "quick_search_results");
 
         var results = document.getElementById("quick_search_results");
 
         $(results).on("click", function() {
-            _500bottles.animate_out({element: results});
-            _500bottles.animate_in({element: home});
+            _500bottles.anim.animate_out({element: results});
+            _500bottles.anim.animate_in({element: home_subview, parent: home});
 
             setTimeout(function() {
                 $("#quick_search_results").remove();
@@ -49,7 +52,7 @@
         if (container == null)
             $("body").prepend($("<div/>").attr("id", "quick_search_results"));
 
-        _500bottles.animate_out({element: home});
+        _500bottles.anim.animate_out({element: home});
     }
 
     $(wine_search_submit).on("click", execute_wine_search);

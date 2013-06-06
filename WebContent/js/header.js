@@ -106,7 +106,10 @@
                 if (view_wine)
                     $(view_wine).remove();
 
-                add_view(data);
+                _500bottles.views.add_view({
+                    contents: data,
+                    id: "wine"
+                });
 
                 view_wine = document.getElementById("wine");
                 update_wine_flag = false;
@@ -131,7 +134,10 @@
                 if (view_wizard)
                     $(view_wizard).remove();
 
-                add_view(data);
+                _500bottles.views.add_view({
+                    contents: data,
+                    id: "wizard"
+                });
 
                 view_wizard = document.getElementById("wizard");
                 update_wizard_flag = false;
@@ -156,7 +162,10 @@
                 if (view_cellar)
                     $(view_cellar).remove();
 
-                add_view(data);
+                _500bottles.views.add_view({
+                    contents: data,
+                    id: "cellar"
+                });
 
                 view_cellar = document.getElementById("cellar");
                 update_cellar_flag = false;
@@ -181,7 +190,10 @@
                 if (view_winebook)
                     $(view_winebook).remove();
 
-                add_view(data);
+                _500bottles.views.add_view({
+                    contents: data,
+                    id: "winebook"
+                });
 
                 view_winebook = document.getElementById("winebook");
                 update_winebook_flag = false;
@@ -191,14 +203,6 @@
         } else {
             animate_in_view(view_winebook);
         }
-    }
-
-    /**
-     * Appends the received HTML to the page.
-     */
-    function add_view(view_contents)
-    {
-        $(VIEW_CONTAINER).append(view_contents);
     }
 
     /**
@@ -232,13 +236,13 @@
         if (view == active_view)
             return;
 
-        _500bottles.animate_in({
+        _500bottles.anim.animate_in({
             element: view,
             animation_class_out: VIEW_ANIM_OUT_CLASS,
             animation_class_in: VIEW_ANIM_IN_CLASS
         });
 
-        _500bottles.animate_out({
+        _500bottles.anim.animate_out({
             element: active_view,
             callback: function() {
                 fix_body_height(view);

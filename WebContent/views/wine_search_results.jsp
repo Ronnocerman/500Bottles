@@ -3,7 +3,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.io.PrintWriter" %>
 
-<section class="wrapper clearfix view animated fadeIn" id="quick_search_results" data-anim-out="fadeOut">
+<section class="wrapper clearfix subview animated" id="quick_search_results" data-anim-out="fadeOutRightBig" data-anim-in="fadeInRightBig">
     <div class="wine_grid">
 <%
     WineQueryResult result = (WineQueryResult) request.getAttribute("search_result");
