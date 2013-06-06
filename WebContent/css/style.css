@@ -784,7 +784,8 @@ footer {
   width: 300px; }
 #chartSide .tooltipContent {
   border: none;
-  padding: 5px; }
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.05); }
 
 #cellar .bg {
   width: 100%;

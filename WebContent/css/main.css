@@ -35,10 +35,10 @@ a.other{
     bottom: 100%;
     left: 50%;
     margin-left: -150px;
-    width: 300px;
 }
 
 .tooltipContent{
 	border: none;
     padding: 5px;
+    background-color: rgba(0, 0, 0, .05);
 }
