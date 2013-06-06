@@ -40,20 +40,16 @@ public class WineAPICall
 			System.out.println(inputLine);
 		}
 		in.close();
-
 		JSONParser parser = new JSONParser();
 		Object obj = parser.parse(jsonString);
 		JSONObject jsonObject = (JSONObject) obj;
 		jsonObject = (JSONObject) jsonObject.get("Products");
 		JSONArray jsonArray = (JSONArray) jsonObject.get("List");
-
 		for (int i = 0; i < jsonArray.size(); i++)
 		{
 			Wine temp = new Wine();
 			jsonObject = (JSONObject) jsonArray.get(i);
-
 			String s = (String) jsonObject.get("Name");
-
 			try
 			{
 				int num = Integer.parseInt(s.substring(s.length() - 4,
@@ -99,7 +95,6 @@ public class WineAPICall
 			wineVector.add(temp);
 
 		}
-
 		return wineVector;
 	}
 }

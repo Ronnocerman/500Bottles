@@ -334,10 +334,11 @@ public class SnoothWine
 		w.setType(type);
 
 		w.setImage(this.getImage());
+		w.setPriceMin(Double.parseDouble(this.getPrice()));
 
 		// TODO THE MOST IMPORTANT SHIT IN THE WORLD TO DO, fix snooth wine get
 		// vintage, penis
-		// w.setYear(Long.valueOf(this.getVintage()));
+		w.setYear(Long.valueOf(this.getVintage()));
 
 		// Appellation appellation = new Appellation(this.getAppellation());
 		// w.setAppellation();

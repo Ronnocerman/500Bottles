@@ -82,6 +82,9 @@ public class WineQueryManager
 				wines = mergeExternalResults(searchSnooth(query),
 						searchWineCom(query));
 			}
+			System.out.println(query.getSize());
+			wines.setSize(query.getSize());
+			System.out.println("wines vector size is " + wines.size());
 			WineQueryResult result = new WineQueryResult(wines);
 
 			return result;
@@ -145,6 +148,7 @@ public class WineQueryManager
 	{
 		try
 		{
+
 			Vector<Wine> v = null;
 
 			WineAPIURL url = new WineAPIURL();
@@ -230,6 +234,7 @@ public class WineQueryManager
 			url.addToURL(filtercategory);
 			WineAPICall call = new WineAPICall();
 			v = call.getProducts(url.getString());
+
 			return v;
 		} catch (InvalidCategory e)
 		{
@@ -245,6 +250,7 @@ public class WineQueryManager
 
 		} catch (ParseException e)
 		{
+
 		}
 		return null;
 
@@ -261,7 +267,6 @@ public class WineQueryManager
 	private static Vector<Wine> mergeExternalResults(
 			WineSearchResponse response, Vector<Wine> wineComWines)
 	{
-		System.out.println(wineComWines.size());
 		Vector<Wine> wines = new Vector<Wine>();
 		Iterator<SnoothWine> it = response.getWinesIterator();
 
@@ -270,7 +275,6 @@ public class WineQueryManager
 		// Iterate through each SnoothWine
 		while (it.hasNext())
 		{
-
 			snoothWine = it.next();
 
 			// Find out if the Snooth wine exists in the database.
@@ -279,7 +283,7 @@ public class WineQueryManager
 
 			if (w == null)
 				w = addWineToDatabase(snoothWine);
-
+			System.out.println("hello1");
 			boolean match = false;
 			for (int i = 0; i < wineComWines.size(); i++)
 			{
@@ -300,15 +304,12 @@ public class WineQueryManager
 					WineDetails d = new WineDetails(snoothWine.getCode());
 					wines.add(SnoothDAO.getWineDetails(d).getWines()
 							.elementAt(0).toWineObject());
-					System.out.println(snoothWine.toWineObject()
-							.getDescription());
 				} catch (InvalidWineDetails e)
 				{
 				}
 
 			}
 		}
-
 		for (int i = 0; i < wineComWines.size(); i++)
 		{
 			boolean match2 = false;

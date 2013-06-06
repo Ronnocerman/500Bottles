@@ -304,7 +304,7 @@ public class Wine
 		str += "WineCom ID: " + this.getWinecomId() + "\n";
 		str += "Varietal: " + this.getVarietal().getGrapeType() + "\n";
 		str += "Vineyard: " + this.getVineyard().getName() + "\n";
-		str += "Appellation: " + this.getAppellation().toString() + "\n";
+		str += "Appellation: " + this.getAppellation().getLocation() + "\n";
 		str += "PriceMin: " + this.getPriceMin() + "\n";
 		str += "PriceMax: " + this.getPriceMax() + "\n";
 		str += "Rating: " + this.getRating() + "\n";

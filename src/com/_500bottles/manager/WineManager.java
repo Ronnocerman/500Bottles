@@ -48,10 +48,8 @@ public class WineManager
 		try
 		{
 			resultWine = WineDAO.getWine(searchWine);
-			System.out.println("found a snooth");
 		} catch (DAException e)
 		{
-			System.out.println("did not find a snooth");
 			return null;
 		}
 
@@ -73,10 +71,8 @@ public class WineManager
 		try
 		{
 			resultWine = WineDAO.getWine(searchWine);
-			System.out.println("found a winecom");
 		} catch (DAException e)
 		{
-			System.out.println("Did not find winecom");
 			return null;
 		}
 
