@@ -94,7 +94,7 @@ public class WineQueryManager
 
 	private static Vector<Wine> searchLocal(WineQuery query) throws DAException
 	{
-		return WineDAO.getWinesFromQuerySearch(query);
+		return WineDAO.getWinesFromQuery(query);
 	}
 
 	/**
