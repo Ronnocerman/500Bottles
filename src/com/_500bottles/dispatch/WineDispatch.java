@@ -7,6 +7,8 @@ import com._500bottles.object.wine.WineQueryResult;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -78,6 +80,14 @@ public class WineDispatch extends HttpServlet
 			context.getRequestDispatcher("/views/wine_search_results.jsp");
 
 		String textWineSearch = request.getParameter(WINE_SEARCH_TEXT_FIELD);
+
+		try {
+			textWineSearch = URLDecoder.decode(textWineSearch, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			System.err.println("WineDispatch.wineSearch(): UnsupportedEncodingException!");
+		}
+
+		System.err.println(textWineSearch);
 
 		WineQuery query = new WineQuery();
 		query.setTextQuery(textWineSearch);
