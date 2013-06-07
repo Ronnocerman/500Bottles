@@ -195,7 +195,7 @@ public class CustomWineDAO extends WineDAO
 
 		String sql = "";
 		sql += "wineId=" + wine.getId();
-		sql += "vineyardId=" + wine.getVineyard().getId();
+		sql += ",vineyardId=" + wine.getVineyard().getId();
 		sql += ",varietalId=" + wine.getVarietal().getId();
 		sql += ",wineName='" + escapeXml(wine.getName()) + "'";
 		sql += ",wineTypeId=" + wine.getType().getWineTypeId();
