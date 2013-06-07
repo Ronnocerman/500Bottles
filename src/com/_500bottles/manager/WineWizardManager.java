@@ -8,6 +8,7 @@ import org.json.simple.parser.ParseException;
 import com._500bottles.da.external.snooth.exception.InvalidSort;
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
+import com._500bottles.da.internal.WineDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Appellation;
 import com._500bottles.object.wine.Varietal;
@@ -168,14 +169,16 @@ public class WineWizardManager
 	 *            a query that accounts for the traits
 	 * 
 	 * @return returns a vector of suggested wine
-	 * @throws ParseException 
-	 * @throws IOException 
-	 * @throws InvalidOtherParameters 
-	 * @throws InvalidSort 
-	 * @throws InvalidCategory 
-	 * @throws DAException 
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws InvalidOtherParameters
+	 * @throws InvalidSort
+	 * @throws InvalidCategory
+	 * @throws DAException
 	 */
-	public static Vector<Wine> selectWine(WineQuery query) throws DAException, InvalidCategory, InvalidSort, InvalidOtherParameters, IOException, ParseException
+	public static Vector<Wine> selectWine(WineQuery query) throws DAException,
+			InvalidCategory, InvalidSort, InvalidOtherParameters, IOException,
+			ParseException
 	{
 		// query object is the user settings
 		WineQuery search = new WineQuery();// the query search for the suggested
@@ -202,25 +205,33 @@ public class WineWizardManager
 		getRating.setMaxRating(5);// sets the max rating to 5
 		// gets the list of wines that are rated
 		wineListRated = WineManager.searchWine(getRating).getWines();
-		// System.out.println("a Varietal "
-		// + wineListRated.get(0).getVarietal().getGrapeType());
-		// System.out.println("the number of wineListRated "
-		// + wineListRated.size());
+		for (int u = 0; u < wineListRated.size(); u++)
+		{
+			WineType bob = WineDAO.getWineTypeById(wineListRated.get(u)
+					.getType().getWineTypeId());
+			wineListRated.get(u).getType().setWineType(bob.getWineType());
+		}
+
 		if (!wineListRated.isEmpty())// if wineListRated is empty then don't do
 										// this
 		{
 			// If varietal is empty and wineType is empty
 			if (!varietal.isEmpty() && wineType.isEmpty())
 			{
+				System.out.println("gets into corner case");
 				int i = 0;
 				while (i < wineListRated.size())
 				{
 					int test = 0;
 					for (int d = 0; d < varietal.size(); d++)
 					{
+
 						if (varietal.get(d).getId() == wineListRated.get(i)
 								.getVarietal().getId())
+						{
 							test++;
+							System.out.println("shouldn't have problems");
+						}
 					}
 					if (test == 0)
 						wineListRated.remove(i);
@@ -236,20 +247,14 @@ public class WineWizardManager
 			{
 				// vector of varietal to be built
 				Vector<Varietal> app = new Vector<Varietal>();
-				// loop that builds it based of the varietalList
-				for (int i = 0; i < varietalList.size(); i++)
+				// varietal to be made gets the varietal grape type and sets
+				// it in newApp
+				Varietal newApp = new Varietal();
+				newApp.setId(varietalID.get(0).longValue());
+				newApp.setGrapeType(varietalList.get(0));
 
-				{
-					// varietal to be made gets the varietal grape type and sets
-					// it in newApp
-					Varietal newApp = new Varietal();
-					newApp.setGrapeType(varietalList.get(i));
-					// gets the varietal grape type and sets it in newApp
-					newApp.setId(varietalID.get(i).longValue());
-
-					app.add(newApp);// adds it to newApp to the search query
-									// list
-				}
+				app.add(newApp);// adds it to newApp to the search query
+								// list
 				search.setVarietal(app);// sets the varietal app vector for the
 										// search query
 			} else
@@ -300,12 +305,22 @@ public class WineWizardManager
 		search.setSize(wineListRated.size());// sets the size of what the user
 												// wants
 		// searchs for the wines with the traits
-		// System.out.println(typeList.size());
+
+		System.out.println("search wine type = "
+				+ search.getType().get(0).getWineType());
+		// System.out.println(" varietalList.size() at this location is"
+		// + varietalList.size());
+		System.out.println("search varietal = "
+				+ search.getVarietal().get(0).getGrapeType());
+		search.setSize(query.getSize());
 		WineQueryResult doug = WineManager.searchWine(search);
-		if (doug == null)
-			return null;
-		Vector<Wine> frog = doug.getWines();
 		Vector<Wine> returnWineVector = new Vector<Wine>();
+		if (doug == null)
+		{
+			System.out.println("why are you not working");
+			return returnWineVector;
+		}
+		Vector<Wine> frog = doug.getWines();
 		for (int i = 0; i < frog.size(); i++)
 		{
 			if (!returnWineVector.contains(frog.get(i)))
@@ -313,6 +328,20 @@ public class WineWizardManager
 				returnWineVector.add(frog.get(i));
 			}
 		}
+		for (int q = 0; q < returnWineVector.size(); q++)
+		{
+			returnWineVector
+					.get(q)
+					.getVarietal()
+					.setGrapeType(
+							WineDAO.getVarietalById(
+									(returnWineVector.get(q).getVarietal()
+											.getId())).getGrapeType());
+			long i = returnWineVector.get(q).getType().getWineTypeId();
+			returnWineVector.get(q).setType(WineDAO.getWineTypeById(i));
+		}
+		// TODO add the wines wineType names as well as their varietal names and
+		// make sure to add something for the query size
 		return returnWineVector;
 	}
 
@@ -332,7 +361,19 @@ public class WineWizardManager
 				// System.out.println("the number it fails at is " + i);
 				Integer k = (int) ((int) 100 * wineListRated.get(i).getRating());
 				// gets the wineType
-				String s = wineListRated.get(i).getType().getWineType();
+				String s = "frog dddddddd";
+				try
+				{
+					s = WineDAO.getWineTypeById(
+							wineListRated.get(i).getType().getWineTypeId())
+							.getWineType();
+				} catch (DAException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// System.out.println("this wineType is "
+				// + wineListRated.get(i).getType().getWineType());
 				// places it in the wineTypelist along with rating
 				place(s, k.intValue(), typeList, typeRating, typeAmount);
 
@@ -355,9 +396,19 @@ public class WineWizardManager
 								// in common
 				for (int y = 0; y < typeList.size(); y++)
 				{
-					if (wineListRated.get(r).getType().getWineType()
-							.compareTo(typeList.get(y)) == 0)
-						test++;
+					try
+					{
+						if (WineDAO
+								.getWineTypeById(
+										wineListRated.get(r).getType()
+												.getWineTypeId()).getWineType()
+								.compareTo(typeList.get(y)) == 0)
+							test++;
+					} catch (DAException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				if (test > 0)// if wine had at least one in common add it to
 								// levelOne
@@ -376,9 +427,20 @@ public class WineWizardManager
 				int test = 0;
 				for (int y = 0; y < wineType.size(); y++)
 				{
-					if (wineListRated.get(r).getType().getWineType()
-							.compareTo(wineType.get(y).getWineType()) == 0)
-						test++;
+
+					try
+					{
+						if (WineDAO
+								.getWineTypeById(
+										wineListRated.get(r).getType()
+												.getWineTypeId()).getWineType()
+								.compareTo(wineType.get(y).getWineType()) == 0)
+							test++;
+					} catch (DAException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				if (test > 0)
 				{
@@ -386,6 +448,7 @@ public class WineWizardManager
 				}
 			}
 		}// calls level 2
+			// System.out.println("levelOne.size()" + levelOne.size());
 		getLevelTwo();
 	}
 
@@ -404,9 +467,21 @@ public class WineWizardManager
 				Integer k = (int) ((int) 100 * levelOne.get(i).getRating());
 				// gets the grapetype
 				String s = levelOne.get(i).getVarietal().getGrapeType();
+				// System.out.println("string s " + s);
 				// sets the id to a class variable to be used in the place
 				// function
 				theID = levelOne.get(i).getVarietal().getId();
+				try
+				{
+					s = WineDAO.getVarietalById(theID).getGrapeType();
+				} catch (DAException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// System.out.println("theID: " + theID);
+				// System.out.println("theRating: " + k);
+				// System.out.println("the varietal " + s);
 				place(s, k.intValue(), varietalList, varietalRating,
 						varietalAmount);// places the item in the list
 			}
@@ -415,10 +490,10 @@ public class WineWizardManager
 			sort(varietalList, varietalRating, varietalID);// sorts the
 															// varietals lists
 															// including the id
-			while (varietalList.size() > 3)// gets the 3 best varietals only
-			{
-				varietalList.remove(varietalList.size() - 1);
-			}
+			// System.out.println("varietallist.get(0) " + varietalID.get(0));
+			// System.out.println("******varieatList.get(0) "
+			// + varietalList.get(0));
+			// System.out.println("varietalID.get()" + varietalID.get(0));
 		}
 	}
 
@@ -451,6 +526,8 @@ public class WineWizardManager
 	public static void sort(Vector<String> att, Vector<Integer> rating,
 			Vector<Integer> amount)
 	{
+		if (att.equals(varietalList))
+			System.out.println("amount.size()" + amount.size());
 		// first for loop goes from beginning to end
 		for (int i = 0; i < rating.size(); i++)
 		{
@@ -459,7 +536,7 @@ public class WineWizardManager
 				// if one is less then the other then switch
 				if (rating.get(j) > rating.get(i))
 				{
-					//
+
 					String tempAtt = att.get(i);
 					Integer tempRat = rating.get(i);
 					Integer tempAmount = amount.get(i);
@@ -469,6 +546,8 @@ public class WineWizardManager
 					att.set(j, tempAtt);
 					rating.set(j, tempRat);
 					amount.set(j, tempAmount);
+					if (att.equals(varietalList))
+						System.out.println("gets into this if state");
 				}
 			}
 		}
@@ -527,13 +606,15 @@ public class WineWizardManager
 			rating.add(r);
 			Integer one = new Integer(1);
 			amount.add(one);
+			// if (att.equals(varietalList))
+			// System.out.println("gets into this if state");
 			if (att.equals(varietalList))
 			{
 				varietalID.add((int) theID);
 			}
 		} else
 		{
-			// System.out.println("gets in here");
+			// System.out.println("gets in here******");
 			int k = att.indexOf(attribute);
 			// System.out.println(k);
 			Integer d = new Integer(rating.get(k).intValue() + rat);

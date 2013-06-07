@@ -69,10 +69,12 @@ public class WineQueryManager
 		Vector<Wine> wines;
 		WineQueryResult result = null;
 
-		try {
+		try
+		{
 			wines = searchLocal(query);
 
-			if (wines.size() < query.getSize()) {
+			if (wines.size() < query.getSize())
+			{
 				searchSnooth(query);
 
 				searchWineCom(query);
@@ -82,7 +84,8 @@ public class WineQueryManager
 
 			result = new WineQueryResult(wines);
 
-		} catch (DAException e) {
+		} catch (DAException e)
+		{
 			System.err.println("WineQueryManager: DAException in search()");
 		}
 
@@ -91,7 +94,7 @@ public class WineQueryManager
 
 	private static Vector<Wine> searchLocal(WineQuery query) throws DAException
 	{
-		return WineDAO.getWinesFromQuery(query);
+		return WineDAO.getWinesFromQuerySearch(query);
 	}
 
 	/**
@@ -221,18 +224,24 @@ public class WineQueryManager
 
 			url.addToURL(filtercategory);
 			WineAPICall call = new WineAPICall();
+			System.out.println(url.getString());
 			v = call.getProducts(url.getString());
 
-
-		} catch (InvalidCategory e) {
+		} catch (InvalidCategory e)
+		{
 			System.err.println("WineQueryManager: InvalidCategory Exception");
-		} catch (InvalidSort e) {
+		} catch (InvalidSort e)
+		{
 			System.err.println("WineQueryManager: InvalidSort Exception");
-		} catch (InvalidOtherParameters e) {
-			System.err.println("WineQueryManager: InvalidOtherParameters Exception");
-		} catch (IOException e) {
+		} catch (InvalidOtherParameters e)
+		{
+			System.err
+					.println("WineQueryManager: InvalidOtherParameters Exception");
+		} catch (IOException e)
+		{
 			System.err.println("WineQueryManager: IOException Exception");
-		} catch (ParseException e) {
+		} catch (ParseException e)
+		{
 			System.err.println("WineQueryManager: ParseException Exception");
 		}
 
@@ -263,10 +272,13 @@ public class WineQueryManager
 			for (int i = 0; i < snoothWines.size(); i++)
 			{
 				d = new WineDetails(snoothWines.elementAt(i).getCode());
-				wines.add(SnoothDAO.getWineDetails(d).getWines().elementAt(0).toWineObject());
+				wines.add(SnoothDAO.getWineDetails(d).getWines().elementAt(0)
+						.toWineObject());
 			}
-		} catch (InvalidWineDetails e) {
-			System.err.println("WineQueryManager: InvalidWineDetails Exception");
+		} catch (InvalidWineDetails e)
+		{
+			System.err
+					.println("WineQueryManager: InvalidWineDetails Exception");
 		}
 
 		// Adding all wine.com results to the return.
@@ -278,6 +290,7 @@ public class WineQueryManager
 
 	/**
 	 * Processes query results from Snooth API.
+	 * 
 	 * @param response
 	 */
 	private static void processSnoothResponse(WineSearchResponse response)
@@ -290,6 +303,7 @@ public class WineQueryManager
 
 	/**
 	 * Processes query results from Wine.com API.
+	 * 
 	 * @param wines
 	 */
 	private static void processesWineComWine(Vector<Wine> wines)
@@ -315,6 +329,7 @@ public class WineQueryManager
 			WineDAO.addWine(wine);
 		} catch (DAException e)
 		{
+			e.printStackTrace();
 		}
 
 		/*
@@ -354,13 +369,15 @@ public class WineQueryManager
 
 			Iterator<SnoothWine> it = r.getWinesIterator();
 
-			while (it.hasNext()) {
+			while (it.hasNext())
+			{
 				wine = it.next().toWineObject();
 				WineDAO.addWine(wine);
 			}
 
-		} catch (InvalidWineDetails | DAException e) {
-
+		} catch (InvalidWineDetails | DAException e)
+		{
+			e.printStackTrace();
 		}
 
 		return wine;

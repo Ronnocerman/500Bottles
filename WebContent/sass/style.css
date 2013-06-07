@@ -1015,17 +1015,6 @@ footer {
   left: -20px;
   z-index: 0; }
 
-#wine_form {
-  width: 75%; }
-  #wine_form select {
-    width: 96.5%; }
-  #wine_form input[type="button"] {
-    width: 50%;
-    position: relative;
-    left: 25%; }
-  #wine_form input[type="text"] {
-    margin-bottom: 20px; }
-
 @media screen and (min-width: 1200px) {
   .content_container {
     width: 1200px; }

@@ -22,7 +22,7 @@ public class WineSearch
 
 	private final static int DEFAULT_FIRST_RESULT = 1;
 
-	private final static int DEFAULT_NUM_RESULTS = 10;
+	private final static int DEFAULT_NUM_RESULTS = 30;
 
 	private final static boolean DEFAULT_AVAIL = false;
 
@@ -145,7 +145,28 @@ public class WineSearch
 	public WineSearch(WineQuery query) throws InvalidWineSearch
 	{
 		this.setQuery(query.getTextQuery());
-		// TODO: Match the rest of the queries.
+
+		if (query.getSize() != DEFAULT_NUM_RESULTS)
+			this.setNumberOfResults(query.getSize());
+
+		if (query.getOffset() != DEFAULT_FIRST_RESULT)
+			this.setFirstResult(query.getOffset());
+
+		// TODO: Set the following if we want...
+		this.setAvailable(DEFAULT_AVAIL);
+		this.setProductType(DEFAULT_PRODUCT_TYPE);
+		this.setColor(DEFAULT_COLOR);
+		this.setStoreId(DEFAULT_STORE_ID);
+		this.setCountry(DEFAULT_COUNTRY);
+		this.setZipCode(DEFAULT_ZIPCODE);
+		this.setLatitude(DEFAULT_LATITUDE);
+		this.setLongitude(DEFAULT_LONGITUDE);
+		this.setSort(DEFAULT_SORT);
+		this.setMinPrice(DEFAULT_MIN_PRICE);
+		this.setMaxPrice(DEFAULT_MAX_PRICE);
+		this.setMinRating(DEFAULT_MIN_RATING);
+		this.setMaxRating(DEFAULT_MAX_RATING);
+		this.setLanguage(DEFAULT_LANGUAGE);
 	}
 
 	@Override
@@ -213,6 +234,9 @@ public class WineSearch
 
 		if (this.getLanguage() != DEFAULT_LANGUAGE)
 			url += "&lang=" + this.getLanguage().toString();
+
+		System.err.println("Num: " + DEFAULT_NUM_RESULTS);
+		System.err.println(url);
 
 		return url;
 	}

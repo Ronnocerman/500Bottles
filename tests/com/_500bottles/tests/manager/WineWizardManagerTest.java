@@ -2,12 +2,16 @@ package com._500bottles.tests.manager;
 
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.Vector;
 
+import org.json.simple.parser.ParseException;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
+import com._500bottles.da.external.snooth.exception.InvalidSort;
+import com._500bottles.da.external.wine.exception.InvalidCategory;
+import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
 import com._500bottles.da.internal.WineDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.manager.WineWizardManager;
@@ -26,7 +30,6 @@ public class WineWizardManagerTest
 	Vector<Integer> animalsNum;
 	Vector<Integer> animalsCount;
 
-	@Before
 	public void setUp()
 	{
 		try
@@ -35,18 +38,23 @@ public class WineWizardManagerTest
 			// String vineyardName, long vineyardId, double rating,
 			// double minPrice, double maxPrice
 			// System.out.println("its one");
-			WineDAO.addWine(createWine("ABCD", "red", 1986, 431, "vineyard1",
-					20, 5, 10, 999));
-			WineDAO.addWine(createWine("check", "red", 1987, 431, "vineyard42",
-					20, 5, 10, 999));
-			WineDAO.addWine(createWine("CD", "red", 1905, 432, "vineyard2", 99,
-					4, 10, 999));
-			WineDAO.addWine(createWine("ABd", "white", 1987, 433, "vineyard3",
-					30, 3, 10, 999));
+			Wine win = createWine("ABCD", "red", 1986, 431, "vineyard1",
+					"dude", 20, 5, 10, 999);
+			System.out.println("this is the varietal of win "
+					+ win.getVarietal().getGrapeType());
+			WineDAO.addWine(createWine("ABCD", "Red Wine", 1986, 431,
+					"vineyard1", "dude", 20, 5, 10, 999));
+			WineDAO.addWine(createWine("check", "Red Wine", 1987, 431,
+					"vineyard42", "dude", 20, 3, 10, 999));
+			WineDAO.addWine(createWine("CD", "Red Wine", 1905, 432,
+					"vineyard2", "frog", 99, 5, 10, 999));
+			WineDAO.addWine(createWine("ABd", "white", 1978, 433, "vineyard3",
+					"dog", 30, 4, 10, 999));
 			WineDAO.addWine(createWine("ZX", "white", 1989, 434, "vineyard4",
-					40, 4, 10, 999));
+					"trex", 40, 2, 10, 999));
 		} catch (DAException e)
 		{
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 		// wineAmount = 22;
@@ -78,29 +86,64 @@ public class WineWizardManagerTest
 	{
 		Vector<Wine> testWine = new Vector<Wine>();
 		WineQuery query = new WineQuery();
+		query.setSize(1);
 		Vector<Varietal> yes = new Vector<Varietal>();
 		Varietal dork = new Varietal();
-		dork.setId(433);
+		dork.setGrapeType("dog");
+
+		try
+		{
+			dork = WineDAO.getVarietal("dog");
+		} catch (DAException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		yes.add(dork);
 		query.setVarietal(yes);
-
+		// System.out.println("after here");
 		Vector<WineType> no = new Vector<WineType>();
 		WineType win = new WineType();
-		win.setWineType("white");
+		try
+		{
+			win = WineDAO.getWineType("Red Wine");
+		} catch (DAException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println("maybe before here");
 		no.add(win);
 		query.setType(no);
 		query.setMinYear(1978);
 		query.setMaxYear(1979);
-		//testWine = WineWizardManager.selectWine(query);
-		if (testWine == null)
+
+		try
+		{
+			testWine = WineWizardManager.selectWine(query);
+		} catch (DAException | InvalidCategory | InvalidSort
+				| InvalidOtherParameters | IOException | ParseException e)
+		{
+			// TODO Auto-generated catch block
+			System.out.println("what are you doing in here");
+			e.printStackTrace();
+		}
+		if (testWine.size() == 0)
+		{
+			System.out.println("testWine is null");
 			return;
-		System.out.println("This is the wine vector size: " + testWine.size());
+		}
+		// System.out.println("This is the wine vector size: " +
+		// testWine.size());
+		// System.out.println("after here 2");
 		for (int i = 0; i < testWine.size(); i++)
 		{
 			System.out.println("WineName: " + testWine.get(i).getName());
 			System.out.println("WineType: "
 					+ testWine.get(i).getType().getWineType());
 			System.out.println("WineVarietal: "
+					+ testWine.get(i).getVarietal().getGrapeType());
+			System.out.println("WineVarietal id: "
 					+ testWine.get(i).getVarietal().getId());
 		}
 	}
@@ -111,7 +154,6 @@ public class WineWizardManagerTest
 		wizardManager = null;
 	}
 
-	@Test
 	public void sort()
 	{
 		WineWizardManager.sort(animals, animalsNum, animalsCount);
@@ -122,8 +164,8 @@ public class WineWizardManagerTest
 	}
 
 	private Wine createWine(String name, String type, long vintage,
-			long varietalId, String vineyardName, long vineyardId,
-			double rating, double minPrice, double maxPrice)
+			long varietalId, String vineyardName, String varietalName,
+			long vineyardId, double rating, double minPrice, double maxPrice)
 	{
 		Wine wine = new Wine();
 		wine.setName(name);
@@ -138,6 +180,7 @@ public class WineWizardManagerTest
 
 		Varietal varietal = new Varietal();
 		varietal.setId(varietalId);
+		varietal.setGrapeType(varietalName);
 
 		WineType wineTypeRed = new WineType(type);
 

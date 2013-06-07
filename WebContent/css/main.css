@@ -47,11 +47,3 @@ a.other{
     background-color: rgba(0, 0, 0, .05);
     text-align: center;
 }
-
-form{
-	width: 25%;
-}
-
-input[type="checkbox"]{
-	display: inline;
-}

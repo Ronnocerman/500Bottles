@@ -18,6 +18,13 @@ body
   min-height: 100%
   position: relative
 
+#floating_view_container
+  position: absolute
+  width: 100%
+  top: 0px
+  left: 0px
+  z-index: 13000
+
 #blackout
   position: fixed
   height: 100%
@@ -44,6 +51,10 @@ body
     color: black
     opacity: 1
     text-shadow: 1px 1px 0px white
+
+.floating_view
+  position: absolute
+  z-index: 13000
 
 h1, h2, h3, h4, h5, h6
   font-family: "LeagueGothicRegular"
