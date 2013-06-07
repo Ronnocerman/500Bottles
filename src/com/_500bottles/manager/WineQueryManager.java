@@ -75,7 +75,7 @@ public class WineQueryManager
 			if (wines.size() < query.getSize()) {
 				searchSnooth(query);
 
-				//searchWineCom(query);
+				searchWineCom(query);
 
 				wines = searchLocal(query);
 			}
