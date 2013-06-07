@@ -5,7 +5,7 @@
         </div>
         
         <form id="wine_form">
-			<input id="name" type="text" value="name"/><center>
+			<input id="name" type="text" placeholder="name" value=""/><center>
 			<input id="red" type="checkbox" value="red"/>red
 			<input id="white" type="checkbox" value="white"/>white
 			<input id="rose" type="checkbox" value="rose"/>ros&eacute;
@@ -52,10 +52,10 @@
 				<option>Zinfandel</option>
 				<option>Other</option>
 			</select><br>
-			<input type="text" value="vintage" class="other-search" />
-			<input type="text" value="region" class="other-search" />
-			<input type="text" value="winery" class="other-search" />
-			<input type="button" value="submit" id="wine_submit" />
+			<input type="text" placeholder="vintage" value="" class="other-search" />
+			<input type="text" placeholder="region" value="" class="other-search" />
+			<input type="text" placeholder="winery" value="" class="other-search" />
+			<input type="button" placeholder="submit" value="" id="wine_submit" />
 		</form>
     </section>
 </section>
