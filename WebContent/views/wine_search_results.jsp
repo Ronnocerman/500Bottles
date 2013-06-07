@@ -18,12 +18,49 @@
         String image = w.getImage();
         if (image.length() == 0)
             image = "/img/blank_wine_bottle.png";
-        %><li class="wine"><%
-        %><div class="back"><%= w.getName() %></div><%
-        %><div class="wine_image front" style="background-image: url('<%= image %>');"></div><%
-        %></li><%
+
+        %>
+        <li class="wine">
+            <div class="back table">
+                <div class="table_row">
+                    <div class="wine_info table_cell">
+                        <div class="favorite_banner"></div>
+                        <span class="wine_name"><%= w.getName() %></span>
+                        <span class="vineyard_name"><%= w.getVineyard().getName() %></span>
+                    </div>
+                </div>
+            </div>
+            <div class="front table">
+                <div class="table_row">
+                    <div class="wine_image_container table_cell">
+                        <div class="wine_image" style="background-image: url('<%= image %>');"></div>
+                    </div>
+                    <div class="wine_info table_cell">
+                        <span class="wine_name"><%= w.getName() %></span>
+                    </div>
+                </div>
+            </div>
+            <div class="details animated no_display" data-anim-in="flipInY" data-anim-out="flipOutY">
+                <div class="close_icon"></div>
+                <div class="table">
+                    <div class="table_row">
+                        <div class="wine_info table_cell">
+                            <div class="favorite_banner"></div>
+                            <span class="wine_name"><%= w.getName() %></span>
+                            <span class="vineyard_name"><%= w.getVineyard().getName() %></span>
+                        </div>
+                    </div>
+                    <div class="table_row">
+                        <div class="table_cell">
+                            <p><%= w.getDescription() %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    <%
     }
-%>
+    %>
         </ul>
         <div class="next"></div>
         <div class="prev"></div>

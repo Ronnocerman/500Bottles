@@ -6,7 +6,7 @@
         <%--</div>--%>
     <%--</section>--%>
 
-    <div id="cellar_wine_grid" class="wine_grid_container" data-rows="4">
+    <div id="cellar_wine_grid" class="wine_grid_container" data-rows="3">
         <ul class="wine_grid">
             <li class="wine">
 

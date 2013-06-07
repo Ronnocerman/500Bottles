@@ -25,7 +25,7 @@
    */
   var NUM_OF_ROWS = 2;
 
-  var SLIDE_MARGIN = 100;
+  var SLIDE_MARGIN = 300;
 
   /************************** End Gallery Config ******************************/
 
@@ -54,13 +54,61 @@
                   previous_page(e);
               })(el);
           });
-
       });
 
-      $(gallery_parent_selector + " " + IMAGE_ELEMENT_SEL).hover(function() {
+      /*
+       * This trickery adds the flipping effects to the wine items. A class
+       * "disable_flip is added to prevent successive hovers from repeatedly
+       * flipping the items when hovering over a nearby element, specifically
+       * the next and previous arrows.
+       */
+      $(gallery_parent_selector + " " + IMAGE_ELEMENT_SEL).hover(function(e) {
+          // Test if the flip is disabled. If so, return.
+          if ($(this).hasClass("disable_flip"))
+            return;
           $(this).addClass("flipped");
+
       }, function() {
           $(this).removeClass("flipped");
+          $(this).addClass("disable_flip");
+
+          // Grab a reference to `this` wine item for the timeout and, and
+          // remove the "disable_flip" class after a specified period of time.
+          var el = this;
+          setTimeout(function() {
+            $(el).removeClass("disable_flip");
+          }, 400);
+      });
+
+      /*
+       * This adds the details view stuff.
+       */
+      var open_details = null;
+      $(gallery_parent_selector + " " + IMAGE_ELEMENT_SEL).on("click", function() {
+
+          if (open_details != null)
+              _500bottles.anim.animate_out({
+                  element: open_details,
+                  time: 700
+              });
+
+          open_details = $(this).children(".details")[0];
+          _500bottles.anim.animate_in({
+              element: $(this).children(".details")[0]
+          });
+      });
+
+      /*
+       * Bind the close icon to close the details view.
+       */
+      $(gallery_parent_selector + " " + IMAGE_ELEMENT_SEL + " .close_icon").on("click", function(e) {
+          console.log("clicked close button...", $(this).parent()[0]);
+          _500bottles.anim.animate_out({
+              element: $(this).parent()[0],
+              time: 700
+          });
+          open_details = null;
+          e.stopPropagation();
       });
   }
 
