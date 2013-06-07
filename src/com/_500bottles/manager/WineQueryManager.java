@@ -66,29 +66,30 @@ public class WineQueryManager
 	 */
 	public static WineQueryResult search(WineQuery query)
 	{
-		Vector<Wine> wines;
+		Vector<Wine> wines = null;
 		WineQueryResult result = null;
 
 		try
 		{
 			wines = searchLocal(query);
-
+			System.out.println("level 1");
 			if (wines.size() < query.getSize())
 			{
 				searchSnooth(query);
-
+				System.out.println("level 2");
 				searchWineCom(query);
-
+				System.out.println("level 3");
 				wines = searchLocal(query);
+				System.out.println("level 4");
 			}
-
+			System.out.println("wine result is: " + wines.size());
 			result = new WineQueryResult(wines);
 
 		} catch (DAException e)
 		{
 			System.err.println("WineQueryManager: DAException in search()");
 		}
-
+		System.out.println("wines.size() " + wines.size());
 		return result;
 	}
 
@@ -140,41 +141,54 @@ public class WineQueryManager
 	{
 		Vector<Wine> v = null;
 
+		WineAPIURL url = new WineAPIURL();
+		FilterCategory filtercategory = new FilterCategory();
+		String search = "";
+		Vector<WineType> types = query.getType();
+
 		try
 		{
-			WineAPIURL url = new WineAPIURL();
-			FilterCategory filtercategory = new FilterCategory();
-			String search = "";
-			Vector<WineType> types = query.getType();
-
 			int offset = query.getOffset();
 			if (offset != 0)
 			{
 				Offset off = new Offset(offset);
 				url.addToURL(off);
 			}
+		} catch (InvalidOtherParameters e)
+		{
+			System.err
+					.println("Winequerymanager: SearchWineCom: Invalid Offset");
+		}
 
+		try
+		{
 			int size = query.getSize();
 			Size siz = new Size(size);
 			url.addToURL(siz);
+		} catch (InvalidOtherParameters e)
+		{
+			System.err.println("Winequerymanager: SearchWineCom: Invalid Size");
+		}
 
-			if (query.getTextQuery() != "")
-				search += query.getTextQuery();
-			if (query.getNameContains() != "")
-				search += query.getNameContains();
-			if (query.getDescriptionContains() != "")
-				search += query.getDescriptionContains();
+		if (query.getTextQuery() != "")
+			search += query.getTextQuery();
+		if (query.getNameContains() != "")
+			search += query.getNameContains();
+		if (query.getDescriptionContains() != "")
+			search += query.getDescriptionContains();
 
-			Vector<Vineyard> vineyards = query.getVineyard();
-			for (int i = 0; i < vineyards.size(); i++)
-				search += vineyards.elementAt(i) + " ";
+		Vector<Vineyard> vineyards = query.getVineyard();
+		for (int i = 0; i < vineyards.size(); i++)
+			search += vineyards.elementAt(i) + " ";
 
-			if (search != "")
-			{
-				Search sea = new Search(search);
-				url.addToURL(sea);
-			}
+		if (search != "")
+		{
+			Search sea = new Search(search);
+			url.addToURL(sea);
+		}
 
+		try
+		{
 			if (types.size() == 0)
 			{
 				WineTypeArray temp = new WineTypeArray("all");
@@ -188,7 +202,14 @@ public class WineQueryManager
 						.getWineType());
 				filtercategory.addAttribute(temp);
 			}
+		} catch (InvalidCategory e)
+		{
+			System.err
+					.println("Winequerymanager: SearchWineCom: Invalid WineType");
+		}
 
+		try
+		{
 			Vector<Varietal> varietals = query.getVarietal();
 			for (int i = 0; i < varietals.size(); i++)
 			{
@@ -196,7 +217,14 @@ public class WineQueryManager
 						.getGrapeType());
 				filtercategory.addAttribute(temp);
 			}
+		} catch (InvalidCategory e)
+		{
+			System.err
+					.println("Winequerymanager: SearchWineCom: Invalid Varietal");
+		}
 
+		try
+		{
 			long min_year = query.getMinYear();
 			long max_year = query.getMaxYear();
 			if (min_year != -1 && max_year != -1)
@@ -205,7 +233,14 @@ public class WineQueryManager
 					VintageArray temp = new VintageArray("" + i);
 					filtercategory.addAttribute(temp);
 				}
+		} catch (InvalidCategory e)
+		{
+			System.err
+					.println("Winequerymanager: SearchWineCom: Invalid Vintage");
+		}
 
+		try
+		{
 			double max_rating = query.getMaxRating();
 			double min_rating = query.getMinRating();
 			if (min_rating != -1 && max_rating != -1)
@@ -213,7 +248,14 @@ public class WineQueryManager
 				SortRating temp = new SortRating(min_rating, max_rating);
 				url.addToURL(temp);
 			}
+		} catch (InvalidSort e)
+		{
+			System.err
+					.println("Winequerymanager: SearchWineCom: Invalid Rating");
+		}
 
+		try
+		{
 			Vector<Appellation> appellations = query.getAppellation();
 			for (int i = 0; i < appellations.size(); i++)
 			{
@@ -221,28 +263,23 @@ public class WineQueryManager
 						.elementAt(i).getLocation());
 				filtercategory.addAttribute(temp);
 			}
-
-			url.addToURL(filtercategory);
-			WineAPICall call = new WineAPICall();
-			System.out.println(url.getString());
-			v = call.getProducts(url.getString());
-
 		} catch (InvalidCategory e)
 		{
-			System.err.println("WineQueryManager: InvalidCategory Exception");
-		} catch (InvalidSort e)
-		{
-			System.err.println("WineQueryManager: InvalidSort Exception");
-		} catch (InvalidOtherParameters e)
-		{
 			System.err
-					.println("WineQueryManager: InvalidOtherParameters Exception");
-		} catch (IOException e)
+					.println("Winequerymanager: SearchWineCom: Invalid Appellation");
+		}
+
+		url.addToURL(filtercategory);
+		WineAPICall call = new WineAPICall();
+		System.out.println(url.getString());
+		try
 		{
-			System.err.println("WineQueryManager: IOException Exception");
-		} catch (ParseException e)
+			v = call.getProducts(url.getString());
+		} catch (Exception e)
 		{
-			System.err.println("WineQueryManager: ParseException Exception");
+			// TODO Auto-generated catch block
+			System.err
+					.println("Winequerymanager: SearchWineCom: Failed API call");
 		}
 
 		processesWineComWine(v);
