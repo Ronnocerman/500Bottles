@@ -1,5 +1,5 @@
 <section id="winebook_entry_form"
-         class="floating_view animated curved shadow"
+         class="floating_view animated curved shadow no_display"
          data-anim-in="fadeIn"
          data-anim-out="fadeOut">
     <div class="close_icon"></div>

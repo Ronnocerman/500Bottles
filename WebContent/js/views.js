@@ -74,15 +74,9 @@
         var id = data.id;
         var view_container = document.getElementById(FLOATING_VIEW_CONTAINER);
 
-        $ns.views.setBlackout();
-
         $(view_container).append(view_contents);
 
-        var child = document.getElementById(id);
-
-        $ns.anim.animate_in({element: child});
-
-        return child;
+        return document.getElementById(id);
     }
 
     /**
@@ -91,7 +85,25 @@
      */
     $ns.views.remove_floating_view = function(view)
     {
+        _500bottles.views.clearBlackout();
+        _500bottles.anim.animate_out({
+            element: view,
+            callback: function() {
+                $(view).remove()
+            }
+        });
+    }
 
+    $ns.views.show_floating_view = function(view)
+    {
+        $ns.views.setBlackout();
+        _500bottles.anim.animate_in({element: view});
+    }
+
+    $ns.views.hide_floating_view = function(view)
+    {
+        _500bottles.anim.animate_out({element: view});
+        _500bottles.views.clearBlackout();
     }
 
     /**
