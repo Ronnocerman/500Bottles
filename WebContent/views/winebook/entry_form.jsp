@@ -7,7 +7,7 @@
 
     <form>
         <input type="text" id="winebook_title" value="title" />
-        <textarea>Entry...</textarea>
+        <textarea>today I made some liver and fava beans, so I decided to crack open a nice chianti to go with it...</textarea>
         <input id="entry_save" type="button" value="save"/>
     </form>
 
