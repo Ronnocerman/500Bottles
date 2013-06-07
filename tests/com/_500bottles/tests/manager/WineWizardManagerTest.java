@@ -93,7 +93,7 @@ public class WineWizardManagerTest
 
 		try
 		{
-			dork = WineDAO.getVarietal("dog");
+			dork = WineDAO.getVarietal("frog");
 		} catch (DAException e1)
 		{
 			// TODO Auto-generated catch block
@@ -112,11 +112,14 @@ public class WineWizardManagerTest
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println("maybe before here");
+		// System.out.println("maybe before here");
 		no.add(win);
+
 		query.setType(no);
-		query.setMinYear(1978);
-		query.setMaxYear(1979);
+		query = new WineQuery();
+		query.setSize(1);
+		// query.setMinYear(1978);
+		// query.setMaxYear(1979);
 
 		try
 		{
