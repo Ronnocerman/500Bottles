@@ -24,4 +24,5 @@
 </head>
 
 <body>
+    <div id="floating_view_container"></div>
     <div id="view_container">

@@ -13,6 +13,11 @@
     /**
      * Animates an object in.
      * @param data
+     *      data.element                element to animate in
+     *      data.animation_class_in     animate in class
+     *      data.animation_class_out    animate out class
+     *      data.time                   animation time for adding no_display
+     *      data.parent                 parent of element for size fixing
      */
     $ns.anim.animate_in = function(data)
     {

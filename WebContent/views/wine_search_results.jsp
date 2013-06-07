@@ -12,11 +12,8 @@
 
     Wine w;
 
-    System.err.println("wines returned: " + result.getResultsCount());
-
     while(it.hasNext()) {
         w = it.next();
-        System.err.println(w.toString());
         String image = w.getImage();
         if (image.length() == 0)
             image = "/img/blank_wine_bottle.png";

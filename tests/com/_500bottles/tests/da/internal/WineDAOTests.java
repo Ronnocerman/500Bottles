@@ -104,13 +104,14 @@ public class WineDAOTests
 
 		try
 		{
-			WineDAO.addWine(wine);
+			wine = WineDAO.addWine(wine);
 			Wine getWine = WineDAO.getWine(wine.getId());
 
 			assertEquals(getWine.getName(), "Wine5");
 			assertEquals(getWine.getDescription(), "Something");
 		} catch (DAException e)
 		{
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
@@ -298,7 +299,7 @@ public class WineDAOTests
 
 		try
 		{
-			wines = WineDAO.getWinesFromQuerySearch(query);
+			wines = WineDAO.getWinesFromQuery(query);
 		} catch (DAException e)
 		{
 			// TODO Auto-generated catch block

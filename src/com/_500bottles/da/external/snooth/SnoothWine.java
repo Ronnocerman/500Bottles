@@ -338,9 +338,11 @@ public class SnoothWine
 		w.setPriceMax(Double.parseDouble(this.getPrice().replace(",", "")));
 		// TODO THE MOST IMPORTANT SHIT IN THE WORLD TO DO, fix snooth wine get
 
-		try {
+		try
+		{
 			w.setYear(Long.valueOf(this.getVintage()));
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException e)
+		{
 
 		}
 
@@ -351,7 +353,7 @@ public class SnoothWine
 
 		Vineyard vineyard = new Vineyard(this.getWinery());
 		w.setVineyard(vineyard);
-		// w.setRating(this.getRating());
+		// w.setRating(this.getSnoothrank());
 		return w;
 	}
 }
