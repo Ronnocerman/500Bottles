@@ -366,7 +366,8 @@ public class WineQueryManager
 			WineDAO.addWine(wine);
 		} catch (DAException e)
 		{
-			e.printStackTrace();
+			System.err
+					.println("Winequerymanager: addWinetoDatabase: Failed to insert winecom wine, might already exist");
 		}
 
 		/*
@@ -412,9 +413,14 @@ public class WineQueryManager
 				WineDAO.addWine(wine);
 			}
 
-		} catch (InvalidWineDetails | DAException e)
+		} catch (DAException e)
 		{
-			e.printStackTrace();
+			System.err
+					.println("Winequerymanager: addWinetoDatabase: Failed to insert snooth wine, might already exist");
+		} catch (InvalidWineDetails e)
+		{
+			System.err
+					.println("Winequerymanager: addWinetoDatabase: Failed to insert snooth wine, snooth wine has invalid wine details");
 		}
 
 		return wine;
