@@ -10,7 +10,7 @@
 			<input id="white" type="checkbox" value="white"/>white
 			<input id="rose" type="checkbox" value="rose"/>ros&eacute;
 			<input id="other" type="checkbox" value="other"/>other<br><br></center>
-			<select id="varietalSelect" name="varietal" />
+			<select id="varietalSelect" name="varietal">
 				<option>grape varietal/type</option>
 				<option>Albarino</option>
 				<option>Barbera</option>
