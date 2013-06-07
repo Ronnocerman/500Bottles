@@ -54,23 +54,38 @@ public class UserDAOTests
 
 		} catch (DAException e)
 		{
-			fail(e.getMessage());
+			if (test)
+				fail(e.getMessage());
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void addUserWithSameEmail() throws DAException
 	{
 		User user = new User();
+		Date date = new Date(90, 11, 25);
+		Date regDate = new Date();
+		Date lastLogin = new Date();
+		String password = "password";
 
+		user.setRegistrationDate(regDate);
+		user.setLastLogin(lastLogin);
+		user.setDOB(date);
+		user.setPassword(password);
 		user.setEmail("elisa@gmail.com");
+		user.setFirstName("Rose");
+		user.setLastName("Shaw");
+		user.setSex(Sex.female);
+		user.setHeight(52);
+		user.setWeight(110);
+		user.setAdmin(0);
 
 		try
 		{
 			UserDAO.addUser(user);
-			fail();
 
-		} catch (NullPointerException e)
+		} catch (DAException e)
 		{
 			if (test)
 				fail(e.getMessage());
@@ -214,14 +229,14 @@ public class UserDAOTests
 		try
 		{
 			UserDAO.editUser(user0);
-			fail();
-		} catch (NullPointerException e)
+		} catch (DAException e)
 		{
 			if (test)
 			{
 				fail(e.getMessage());
 			}
 		}
+
 	}
 
 	@SuppressWarnings("deprecation")
@@ -350,5 +365,4 @@ public class UserDAOTests
 			}
 		}
 	}
-
 }
