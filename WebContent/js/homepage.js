@@ -35,14 +35,14 @@
 
         var results = document.getElementById("quick_search_results");
 
-        $(results).on("click", function() {
-            _500bottles.anim.animate_out({element: results});
-            _500bottles.anim.animate_in({element: home_subview, parent: home});
-
-            setTimeout(function() {
-                $("#quick_search_results").remove();
-            }, 1000);
-        });
+//        $(results).on("click", function() {
+//            _500bottles.anim.animate_out({element: results});
+//            _500bottles.anim.animate_in({element: home_subview, parent: home});
+//
+//            setTimeout(function() {
+//                $("#quick_search_results").remove();
+//            }, 1000);
+//        });
     }
 
     function display_quick_search_container()

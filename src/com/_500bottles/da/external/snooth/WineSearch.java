@@ -235,9 +235,6 @@ public class WineSearch
 		if (this.getLanguage() != DEFAULT_LANGUAGE)
 			url += "&lang=" + this.getLanguage().toString();
 
-		System.err.println("Num: " + DEFAULT_NUM_RESULTS);
-		System.err.println(url);
-
 		return url;
 	}
 
