@@ -565,6 +565,7 @@ public class WineDAO extends DAO
 
 			}
 		}
+		IdSort.clear();
 		try
 		{
 			Database.disconnect();
