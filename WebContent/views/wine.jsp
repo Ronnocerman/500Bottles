@@ -10,7 +10,7 @@
 			<input id="white" type="checkbox" value="white"/>white
 			<input id="rose" type="checkbox" value="rose"/>ros&eacute;
 			<input id="other" type="checkbox" value="other"/>other<br><br></center>
-			<select id="varietalSelect" name="varietal" class="select-varietal">
+			<select id="varietalSelect" name="varietal" />
 				<option>grape varietal/type</option>
 				<option>Albarino</option>
 				<option>Barbera</option>
@@ -52,9 +52,9 @@
 				<option>Zinfandel</option>
 				<option>Other</option>
 			</select><br>
-			<input type="text" placeholder="vintage" value="" class="other-search" />
-			<input type="text" placeholder="region" value="" class="other-search" />
-			<input type="text" placeholder="winery" value="" class="other-search" />
+			<input type="text" placeholder="vintage" value="" />
+			<input type="text" placeholder="region" value="" />
+			<input type="text" placeholder="winery" value="" />
 			<input type="button" value="submit" id="wine_submit" />
 		</form>
     </section>

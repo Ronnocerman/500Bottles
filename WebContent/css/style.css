@@ -1050,9 +1050,24 @@ footer {
   #wine_form input[type="button"] {
     width: 50%;
     position: relative;
-    left: 25%; }
+    left: 23%; }
   #wine_form input[type="text"] {
     margin-bottom: 20px; }
+
+#wizard_form {
+  width: 75%; }
+  #wizard_form input[type="text"] {
+    margin-bottom: 20px; }
+  #wizard_form select {
+    width: 96.5%; }
+  #wizard_form .number {
+    width: 25%;
+    display: inline;
+    margin-right: 10px; }
+  #wizard_form input[type="button"] {
+    width: 50%;
+    position: relative;
+    left: 23%; }
 
 @media screen and (min-width: 1200px) {
   .content_container {
