@@ -180,6 +180,22 @@ p {
 .shadow {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); }
 
+.close_icon {
+  background-image: url("../img/icons/plus-black-white-bg-shadow.png");
+  background-size: 100% 100%;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  right: -15px;
+  top: -20px;
+  display: block;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  cursor: pointer; }
+
 .wine_grid {
   list-style: none;
   -webkit-transition: all 1s 0s;
@@ -414,7 +430,7 @@ a.box_arrow {
   .wine_grid_container:hover .next {
     right: -30px; }
 
-form input, .button, select {
+form input, .button, select, textarea {
   border-radius: 6px;
   text-decoration: none;
   display: block;
@@ -461,7 +477,7 @@ form {
     background-color: white !important;
     -webkit-appearance: none;
     margin-top: 0; }
-  form input, form select {
+  form input, form select, form textarea {
     font-family: Signika;
     font-size: 1.7em;
     -webkit-transition: all 0.4s 0s;
@@ -476,12 +492,12 @@ form {
     transition-timing-function: default;
     border: none;
     padding: 2%; }
-  form input[type="text"], form input[type="password"], form select {
+  form input[type="text"], form input[type="password"], form select, form textarea {
     border: 1px solid rgba(0, 0, 0, 0.1);
     color: #aaaaaa; }
-    form input[type="text"]:hover, form input[type="text"]:focus, form input[type="password"]:hover, form input[type="password"]:focus, form select:hover, form select:focus {
+    form input[type="text"]:hover, form input[type="text"]:focus, form input[type="password"]:hover, form input[type="password"]:focus, form select:hover, form select:focus, form textarea:hover, form textarea:focus {
       color: #333333; }
-    form input[type="text"]:focus, form input[type="password"]:focus, form select:focus {
+    form input[type="text"]:focus, form input[type="password"]:focus, form select:focus, form textarea:focus {
       outline: 0; }
   form input[type="text"], form input[type="password"] {
     width: 92%;
@@ -998,12 +1014,24 @@ footer {
 #winebook_entry_form {
   background: white;
   width: 80%;
-  margin-left: 10%;
-  margin-top: 10%;
-  padding: 2em; }
+  margin-left: 8%;
+  margin-top: 4%;
+  padding: 3%; }
   #winebook_entry_form form {
+    position: relative;
+    width: 96%;
     padding-left: 0;
-    padding-right: 0; }
+    padding-right: 0;
+    padding-bottom: 0; }
+    #winebook_entry_form form input, #winebook_entry_form form textarea {
+      width: 100%;
+      margin-bottom: 2%; }
+    #winebook_entry_form form textarea {
+      height: 170px; }
+    #winebook_entry_form form input[type="button"] {
+      padding: 10px !important;
+      margin: 0 auto 0 !important;
+      width: 37%; }
 
 #cellar .bg {
   width: 100%;

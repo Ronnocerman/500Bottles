@@ -3,12 +3,16 @@
     var $ns = window._500bottles;
 
     var VIEW_CONTAINER = "view_container";
+    var FLOATING_VIEW_CONTAINER = "floating_view_container";
 
     var NO_DISPLAY = "no_display";
     var BLACKOUT_ANIM_IN = "fadeIn";
     var BLACKOUT_ANIM_OUT = "fadeOut";
     var BLACKOUT_TIMER = 1000;
 
+    /**
+     * Sets the page blackout.
+     */
     $ns.views.setBlackout = function()
     {
         var blackout = document.getElementById("blackout");
@@ -23,6 +27,9 @@
         $(blackout).addClass(BLACKOUT_ANIM_IN);
     }
 
+    /**
+     * Clears the blackout.
+     */
     $ns.views.clearBlackout = function()
     {
         var blackout = document.getElementById("blackout");
@@ -52,6 +59,39 @@
 
         var child = document.getElementById(id);
         $ns.views.fix_height(view_container, child);
+    }
+
+    /**
+     * Adds a floating view to the window.
+     * @param data  Data object.
+     *        data.contents - Contents to add to window.
+     *        data.id       - ID of view.
+     *
+     */
+    $ns.views.add_floating_view = function(data)
+    {
+        var view_contents = data.contents;
+        var id = data.id;
+        var view_container = document.getElementById(FLOATING_VIEW_CONTAINER);
+
+        $ns.views.setBlackout();
+
+        $(view_container).append(view_contents);
+
+        var child = document.getElementById(id);
+
+        $ns.anim.animate_in({element: child});
+
+        return child;
+    }
+
+    /**
+     *
+     * @param view
+     */
+    $ns.views.remove_floating_view = function(view)
+    {
+
     }
 
     /**
