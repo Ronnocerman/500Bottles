@@ -55,7 +55,7 @@
 			<input type="text" placeholder="vintage" value="" class="other-search" />
 			<input type="text" placeholder="region" value="" class="other-search" />
 			<input type="text" placeholder="winery" value="" class="other-search" />
-			<input type="button" placeholder="submit" value="" id="wine_submit" />
+			<input type="button" value="submit" id="wine_submit" />
 		</form>
     </section>
 </section>
