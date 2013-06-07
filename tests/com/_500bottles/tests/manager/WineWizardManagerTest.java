@@ -117,7 +117,7 @@ public class WineWizardManagerTest
 
 		query.setType(no);
 		query = new WineQuery();
-		query.setSize(1);
+		query.setSize(2);
 		// query.setMinYear(1978);
 		// query.setMaxYear(1979);
 
