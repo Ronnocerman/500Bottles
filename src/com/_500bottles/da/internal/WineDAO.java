@@ -1168,7 +1168,7 @@ public class WineDAO extends DAO
 		}
 	}
 
-	private static boolean wineExists(Wine wine) throws DAException
+	protected static boolean wineExists(Wine wine) throws DAException
 	{
 		boolean ret;
 		if (getVarietal(wine.getVarietal().getGrapeType()) == null)
