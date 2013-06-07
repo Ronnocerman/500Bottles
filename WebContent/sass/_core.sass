@@ -96,6 +96,19 @@ p
 .shadow
   box-shadow: 0 0 4px rgba(black, 0.3)
 
+.close_icon
+  background-image: url('../img/icons/plus-black-white-bg-shadow.png')
+  background-size: 100% 100%
+  width: 50px
+  height: 50px
+  position: absolute
+  right: -15px
+  top: -20px
+  display: block
+  @include rotate(-45deg)
+  cursor: pointer
+
+
 .wine_grid
   list-style: none
   @include transition(all, 1s)

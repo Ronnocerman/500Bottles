@@ -534,19 +534,36 @@ public class WineDAO extends DAO
 			// System.out.println("marty's stuff: " + returnLong.get(i));
 		}
 
-		for (int i = 0; i < size; i++)
+		if (returnLong.size() >= size)
 		{
-			// System.out.println("wineIdVectorvalue: "
-			// + wineIdVector.get(i).longValue());
-			Wine temp = new Wine();
+			for (int i = 0; i < size; i++)
+			{
+				// System.out.println("wineIdVectorvalue: "
+				// + wineIdVector.get(i).longValue());
+				Wine temp = new Wine();
+				temp = getWine(returnLong.get(i).longValue());
+				// System.out.println("tempId: " + temp.getId());
+				// System.out.println("next wineId is "
+				// + wineIdVector.get(i).longValue());
+				wines.add(temp);
+				// System.out.println("after the add(temp)");
 
-			temp = getWine(returnLong.get(i).longValue());
-			// System.out.println("tempId: " + temp.getId());
-			// System.out.println("next wineId is "
-			// + wineIdVector.get(i).longValue());
-			wines.add(temp);
-			// System.out.println("after the add(temp)");
+			}
+		} else
+		{
+			for (int i = 0; i < returnLong.size(); i++)
+			{
+				// System.out.println("wineIdVectorvalue: "
+				// + wineIdVector.get(i).longValue());
+				Wine temp = new Wine();
+				temp = getWine(returnLong.get(i).longValue());
+				// System.out.println("tempId: " + temp.getId());
+				// System.out.println("next wineId is "
+				// + wineIdVector.get(i).longValue());
+				wines.add(temp);
+				// System.out.println("after the add(temp)");
 
+			}
 		}
 		try
 		{
