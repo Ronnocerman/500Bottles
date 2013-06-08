@@ -8,19 +8,32 @@ import java.util.Vector;
 
 import com._500bottles.config.Config;
 import com._500bottles.exception.da.DAException;
+import com._500bottles.manager.SessionManager;
 import com._500bottles.object.cellar.CellarItem;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.wine.WineQuery;
 
+/**
+ * Coordinates all Cellar related database access for cellar item adding,
+ * deleting, and getting in the database. Also implements search functionality
+ * for the cellar items.
+ */
 public class CellarDAO extends DAO
 {
 
 	private final static String CELLARITEM_TABLE = Config
 			.getProperty("cellarItemTableName");
 
-	// private final static String CELLAR_TABLE = Config
-	// .getProperty("cellarTableName");
-
+	/**
+	 * Adds a cellarItem to the cellarItem table.
+	 * 
+	 * @param userId
+	 *            The ID of the user which we are adding the cellar item for
+	 * @param item
+	 *            The item to be inserted to the cellarItem table
+	 * @return CellarItem that was added.
+	 * @throws DAException
+	 */
 	public static CellarItem addCellarItem(long userId, CellarItem item)
 			throws DAException
 	{
@@ -28,8 +41,7 @@ public class CellarDAO extends DAO
 		String columns, values; // no need for a String table since i have those
 								// final ones
 
-		// table = Config.getProperty("cellarItemTableName");
-
+		// Construct query
 		columns = "( `userId`,";
 		columns += "`wineId`,";
 		columns += "`quantity`,";
@@ -46,89 +58,50 @@ public class CellarDAO extends DAO
 		{
 			insert(CELLARITEM_TABLE, columns, values);
 			Database.disconnect();
-			// System.out.print("This is what we got: " + i);
-			// TODO: Better exception handling.
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed CellarItem insertion.", e);
 		}
 
+		// Sets Id to the last incremented id.
 		item.setCellarItemId(getLastInsertId());
 
 		return item;
 	}
 
-	/*
-	 * public static void addCellar(long userId) throws DAException { String
-	 * columns, values; // cellarItemsJSON not used // anymore
+	/**
+	 * Deletes the cellarItem from the table.
 	 * 
-	 * columns = "( `userId`)";
-	 * 
-	 * // cellarItemsJSON = //
-	 * cellar.getCellarItemIdsAsJSONArray().toJSONString();
-	 * 
-	 * values = "('" + userId + "')"; // values += "'" + "0" + "')";
-	 * 
-	 * try { insert(CELLAR_TABLE, columns, values); Database.disconnect(); //
-	 * System.out.print("This is what we got: " + i); // TODO: Better exception
-	 * handling. } catch (SQLException e) { throw new
-	 * DAException("Failed Cellar insertion.", e); } catch (ConnectionException
-	 * e) { throw new DAException("Not connected to database"); } }
+	 * @param cellar
+	 * @return true if item was deleted, false otherwise.
 	 */
+	public static boolean deleteCellarItem(CellarItem cellar)
+	{
+		int ret;
+		try
+		{
+			ret = delete(CELLARITEM_TABLE, "cellarItemId=" + cellar.getId());
+			Database.disconnect();
+		} catch (SQLException e)
+		{
+			return false;
+			// throw new DAException("Failed Favorites deletion", e);
+		}
+		if (ret == 0)
+			return false;
+		return true;
+	}
 
-	/*
-	 * public static void deleteCellarItem(CellarItem item) throws DAException,
-	 * NullPointerException { if (item == null) throw new
-	 * NullPointerException("CellarItem is null.");
+	/**
+	 * Deletes the cellar item specified.
 	 * 
-	 * // delete(CELLARITEM_TABLE, "cellarItemId=" + item.getId());
-	 * deleteCellarItem(item.getId());
-	 * 
-	 * }
+	 * @param cellarItemId
+	 *            Id of the cellarItem to delete from the database.
+	 * @return true if item was deleted, false otherwise.
 	 */
-
-	/*
-	 * public static void deleteCellar(long cellarId) throws DAException { if
-	 * (cellarId == 0) throw new DAException("Cellar ID not set"); try {
-	 * delete(CELLAR_TABLE, "cellarId=" + cellarId); } catch (SQLException e) {
-	 * throw new DAException("Failed Cellar deletion."); } catch
-	 * (ConnectionException e) { throw new
-	 * DAException("Not connected to database"); } }
-	 */
-
-	/*
-	 * public static void addCellar(long userId) throws DAException { String
-	 * columns, values; // cellarItemsJSON not used // anymore
-	 * 
-	 * columns = "( `userId`)";
-	 * 
-	 * // cellarItemsJSON = //
-	 * cellar.getCellarItemIdsAsJSONArray().toJSONString();
-	 * 
-	 * values = "('" + userId + "')"; // values += "'" + "0" + "')";
-	 * 
-	 * try { insert(CELLAR_TABLE, columns, values); Database.disconnect(); //
-	 * System.out.print("This is what we got: " + i); // TODO: Better exception
-	 * handling. } catch (SQLException e) { throw new
-	 * DAException("Failed Cellar insertion.", e); } catch (ConnectionException
-	 * e) { throw new DAException("Not connected to database"); } }
-	 */
-
-	/*
-	 * public static void deleteCellarItem(CellarItem item) throws DAException,
-	 * NullPointerException { if (item == null) throw new
-	 * NullPointerException("CellarItem is null.");
-	 * 
-	 * // delete(CELLARITEM_TABLE, "cellarItemId=" + item.getId());
-	 * deleteCellarItem(item.getId());
-	 * 
-	 * }
-	 */
-
 	public static boolean deleteCellarItem(long cellarItemId)
 	{
-		// if (cellarItemId == 0)
-		// throw new DAException("CellarItem ID not set.");
+
 		int ret;
 		try
 		{
@@ -143,44 +116,14 @@ public class CellarDAO extends DAO
 		return true;
 	}
 
-	/*
-	 * public static void addCellar(long userId) throws DAException { String
-	 * columns, values; // cellarItemsJSON not used // anymore
+	/**
+	 * Edits the cellar item specified
 	 * 
-	 * columns = "( `userId`)";
-	 * 
-	 * // cellarItemsJSON = //
-	 * cellar.getCellarItemIdsAsJSONArray().toJSONString();
-	 * 
-	 * values = "('" + userId + "')"; // values += "'" + "0" + "')";
-	 * 
-	 * try { insert(CELLAR_TABLE, columns, values); Database.disconnect(); //
-	 * System.out.print("This is what we got: " + i); // TODO: Better exception
-	 * handling. } catch (SQLException e) { throw new
-	 * DAException("Failed Cellar insertion.", e); } catch (ConnectionException
-	 * e) { throw new DAException("Not connected to database"); } }
+	 * @param item
+	 *            The new edited item.
+	 * @return the edited cellarItem
+	 * @throws DAException
 	 */
-
-	/*
-	 * public static void deleteCellarItem(CellarItem item) throws DAException,
-	 * NullPointerException { if (item == null) throw new
-	 * NullPointerException("CellarItem is null.");
-	 * 
-	 * // delete(CELLARITEM_TABLE, "cellarItemId=" + item.getId());
-	 * deleteCellarItem(item.getId());
-	 * 
-	 * }
-	 */
-
-	/*
-	 * public static void deleteCellar(long cellarId) throws DAException { if
-	 * (cellarId == 0) throw new DAException("Cellar ID not set"); try {
-	 * delete(CELLAR_TABLE, "cellarId=" + cellarId); } catch (SQLException e) {
-	 * throw new DAException("Failed Cellar deletion."); } catch
-	 * (ConnectionException e) { throw new
-	 * DAException("Not connected to database"); } }
-	 */
-
 	public static CellarItem editCellarItem(CellarItem item) throws DAException
 	{
 		if (item == null)
@@ -192,13 +135,10 @@ public class CellarDAO extends DAO
 		// throw new DAException("User ID not set");
 		String sql = "";
 
-		// sql += "userID=" + userId;
 		sql += "wineID=" + item.getWineId();
 		sql += ",quantity=" + item.getQuantity();
 		sql += ",notes='" + escapeXml(item.getNotes()) + "'";
 		sql += ",cellarItemId='" + item.getId() + "'";
-
-		System.out.println(sql);
 
 		try
 		{
@@ -210,27 +150,37 @@ public class CellarDAO extends DAO
 		return item;
 	}
 
+	/**
+	 * Searches for matching wines in the cellar
+	 * 
+	 * @param q
+	 *            WineQuery object used to get the search query
+	 * @return Vector of wines for the search result
+	 * @throws DAException
+	 */
+	/**
+	 * @param q
+	 * @return
+	 * @throws DAException
+	 */
+	/**
+	 * @param q
+	 * @return
+	 * @throws DAException
+	 */
 	public static Vector<Wine> getWinesFromCellarSearch(WineQuery q)
 			throws DAException
 	{
 		Vector<Wine> ret = new Vector<Wine>();
+
+		// Find all wine IDs that match the query in both the wine database and
+		// cellar database
 		Vector<Long> allMatching = WineDAO.getWineIdsFromQuerySearch(q);
-
-		// System.out.println("allmatchingsize: " + allMatching.size());
-		// for (int i = 0; i < allMatching.size(); i++)
-		// {
-		// System.out.println("allMatchingIds: " + allMatching.get(i));
-		// }
-
-		Vector<Long> allCellar = getAllWineIdsFromCellar(1);
-
-		// for (int i = 0; i < allCellar.size(); i++)
-		// {
-		// System.out.println("allCellarIds: " + allCellar.get(i));
-		// }
-
+		Vector<Long> allCellar = getAllWineIdsFromCellar(SessionManager
+				.getSessionManager().getLoggedInUser().getUserId());
 		Vector<Long> retIds = new Vector<Long>();
 
+		// Find wines that are found in both the wines table and cellar table.
 		for (int i = 0; i < allMatching.size(); i++)
 		{
 			for (int j = 0; j < allCellar.size(); j++)
@@ -238,12 +188,11 @@ public class CellarDAO extends DAO
 				if (allMatching.get(i) == allCellar.get(j))
 				{
 					retIds.add(allMatching.get(i));
-					// System.out.println("the id: " + allMatching.get(i));
 				}
-				// System.out.println("nope");
 			}
 		}
 
+		// Create the vector of wines from the vector of wineIds to return
 		for (int i = 0; i < retIds.size(); i++)
 		{
 			Wine temp = new Wine();
@@ -254,6 +203,14 @@ public class CellarDAO extends DAO
 		return ret;
 	}
 
+	/**
+	 * Gets all the wineIDs from the user's cellar
+	 * 
+	 * @param userId
+	 *            userId associated with the cellar of wineID's
+	 * @return Vector of wineID's
+	 * @throws DAException
+	 */
 	public static Vector<Long> getAllWineIdsFromCellar(long userId)
 			throws DAException
 	{
@@ -265,6 +222,7 @@ public class CellarDAO extends DAO
 		{
 			r = select(CELLARITEM_TABLE, "*", "userId=" + userId + "");
 
+			// Adding to the wine vector
 			while (r.next())
 			{
 				wineIdVector.add(r.getLong("wineId"));
@@ -281,6 +239,14 @@ public class CellarDAO extends DAO
 
 	}
 
+	/**
+	 * Gets all the Wines from the Cellar of the user
+	 * 
+	 * @param userId
+	 *            User's cellar to check
+	 * @return Vector of Wine objects in the given user's cellar
+	 * @throws DAException
+	 */
 	public static Vector<Wine> getAllWinesFromCellar(long userId)
 			throws DAException
 	{
@@ -300,41 +266,15 @@ public class CellarDAO extends DAO
 	}
 
 	/**
-	 * DONT THINK WE NEED THIS
+	 * Gets the cellarItem for the user with the specified wineId
 	 * 
 	 * @param userId
-	 * @return cellarId of edited cellar
+	 *            User's cellar to look in
+	 * @param wineId
+	 *            Wine to look for
+	 * @return CellarItem matching the user and wine specified
 	 * @throws DAException
-	 * @throws NullPointerException
-	 * @throws SQLException
 	 */
-	/*
-	 * public static long editCellar(long userId) throws DAException,
-	 * NullPointerException, SQLException {
-	 * 
-	 * if (userId == 0) throw new DAException("Cellar ID not set"); String sql =
-	 * "";
-	 * 
-	 * // Get UserId from session manager // sql += "cellarID=" +
-	 * cellar.getCellarId(); sql += "userId=" + userId;
-	 * 
-	 * try { update(CELLAR_TABLE, sql, "userId=" + userId); } catch
-	 * (SQLException e) { throw new DAException("Failed Cellar update.", e); }
-	 * catch (ConnectionException e) { throw new
-	 * DAException("Not connected to database"); } ResultSet r = null; try { r =
-	 * select(CELLAR_TABLE, sql, "userId=" + userId); } catch (SQLException e) {
-	 * throw new DAException("SQL Select exception"); } catch
-	 * (ConnectionException e) { throw new
-	 * DAException("Not connected to database"); } return (long)
-	 * r.getInt("cellarId"); }
-	 */
-	/*
-	 * public static CellarItem getCellarItem(CellarItem item) throws
-	 * ConnectionException, DAException, NullPointerException { if (item ==
-	 * null) throw new NullPointerException("Cellar is null."); long
-	 * cellarItemId = item.getId(); return getCellarItem(cellarItemId); }
-	 */
-	// get cellaritem by wineid
 	public static CellarItem getByWineID(long userId, long wineId)
 			throws DAException
 	{
@@ -359,15 +299,23 @@ public class CellarDAO extends DAO
 		try
 		{
 			item = createCellarItem(r);
-			Database.disconnect(); // what was that one command that josh used?
+			Database.disconnect();
 
 		} catch (SQLException e)
 		{
-			throw new DAException("SQL select exception"); // TODO : fix this
+			throw new DAException("Cellar Item creation error");
 		}
 		return item;
 	}
 
+	/**
+	 * Gets the CellarItem by its ID
+	 * 
+	 * @param cellarItemId
+	 *            The ID of the CellarItem to get.
+	 * @return the CellarItem of the given ID
+	 * @throws DAException
+	 */
 	public static CellarItem getCellarItem(long cellarItemId)
 			throws DAException
 	{
@@ -390,29 +338,22 @@ public class CellarDAO extends DAO
 		try
 		{
 			item = createCellarItem(r);
-			Database.disconnect(); // what was that one command that josh used?
+			Database.disconnect();
 
 		} catch (SQLException e)
 		{
-			throw new DAException("SQL select exception");
+			throw new DAException("Cellar Item creation error");
 		}
 		return item;
 	}
 
-	/*
-	 * public static long getCellar(long cellarId) throws DAException,
-	 * SQLException { // String table; ResultSet r = null;
+	/**
+	 * Creates a CellarItem from a ResultSet
 	 * 
-	 * if (cellarId == 0) throw new DAException("Cellar ID not set.");
-	 * 
-	 * try { String where = "cellarId = "; where += cellarId; r =
-	 * select(CELLAR_TABLE, "*", where); Database.disconnect(); } catch
-	 * (SQLException e) { throw new DAException("SQL select exception");
-	 * 
-	 * } catch (ConnectionException e) { throw new
-	 * DAException("Not connected to database"); }
-	 * 
-	 * return (long) r.getInt("userId"); }
+	 * @param r
+	 *            The ResultSet of the CellarItem to create
+	 * @return CellarItem from the given ResultSet
+	 * @throws SQLException
 	 */
 	private static CellarItem createCellarItem(ResultSet r) throws SQLException
 	{
@@ -442,18 +383,4 @@ public class CellarDAO extends DAO
 		return cellarItem;
 	}
 
-	/*
-	 * private static Cellar createCellar(ResultSet r) throws SQLException {
-	 * Cellar c;
-	 * 
-	 * long cellarId, userId;
-	 * 
-	 * if (!r.next()) return null;
-	 * 
-	 * cellarId = r.getLong("cellarId"); userId = r.getLong("userId");
-	 * 
-	 * c = new Cellar(); c.setCellarId(cellarId); c.setUserId(userId);
-	 * 
-	 * return c; }
-	 */
 }
