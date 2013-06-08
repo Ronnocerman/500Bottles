@@ -1,0 +1,188 @@
+.wine_grid
+  list-style: none
+  @include transition(all, 1s)
+
+  .wine
+    $ITEM_WIDTH: 340px
+    $ITEM_HEIGHT: 140px
+    $IMAGE_WIDTH: 140px
+    $IMAGE_HEIGHT: 140px
+    @include prevent_selection
+
+    @include inline_block
+    width: $ITEM_WIDTH
+    height: $ITEM_HEIGHT
+    position: relative
+    margin: 0.3em
+    padding: 6px
+    box-shadow: 0 0 3px rgba(black, 0.2) inset
+    border: none
+    cursor: pointer
+
+    .front, .back, .details
+      border: 1px solid #ccc
+      background-color: white
+      position: absolute
+      float: none
+
+    &.flipped .back, .details
+      box-shadow: 0 15px 50px rgba(0,0,0,0.2)
+      -moz-box-shadow: 0 15px 50px rgba(0,0,0,0.2)
+      -webkit-box-shadow: 0 15px 50px rgba(0,0,0,0.2)
+
+    .front, .back
+      max-width: $ITEM_WIDTH
+      width: inherit
+      height: inherit
+
+      -o-transition: all .4s ease-in-out 0.1s
+      -ms-transition: all .4s ease-in-out 0.1s
+      -moz-transition: all .4s ease-in-out 0.1s
+      -webkit-transition: all .4s ease-in-out 0.1s
+      transition: all .4s ease-in-out 0.1s
+
+      -webkit-transform-style: preserve-3d
+      -webkit-backface-visibility: hidden
+      -moz-transform-style: preserve-3d
+      -moz-backface-visibility: hidden
+
+    .front
+      z-index: 900
+
+      -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.9)
+      -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.9)
+      box-shadow: 0 1px 5px rgba(0,0,0,0.9)
+
+      -webkit-transform: rotateX(0deg) rotateY(0deg)
+      -moz-transform: rotateX(0deg) rotateY(0deg)
+
+
+    &.flipped .front
+      z-index: 900
+      border-color: #eee
+
+      -webkit-transform: rotateX(180deg)
+      -moz-transform: rotateX(180deg)
+
+      -moz-box-shadow: 0 15px 50px rgba(0,0,0,0.2)
+      -webkit-box-shadow: 0 15px 50px rgba(0,0,0,0.2)
+      box-shadow: 0 15px 50px rgba(0,0,0,0.2)
+
+    .back
+      z-index: 800
+      -webkit-transform: rotateX(-180deg)
+      -moz-transform: rotateX(-180deg)
+
+    &.flipped .back
+      z-index: 1000
+
+      -webkit-transform: rotateX(0deg) rotateY(0deg)
+      -moz-transform: rotateX(0deg) rotateY(0deg)
+
+    .wine_image_container
+      text-align: center
+      vertical-align: middle
+      border: 1px solid rgba(white, 0.6)
+      width: $IMAGE_WIDTH
+
+    .wine_image
+      background-position: center center
+      background-repeat: no-repeat
+      height: $IMAGE_HEIGHT - 10
+      width: $IMAGE_WIDTH - 10
+      margin: 0 auto 0
+
+    .wine_info
+      font-size: 1.7em
+      line-height: 1.1em
+      vertical-align: middle
+      padding-left: 0.2em
+      padding-right: 0.2em
+      text-align: left
+
+      span.wine_name
+        background-color: rgba(white, 0.8)
+        font-family: LeagueGothicRegular
+        text-transform: uppercase
+
+      span.vineyard_name
+        font-size: 1.2em
+        margin-top: -0.1em
+        color: #AAA
+        display: block
+
+    .back .wine_info
+      padding-top: 1.3em
+      span.wine_name, span.vineyard_name
+        height: 1.2em
+        text-overflow: ellipsis
+        overflow: hidden
+        display: block
+        white-space: nowrap
+        padding-left: 0.07em
+
+    .wine_vintage
+      position: absolute
+      right: -4px
+      bottom: 23px
+      font-size: 5em
+      opacity: 0.05
+      font-family: LeagueGothicRegular
+
+    .details
+      @include transition(all, 1s)
+      width: 120%
+      min-height: 120%
+      margin-left: -10%
+      margin-top: -10%
+      z-index: 1200
+      -webkit-animation-duration: 0.7s
+      -moz-animation-duration: 0.7s
+      -o-animation-duration: 0.7s
+      animation-duration: 0.7s
+      padding: 0.5em
+      cursor: move
+      &.open
+        @include transition(none)
+
+      .wine_info
+        padding-left: 0em
+
+      .vineyard_name
+        margin-left: -2px
+
+      .favorite_banner
+        right: 30px
+      .wine_vintage
+        right: -1px
+        bottom: -28px
+        font-size: 8em
+      p
+        text-align: left
+        max-height: 200px
+        overflow: scroll
+        padding-left: 0em
+
+    .favorite_banner
+      position: absolute
+      top: -1px
+      height: 40px
+      width: 35px
+      background-image: url('../img/icons/favorite_banner.png')
+      right: 5px
+      background-size: 100% auto
+      background-position: center bottom
+      cursor: pointer
+      @include transition(all, 0.27s)
+      opacity: 0.2
+
+    .favorite_banner:hover
+      height: 44px
+      opacity: 0.8
+
+    &.favorite .favorite_banner
+      height: 47px
+      opacity: 1
+
+    &:not(.favorite) .front .favorite_banner
+      height: 0px
