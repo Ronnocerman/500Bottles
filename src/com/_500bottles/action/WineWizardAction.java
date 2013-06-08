@@ -15,9 +15,9 @@ import com._500bottles.object.wine.WineQuery;
 
 public class WineWizardAction
 {
-	public Vector<Wine> getSuggestion(WineQuery wine) throws DAException,
-			InvalidCategory, InvalidSort, InvalidOtherParameters, IOException,
-			ParseException
+	public static Vector<Wine> getSuggestion(WineQuery wine)
+			throws DAException, InvalidCategory, InvalidSort,
+			InvalidOtherParameters, IOException, ParseException
 	{
 		return WineWizardManager.selectWine(wine);
 	}
