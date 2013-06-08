@@ -125,7 +125,7 @@ public class WineWizardManagerTest
 
 		try
 		{
-			testWine = WineWizardManager.selectWine(query);
+			testWine = WineWizardManager.selectWine(query).getWines();
 		} catch (DAException | InvalidCategory | InvalidSort
 				| InvalidOtherParameters | IOException | ParseException e)
 		{

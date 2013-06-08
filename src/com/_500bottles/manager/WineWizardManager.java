@@ -177,9 +177,9 @@ public class WineWizardManager
 	 * @throws InvalidCategory
 	 * @throws DAException
 	 */
-	public static Vector<Wine> selectWine(WineQuery query) throws DAException,
-			InvalidCategory, InvalidSort, InvalidOtherParameters, IOException,
-			ParseException
+	public static WineQueryResult selectWine(WineQuery query)
+			throws DAException, InvalidCategory, InvalidSort,
+			InvalidOtherParameters, IOException, ParseException
 	{
 		// query object is the user settings
 		WineQuery search = new WineQuery();// the query search for the suggested
@@ -324,35 +324,7 @@ public class WineWizardManager
 				+ search.getVarietal().get(0).getGrapeType());
 		search.setSize(query.getSize());
 		WineQueryResult doug = WineManager.searchWine(search);
-		Vector<Wine> returnWineVector = new Vector<Wine>();
-		if (doug == null)
-		{
-			System.out.println("why are you not working");
-			return returnWineVector;
-		}
-		Vector<Wine> frog = doug.getWines();
-		for (int i = 0; i < frog.size(); i++)
-		{
-			if (!returnWineVector.contains(frog.get(i)))
-			{
-				returnWineVector.add(frog.get(i));
-			}
-		}
-		for (int q = 0; q < returnWineVector.size(); q++)
-		{
-			returnWineVector
-					.get(q)
-					.getVarietal()
-					.setGrapeType(
-							VarietalDAO.getVarietalById(
-									(returnWineVector.get(q).getVarietal()
-											.getId())).getGrapeType());
-			long i = returnWineVector.get(q).getType().getWineTypeId();
-			returnWineVector.get(q).setType(WineTypeDAO.getWineTypeById(i));
-		}
-		// TODO add the wines wineType names as well as their varietal names and
-		// make sure to add something for the query size
-		return returnWineVector;
+		return doug;
 	}
 
 	/**
