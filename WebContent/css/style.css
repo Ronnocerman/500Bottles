@@ -1139,7 +1139,9 @@ footer {
     left: 10%; }
 
 #wizard_form {
-  width: 75%; }
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto; }
   #wizard_form input[type="text"] {
     margin-bottom: 20px; }
   #wizard_form select {
@@ -1152,6 +1154,14 @@ footer {
     width: 50%;
     position: relative;
     left: 23%; }
+
+.light_bg_wizard {
+  background-color: white; }
+  .light_bg_wizard.with_border {
+    position: relative;
+    margin: 1em;
+    width: 75%;
+    left: 10%; }
 
 @media screen and (min-width: 1200px) {
   .content_container {

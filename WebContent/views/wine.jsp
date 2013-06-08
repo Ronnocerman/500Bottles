@@ -1,9 +1,5 @@
 <section class="wrapper clearfix view animated no_display fadeInUp" id="wine">
     <section class="column_100 clearfix">
-        <div class="content">
-            <h1>Wine</h1>
-        </div>
-        
         <div class="light_bg_wines with_border shadow" style="height: 550px">
 			<form id="wine_form">
 				<input id="name" type="text" placeholder="name" value=""/><center>
