@@ -103,10 +103,15 @@ public class SnoothWine
 
 	public void setSugar(String sugar)
 	{
-		if (sugar.length() == 0)
+		try {
+			if (sugar.length() == 0)
+				this.sugar = -1;
+			else
+				this.sugar = Double.parseDouble(sugar);
+
+		} catch (NumberFormatException e) {
 			this.sugar = -1;
-		else
-			this.sugar = Double.parseDouble(sugar);
+		}
 	}
 
 	public void setColor(String color)
@@ -121,10 +126,16 @@ public class SnoothWine
 
 	public void setAlcohol(String alcohol)
 	{
-		if (alcohol.length() == 0)
+		try {
+			if (alcohol.length() == 0)
+				this.alcohol = -1;
+			else
+				this.alcohol = Double.parseDouble(alcohol);
+
+		} catch (NumberFormatException e) {
 			this.alcohol = -1;
-		else
-			this.alcohol = Double.parseDouble(alcohol);
+		}
+
 	}
 
 	public double getPh()
@@ -134,10 +145,15 @@ public class SnoothWine
 
 	public void setPh(String ph)
 	{
-		if (ph.length() == 0)
+		try {
+			if (ph.length() == 0)
+				this.ph = -1;
+			else
+				this.ph = Double.parseDouble(ph);
+
+		} catch (NumberFormatException e) {
 			this.ph = -1;
-		else
-			this.ph = Double.parseDouble(ph);
+		}
 	}
 
 	public double getAcidity()
@@ -147,10 +163,16 @@ public class SnoothWine
 
 	public void setAcidity(String acidity)
 	{
-		if (acidity.length() == 0)
+		try {
+			if (acidity.length() == 0)
+				this.acidity = -1;
+			else
+				this.acidity = Double.parseDouble(acidity);
+
+		} catch (NumberFormatException e) {
 			this.acidity = -1;
-		else
-			this.acidity = Double.parseDouble(acidity);
+		}
+
 	}
 
 	public void setName(String name)
@@ -275,16 +297,13 @@ public class SnoothWine
 
 	public void setSnoothrank(Object snoothrank)
 	{
-		if (snoothrank instanceof String)
-		{
+		if (snoothrank instanceof String) {
 			this.snoothrank = -1;
 
-		} else if (snoothrank instanceof Long)
-		{
+		} else if (snoothrank instanceof Long) {
 			this.snoothrank = (new Long((Long) snoothrank)).doubleValue();
 
-		} else
-		{
+		} else {
 			this.snoothrank = (Double) snoothrank;
 		}
 	}
