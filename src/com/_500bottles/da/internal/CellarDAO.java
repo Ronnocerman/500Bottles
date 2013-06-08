@@ -86,6 +86,44 @@ public class CellarDAO extends DAO
 	 * }
 	 */
 
+	/*
+	 * public static void deleteCellar(long cellarId) throws DAException { if
+	 * (cellarId == 0) throw new DAException("Cellar ID not set"); try {
+	 * delete(CELLAR_TABLE, "cellarId=" + cellarId); } catch (SQLException e) {
+	 * throw new DAException("Failed Cellar deletion."); } catch
+	 * (ConnectionException e) { throw new
+	 * DAException("Not connected to database"); } }
+	 */
+
+	/*
+	 * public static void addCellar(long userId) throws DAException { String
+	 * columns, values; // cellarItemsJSON not used // anymore
+	 * 
+	 * columns = "( `userId`)";
+	 * 
+	 * // cellarItemsJSON = //
+	 * cellar.getCellarItemIdsAsJSONArray().toJSONString();
+	 * 
+	 * values = "('" + userId + "')"; // values += "'" + "0" + "')";
+	 * 
+	 * try { insert(CELLAR_TABLE, columns, values); Database.disconnect(); //
+	 * System.out.print("This is what we got: " + i); // TODO: Better exception
+	 * handling. } catch (SQLException e) { throw new
+	 * DAException("Failed Cellar insertion.", e); } catch (ConnectionException
+	 * e) { throw new DAException("Not connected to database"); } }
+	 */
+
+	/*
+	 * public static void deleteCellarItem(CellarItem item) throws DAException,
+	 * NullPointerException { if (item == null) throw new
+	 * NullPointerException("CellarItem is null.");
+	 * 
+	 * // delete(CELLARITEM_TABLE, "cellarItemId=" + item.getId());
+	 * deleteCellarItem(item.getId());
+	 * 
+	 * }
+	 */
+
 	public static boolean deleteCellarItem(long cellarItemId)
 	{
 		// if (cellarItemId == 0)
@@ -103,6 +141,35 @@ public class CellarDAO extends DAO
 			return false;
 		return true;
 	}
+
+	/*
+	 * public static void addCellar(long userId) throws DAException { String
+	 * columns, values; // cellarItemsJSON not used // anymore
+	 * 
+	 * columns = "( `userId`)";
+	 * 
+	 * // cellarItemsJSON = //
+	 * cellar.getCellarItemIdsAsJSONArray().toJSONString();
+	 * 
+	 * values = "('" + userId + "')"; // values += "'" + "0" + "')";
+	 * 
+	 * try { insert(CELLAR_TABLE, columns, values); Database.disconnect(); //
+	 * System.out.print("This is what we got: " + i); // TODO: Better exception
+	 * handling. } catch (SQLException e) { throw new
+	 * DAException("Failed Cellar insertion.", e); } catch (ConnectionException
+	 * e) { throw new DAException("Not connected to database"); } }
+	 */
+
+	/*
+	 * public static void deleteCellarItem(CellarItem item) throws DAException,
+	 * NullPointerException { if (item == null) throw new
+	 * NullPointerException("CellarItem is null.");
+	 * 
+	 * // delete(CELLARITEM_TABLE, "cellarItemId=" + item.getId());
+	 * deleteCellarItem(item.getId());
+	 * 
+	 * }
+	 */
 
 	/*
 	 * public static void deleteCellar(long cellarId) throws DAException { if
@@ -140,6 +207,38 @@ public class CellarDAO extends DAO
 			throw new DAException("Failed CellarItem update.", e);
 		}
 		return item;
+	}
+
+	public static Vector<Wine> getAllWinesFromCellar(long userId)
+			throws DAException
+	{
+		Vector<Wine> wineVector = new Vector<Wine>();
+		ResultSet r;
+
+		try
+		{
+			r = select(CELLARITEM_TABLE, "*", "userId=" + userId + "");
+
+			Vector<Long> wineIdVector = new Vector<Long>();
+
+			while (r.next())
+			{
+				wineIdVector.add(r.getLong("wineId"));
+			}
+			for (int i = 0; i < wineIdVector.size(); i++)
+			{
+				Wine temp = new Wine();
+				temp = WineDAO.getWine(wineIdVector.elementAt(i).longValue());
+				wineVector.add(temp);
+			}
+			Database.disconnect();
+
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception", e.getCause());
+		}
+
+		return wineVector;
 	}
 
 	/**
@@ -283,38 +382,6 @@ public class CellarDAO extends DAO
 		cellarItem.setCellarItemId(cellarItemId);
 
 		return cellarItem;
-	}
-
-	public static Vector<Wine> getAllWinesFromCellar(long userId)
-			throws DAException
-	{
-		Vector<Wine> wineVector = new Vector<Wine>();
-		ResultSet r;
-
-		try
-		{
-			r = select(CELLARITEM_TABLE, "*", "userId=" + userId + "");
-
-			Vector<Long> wineIdVector = new Vector<Long>();
-
-			while (r.next())
-			{
-				wineIdVector.add(r.getLong("wineId"));
-			}
-			for (int i = 0; i < wineIdVector.size(); i++)
-			{
-				Wine temp = new Wine();
-				temp = WineDAO.getWine(wineIdVector.elementAt(i).longValue());
-				wineVector.add(temp);
-			}
-			Database.disconnect();
-
-		} catch (SQLException e)
-		{
-			throw new DAException("SQL select exception", e.getCause());
-		}
-
-		return wineVector;
 	}
 
 	/*

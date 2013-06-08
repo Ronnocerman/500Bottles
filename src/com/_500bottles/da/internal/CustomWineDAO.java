@@ -115,22 +115,23 @@ public class CustomWineDAO extends WineDAO
 
 			try
 			{
-				varietal = getVarietal(wine.getVarietal().getGrapeType());
+				varietal = VarietalDAO.getVarietal(wine.getVarietal()
+						.getGrapeType());
 
-				vineyard = getVineyard(wine.getVineyard().getName());
+				vineyard = VineyardDAO.getVineyard(wine.getVineyard().getName());
 
-				wineType = getWineType(wine.getType().getWineType());
+				wineType = WineTypeDAO.getWineType(wine.getType().getWineType());
 			} catch (DAException e)
 			{
 			}
 
 			// If vineyard, varietal, winetype dont exist, then add a new one
 			if (varietal == null)
-				addVarietal(wine.getVarietal());
+				VarietalDAO.addVarietal(wine.getVarietal());
 			if (vineyard == null)
-				addVineyard(wine.getVineyard());
+				VineyardDAO.addVineyard(wine.getVineyard());
 			if (wineType == null)
-				addWineType(wine.getType());
+				WineTypeDAO.addWineType(wine.getType());
 
 			values = "('" + ret.getId() + "',";
 			values += "'" + ret.getUserId() + "',";
@@ -212,14 +213,14 @@ public class CustomWineDAO extends WineDAO
 			throw new DAException("Failed Wine update", e);
 		}
 
-		if (getVineyard(wine.getVineyard().getName()) != null)
-			addVineyard(wine.getVineyard());
+		if (VineyardDAO.getVineyard(wine.getVineyard().getName()) != null)
+			VineyardDAO.addVineyard(wine.getVineyard());
 		// System.out.println(wine.getVineyard().getName());
 		// System.out.println(wine.getVarietal().getGrapeType());
-		if (getVarietal(wine.getVarietal().getGrapeType()) != null)
-			addVarietal(wine.getVarietal());
-		if (getWineType(wine.getType().getWineType()) != null)
-			addWineType(wine.getType());
+		if (VarietalDAO.getVarietal(wine.getVarietal().getGrapeType()) != null)
+			VarietalDAO.addVarietal(wine.getVarietal());
+		if (WineTypeDAO.getWineType(wine.getType().getWineType()) != null)
+			WineTypeDAO.addWineType(wine.getType());
 	}
 
 	public static CustomWine getCustomWine(long customId) throws DAException
@@ -274,7 +275,7 @@ public class CustomWineDAO extends WineDAO
 		wineTypeId = r.getLong("wineTypeId");
 		try
 		{
-			type = getWineTypeById(wineTypeId);
+			type = WineTypeDAO.getWineTypeById(wineTypeId);
 
 		} catch (DAException e1)
 		{
@@ -291,7 +292,7 @@ public class CustomWineDAO extends WineDAO
 
 		try
 		{
-			varietal = getVarietalById(varId);
+			varietal = VarietalDAO.getVarietalById(varId);
 		} catch (DAException e)
 		{
 			// TODO Auto-generated catch block
@@ -306,7 +307,7 @@ public class CustomWineDAO extends WineDAO
 
 		try
 		{
-			vineyard = getVineyardNameById(vineId);
+			vineyard = VineyardDAO.getVineyardById(vineId);
 		} catch (DAException e)
 		{
 			// TODO Auto-generated catch block
@@ -347,9 +348,8 @@ public class CustomWineDAO extends WineDAO
 		return wine;
 	}
 
-	private static boolean customWineExists(CustomWine wine)
-	{
-		return true;
-	}
+	/*
+	 * private static boolean customWineExists(CustomWine wine) { return true; }
+	 */
 
 }
