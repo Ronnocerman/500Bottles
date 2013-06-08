@@ -165,28 +165,29 @@ public class WineDAOTests
 		}
 	}
 
-	@Test
-	public void editVineyard() throws DAException
-	{
-		Vineyard getVineyard;
-		Vineyard vineyard = createVineyard("If this shows up youre REALLY fucked");
-
-		try
-		{
-			WineDAO.addVineyard(vineyard);
-			getVineyard = WineDAO.getVineyard(vineyard.getName());
-
-			assertEquals(getVineyard.getName(),
-					"If this shows up youre REALLY fucked");
-
-			getVineyard.setName("vineyard8");
-
-			WineDAO.editVineyard(getVineyard);
-		} catch (DAException e)
-		{
-			fail(e.getMessage());
-		}
-	}
+	// @Test
+	// public void editVineyard() throws DAException
+	// {
+	// Vineyard getVineyard;
+	// Vineyard vineyard =
+	// createVineyard("If this shows up youre REALLY fucked");
+	//
+	// try
+	// {
+	// WineDAO.addVineyard(vineyard);
+	// getVineyard = WineDAO.getVineyard(vineyard.getName());
+	//
+	// assertEquals(getVineyard.getName(),
+	// "If this shows up youre REALLY fucked");
+	//
+	// getVineyard.setName("vineyard8");
+	//
+	// WineDAO.editVineyard(getVineyard);
+	// } catch (DAException e)
+	// {
+	// fail(e.getMessage());
+	// }
+	// }
 
 	@Test
 	public void addVarietal() throws DAException
@@ -215,29 +216,30 @@ public class WineDAOTests
 		}
 	}
 
-	@Test
-	public void editVarietal() throws DAException
-	{
-		Varietal getVarietal;
-		Varietal varietal = createVarietal("You should not be able to see this.");
-
-		try
-		{
-			WineDAO.addVarietal(varietal);
-
-			getVarietal = WineDAO.getVarietal(varietal.getGrapeType());
-
-			assertEquals(getVarietal.getGrapeType(),
-					"You should not be able to see this.");
-
-			getVarietal.setGrapeType("varietal8.");
-
-			WineDAO.editVarietal(getVarietal);
-		} catch (DAException e)
-		{
-			fail(e.getMessage());
-		}
-	}
+	// @Test
+	// public void editVarietal() throws DAException
+	// {
+	// Varietal getVarietal;
+	// Varietal varietal =
+	// createVarietal("You should not be able to see this.");
+	//
+	// try
+	// {
+	// WineDAO.addVarietal(varietal);
+	//
+	// getVarietal = WineDAO.getVarietal(varietal.getGrapeType());
+	//
+	// assertEquals(getVarietal.getGrapeType(),
+	// "You should not be able to see this.");
+	//
+	// getVarietal.setGrapeType("varietal8.");
+	//
+	// WineDAO.editVarietal(getVarietal);
+	// } catch (DAException e)
+	// {
+	// fail(e.getMessage());
+	// }
+	// }
 
 	@Test
 	public void testCrazyShit()
