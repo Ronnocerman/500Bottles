@@ -26,8 +26,18 @@
     <section class="column_50">
 		<div class="light_bg_wizard with_border shadow">
 			<form id="wizard_form">
-					<select id="varietalSelect" name="varietal">
-					<option>grape varietal/type</option>
+				<select id="varietalSelect" name="type">
+					<option>type</option>
+					<option>red</option>
+					<option>white</option>
+					<option>ros&eacute;</option>
+					<option>champagne & sparkling</option>
+					<option>sak&eacute;</option>
+					<option>dessert, sherry, & port</option>
+				</select>
+			
+				<select id="varietalSelect" name="varietal">
+					<option>grape varietal</option>
 					<option>Albarino</option>
 					<option>Barbera</option>
 					<option>Bordeaux</option>
@@ -67,7 +77,7 @@
 					<option>Voignier</option>
 					<option>Zinfandel</option>
 					<option>Other</option>
-				</select><br>
+				</select>
 				
 				<input type="text" name="vineyard" placeholder="vineyard" value="" />
 				<input type="text" name="min_year" placeholder="min year" value="" class="number"/>
