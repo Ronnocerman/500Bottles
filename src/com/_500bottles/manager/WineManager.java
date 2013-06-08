@@ -94,10 +94,13 @@ public class WineManager
 		try
 		{
 			result = WineQueryManager.search(query);
-		} catch (Exception e)
-		{
+		} catch (NullPointerException e) {
+			System.err.println("NullPointerException caught!");
+			e.printStackTrace();
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+
 
 		return result;
 	}

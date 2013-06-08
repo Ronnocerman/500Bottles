@@ -109,7 +109,7 @@ public class SnoothWine
 			else
 				this.sugar = Double.parseDouble(sugar);
 
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | NullPointerException e) {
 			this.sugar = -1;
 		}
 	}
@@ -132,7 +132,7 @@ public class SnoothWine
 			else
 				this.alcohol = Double.parseDouble(alcohol);
 
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | NullPointerException e) {
 			this.alcohol = -1;
 		}
 
@@ -151,7 +151,7 @@ public class SnoothWine
 			else
 				this.ph = Double.parseDouble(ph);
 
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | NullPointerException e) {
 			this.ph = -1;
 		}
 	}
@@ -169,7 +169,7 @@ public class SnoothWine
 			else
 				this.acidity = Double.parseDouble(acidity);
 
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | NullPointerException e) {
 			this.acidity = -1;
 		}
 
@@ -207,7 +207,7 @@ public class SnoothWine
 
 	public void setWinery(String winery)
 	{
-		this.winery = winery;
+		this.winery = (winery == null) ? "" : winery;
 	}
 
 	public String getWinery_id()
@@ -346,9 +346,13 @@ public class SnoothWine
 		Wine w = new Wine();
 
 		w.setName(this.getName());
+
 		w.setDescription(this.getWineMakerNotes());
+
 		w.setSnoothId(this.getCode());
+
 		// w.setGeoLocation();
+
 		WineType type = new WineType(this.getType());
 		w.setType(type);
 
@@ -370,9 +374,12 @@ public class SnoothWine
 		Varietal varietal = new Varietal(this.getVarietal());
 		w.setVarietal(varietal);
 
+
 		Vineyard vineyard = new Vineyard(this.getWinery());
 		w.setVineyard(vineyard);
+
 		// w.setRating(this.getSnoothrank());
+
 		return w;
 	}
 }

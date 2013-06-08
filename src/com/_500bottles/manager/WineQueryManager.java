@@ -116,9 +116,10 @@ public class WineQueryManager
 			// Do the Snooth query and get the response object.
 			res = SnoothDAO.doSearch(s);
 
-		} catch (InvalidWineSearch e)
-		{
+		} catch (InvalidWineSearch e) {
 			// TODO
+		} catch (NullPointerException e) {
+			System.err.println("Caught NPE in searchSnooth...");
 		}
 
 		processSnoothResponse(res);
@@ -333,9 +334,13 @@ public class WineQueryManager
 	private static void processSnoothResponse(WineSearchResponse response)
 	{
 		Iterator<SnoothWine> it = response.getWinesIterator();
+		SnoothWine w;
 
-		while (it.hasNext())
-			addWineToDatabase(it.next());
+		while (it.hasNext()) {
+			w = it.next();
+			addWineToDatabase(w);
+		}
+
 	}
 
 	/**

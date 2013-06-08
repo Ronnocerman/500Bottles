@@ -66,7 +66,11 @@ public class SessionManager
 
 			// Set the userId session variable to indicate that
 			// the user is logged in.
-			session.setAttribute("userId", user.getUserId());
+			try {
+				session.setAttribute("userId", user.getUserId());
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
 
 			return passwordHash.equals(user.getPasswordHash());
 
