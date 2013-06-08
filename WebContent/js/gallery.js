@@ -196,7 +196,7 @@
     }
 
     /* Builds internal representation of gallery. */
-    function build_gallery(gallery_parent_selector) {
+    function build_gallery(gallery_parent_selector, randomize) {
         var i, j,               // loop index
             start_index,        // start index for adding images to rows
             end_index;     // count of images per row
@@ -229,6 +229,28 @@
 
                 // append the image to the row container
                 $(image_rows[i]).append(images[j]);
+
+                // Give the images some random-ass locations.
+                var neg_left, neg_top;
+                Math.random() > .5 ? neg_left = 1 : neg_left = -1;
+                Math.random() > .5 ? neg_top = 1 : neg_top = -1;
+
+                if (randomize) {
+                    $(images[j]).css("left", Math.random() * 1000 * neg_left);
+                    $(images[j]).css("top", Math.random() * 1000 * neg_top);
+                    $(images[j]).css("opacity", "0");
+
+                    setTimeout((function(el) {
+
+                        return function() {
+                            console.log("putting back...", el);
+                            $(el).css("left", 0);
+                            $(el).css("top", 0);
+                            $(el).css("opacity", 1);
+                        }
+
+                    })(images[j]), 1000);
+                }
             }
 
             // add this row container to the gallery container
@@ -255,7 +277,6 @@
 
         image_selector = "." + GALLERY_CLASS_PREFIX + "row " + IMAGE_ELEMENT_SEL;
 
-        // TODO: why do I have to add 5px here when the number of images increases?
         image_width = $(image_selector).outerWidth(true);
         image_height = $(image_selector).outerHeight(true);
 

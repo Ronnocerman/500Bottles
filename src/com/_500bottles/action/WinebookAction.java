@@ -15,8 +15,7 @@ public class WinebookAction
 	/**
 	 * Add an entry to the winebook
 	 * 
-	 * @param id
-	 *            ID of the entry to be added to the Winebook
+	 * @param entry   Entry object to be added to the Winebook
 	 * @throws EntryDoesExistException
 	 */
 	public static void addEntry(Entry entry) throws EntryDoesExistException
@@ -27,8 +26,7 @@ public class WinebookAction
 	/**
 	 * Get a winebook entry
 	 * 
-	 * @param id
-	 *            ID of the entry to be added the winebook
+	 * @param id	ID of the entry to be added the winebook
 	 * @throws EntryDoesNotExistException
 	 */
 	public static void getEntry(long id) throws EntryDoesNotExistException
@@ -39,8 +37,7 @@ public class WinebookAction
 	/**
 	 * Remove the specified winebook entry form the winebook
 	 * 
-	 * @param id
-	 *            ID of the winebook entry to be removed
+	 * @param id	ID of the winebook entry to be removed
 	 */
 	public static void removeEntry(long id) throws EntryDoesNotExistException
 	{
@@ -50,8 +47,7 @@ public class WinebookAction
 	/**
 	 * Edit the content of the specific winebook entry
 	 * 
-	 * @param id
-	 *            ID of the winebook entry to be edited
+	 * @param id	ID of the winebook entry to be edited
 	 * @throws EntryDoesNotExistException
 	 */
 	public static void editContent(long id) throws EntryDoesNotExistException
@@ -64,7 +60,7 @@ public class WinebookAction
 	 * 
 	 * @param id
 	 *            ID of the winebook entry to add the specifed wine to
-	 * @param w
+	 * @param wid
 	 *            Wine to be added to the specified winebook entry
 	 * @throws DAException
 	 */
@@ -80,7 +76,7 @@ public class WinebookAction
 	 * @param id
 	 *            ID of the winebook entry that the specified wine will be
 	 *            removed from
-	 * @param w
+	 * @param wid
 	 *            Wine to be removed from the specified winebook entry
 	 * @throws DAException
 	 */

@@ -98,7 +98,7 @@
     </div>
 
     <script type="text/javascript">
-        _500bottles.gallery.buildGallery("#quick_search_results_wine_container");
+        _500bottles.gallery.buildGallery("#quick_search_results_wine_container", true);
     </script>
 
 </section>
