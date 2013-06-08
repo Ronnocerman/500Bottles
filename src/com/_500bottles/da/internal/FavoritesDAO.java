@@ -2,6 +2,7 @@ package com._500bottles.da.internal;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import com._500bottles.config.Config;
 import com._500bottles.exception.da.DAException;
@@ -128,6 +129,30 @@ public class FavoritesDAO extends DAO
 	// // + favorite.getfavoritesId());
 	// return getFavorite(wineId);
 	// }
+
+	public static Vector<Wine> getFavorites(long user_id) throws DAException
+	{
+		ResultSet r;
+		Vector<Wine> output = new Vector<Wine>();
+
+		try
+		{
+			String where = "userId = " + user_id;
+			r = select(FAVORITES_TABLE, "*", where);
+			while (r.next())
+			{
+				output.add(WineDAO.getWine(r.getLong("wineId")));
+			}
+			Database.disconnect();
+
+		} catch (SQLException e)
+		{
+			System.out.println("Message: " + e.getMessage());
+			throw new DAException("SQL select exception.", e);
+		}
+
+		return output;
+	}
 
 	private static Favorites createFavorites(ResultSet r) throws SQLException
 	{
