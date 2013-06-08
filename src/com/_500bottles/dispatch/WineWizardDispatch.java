@@ -19,8 +19,9 @@ import com._500bottles.da.external.wine.exception.InvalidCategory;
 import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Varietal;
-import com._500bottles.object.wine.Wine;
+import com._500bottles.object.wine.Vineyard;
 import com._500bottles.object.wine.WineQuery;
+import com._500bottles.object.wine.WineQueryResult;
 import com._500bottles.object.wine.WineType;
 
 @SuppressWarnings("serial")
@@ -33,19 +34,17 @@ public class WineWizardDispatch extends HttpServlet
 		// TODO Auto-generated method stub
 		String action = request.getParameter("action");
 		PrintWriter out = response.getWriter();
-		switch (action)
-		{
-		case "getSuggestion":
+		if (action.equals("suggestion"))
 			getSuggestion(request, response);
-		}
 
 	}
 
 	private void getSuggestion(HttpServletRequest request,
 			HttpServletResponse response)
 	{
+		// System.out.println("Gets into ");
 		// TODO Auto-generated method stub
-		Vector<Wine> returnWines;
+		WineQueryResult result = null;
 		ServletContext context = getServletContext();
 
 		RequestDispatcher dispatcher = context
@@ -58,6 +57,15 @@ public class WineWizardDispatch extends HttpServlet
 		String max_price = request.getParameter("max_price");
 		String vineyard = request.getParameter("vineyard");
 		WineQuery query = new WineQuery();
+		query.setSize(4);
+		if (vineyard != null)
+		{
+			Vector<Vineyard> vine = new Vector<Vineyard>();
+			Vineyard yard = new Vineyard();
+			yard.setName(vineyard);
+			vine.add(yard);
+			query.setVineyard(vine);
+		}
 		if (wineType != null)
 		{
 			Vector<WineType> typeList = new Vector<WineType>();
@@ -87,7 +95,7 @@ public class WineWizardDispatch extends HttpServlet
 		}
 		try
 		{
-			returnWines = WineWizardAction.getSuggestion(query);
+			result = WineWizardAction.getSuggestion(query);
 		} catch (DAException e)
 		{
 			// TODO Auto-generated catch block
@@ -112,6 +120,15 @@ public class WineWizardDispatch extends HttpServlet
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		request.setAttribute("search_result", result);
+
+		try
+		{
+			dispatcher.forward(request, response);
+		} catch (ServletException | IOException e)
+		{
+			// TODO: catch exception or display error.
 		}
 
 	}
