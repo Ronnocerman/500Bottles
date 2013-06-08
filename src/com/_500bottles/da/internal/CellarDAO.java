@@ -8,8 +8,10 @@ import java.util.Vector;
 
 import com._500bottles.config.Config;
 import com._500bottles.exception.da.DAException;
+import com._500bottles.manager.SessionManager;
 import com._500bottles.object.cellar.CellarItem;
 import com._500bottles.object.wine.Wine;
+import com._500bottles.object.wine.WineQuery;
 
 public class CellarDAO extends DAO
 {
@@ -209,33 +211,76 @@ public class CellarDAO extends DAO
 		return item;
 	}
 
-	public static Vector<Wine> getAllWinesFromCellar(long userId)
+	public static Vector<Wine> getWinesFromCellarSearch(WineQuery q)
 			throws DAException
 	{
-		Vector<Wine> wineVector = new Vector<Wine>();
+		Vector<Wine> ret = new Vector<Wine>();
+		Vector<Long> allMatching = WineDAO.getWineIdsFromQuerySearch(q);
+		Vector<Long> allCellar = getAllWineIdsFromCellar(SessionManager
+				.getSessionManager().getLoggedInUser().getUserId());
+		Vector<Long> retIds = new Vector<Long>();
+
+		for (int i = 0; i < allMatching.size(); i++)
+		{
+			for (int j = 0; i < allCellar.size(); i++)
+			{
+				if (allMatching.get(i) == allCellar.get(j))
+				{
+					retIds.add(allMatching.get(i));
+				}
+			}
+		}
+
+		for (int i = 0; i < retIds.size(); i++)
+		{
+			Wine temp = new Wine();
+			temp = WineDAO.getWine(retIds.get(i).longValue());
+			ret.add(temp);
+		}
+
+		return ret;
+	}
+
+	public static Vector<Long> getAllWineIdsFromCellar(long userId)
+			throws DAException
+	{
+		// Vector<Wine> wineVector = new Vector<Wine>();
 		ResultSet r;
+		Vector<Long> wineIdVector = new Vector<Long>();
 
 		try
 		{
 			r = select(CELLARITEM_TABLE, "*", "userId=" + userId + "");
 
-			Vector<Long> wineIdVector = new Vector<Long>();
-
 			while (r.next())
 			{
 				wineIdVector.add(r.getLong("wineId"));
 			}
-			for (int i = 0; i < wineIdVector.size(); i++)
-			{
-				Wine temp = new Wine();
-				temp = WineDAO.getWine(wineIdVector.elementAt(i).longValue());
-				wineVector.add(temp);
-			}
+
 			Database.disconnect();
 
 		} catch (SQLException e)
 		{
 			throw new DAException("SQL select exception", e.getCause());
+		}
+
+		return wineIdVector;
+
+	}
+
+	public static Vector<Wine> getAllWinesFromCellar(long userId)
+			throws DAException
+	{
+		Vector<Wine> wineVector = new Vector<Wine>();
+
+		Vector<Long> wineIdVector = new Vector<Long>();
+
+		wineIdVector = getAllWineIdsFromCellar(userId);
+		for (int i = 0; i < wineIdVector.size(); i++)
+		{
+			Wine temp = new Wine();
+			temp = WineDAO.getWine(wineIdVector.elementAt(i).longValue());
+			wineVector.add(temp);
 		}
 
 		return wineVector;

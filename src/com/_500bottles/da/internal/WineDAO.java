@@ -719,6 +719,83 @@ public class WineDAO extends DAO
 
 	}
 
+	protected static Vector<Long> getWineIdsFromQuerySearch(WineQuery q) // for
+																			// wine
+																			// search
+			throws DAException
+	{
+		// Vector<Wine> wines = new Vector<Wine>();
+		int size = q.getSize();
+		int offset = q.getOffset();
+		String query = q.getTextQuery();
+		String delims = "\\s+"; // any spaces, plus any spaces right after the
+								// spaces
+		String[] fields = query.split(delims);
+
+		Vector<Long> allWineIds = new Vector<Long>();
+
+		Vector<Long> nameIds = new Vector<Long>();
+		Vector<Long> varietalIds = new Vector<Long>();
+		Vector<Long> vineyardIds = new Vector<Long>();
+		Vector<Long> wineTypeIds = new Vector<Long>();
+		Vector<Long> descriptionIds = new Vector<Long>();
+		Vector<Long> vintageIds = new Vector<Long>();
+
+		try
+		{
+			nameIds = getWineIdByWineName(fields, offset, size);//
+			varietalIds = VarietalDAO.getWineIdByVarietal(fields, offset, size);
+			vineyardIds = VineyardDAO.getWineIdByVineyard(fields, offset, size);
+			wineTypeIds = WineTypeDAO.getWineIdByWineType(fields, offset, size);
+			descriptionIds = getWineIdByDescription(fields, offset, size);//
+			vintageIds = getWineIdByVintage(fields, offset, size);//
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (int j = 0; j < nameIds.size(); j++)
+		{
+			allWineIds.add(nameIds.get(j));
+		}
+
+		for (int j = 0; j < varietalIds.size(); j++)
+		{
+			allWineIds.add(varietalIds.get(j));
+		}
+		for (int j = 0; j < vineyardIds.size(); j++)
+		{
+			allWineIds.add(vineyardIds.get(j));
+		}
+		for (int j = 0; j < wineTypeIds.size(); j++)
+		{
+			allWineIds.add(wineTypeIds.get(j));
+		}
+		for (int j = 0; j < descriptionIds.size(); j++)
+		{
+			allWineIds.add(descriptionIds.get(j));
+		}
+		for (int j = 0; j < vintageIds.size(); j++)
+		{
+			allWineIds.add(vintageIds.get(j));
+		}
+
+		for (int i = 0; i < allWineIds.size(); i++)
+		{
+			// if (i < 10)
+			// System.out.println("wineIds: " + allWineIds.get(i));
+			place(allWineIds.get(i));
+		}
+		sort();
+		Vector<Long> returnLong = new Vector<Long>();
+		for (int i = 0; i < IdSort.size(); i++)
+		{
+			returnLong.add(IdSort.get(i).getValue());
+			// System.out.println("marty's stuff: " + returnLong.get(i));
+		}
+		return returnLong;
+	}
+
 	private static void place(long id)
 	{
 		int test = 0;
@@ -1044,80 +1121,12 @@ public class WineDAO extends DAO
 		return ret;
 	}
 
-	private static Vector<Wine> getWinesFromQuerySearch(WineQuery q) // for wine
-																		// search
+	private static Vector<Wine> getWinesFromQuerySearch(WineQuery q)
 			throws DAException
 	{
+		Vector<Long> returnLong = getWineIdsFromQuerySearch(q);
 		Vector<Wine> wines = new Vector<Wine>();
 		int size = q.getSize();
-		int offset = q.getOffset();
-		String query = q.getTextQuery();
-		String delims = "\\s+"; // any spaces, plus any spaces right after the
-								// spaces
-		String[] fields = query.split(delims);
-
-		Vector<Long> allWineIds = new Vector<Long>();
-
-		Vector<Long> nameIds = new Vector<Long>();
-		Vector<Long> varietalIds = new Vector<Long>();
-		Vector<Long> vineyardIds = new Vector<Long>();
-		Vector<Long> wineTypeIds = new Vector<Long>();
-		Vector<Long> descriptionIds = new Vector<Long>();
-		Vector<Long> vintageIds = new Vector<Long>();
-
-		try
-		{
-			nameIds = getWineIdByWineName(fields, offset, size);//
-			varietalIds = VarietalDAO.getWineIdByVarietal(fields, offset, size);
-			vineyardIds = VineyardDAO.getWineIdByVineyard(fields, offset, size);
-			wineTypeIds = WineTypeDAO.getWineIdByWineType(fields, offset, size);
-			descriptionIds = getWineIdByDescription(fields, offset, size);//
-			vintageIds = getWineIdByVintage(fields, offset, size);//
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (int j = 0; j < nameIds.size(); j++)
-		{
-			allWineIds.add(nameIds.get(j));
-		}
-
-		for (int j = 0; j < varietalIds.size(); j++)
-		{
-			allWineIds.add(varietalIds.get(j));
-		}
-		for (int j = 0; j < vineyardIds.size(); j++)
-		{
-			allWineIds.add(vineyardIds.get(j));
-		}
-		for (int j = 0; j < wineTypeIds.size(); j++)
-		{
-			allWineIds.add(wineTypeIds.get(j));
-		}
-		for (int j = 0; j < descriptionIds.size(); j++)
-		{
-			allWineIds.add(descriptionIds.get(j));
-		}
-		for (int j = 0; j < vintageIds.size(); j++)
-		{
-			allWineIds.add(vintageIds.get(j));
-		}
-
-		for (int i = 0; i < allWineIds.size(); i++)
-		{
-			// if (i < 10)
-			// System.out.println("wineIds: " + allWineIds.get(i));
-			place(allWineIds.get(i));
-		}
-		sort();
-		Vector<Long> returnLong = new Vector<Long>();
-		for (int i = 0; i < IdSort.size(); i++)
-		{
-			returnLong.add(IdSort.get(i).getValue());
-			// System.out.println("marty's stuff: " + returnLong.get(i));
-		}
-
 		if (returnLong.size() >= size)
 		{
 			for (int i = 0; i < size; i++)
