@@ -91,25 +91,20 @@ public class FavoritesDAO extends DAO
 		}
 	}
 
-	public static Favorites getFavorite(long wineId) throws DAException
+	public static Favorites getFavorite(long wine_id, long user_id) throws DAException
 	{
 		ResultSet r;
 		Favorites favorite = null;
 
-		try
-		{
-			long userId = SessionManager.getSessionManager().getLoggedInUser()
-					.getUserId();
-			// System.out.println(favoritesId);
-			String where = "wineId = " + wineId;
-			where += " AND " + "userId = " + userId;
+		try {
+			String where = "wineId = " + wine_id;
+			where += " AND " + "userId = " + user_id;
 			r = select(FAVORITES_TABLE, "*", where);
 
-			// System.out.println("abc " + r.getLong("favoritesId"));
 			favorite = createFavorites(r);
 			Database.disconnect();
-		} catch (SQLException e)
-		{
+
+		} catch (SQLException e) {
 			System.out.println("Message: " + e.getMessage());
 			throw new DAException("SQL select exception.", e);
 		}
@@ -117,19 +112,19 @@ public class FavoritesDAO extends DAO
 		return favorite;
 	}
 
-	public static Favorites getFavorite(Favorites favorite) throws DAException,
-			NullPointerException
-	{
-		if (favorite == null)
-			throw new NullPointerException("Null Favorite.");
-		if (favorite.getWineId() == 0)
-			throw new DAException("Favorite not set.");
-
-		long wineId = favorite.getWineId();
-		// System.out.println("favoritesId in getFavorite: "
-		// + favorite.getfavoritesId());
-		return getFavorite(wineId);
-	}
+//	public static Favorites getFavorite(Favorites favorite) throws DAException,
+//			NullPointerException
+//	{
+//		if (favorite == null)
+//			throw new NullPointerException("Null Favorite.");
+//		if (favorite.getWineId() == 0)
+//			throw new DAException("Favorite not set.");
+//
+//		long wineId = favorite.getWineId();
+//		// System.out.println("favoritesId in getFavorite: "
+//		// + favorite.getfavoritesId());
+//		return getFavorite(wineId);
+//	}
 
 	private static Favorites createFavorites(ResultSet r) throws SQLException
 	{

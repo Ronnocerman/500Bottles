@@ -209,6 +209,12 @@ p {
   -o-transition-timing-function: default;
   transition-timing-function: default; }
   .wine_grid .wine {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     display: -moz-inline-stack;
     display: inline-block;
     zoom: 1;
@@ -302,29 +308,13 @@ p {
         display: block;
         white-space: nowrap;
         padding-left: 0.07em; }
-    .wine_grid .wine .favorite_banner {
+    .wine_grid .wine .wine_vintage {
       position: absolute;
-      top: -1px;
-      height: 43px;
-      width: 35px;
-      background-image: url("../img/icons/favorite_banner.png");
-      right: 5px;
-      background-size: 100% auto;
-      background-position: center bottom;
-      -webkit-transition: all 0.27s 0s;
-      -moz-transition: all 0.27s 0s;
-      -ms-transition: all 0.27s 0s;
-      -o-transition: all 0.27s 0s;
-      transition: all 0.27s 0s;
-      -webkit-transition-timing-function: default;
-      -moz-transition-timing-function: default;
-      -ms-transition-timing-function: default;
-      -o-transition-timing-function: default;
-      transition-timing-function: default;
-      opacity: 0.2; }
-      .wine_grid .wine .favorite_banner:hover {
-        height: 47px;
-        opacity: 1; }
+      right: -4px;
+      bottom: 23px;
+      font-size: 5em;
+      opacity: 0.05;
+      font-family: LeagueGothicRegular; }
     .wine_grid .wine .details {
       -webkit-transition: all 1s 0s;
       -moz-transition: all 1s 0s;
@@ -336,21 +326,70 @@ p {
       -ms-transition-timing-function: default;
       -o-transition-timing-function: default;
       transition-timing-function: default;
-      min-width: 120%;
+      width: 120%;
       min-height: 120%;
       margin-left: -10%;
       margin-top: -10%;
-      z-index: 1000;
+      z-index: 1200;
       -webkit-animation-duration: 0.7s;
       -moz-animation-duration: 0.7s;
       -o-animation-duration: 0.7s;
-      animation-duration: 0.7s; }
+      animation-duration: 0.7s;
+      padding: 0.5em;
+      cursor: move; }
+      .wine_grid .wine .details.open {
+        -webkit-transition: none 1s 0s;
+        -moz-transition: none 1s 0s;
+        -ms-transition: none 1s 0s;
+        -o-transition: none 1s 0s;
+        transition: none 1s 0s;
+        -webkit-transition-timing-function: default;
+        -moz-transition-timing-function: default;
+        -ms-transition-timing-function: default;
+        -o-transition-timing-function: default;
+        transition-timing-function: default; }
+      .wine_grid .wine .details .wine_info {
+        padding-left: 0em; }
       .wine_grid .wine .details .favorite_banner {
         right: 30px; }
+      .wine_grid .wine .details .wine_vintage {
+        right: -1px;
+        bottom: -28px;
+        font-size: 8em; }
       .wine_grid .wine .details p {
         text-align: left;
         max-height: 200px;
-        overflow: scroll; }
+        overflow: scroll;
+        padding-left: 0em; }
+    .wine_grid .wine .favorite_banner {
+      position: absolute;
+      top: -1px;
+      height: 40px;
+      width: 35px;
+      background-image: url("../img/icons/favorite_banner.png");
+      right: 5px;
+      background-size: 100% auto;
+      background-position: center bottom;
+      cursor: pointer;
+      -webkit-transition: all 0.27s 0s;
+      -moz-transition: all 0.27s 0s;
+      -ms-transition: all 0.27s 0s;
+      -o-transition: all 0.27s 0s;
+      transition: all 0.27s 0s;
+      -webkit-transition-timing-function: default;
+      -moz-transition-timing-function: default;
+      -ms-transition-timing-function: default;
+      -o-transition-timing-function: default;
+      transition-timing-function: default;
+      opacity: 0.2; }
+    .wine_grid .wine .favorite_banner:hover {
+      height: 44px;
+      opacity: 0.8; }
+    .wine_grid .wine.favorite .favorite_banner {
+      height: 47px;
+      opacity: 1; }
+    .wine_grid .wine:not(.favorite) .front .favorite_banner {
+      height: 0px; }
 
 a.light_link {
   text-decoration: none;

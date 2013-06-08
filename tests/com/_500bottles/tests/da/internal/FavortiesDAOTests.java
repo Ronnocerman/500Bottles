@@ -66,71 +66,71 @@ public class FavortiesDAOTests
 
 	}
 
-	@Test
-	public void editFavorites() throws DAException
-	{
-		Favorites fave = new Favorites();
+//	@Test
+//	public void editFavorites() throws DAException
+//	{
+//		Favorites fave = new Favorites();
+//
+//		fave.setWineId(30);
+//
+//		try
+//		{
+//			fave = FavoritesDAO.addFavorite(1, fave);
+//			fave.setWineId(69);
+//			FavoritesDAO.editFavorite(fave);
+//
+//			assertEquals(FavoritesDAO.getFavorite(fave).getWineId(), 69);
+//		} catch (DAException e)
+//		{
+//			fail(e.getMessage());
+//		}
+//	}
 
-		fave.setWineId(30);
+//	@Test
+//	public void getFavoritesByFavoritesId()
+//	{
+//		Favorites fave = new Favorites();
+//
+//		fave.setWineId(250);
+//
+//		try
+//		{
+//			FavoritesDAO.addFavorite(52, fave);
+//
+//			long faveId = fave.getfavoritesId();
+//			// System.out.println(FavoritesDAO.getFavorite(fave.getfavoritesId())
+//
+//			// THERE WILL BE NO METHOD THAT WILL GET A FAVORITE BY FAVORITESID
+//			// assertEquals(FavoritesDAO.getFavorite(fave.getWineId() ),
+//			// 250);
+//
+//			assertEquals(
+//					FavoritesDAO.getFavorite(fave.getWineId()).getWineId(), 250);
+//		} catch (DAException e)
+//		{
+//			fail(e.getMessage());
+//		}
+//	}
 
-		try
-		{
-			fave = FavoritesDAO.addFavorite(1, fave);
-			fave.setWineId(69);
-			FavoritesDAO.editFavorite(fave);
-
-			assertEquals(FavoritesDAO.getFavorite(fave).getWineId(), 69);
-		} catch (DAException e)
-		{
-			fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void getFavoritesByFavoritesId()
-	{
-		Favorites fave = new Favorites();
-
-		fave.setWineId(250);
-
-		try
-		{
-			FavoritesDAO.addFavorite(52, fave);
-
-			long faveId = fave.getfavoritesId();
-			// System.out.println(FavoritesDAO.getFavorite(fave.getfavoritesId())
-
-			// THERE WILL BE NO METHOD THAT WILL GET A FAVORITE BY FAVORITESID
-			// assertEquals(FavoritesDAO.getFavorite(fave.getWineId() ),
-			// 250);
-
-			assertEquals(
-					FavoritesDAO.getFavorite(fave.getWineId()).getWineId(), 250);
-		} catch (DAException e)
-		{
-			fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void getFavoritesByFavorites()
-	{
-		Favorites fave = new Favorites();
-
-		fave.setWineId(500);
-
-		try
-		{
-			FavoritesDAO.addFavorite(1000, fave);
-
-			long faveId = fave.getfavoritesId();
-
-			assertEquals(FavoritesDAO.getFavorite(fave).getfavoritesId(),
-					faveId);
-			assertEquals(FavoritesDAO.getFavorite(fave).getWineId(), 500);
-		} catch (DAException e)
-		{
-			fail(e.getMessage());
-		}
-	}
+//	@Test
+//	public void getFavoritesByFavorites()
+//	{
+//		Favorites fave = new Favorites();
+//
+//		fave.setWineId(500);
+//
+//		try
+//		{
+//			FavoritesDAO.addFavorite(1000, fave);
+//
+//			long faveId = fave.getfavoritesId();
+//
+//			assertEquals(FavoritesDAO.getFavorite(fave).getfavoritesId(),
+//					faveId);
+//			assertEquals(FavoritesDAO.getFavorite(fave).getWineId(), 500);
+//		} catch (DAException e)
+//		{
+//			fail(e.getMessage());
+//		}
+//	}
 }

@@ -37,6 +37,9 @@ public class FavoritesDispatch extends HttpServlet
 			case "setFavorite":
 				setFavorite(request);
 				break;
+			case "clearFavorite":
+				clearFavorite(request);
+				break;
 			case "getFavorite":
 
 				break;
@@ -59,5 +62,17 @@ public class FavoritesDispatch extends HttpServlet
 		long wine_id_lng = Long.parseLong(wine_id);
 
 		FavoritesAction.setFavorite(wine_id_lng, user_id);
+	}
+
+	private void clearFavorite(HttpServletRequest request)
+	{
+		SessionManager sm = SessionManager.getSessionManager();
+		ApplicationUser user = sm.getLoggedInUser();
+		long user_id = user.getUserId();
+
+		String wine_id = request.getParameter(WINE_ID_FIELD);
+		long wine_id_lng = Long.parseLong(wine_id);
+
+		FavoritesAction.clearFavorite(wine_id_lng, user_id);
 	}
 }

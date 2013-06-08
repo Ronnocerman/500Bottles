@@ -77,6 +77,16 @@
         <url-pattern>/wine</url-pattern>
     </servlet-mapping>
 
+    <!-- Favorites Dispatcher -->
+    <servlet>
+        <servlet-name>FavoritesDispatch</servlet-name>
+        <servlet-class>com._500bottles.dispatch.FavoritesDispatch</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FavoritesDispatch</servlet-name>
+        <url-pattern>/favorites</url-pattern>
+    </servlet-mapping>
+
     <!-- Wine Wizard Dispatcher -->
     <servlet>
         <servlet-name>WineWizardDispatch</servlet-name>

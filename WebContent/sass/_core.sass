@@ -232,21 +232,6 @@ p
         white-space: nowrap
         padding-left: 0.07em
 
-    .favorite_banner
-      position: absolute
-      top: -1px
-      height: 43px
-      width: 35px
-      background-image: url('../img/icons/favorite_banner.png')
-      right: 5px
-      background-size: 100% auto
-      background-position: center bottom
-      @include transition(all, 0.27s)
-      opacity: 0.2
-      &:hover
-        height: 47px
-        opacity: 1
-
     .wine_vintage
       position: absolute
       right: -4px
@@ -286,6 +271,29 @@ p
         overflow: scroll
         padding-left: 0em
 
+    .favorite_banner
+      position: absolute
+      top: -1px
+      height: 40px
+      width: 35px
+      background-image: url('../img/icons/favorite_banner.png')
+      right: 5px
+      background-size: 100% auto
+      background-position: center bottom
+      cursor: pointer
+      @include transition(all, 0.27s)
+      opacity: 0.2
+
+    .favorite_banner:hover
+      height: 44px
+      opacity: 0.8
+
+    &.favorite .favorite_banner
+      height: 47px
+      opacity: 1
+
+    &:not(.favorite) .front .favorite_banner
+      height: 0px
 
 a.light_link
   text-decoration: none
