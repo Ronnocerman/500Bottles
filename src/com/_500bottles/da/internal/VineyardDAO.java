@@ -135,14 +135,32 @@ public class VineyardDAO extends DAO
 		}
 	}
 
-	protected static Vector<Long> getWineIdByVineyard(String s, int offset,
-			int size) throws DAException, SQLException
+	protected static Vector<Long> getWineIdByVineyard(String[] fields,
+			int offset, int size) throws DAException, SQLException
 	{
 		Vector<Long> ret = new Vector<Long>();
 		Vector<Long> vineId = new Vector<Long>();
 		ResultSet r;
 		String where = "";
-		where += "vineyardName LIKE " + "'%" + escapeXml(s) + "%'";
+		boolean first = true;
+
+		for (int i = 0; i < fields.length; i++)
+		{
+			if (first)
+			{
+				where += "vineyardName";
+				where += " LIKE ";
+				where += "'%" + escapeXml(fields[i]) + "%'";
+				first = false;
+			} else
+			{
+				where += " and ";
+				where += "vineyardName";
+				where += " LIKE ";
+				where += "'%" + escapeXml(fields[i]) + "%'";
+				first = false;
+			}
+		}
 
 		// Find matches to the passed in string
 		try
@@ -190,20 +208,20 @@ public class VineyardDAO extends DAO
 	private static Vineyard createVineyard(ResultSet r) throws SQLException
 	{
 		Vineyard vineyard;
-	
+
 		long vineyardId;
 		String vineyardName;
-	
+
 		if (!r.next())
 			return null;
-	
+
 		vineyardId = r.getLong("vineyardId");
 		vineyardName = r.getString("vineyardName");
-	
+
 		vineyard = new Vineyard();
 		vineyard.setId(vineyardId);
 		vineyard.setName(vineyardName);
-	
+
 		return vineyard;
 	}
 

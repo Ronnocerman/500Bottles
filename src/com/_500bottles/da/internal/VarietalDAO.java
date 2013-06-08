@@ -102,14 +102,34 @@ public class VarietalDAO extends DAO
 		return varietal;
 	}
 
-	protected static Vector<Long> getWineIdByVarietal(String s, int offset,
-			int size) throws DAException, SQLException
+	protected static Vector<Long> getWineIdByVarietal(String[] fields,
+			int offset, int size) throws DAException, SQLException
 	{
 		Vector<Long> ret = new Vector<Long>();
 		Vector<Long> varId = new Vector<Long>();
 		ResultSet r;
 		String where = "";
-		where += "varietalName LIKE " + "'%" + escapeXml(s) + "%'";
+
+		boolean first = true;
+
+		for (int i = 0; i < fields.length; i++)
+		{
+			if (first)
+			{
+				where += "varietalName";
+				where += " LIKE ";
+				where += "'%" + escapeXml(fields[i]) + "%'";
+				first = false;
+			} else
+			{
+				where += " and ";
+				where += "varietalName";
+				where += " LIKE ";
+				where += "'%" + escapeXml(fields[i]) + "%'";
+				first = false;
+			}
+		}
+
 		// Find matches to the passed in string
 		try
 		{
@@ -131,13 +151,13 @@ public class VarietalDAO extends DAO
 			where = "";
 			where += "varietalId=" + varId.get(i);
 			where += " LIMIT ";
-	
+
 			if (offset != WineQuery.DEFAULT_OFFSET)
 			{
 				where += offset;
 				where += ",";
 			}
-	
+
 			where += size;
 			try
 			{
@@ -151,7 +171,7 @@ public class VarietalDAO extends DAO
 				ret.add(r.getLong("wineId"));
 			}
 		}
-	
+
 		return ret;
 	}
 

@@ -104,14 +104,32 @@ public class WineTypeDAO extends DAO
 		return wineType;
 	}
 
-	protected static Vector<Long> getWineIdByWineType(String s, int offset,
-			int size) throws DAException, SQLException
+	protected static Vector<Long> getWineIdByWineType(String[] fields,
+			int offset, int size) throws DAException, SQLException
 	{
 		Vector<Long> ret = new Vector<Long>();
 		Vector<Long> wineTypeId = new Vector<Long>();
 		ResultSet r;
 		String where = "";
-		where += "type LIKE " + "'%" + escapeXml(s) + "%'";
+		boolean first = true;
+
+		for (int i = 0; i < fields.length; i++)
+		{
+			if (first)
+			{
+				where += "type";
+				where += " LIKE ";
+				where += "'%" + escapeXml(fields[i]) + "%'";
+				first = false;
+			} else
+			{
+				where += " and ";
+				where += "type";
+				where += " LIKE ";
+				where += "'%" + escapeXml(fields[i]) + "%'";
+				first = false;
+			}
+		}
 
 		// Find matches to the passed in string
 		try

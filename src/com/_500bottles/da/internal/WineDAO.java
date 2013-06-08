@@ -880,13 +880,33 @@ public class WineDAO extends DAO
 
 	// Return vector of wineIds
 
-	private static Vector<Long> getWineIdByWineName(String s, int offset,
-			int size) throws DAException, SQLException
+	private static Vector<Long> getWineIdByWineName(String[] fields,
+			int offset, int size) throws DAException, SQLException
 	{
+
 		Vector<Long> ret = new Vector<Long>();
 		ResultSet r;
 		String where = "";
-		where += "wineName LIKE " + "'%" + escapeXml(s) + "%'";
+		boolean first = true;
+
+		for (int i = 0; i < fields.length; i++)
+		{
+			if (first)
+			{
+				where += "wineName";
+				where += " LIKE ";
+				where += "'%" + escapeXml(fields[i]) + "%'";
+				first = false;
+			} else
+			{
+				where += " and ";
+				where += "wineName";
+				where += " LIKE ";
+				where += "'%" + escapeXml(fields[i]) + "%'";
+				first = false;
+			}
+		}
+
 		where += " LIMIT ";
 		if (offset != WineQuery.DEFAULT_OFFSET)
 		{
@@ -912,13 +932,33 @@ public class WineDAO extends DAO
 		return ret;
 	}
 
-	private static Vector<Long> getWineIdByDescription(String s, int offset,
-			int size) throws DAException, SQLException
+	private static Vector<Long> getWineIdByDescription(String[] fields,
+			int offset, int size) throws DAException, SQLException
 	{
 		Vector<Long> ret = new Vector<Long>();
 		ResultSet r;
 		String where = "";
-		where += "description LIKE " + "'%" + escapeXml(s) + "%'";
+
+		boolean first = true;
+
+		for (int i = 0; i < fields.length; i++)
+		{
+			if (first)
+			{
+				where += "description";
+				where += " LIKE ";
+				where += "'%" + escapeXml(fields[i]) + "%'";
+				first = false;
+			} else
+			{
+				where += " and ";
+				where += "description";
+				where += " LIKE ";
+				where += "'%" + escapeXml(fields[i]) + "%'";
+				first = false;
+			}
+		}
+
 		where += " LIMIT ";
 		if (offset != WineQuery.DEFAULT_OFFSET)
 		{
@@ -949,42 +989,54 @@ public class WineDAO extends DAO
 		return ret;
 	}
 
-	private static Vector<Long> getWineIdByVintage(String s, int offset,
+	private static Vector<Long> getWineIdByVintage(String[] fields, int offset,
 			int size) throws DAException, SQLException
 	{
 		Vector<Long> ret = new Vector<Long>();
 		int vintage = 0;
-		ResultSet r;
-		try
+		ResultSet r = null;
+
+		for (int i = 0; i < fields.length; i++)
 		{
-			vintage = Integer.parseInt(s);
-		} catch (NumberFormatException e)
-		{
-		}
-		String where = "";
-		if (vintage != 0)
-		{
-			where += "vintage=" + vintage;
-			where += " LIMIT ";
-			if (offset != WineQuery.DEFAULT_OFFSET)
+
+			try
 			{
-				where += offset;
-				where += ",";
+				vintage = Integer.parseInt(fields[i]);
+			} catch (NumberFormatException e)
+			{
+			}
+			String where = "";
+			if (vintage != 0)
+			{
+				where += "vintage=" + vintage;
+				where += " LIMIT ";
+				if (offset != WineQuery.DEFAULT_OFFSET)
+				{
+					where += offset;
+					where += ",";
+				}
+
+				where += size;
+			} else
+				return ret;
+			// Find matches to the passed in string
+			try
+			{
+				r = select(WINE_TABLE, "*", where);
+			} catch (SQLException e)
+			{
+				throw new DAException("SQL select exception.");
 			}
 
-			where += size;
-		} else
-			return ret;
-		// Find matches to the passed in string
-		try
-		{
-			r = select(WINE_TABLE, "*", where);
-		} catch (SQLException e)
-		{
-			throw new DAException("SQL select exception.");
 		}
+
 		// Iterate through the results and add the wine IDs to the return
 		// vector
+
+		if (r == null)
+		{
+			return ret;
+		}
 		while (r.next())
 		{
 			ret.add((long) r.getInt("wineId"));
@@ -1012,49 +1064,44 @@ public class WineDAO extends DAO
 		Vector<Long> wineTypeIds = new Vector<Long>();
 		Vector<Long> descriptionIds = new Vector<Long>();
 		Vector<Long> vintageIds = new Vector<Long>();
-		for (int i = 0; i < fields.length; i++)
-		{
-			try
-			{
-				nameIds = getWineIdByWineName(fields[i], offset, size);
-				varietalIds = VarietalDAO.getWineIdByVarietal(fields[i],
-						offset, size);
-				vineyardIds = VineyardDAO.getWineIdByVineyard(fields[i],
-						offset, size);
-				wineTypeIds = WineTypeDAO.getWineIdByWineType(fields[i],
-						offset, size);
-				descriptionIds = getWineIdByDescription(fields[i], offset, size);
-				vintageIds = getWineIdByVintage(fields[i], offset, size);
-			} catch (SQLException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			for (int j = 0; j < nameIds.size(); j++)
-			{
-				allWineIds.add(nameIds.get(j));
-			}
 
-			for (int j = 0; j < varietalIds.size(); j++)
-			{
-				allWineIds.add(varietalIds.get(j));
-			}
-			for (int j = 0; j < vineyardIds.size(); j++)
-			{
-				allWineIds.add(vineyardIds.get(j));
-			}
-			for (int j = 0; j < wineTypeIds.size(); j++)
-			{
-				allWineIds.add(wineTypeIds.get(j));
-			}
-			for (int j = 0; j < descriptionIds.size(); j++)
-			{
-				allWineIds.add(descriptionIds.get(j));
-			}
-			for (int j = 0; j < vintageIds.size(); j++)
-			{
-				allWineIds.add(vintageIds.get(j));
-			}
+		try
+		{
+			nameIds = getWineIdByWineName(fields, offset, size);//
+			varietalIds = VarietalDAO.getWineIdByVarietal(fields, offset, size);
+			vineyardIds = VineyardDAO.getWineIdByVineyard(fields, offset, size);
+			wineTypeIds = WineTypeDAO.getWineIdByWineType(fields, offset, size);
+			descriptionIds = getWineIdByDescription(fields, offset, size);//
+			vintageIds = getWineIdByVintage(fields, offset, size);//
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (int j = 0; j < nameIds.size(); j++)
+		{
+			allWineIds.add(nameIds.get(j));
+		}
+
+		for (int j = 0; j < varietalIds.size(); j++)
+		{
+			allWineIds.add(varietalIds.get(j));
+		}
+		for (int j = 0; j < vineyardIds.size(); j++)
+		{
+			allWineIds.add(vineyardIds.get(j));
+		}
+		for (int j = 0; j < wineTypeIds.size(); j++)
+		{
+			allWineIds.add(wineTypeIds.get(j));
+		}
+		for (int j = 0; j < descriptionIds.size(); j++)
+		{
+			allWineIds.add(descriptionIds.get(j));
+		}
+		for (int j = 0; j < vintageIds.size(); j++)
+		{
+			allWineIds.add(vintageIds.get(j));
 		}
 
 		for (int i = 0; i < allWineIds.size(); i++)
