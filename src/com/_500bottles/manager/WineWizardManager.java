@@ -316,12 +316,12 @@ public class WineWizardManager
 												// wants
 		// searchs for the wines with the traits
 
-		System.out.println("search wine type = "
-				+ search.getType().get(0).getWineType());
+		// System.out.println("search wine type = "
+		// + search.getType().get(0).getWineType());
 		// System.out.println(" varietalList.size() at this location is"
 		// + varietalList.size());
-		System.out.println("search varietal = "
-				+ search.getVarietal().get(0).getGrapeType());
+		// System.out.println("search varietal = "
+		// + search.getVarietal().get(0).getGrapeType());
 		search.setSize(query.getSize());
 		WineQueryResult doug = WineManager.searchWine(search);
 		if (doug == null)
