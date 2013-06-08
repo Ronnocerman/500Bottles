@@ -67,29 +67,21 @@
         //var FAILED_LOGIN_ACTION = views.front.showSignupForm;
 
         var url = "/user";
-        //var submit = document.getElementById("logout_submit");
 
-            var data = {
-                "action": "logout",
-                "email": $("#email").val(),
-                //"password": $("#password").val(),
-                //"success": "successful_login",
-                //"failed": "failed_login"
-            };
+        var data = {
+            "action": "logout",
+            "email": $("#email").val()
+        };
 
-            var type = "GET";
+        var type = "GET";
 
-            $.ajax({
-                url: url,
-                data: data,
-                type: type
-            }).success(function (data, textStatus, jqXHR) {
-                eval(data);
-            });
-        
-
-       // $(submit).on("click", do_logout);
-
+        $.ajax({
+            url: url,
+            data: data,
+            type: type
+        }).success(function (data, textStatus, jqXHR) {
+            window.location = "/";
+        });
     }
     
 
