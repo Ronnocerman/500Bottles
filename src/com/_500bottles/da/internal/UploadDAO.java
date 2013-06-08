@@ -1,7 +1,9 @@
 package com._500bottles.da.internal;
 
 import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com._500bottles.config.Config;
@@ -46,4 +48,46 @@ public class UploadDAO extends DAO
 			return false;
 		return true;
 	}
+
+	public static String getPhoto(long uploadId) throws DAException
+	{
+		ResultSet r;
+		String ret;
+		try
+		{
+			// System.out.println(wineId);
+			r = select(PHOTOS_TABLE, "*", "uploadId=" + uploadId);
+			// System.out.println("after the select in getWine");
+
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception.", e.getCause());
+		}
+		try
+		{
+			ret = unescapeXml(r.getString("photoURI"));
+		} catch (SQLException e)
+		{
+			throw new DAException("URI not received.");
+		}
+		return ret;
+	}
+
+	public static boolean photoExists(String photo)
+	{
+		ResultSet r;
+		String where = "photoURI = '" + escapeXml(photo) + "'";
+		try
+		{
+			r = select(PHOTOS_TABLE, "*", where);
+			if (!r.next())
+				return false;
+		} catch (SQLException e)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 }
