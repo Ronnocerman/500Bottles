@@ -121,6 +121,13 @@
         white-space: nowrap
         padding-left: 0.07em
 
+    .front .wine_info
+      span.wine_name
+        height: 2.1em
+        overflow: hidden
+        display: block
+
+
     .wine_vintage
       position: absolute
       right: -4px
@@ -144,6 +151,11 @@
       cursor: move
       &.open
         @include transition(none)
+
+      .wine_name
+        display: block
+        width: 82%
+
 
       .wine_info
         padding-left: 0em
