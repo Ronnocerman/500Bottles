@@ -1561,14 +1561,14 @@ footer {
   margin-right: auto;
   text-align: center; }
   #wizard #wizard_form input[type="text"] {
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    display: inline; }
   #wizard #wizard_form select {
     width: 96.5%;
     display: inline; }
   #wizard #wizard_form .number {
-    width: 25%;
-    display: inline;
-    margin-right: 10px; }
+    width: 43.5%;
+    display: inline; }
   #wizard #wizard_form input[type="button"] {
     width: 50%;
     position: relative;
