@@ -51,7 +51,7 @@
 				<input type="text" name="max_year" placeholder="max year" value="" class="number"/><br>
 				<input type="text" name="min_price" placeholder="min price" value="" class="number"/>
 				<input type="text" name="max_price" placeholder="max price" value="" class="number"/>
-				<br><br>
+				<br>
 				<input id="red" name="type" type="radio" value="Red Wine"/>red
 				<input id="white" name="type" type="radio" value="White Wine"/>white
 				<input id="rose" name="type" type="radio" value="Rose Wine"/>ros&eacute;
