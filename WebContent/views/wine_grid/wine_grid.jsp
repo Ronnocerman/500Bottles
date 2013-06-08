@@ -2,6 +2,7 @@
 <%@ page import="com._500bottles.object.wine.Wine" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="com._500bottles.manager.SessionManager" %>
+<%@ page import="com._500bottles.manager.FavoritesManager" %>
 
 <ul class="wine_grid">
 
@@ -10,8 +11,7 @@
 
         Iterator<Wine> it = wines.getIterator();
 
-        SessionManager sm = SessionManager.getSessionManager();
-        long user_id = sm.getLoggedInUser().getUserId();
+        long user_id = SessionManager.getSessionManager().getLoggedInUser().getUserId();
 
         request.setAttribute("user_id", user_id);
 

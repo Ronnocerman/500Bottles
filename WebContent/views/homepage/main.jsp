@@ -11,7 +11,7 @@
         %>
 
 
-        <%@include file="../wine_grid/wine_grid.jsp" %>
+        <%--<%@include file="../wine_grid/wine_grid.jsp" %>--%>
 
     </div>
 
