@@ -1118,18 +1118,30 @@ footer {
   z-index: 0; }
 
 #wine_form {
-  width: 75%; }
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto; }
   #wine_form select {
     width: 96.5%; }
   #wine_form input[type="button"] {
     width: 50%;
     position: relative;
-    left: 23%; }
+    left: 25%; }
   #wine_form input[type="text"] {
     margin-bottom: 20px; }
 
+.light_bg_wines {
+  background-color: white; }
+  .light_bg_wines.with_border {
+    position: relative;
+    margin: 1em;
+    width: 75%;
+    left: 10%; }
+
 #wizard_form {
-  width: 75%; }
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto; }
   #wizard_form input[type="text"] {
     margin-bottom: 20px; }
   #wizard_form select {
@@ -1142,6 +1154,14 @@ footer {
     width: 50%;
     position: relative;
     left: 23%; }
+
+.light_bg_wizard {
+  background-color: white; }
+  .light_bg_wizard.with_border {
+    position: relative;
+    margin: 1em;
+    width: 75%;
+    left: 10%; }
 
 @media screen and (min-width: 1200px) {
   .content_container {

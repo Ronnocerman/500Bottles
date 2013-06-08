@@ -118,6 +118,7 @@ p
     $ITEM_HEIGHT: 140px
     $IMAGE_WIDTH: 140px
     $IMAGE_HEIGHT: 140px
+    @include prevent_selection
 
     @include inline_block
     width: $ITEM_WIDTH
@@ -246,25 +247,44 @@ p
         height: 47px
         opacity: 1
 
+    .wine_vintage
+      position: absolute
+      right: -4px
+      bottom: 23px
+      font-size: 5em
+      opacity: 0.05
+      font-family: LeagueGothicRegular
+
     .details
       @include transition(all, 1s)
-      min-width: 120%
+      width: 120%
       min-height: 120%
       margin-left: -10%
       margin-top: -10%
-      z-index: 1000
+      z-index: 1200
       -webkit-animation-duration: 0.7s
       -moz-animation-duration: 0.7s
       -o-animation-duration: 0.7s
       animation-duration: 0.7s
+      padding: 0.5em
+      cursor: move
+      &.open
+        @include transition(none)
+
+      .wine_info
+        padding-left: 0em
 
       .favorite_banner
         right: 30px
-
+      .wine_vintage
+        right: -1px
+        bottom: -28px
+        font-size: 8em
       p
         text-align: left
         max-height: 200px
         overflow: scroll
+        padding-left: 0em
 
 
 a.light_link
