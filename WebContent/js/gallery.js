@@ -90,6 +90,8 @@
 
         // Binds the close details event.
         $(gallery_parent_selector + " " + IMAGE_ELEMENT_SEL + " .close_icon").on("click", close_wine_details);
+
+        $(gallery_parent_selector + " " + IMAGE_ELEMENT_SEL + " .favorite_banner").on("click", favorites_banner_click);
     }
 
     /**
@@ -133,6 +135,64 @@
             }
         });
         e.stopPropagation();
+    }
+
+    function favorites_banner_click(e)
+    {
+        var parent_wine = $(this).parents(".wine");
+        var is_favorite;
+
+        if ($(parent_wine).hasClass("favorite"))
+            is_favorite = true;
+        else
+            is_favorite = false;
+
+        if (!is_favorite)
+            set_favorite(parent_wine);
+        else
+            clear_favorite(parent_wine);
+
+        e.stopPropagation();
+    }
+
+    function set_favorite(wine_el)
+    {
+        var wine_id = $(wine_el).data("wine-id");
+        var url = "/favorites"
+
+        $(wine_el).addClass("favorite");
+
+        var data = {
+            "action": "setFavorite",
+            "wineId": wine_id
+        };
+
+        $.ajax({
+            url: url,
+            data: data
+        }).success(function (data, textStatus, jqXHR) {
+            console.log("favorites success!");
+        });
+    }
+
+    function clear_favorite(wine_el)
+    {
+        var wine_id = $(wine_el).data("wine-id");
+        var url = "/favorites"
+
+        $(wine_el).removeClass("favorite");
+
+        var data = {
+            "action": "clearFavorite",
+            "wineId": wine_id
+        };
+
+        $.ajax({
+            url: url,
+            data: data
+        }).success(function (data, textStatus, jqXHR) {
+                console.log("favorites success!");
+            });
     }
 
     /* Builds internal representation of gallery. */

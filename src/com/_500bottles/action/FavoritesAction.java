@@ -27,6 +27,15 @@ public class FavoritesAction
 		}
 	}
 
+	public static void clearFavorite(long wine_id, long user_id)
+	{
+		try {
+			FavoritesManager.clearFavorite(wine_id, user_id);
+		} catch (DAException e) {
+			// TODO: throw generic exception here to notify the user the
+		}
+	}
+
 	/**
 	 * Gets whether the specified wine is a favorited wine
 	 * 
@@ -35,10 +44,10 @@ public class FavoritesAction
 	 */
 	public static void getFavorite(long id)
 	{
-		try {
-			WineManager.isFavorite(id);
-		} catch (DAException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			WineManager.isFavorite(id);
+//		} catch (DAException e) {
+//			e.printStackTrace();
+//		}
 	}
 }

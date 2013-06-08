@@ -12,7 +12,9 @@ import org.junit.Test;
 import com._500bottles.da.external.snooth.exception.InvalidSort;
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
+import com._500bottles.da.internal.VarietalDAO;
 import com._500bottles.da.internal.WineDAO;
+import com._500bottles.da.internal.WineTypeDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.manager.WineWizardManager;
 import com._500bottles.object.geolocation.GeoLocation;
@@ -93,7 +95,7 @@ public class WineWizardManagerTest
 
 		try
 		{
-			dork = WineDAO.getVarietal("frog");
+			dork = VarietalDAO.getVarietal("frog");
 		} catch (DAException e1)
 		{
 			// TODO Auto-generated catch block
@@ -106,7 +108,7 @@ public class WineWizardManagerTest
 		WineType win = new WineType();
 		try
 		{
-			win = WineDAO.getWineType("Red Wine");
+			win = WineTypeDAO.getWineType("Red Wine");
 		} catch (DAException e1)
 		{
 			// TODO Auto-generated catch block

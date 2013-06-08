@@ -2,6 +2,8 @@
 <%@ page import="com._500bottles.object.wine.Wine" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.io.PrintWriter" %>
+<%@ page import="com._500bottles.manager.SessionManager" %>
+<%@ page import="com._500bottles.manager.FavoritesManager" %>
 
 <section class="wrapper clearfix subview animated" id="quick_search_results" data-anim-out="fadeOutRightBig" data-anim-in="fadeInRightBig">
     <div id="quick_search_results_wine_container" class="wine_grid_container" data-rows="3">
@@ -11,11 +13,18 @@
 
     Iterator<Wine> it = result.getIterator();
 
+    SessionManager sm = SessionManager.getSessionManager();
+    long user_id = sm.getLoggedInUser().getUserId();
+
     Wine w;
 
     while(it.hasNext()) {
         w = it.next();
         String image = w.getImage();
+
+        long wine_id = w.getId();
+
+        boolean is_favorite = FavoritesManager.isFavorite(wine_id, user_id);
 
         long year = w.getYear();
         String displayYear = "";
@@ -29,8 +38,16 @@
         if (image.length() == 0)
             image = "/img/blank_wine_bottle.png";
 
+
+        if (is_favorite) { %>
+            <li class="wine favorite" data-wine-id="<%= wine_id %>">
+
+        <% } else { %>
+            <li class="wine" data-wine-id="<%= wine_id %>">
+        <%
+        }
         %>
-        <li class="wine">
+
             <div class="back table">
                 <div class="table_row">
                     <div class="wine_info table_cell">
@@ -44,6 +61,7 @@
             <div class="front table">
                 <div class="table_row">
                     <div class="wine_image_container table_cell">
+                        <div class="favorite_banner"></div>
                         <div class="wine_image" style="background-image: url('<%= image %>');"></div>
                     </div>
                     <div class="wine_info table_cell">

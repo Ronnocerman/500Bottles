@@ -22,22 +22,24 @@ public class FavoritesManager
 		FavoritesDAO.addFavorite(user_id, fave);
 	}
 
+	public static void clearFavorite(long wine_id, long user_id) throws DAException
+	{
+		Favorites fave = FavoritesDAO.getFavorite(wine_id, user_id);
+
+		FavoritesDAO.deleteFavorite(fave);
+	}
+
 	/**
 	 *
-	 * @param wineId
+	 * @param wine_id
 	 *            - the wine Id
 	 * @return boolean, if this wine id is in the favorites
 	 * @throws com._500bottles.exception.da.DAException
 	 */
-	public static boolean isFavorite(long wineId) throws DAException
+	public static boolean isFavorite(long wine_id, long user_id) throws DAException
 	{
-		Favorites fave = new Favorites();
-
-		fave = FavoritesDAO.getFavorite(wineId);
-		if (fave == null)
-		{
+		if (FavoritesDAO.getFavorite(wine_id, user_id) == null)
 			return false;
-		}
 
 		return true;
 	}

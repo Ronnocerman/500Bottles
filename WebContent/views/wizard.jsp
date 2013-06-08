@@ -1,8 +1,12 @@
 <section class="wrapper clearfix view animated no_display fadeInUp" id="wizard">
     <section class="column_100 clearfix">
 		
-		<div class="light_bg_wizard with_border shadow" style="height: 710px">
+		<div class="light_bg_wizard with_border shadow" style="height: 640px">
 			<form id="wizard_form">
+				<center><input id="red" name="type" type="radio" value="red"/>red
+				<input id="white" name="type" type="radio" value="white"/>white
+				<input id="rose" name="type" type="radio" value="rose"/>ros&eacute;
+				<input id="other" name="type" type="radio" value="other"/>other<br><br></center>
 				<input type="text" placeholder="description" value="" />
 				<select id="varietalSelect" name="varietal">
 					<option>grape varietal/type</option>
@@ -53,10 +57,6 @@
 				<input type="text" placeholder="max rating" value="" class="number"/><br>
 				<input type="text" placeholder="min price" value="" class="number"/>
 				<input type="text" placeholder="max price" value="" class="number"/></center>
-				<center><input id="red" type="checkbox" value="red"/>red
-				<input id="white" type="checkbox" value="white"/>white
-				<input id="rose" type="checkbox" value="rose"/>ros&eacute;
-				<input id="other" type="checkbox" value="other"/>other<br><br></center>
 				<input type="button" value="submit" />
 			</form>
 		</div>
