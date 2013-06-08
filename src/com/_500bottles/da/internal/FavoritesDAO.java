@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import com._500bottles.config.Config;
 import com._500bottles.exception.da.DAException;
+import com._500bottles.manager.SessionManager;
 import com._500bottles.object.wine.Favorites;
 import com._500bottles.object.wine.Wine;
 
@@ -20,7 +21,6 @@ public class FavoritesDAO extends DAO
 		columns = "(`userID`, ";
 		columns += "`wineID`)";
 
-		// TODO:Get userId from session manager
 		values = "('" + userId + "',";
 		values += "'" + favorite.getWineId() + "')";
 		try
@@ -98,8 +98,12 @@ public class FavoritesDAO extends DAO
 
 		try
 		{
+			long userId = SessionManager.getSessionManager().getLoggedInUser()
+					.getUserId();
 			// System.out.println(favoritesId);
-			r = select(FAVORITES_TABLE, "*", "wineId = " + wineId);
+			String where = "wineId = " + wineId;
+			where += " AND " + "userId = " + userId;
+			r = select(FAVORITES_TABLE, "*", where);
 
 			// System.out.println("abc " + r.getLong("favoritesId"));
 			favorite = createFavorites(r);
