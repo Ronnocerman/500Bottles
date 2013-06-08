@@ -16,6 +16,16 @@
     while(it.hasNext()) {
         w = it.next();
         String image = w.getImage();
+
+        long year = w.getYear();
+        String displayYear = "";
+        if (year > 0)
+            displayYear = Long.toString(year);
+
+        String description = w.getDescription();
+        if (description.length() == 0)
+            description = "Sorry, no description available.";
+
         if (image.length() == 0)
             image = "/img/blank_wine_bottle.png";
 
@@ -27,6 +37,7 @@
                         <div class="favorite_banner"></div>
                         <span class="wine_name"><%= w.getName() %></span>
                         <span class="vineyard_name"><%= w.getVineyard().getName() %></span>
+                        <span class="wine_vintage"><%= displayYear %></span>
                     </div>
                 </div>
             </div>
@@ -37,11 +48,13 @@
                     </div>
                     <div class="wine_info table_cell">
                         <span class="wine_name"><%= w.getName() %></span>
+                        <span class="wine_vintage"><%= displayYear %></span>
                     </div>
                 </div>
             </div>
-            <div class="details animated no_display" data-anim-in="flipInY" data-anim-out="flipOutY">
+            <div class="details animated no_display" data-anim-in="flipInY" data-anim-out="fadeOutLeftBig">
                 <div class="close_icon"></div>
+                <span class="wine_vintage"><%= displayYear %></span>
                 <div class="table">
                     <div class="table_row">
                         <div class="wine_info table_cell">
@@ -52,7 +65,7 @@
                     </div>
                     <div class="table_row">
                         <div class="table_cell">
-                            <p><%= w.getDescription() %></p>
+                            <p><%= description %></p>
                         </div>
                     </div>
                 </div>
