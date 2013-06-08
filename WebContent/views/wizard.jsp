@@ -1,7 +1,7 @@
 <section class="wrapper clearfix view animated no_display fadeInUp" id="wizard">
     <section class="column_100 clearfix">
 		
-		<div class="light_bg_wizard with_border shadow" style="height: 710px">
+		<div class="light_bg_wizard with_border shadow" style="height: 640px">
 			<form id="wizard_form">
 				<center><input id="red" type="checkbox" value="red"/>red
 				<input id="white" type="checkbox" value="white"/>white
