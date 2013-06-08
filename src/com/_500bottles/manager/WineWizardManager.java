@@ -324,6 +324,11 @@ public class WineWizardManager
 				+ search.getVarietal().get(0).getGrapeType());
 		search.setSize(query.getSize());
 		WineQueryResult doug = WineManager.searchWine(search);
+		if (doug == null)
+		{
+			Vector<Wine> wines = new Vector<Wine>();
+			doug = new WineQueryResult(wines);
+		}
 		return doug;
 	}
 
