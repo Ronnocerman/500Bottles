@@ -1130,11 +1130,13 @@ footer {
   #wine_form input[type="text"] {
     margin-bottom: 20px; }
 
-.light_bg_wines.with_border {
-  position: relative;
-  margin: 1em;
-  width: 75%;
-  left: 10%; }
+.light_bg_wines {
+  background-color: white; }
+  .light_bg_wines.with_border {
+    position: relative;
+    margin: 1em;
+    width: 75%;
+    left: 10%; }
 
 #wizard_form {
   width: 75%; }
