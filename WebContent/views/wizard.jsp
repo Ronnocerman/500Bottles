@@ -1,7 +1,7 @@
 <section class="wrapper clearfix view animated no_display fadeInUp" id="wizard">
-    <section class="column_100 clearfix">
+    <section class="column_50">
     
-		<div class="light_bg_suggestion with_border shadow" style="min-height: 470px">
+		<div class="light_bg_suggestion with_border shadow">
 			<h1>Recent Suggestions</h1>
 			<hr style="width: 75%; left: -5px">
 			
@@ -20,9 +20,11 @@
 				
 				<a>use this search &rarr;</a></li>
 			</ul>
+            <div class="clearfix"></div>
 		</div>
-		
-		<div class="light_bg_wizard with_border shadow" style="height: 470px">
+    </section>
+    <section class="column_50">
+		<div class="light_bg_wizard with_border shadow">
 			<form id="wizard_form">
 					<select id="varietalSelect" name="varietal">
 					<option>grape varietal/type</option>

@@ -741,6 +741,47 @@ footer {
         max-height: 200px;
         overflow: scroll;
         padding-left: 0em; }
+    .wine_grid .wine .rating {
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      height: 19px;
+      width: 100px;
+      overflow: hidden; }
+      .wine_grid .wine .rating .stars, .wine_grid .wine .rating .stars_bg, .wine_grid .wine .rating .your_rating, .wine_grid .wine .rating .their_rating {
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        position: absolute; }
+      .wine_grid .wine .rating .stars {
+        background: url("../img/icons/star-cutout.png");
+        z-index: 10;
+        background-repeat: repeat-x;
+        background-size: auto 100%; }
+      .wine_grid .wine .rating .their_rating, .wine_grid .wine .rating .stars_bg {
+        background-color: black;
+        z-index: 5; }
+      .wine_grid .wine .rating .your_rating {
+        background-color: goldenrod;
+        z-index: 6; }
+      .wine_grid .wine .rating .their_rating {
+        opacity: 1; }
+      .wine_grid .wine .rating .your_rating, .wine_grid .wine .rating .their_rating {
+        left: -100%;
+        -webkit-transition: all 0.2s 0s;
+        -moz-transition: all 0.2s 0s;
+        -ms-transition: all 0.2s 0s;
+        -o-transition: all 0.2s 0s;
+        transition: all 0.2s 0s;
+        -webkit-transition-timing-function: default;
+        -moz-transition-timing-function: default;
+        -ms-transition-timing-function: default;
+        -o-transition-timing-function: default;
+        transition-timing-function: default; }
+      .wine_grid .wine .rating .stars_bg {
+        opacity: 0.1;
+        z-index: 0; }
     .wine_grid .wine .favorite_banner {
       position: absolute;
       top: -1px;
@@ -1536,24 +1577,19 @@ footer {
   #wizard .light_bg_wizard.with_border {
     position: relative;
     margin: 1em;
-    width: 50%;
-    left: 7%;
-    padding-left: 2%;
-    margin-left: 40%; }
+    padding-left: 2%; }
 #wizard .light_bg_suggestion {
-  background-color: white; }
+  background-color: white;
+  margin: 1em; }
   #wizard .light_bg_suggestion.with_border {
-    width: 45%;
-    margin-left: 5%;
     padding: 5px; }
 #wizard .wine_grid {
   list-style: none;
-  position: absolute; }
+  text-align: center; }
   #wizard .wine_grid .wine {
     width: 340px;
     height: 110px !important;
     position: relative;
-    left: 15%;
     padding: 6px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) inset;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.9) !important;
