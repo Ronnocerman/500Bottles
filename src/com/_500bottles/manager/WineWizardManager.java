@@ -8,7 +8,8 @@ import org.json.simple.parser.ParseException;
 import com._500bottles.da.external.snooth.exception.InvalidSort;
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
-import com._500bottles.da.internal.WineDAO;
+import com._500bottles.da.internal.VarietalDAO;
+import com._500bottles.da.internal.WineTypeDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Appellation;
 import com._500bottles.object.wine.Varietal;
@@ -207,7 +208,7 @@ public class WineWizardManager
 		wineListRated = WineManager.searchWine(getRating).getWines();
 		for (int u = 0; u < wineListRated.size(); u++)
 		{
-			WineType bob = WineDAO.getWineTypeById(wineListRated.get(u)
+			WineType bob = WineTypeDAO.getWineTypeById(wineListRated.get(u)
 					.getType().getWineTypeId());
 			wineListRated.get(u).getType().setWineType(bob.getWineType());
 		}
@@ -334,11 +335,11 @@ public class WineWizardManager
 					.get(q)
 					.getVarietal()
 					.setGrapeType(
-							WineDAO.getVarietalById(
+							VarietalDAO.getVarietalById(
 									(returnWineVector.get(q).getVarietal()
 											.getId())).getGrapeType());
 			long i = returnWineVector.get(q).getType().getWineTypeId();
-			returnWineVector.get(q).setType(WineDAO.getWineTypeById(i));
+			returnWineVector.get(q).setType(WineTypeDAO.getWineTypeById(i));
 		}
 		// TODO add the wines wineType names as well as their varietal names and
 		// make sure to add something for the query size
@@ -364,7 +365,7 @@ public class WineWizardManager
 				String s = "frog dddddddd";
 				try
 				{
-					s = WineDAO.getWineTypeById(
+					s = WineTypeDAO.getWineTypeById(
 							wineListRated.get(i).getType().getWineTypeId())
 							.getWineType();
 				} catch (DAException e)
@@ -398,7 +399,7 @@ public class WineWizardManager
 				{
 					try
 					{
-						if (WineDAO
+						if (WineTypeDAO
 								.getWineTypeById(
 										wineListRated.get(r).getType()
 												.getWineTypeId()).getWineType()
@@ -430,7 +431,7 @@ public class WineWizardManager
 
 					try
 					{
-						if (WineDAO
+						if (WineTypeDAO
 								.getWineTypeById(
 										wineListRated.get(r).getType()
 												.getWineTypeId()).getWineType()
@@ -473,7 +474,7 @@ public class WineWizardManager
 				theID = levelOne.get(i).getVarietal().getId();
 				try
 				{
-					s = WineDAO.getVarietalById(theID).getGrapeType();
+					s = VarietalDAO.getVarietalById(theID).getGrapeType();
 				} catch (DAException e)
 				{
 					// TODO Auto-generated catch block
