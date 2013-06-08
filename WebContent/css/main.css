@@ -47,3 +47,10 @@ a.other{
     background-color: rgba(0, 0, 0, .05);
     text-align: center;
 }
+
+.light_bg{
+	width: 20%;
+	margin-left: auto;
+	padding-left: 75px;
+	margin-right: auto;
+}
