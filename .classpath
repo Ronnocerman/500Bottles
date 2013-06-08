@@ -22,5 +22,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/sass-stdlib"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-fileupload-1.3"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-io-2.4"/>
+	<classpathentry kind="lib" path="lib/commons-fileupload-1.3.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

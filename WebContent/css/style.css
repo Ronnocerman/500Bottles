@@ -576,6 +576,16 @@ footer {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    -webkit-transition: all 1s 0s;
+    -moz-transition: all 1s 0s;
+    -ms-transition: all 1s 0s;
+    -o-transition: all 1s 0s;
+    transition: all 1s 0s;
+    -webkit-transition-timing-function: default;
+    -moz-transition-timing-function: default;
+    -ms-transition-timing-function: default;
+    -o-transition-timing-function: default;
+    transition-timing-function: default;
     display: -moz-inline-stack;
     display: inline-block;
     zoom: 1;
@@ -669,6 +679,10 @@ footer {
         display: block;
         white-space: nowrap;
         padding-left: 0.07em; }
+    .wine_grid .wine .front .wine_info span.wine_name {
+      height: 2.1em;
+      overflow: hidden;
+      display: block; }
     .wine_grid .wine .wine_vintage {
       position: absolute;
       right: -4px;
@@ -709,6 +723,9 @@ footer {
         -ms-transition-timing-function: default;
         -o-transition-timing-function: default;
         transition-timing-function: default; }
+      .wine_grid .wine .details .wine_name {
+        display: block;
+        width: 82%; }
       .wine_grid .wine .details .wine_info {
         padding-left: 0em; }
       .wine_grid .wine .details .vineyard_name {

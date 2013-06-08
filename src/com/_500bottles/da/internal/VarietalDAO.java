@@ -11,11 +11,24 @@ import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Varietal;
 import com._500bottles.object.wine.WineQuery;
 
+/**
+ * Coordinates all varietal related database access for varietal adding,
+ * deleting, and getting in the database.
+ */
 public class VarietalDAO extends DAO
 {
 	private final static String VARIETALS_TABLE = Config
 			.getProperty("varietalsTableName");
 
+	/**
+	 * Adds a varietal. Returns an varietal object with the new unique Id.
+	 * Throws a DAException if the SQL insertion fails.
+	 * 
+	 * @param v
+	 *            The varietal object to add.
+	 * @return Varietal object with the varietal Id.
+	 * @throws DAException
+	 */
 	public static Varietal addVarietal(Varietal v) throws DAException
 	{
 		String columns, values;
@@ -43,6 +56,13 @@ public class VarietalDAO extends DAO
 		return v;
 	}
 
+	/**
+	 * Deletes a varietal. The varietal's id must be set for a deletion to
+	 * succeed.
+	 * 
+	 * @param varietalId
+	 *            The varietal to delete.
+	 */
 	public static boolean deleteVarietal(long varietalId)
 	{
 		int ret;
@@ -59,6 +79,15 @@ public class VarietalDAO extends DAO
 		return true;
 	}
 
+	/**
+	 * Gets and returns an varietal object from the database. Throws DAException
+	 * if an SQL error occurs or if the varietal name was not set.
+	 * 
+	 * @param varietalName
+	 *            The name of the varietal to get.
+	 * @return The varietal object.
+	 * @throws DAException
+	 */
 	public static Varietal getVarietal(String varietalName) throws DAException
 	{
 		ResultSet r;
@@ -81,6 +110,15 @@ public class VarietalDAO extends DAO
 		return varietal;
 	}
 
+	/**
+	 * Gets and returns an varietal object from the database. Throws DAException
+	 * if an SQL error occurs or if the varietal Id was not set.
+	 * 
+	 * @param varietalName
+	 *            The name of the varietal to get.
+	 * @return The varietal object.
+	 * @throws DAException
+	 */
 	public static Varietal getVarietalById(long varId) throws DAException
 	{
 		ResultSet r;
@@ -102,14 +140,47 @@ public class VarietalDAO extends DAO
 		return varietal;
 	}
 
-	protected static Vector<Long> getWineIdByVarietal(String s, int offset,
-			int size) throws DAException, SQLException
+	/**
+	 * Searches and return a list of wines in the database. Throws DAException
+	 * if an SQL error occurs.
+	 * 
+	 * @param s
+	 *            The name of the varietal.
+	 * @param offset
+	 *            The offset.
+	 * @param size
+	 *            The number of wines to get.
+	 * @return Vector of wineIds.
+	 * @throws DAException
+	 */
+	protected static Vector<Long> getWineIdByVarietal(String[] fields,
+			int offset, int size) throws DAException, SQLException
 	{
 		Vector<Long> ret = new Vector<Long>();
 		Vector<Long> varId = new Vector<Long>();
 		ResultSet r;
 		String where = "";
-		where += "varietalName LIKE " + "'%" + escapeXml(s) + "%'";
+
+		boolean first = true;
+
+		for (int i = 0; i < fields.length; i++)
+		{
+			if (first)
+			{
+				where += "varietalName";
+				where += " LIKE ";
+				where += "'%" + escapeXml(fields[i]) + "%'";
+				first = false;
+			} else
+			{
+				where += " and ";
+				where += "varietalName";
+				where += " LIKE ";
+				where += "'%" + escapeXml(fields[i]) + "%'";
+				first = false;
+			}
+		}
+
 		// Find matches to the passed in string
 		try
 		{
@@ -118,8 +189,7 @@ public class VarietalDAO extends DAO
 		{
 			throw new DAException("SQL select exception.");
 		}
-		// Iterate through the results and add the varietal IDs to the varId
-		// vector
+		// Iterate through the results and add the varietal IDs to the vector
 		while (r.next())
 		{
 			varId.add((long) r.getInt("varietalId"));
@@ -131,13 +201,13 @@ public class VarietalDAO extends DAO
 			where = "";
 			where += "varietalId=" + varId.get(i);
 			where += " LIMIT ";
-	
+
 			if (offset != WineQuery.DEFAULT_OFFSET)
 			{
 				where += offset;
 				where += ",";
 			}
-	
+
 			where += size;
 			try
 			{
@@ -151,10 +221,19 @@ public class VarietalDAO extends DAO
 				ret.add(r.getLong("wineId"));
 			}
 		}
-	
+
 		return ret;
 	}
 
+	/**
+	 * Determines if an varietal object exist in the database. Throws
+	 * DAException if an SQL error occurs.
+	 * 
+	 * @param varietal
+	 *            The varietal object to check.
+	 * @return True if varietal exist and false otherwise.
+	 * @throws DAException
+	 */
 	protected static boolean varietalExists(Varietal varietal)
 			throws DAException
 	{
@@ -188,6 +267,13 @@ public class VarietalDAO extends DAO
 
 	}
 
+	/**
+	 * Creates an varietal object from the database.
+	 * 
+	 * @param r
+	 *            The varietal to create.
+	 * @return The varietal object.
+	 */
 	private static Varietal createVarietal(ResultSet r) throws SQLException
 	{
 		Varietal varietal;
