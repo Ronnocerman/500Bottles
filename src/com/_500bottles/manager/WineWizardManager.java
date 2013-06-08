@@ -296,9 +296,9 @@ public class WineWizardManager
 			{
 				search.setMinPrice(query.getMinPrice());
 			}
-			if (query.getMinPrice() != 0)
+			if (query.getMaxPrice() != 0)
 			{
-				search.setMinPrice(query.getMinPrice());
+				search.setMaxPrice(query.getMaxPrice());
 			}
 
 			if (!vineyard.isEmpty())
@@ -311,6 +311,16 @@ public class WineWizardManager
 				// sets the appellation if the query vineyard was set
 				search.setAppellation(getAppellation());
 			}
+		} else
+		{
+			search.setAppellation(query.getAppellation());
+			search.setVarietal(getVarietal());
+			search.setVineyard(getVineyard());
+			search.setMinPrice(query.getMinPrice());
+			search.setMaxPrice(query.getMaxPrice());
+			search.setMinYear(minYear);
+			search.setMaxYear(maxYear);
+			search.setType(query.getType());
 		}
 		search.setSize(wineListRated.size());// sets the size of what the user
 												// wants
