@@ -5,7 +5,6 @@ import java.sql.SQLException;
 
 import com._500bottles.config.Config;
 import com._500bottles.exception.da.DAException;
-import com._500bottles.manager.SessionManager;
 import com._500bottles.object.wine.Favorites;
 import com._500bottles.object.wine.Wine;
 
@@ -91,12 +90,14 @@ public class FavoritesDAO extends DAO
 		}
 	}
 
-	public static Favorites getFavorite(long wine_id, long user_id) throws DAException
+	public static Favorites getFavorite(long wine_id, long user_id)
+			throws DAException
 	{
 		ResultSet r;
 		Favorites favorite = null;
 
-		try {
+		try
+		{
 			String where = "wineId = " + wine_id;
 			where += " AND " + "userId = " + user_id;
 			r = select(FAVORITES_TABLE, "*", where);
@@ -104,7 +105,8 @@ public class FavoritesDAO extends DAO
 			favorite = createFavorites(r);
 			Database.disconnect();
 
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			System.out.println("Message: " + e.getMessage());
 			throw new DAException("SQL select exception.", e);
 		}
@@ -112,19 +114,20 @@ public class FavoritesDAO extends DAO
 		return favorite;
 	}
 
-//	public static Favorites getFavorite(Favorites favorite) throws DAException,
-//			NullPointerException
-//	{
-//		if (favorite == null)
-//			throw new NullPointerException("Null Favorite.");
-//		if (favorite.getWineId() == 0)
-//			throw new DAException("Favorite not set.");
-//
-//		long wineId = favorite.getWineId();
-//		// System.out.println("favoritesId in getFavorite: "
-//		// + favorite.getfavoritesId());
-//		return getFavorite(wineId);
-//	}
+	// public static Favorites getFavorite(Favorites favorite) throws
+	// DAException,
+	// NullPointerException
+	// {
+	// if (favorite == null)
+	// throw new NullPointerException("Null Favorite.");
+	// if (favorite.getWineId() == 0)
+	// throw new DAException("Favorite not set.");
+	//
+	// long wineId = favorite.getWineId();
+	// // System.out.println("favoritesId in getFavorite: "
+	// // + favorite.getfavoritesId());
+	// return getFavorite(wineId);
+	// }
 
 	private static Favorites createFavorites(ResultSet r) throws SQLException
 	{
