@@ -292,6 +292,15 @@ public class WineWizardManager
 			{
 				search.setMaxYear(maxYear);// sets the max year
 			}
+			if (query.getMinPrice() != 0)
+			{
+				search.setMinPrice(query.getMinPrice());
+			}
+			if (query.getMinPrice() != 0)
+			{
+				search.setMinPrice(query.getMinPrice());
+			}
+
 			if (!vineyard.isEmpty())
 			{
 				// sets the vineyard if the query vineyard was set

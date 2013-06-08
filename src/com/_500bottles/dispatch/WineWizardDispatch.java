@@ -58,16 +58,23 @@ public class WineWizardDispatch extends HttpServlet
 		String max_price = request.getParameter("max_price");
 		String vineyard = request.getParameter("vineyard");
 		WineQuery query = new WineQuery();
-		Vector<WineType> typeList = new Vector<WineType>();
-		WineType type = new WineType();
-		type.setWineType(wineType);
-		typeList.add(type);
-		query.setType(typeList);
-		Vector<Varietal> var = new Vector<Varietal>();
-		Varietal variet = new Varietal();
-		variet.setGrapeType(varietal);
-		var.add(variet);
-		query.setVarietal(var);
+		if (wineType != null)
+		{
+			Vector<WineType> typeList = new Vector<WineType>();
+			WineType type = new WineType();
+			type.setWineType(wineType);
+			typeList.add(type);
+			query.setType(typeList);
+		}
+		if (varietal != null)
+		{
+			Vector<Varietal> var = new Vector<Varietal>();
+			Varietal variet = new Varietal();
+			variet.setGrapeType(varietal);
+			var.add(variet);
+			query.setVarietal(var);
+		}
+
 		if (min_year != null && max_year != null)
 		{
 			query.setMinYear(Integer.parseInt(min_year));
