@@ -1515,7 +1515,7 @@ footer {
     left: 10%; }
 
 #wizard #wizard_form {
-  width: 75%;
+  width: 85%;
   margin-left: auto;
   margin-right: auto;
   text-align: center; }
@@ -1536,8 +1536,10 @@ footer {
   #wizard .light_bg_wizard.with_border {
     position: relative;
     margin: 1em;
-    width: 75%;
-    left: 10%; }
+    width: 50%;
+    left: 7%;
+    padding-left: 2%;
+    margin-left: 40%; }
 
 @media screen and (min-width: 1200px) {
   .content_container {

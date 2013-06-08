@@ -55,7 +55,7 @@
 				<input id="white" name="type" type="radio" value="White Wine"/>white
 				<input id="rose" name="type" type="radio" value="Rose Wine"/>ros&eacute;
 				<input id="champagne & sparkling" name="type" type="radio" value="Champagne & Sparkling"/>champagne & sparkling
-				<input id="sake" name="type" type="radio" value="Sake"/>sak&eacute;
+				<input id="sake" name="type" type="radio" value="Sake"/>sak&eacute;<br>
 				<input id="dessert, sherry & port" name="type" type="radio" value="Dessert, Sherry & Port"/>dessert, sherry, & port<br><br>
 				<input type="button" value="submit" />
 			</form>
