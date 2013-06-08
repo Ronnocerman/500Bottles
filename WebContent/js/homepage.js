@@ -14,9 +14,6 @@
     {
         var url = "/wine";
 
-        // Add the container for the quick-search if it doesn't already exist.
-        //display_quick_search_container();
-
         var data = {
             "action": "wineSearch",
             "textWineSearch": encodeURIComponent($(wine_search_text).val())
@@ -35,24 +32,21 @@
 
         var results = document.getElementById("quick_search_results");
 
-//        $(results).on("click", function() {
-//            _500bottles.anim.animate_out({element: results});
-//            _500bottles.anim.animate_in({element: home_subview, parent: home});
-//
-//            setTimeout(function() {
-//                $("#quick_search_results").remove();
-//            }, 1000);
-//        });
+        $("#logo").on("click", hide_quick_search_container);
     }
 
-    function display_quick_search_container()
+    function hide_quick_search_container()
     {
-        var container = document.getElementById("quick_search_results");
+        var results = document.getElementById("quick_search_results");
 
-        if (container == null)
-            $("body").prepend($("<div/>").attr("id", "quick_search_results"));
+        _500bottles.anim.animate_out({element: results});
+        _500bottles.anim.animate_in({element: home_subview, parent: home});
 
-        _500bottles.anim.animate_out({element: home});
+        setTimeout(function() {
+            $("#quick_search_results").remove();
+        }, 1000);
+
+        $("#logo").off("click", hide_quick_search_container);
     }
 
     $(wine_search_submit).on("click", execute_wine_search);

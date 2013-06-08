@@ -771,6 +771,71 @@ footer {
     .wine_grid .wine:not(.favorite) .front .favorite_banner {
       height: 0px; }
 
+.side_nav.left {
+  left: -180px; }
+  .side_nav.left:hover {
+    left: -10px; }
+
+.side_nav.right {
+  right: -180px; }
+  .side_nav.right:hover {
+    right: -10px; }
+
+.side_nav {
+  display: block;
+  position: absolute;
+  height: 100px;
+  width: 240px;
+  background: rgba(255, 255, 255, 0.3);
+  top: 60px;
+  z-index: 1000;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.8);
+  -webkit-transition: all 0.35s 0s;
+  -moz-transition: all 0.35s 0s;
+  -ms-transition: all 0.35s 0s;
+  -o-transition: all 0.35s 0s;
+  transition: all 0.35s 0s;
+  -webkit-transition-timing-function: default;
+  -moz-transition-timing-function: default;
+  -ms-transition-timing-function: default;
+  -o-transition-timing-function: default;
+  transition-timing-function: default; }
+  .side_nav:hover {
+    background: red; }
+  .side_nav .nav_item {
+    font-family: LeagueGothicRegular;
+    font-size: 2em;
+    text-transform: uppercase;
+    padding-left: 100px;
+    padding-top: 20px;
+    display: block;
+    cursor: pointer;
+    opacity: 0.7;
+    -webkit-transition: all 0.35s 0s;
+    -moz-transition: all 0.35s 0s;
+    -ms-transition: all 0.35s 0s;
+    -o-transition: all 0.35s 0s;
+    transition: all 0.35s 0s;
+    -webkit-transition-timing-function: default;
+    -moz-transition-timing-function: default;
+    -ms-transition-timing-function: default;
+    -o-transition-timing-function: default;
+    transition-timing-function: default; }
+    .side_nav .nav_item:hover {
+      opacity: 1; }
+    .side_nav .nav_item:before {
+      content: "";
+      width: 80px;
+      height: 80px;
+      background: url("../img/icons/plus-black.png") no-repeat center center;
+      background-size: 100% 100%;
+      filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/icons/plus-black.png',sizingMethod='scale');
+      -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/icons/plus-black.png',sizingMethod='scale')";
+      display: block;
+      top: 10px;
+      left: 10px;
+      position: absolute; }
+
 #view_login {
   position: fixed;
   height: 100%;
@@ -1052,62 +1117,6 @@ footer {
 #winebook .light_bg.with_border {
   position: relative;
   margin: 1em; }
-#winebook #winebook_nav {
-  display: block;
-  position: absolute;
-  height: 100px;
-  width: 240px;
-  background: rgba(255, 255, 255, 0.3);
-  right: -180px;
-  top: 100px;
-  z-index: 1000;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.8);
-  -webkit-transition: all 0.35s 0s;
-  -moz-transition: all 0.35s 0s;
-  -ms-transition: all 0.35s 0s;
-  -o-transition: all 0.35s 0s;
-  transition: all 0.35s 0s;
-  -webkit-transition-timing-function: default;
-  -moz-transition-timing-function: default;
-  -ms-transition-timing-function: default;
-  -o-transition-timing-function: default;
-  transition-timing-function: default; }
-  #winebook #winebook_nav:hover {
-    background: rgba(255, 255, 255, 0.9);
-    right: -10px; }
-  #winebook #winebook_nav #add_winebook_entry {
-    font-family: LeagueGothicRegular;
-    font-size: 2em;
-    text-transform: uppercase;
-    padding-left: 100px;
-    padding-top: 20px;
-    display: block;
-    cursor: pointer;
-    opacity: 0.7;
-    -webkit-transition: all 0.35s 0s;
-    -moz-transition: all 0.35s 0s;
-    -ms-transition: all 0.35s 0s;
-    -o-transition: all 0.35s 0s;
-    transition: all 0.35s 0s;
-    -webkit-transition-timing-function: default;
-    -moz-transition-timing-function: default;
-    -ms-transition-timing-function: default;
-    -o-transition-timing-function: default;
-    transition-timing-function: default; }
-    #winebook #winebook_nav #add_winebook_entry:hover {
-      opacity: 1; }
-    #winebook #winebook_nav #add_winebook_entry:before {
-      content: "";
-      width: 80px;
-      height: 80px;
-      background: url("../img/icons/plus-black.png") no-repeat center center;
-      background-size: 100% 100%;
-      filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/icons/plus-black.png',sizingMethod='scale');
-      -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/icons/plus-black.png',sizingMethod='scale')";
-      display: block;
-      top: 10px;
-      left: 10px;
-      position: absolute; }
 #winebook .winebook_entry {
   min-height: 7.8em;
   margin-bottom: 4em !important;

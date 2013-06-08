@@ -1,7 +1,6 @@
 <%@ page import="com._500bottles.object.wine.WineQueryResult" %>
 <%@ page import="com._500bottles.object.wine.Wine" %>
 <%@ page import="java.util.Iterator" %>
-<%@ page import="java.io.PrintWriter" %>
 <%@ page import="com._500bottles.manager.SessionManager" %>
 <%@ page import="com._500bottles.manager.FavoritesManager" %>
 
