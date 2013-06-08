@@ -3,12 +3,12 @@
 		
 		<div class="light_bg_wizard with_border shadow" style="height: 640px">
 			<form id="wizard_form">
-				<center><input id="red" name="type" type="radio" value="Red Wine"/>red
+				<input id="red" name="type" type="radio" value="Red Wine"/>red
 				<input id="white" name="type" type="radio" value="White Wine"/>white
 				<input id="rose" name="type" type="radio" value="Rose Wine"/>ros&eacute;
 				<input id="champagne & sparkling" name="type" type="radio" value="Champagne & Sparkling"/>champagne & sparkling
 				<input id="sake" name="type" type="radio" value="Sake"/>sak&eacute;
-				<input id="dessert, sherry & port" name="type" type="radio" value="Dessert, Sherry & Port"/>dessert,sherry & port<br><br></center>
+				<input id="dessert, sherry & port" name="type" type="radio" value="Dessert, Sherry & Port"/>dessert,sherry & port<br><br>
 				<select id="varietalSelect" name="varietal">
 					<option>grape varietal/type</option>
 					<option>Albarino</option>
@@ -51,11 +51,11 @@
 					<option>Zinfandel</option>
 					<option>Other</option>
 				</select><br>
-				<input type="text" name = "vineyard" placeholder="vineyard" value="" />
-				<center><input type="text" name= "min_year" placeholder="min year" value="" class="number"/>
-				<input type="text" name = "max_year" placeholder="max year" value="" class="number"/><br>
-				<input type="text" name = "min_price" placeholder="min price" value="" class="number"/>
-				<input type="text" name = "max_year" placeholder="max price" value="" class="number"/></center>
+				<input type="text" name="vineyard" placeholder="vineyard" value="" />
+				<input type="text" name="min_year" placeholder="min year" value="" class="number"/>
+				<input type="text" name="max_year" placeholder="max year" value="" class="number"/><br>
+				<input type="text" name="min_price" placeholder="min price" value="" class="number"/>
+				<input type="text" name="max_price" placeholder="max price" value="" class="number"/>
 				<input type="button" value="submit" />
 			</form>
 		</div>
