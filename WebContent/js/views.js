@@ -106,6 +106,22 @@
         _500bottles.views.clearBlackout();
     }
 
+    $ns.views.show_loader = function()
+    {
+        var el = document.getElementById("loader");
+        $ns.anim.animate_in({
+            element: el
+        });
+    }
+
+    $ns.views.hide_loader = function()
+    {
+        var el = document.getElementById("loader");
+        $ns.anim.animate_out({
+            element: el
+        });
+    }
+
     /**
      *
      * @param parent

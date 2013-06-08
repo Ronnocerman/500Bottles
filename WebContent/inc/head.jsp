@@ -26,4 +26,5 @@
 
 <body>
     <div id="floating_view_container"></div>
+    <%@ include file="loader.jsp" %>
     <div id="view_container">

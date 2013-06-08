@@ -6,10 +6,14 @@
     var wine_search_submit = document.getElementById("wine_search_submit");
 
     _500bottles.views.fix_height(home, home_subview);
+
     setTimeout(function() {
         _500bottles.views.fix_height(home, home_subview);
     }, 1000);
 
+    /**
+     *
+     */
     function execute_wine_search()
     {
         var url = "/wine";
@@ -23,11 +27,20 @@
             url: url,
             data: data
         }).success(show_search_results);
+
+        _500bottles.anim.animate_out({element: home_subview});
+        _500bottles.views.show_loader();
     }
 
+    /**
+     *
+     * @param data
+     * @param textStatus
+     * @param jqXHR
+     */
     function show_search_results(data, textStatus, jqXHR)
     {
-        _500bottles.anim.animate_out({element: home_subview});
+        _500bottles.views.hide_loader();
         _500bottles.views.add_subview(home, data, "quick_search_results");
 
         var results = document.getElementById("quick_search_results");
@@ -35,6 +48,9 @@
         $("#logo").on("click", hide_quick_search_container);
     }
 
+    /**
+     *
+     */
     function hide_quick_search_container()
     {
         var results = document.getElementById("quick_search_results");
@@ -49,5 +65,25 @@
         $("#logo").off("click", hide_quick_search_container);
     }
 
+    function bind_quick_search_enter_key()
+    {
+        $(document).on("keypress", on_quick_search_enter_key);
+    }
+
+    function unbind_quick_search_enter_key()
+    {
+        $(document).off("keypress", on_quick_search_enter_key);
+    }
+
+    function on_quick_search_enter_key(e)
+    {
+        if (e.which == 13) {
+            e.preventDefault();
+            execute_wine_search();
+        }
+    }
+
     $(wine_search_submit).on("click", execute_wine_search);
+    $(wine_search_text).on("focus", bind_quick_search_enter_key);
+    $(wine_search_text).on("blur", unbind_quick_search_enter_key);
 })();
