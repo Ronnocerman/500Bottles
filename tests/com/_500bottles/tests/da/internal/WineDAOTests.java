@@ -138,119 +138,11 @@ public class WineDAOTests
 		}
 	}
 
-	// @Test
-	// public void addVineyard() throws DAException
-	// {
-	// try
-	// {
-	// WineDAO.addVineyard(createVineyard("vineyard7"));
-	// } catch (DAException e)
-	// {
-	// fail(e.getMessage());
-	// }
-	// }
-	//
-	// @Test
-	// public void deleteVineyard() throws DAException
-	// {
-	// Vineyard vineyard =
-	// createVineyard("If this shows up youre REALLY fucked");
-	//
-	// try
-	// {
-	// WineDAO.addVineyard(vineyard);
-	// assertTrue(WineDAO.deleteVineyard(vineyard.getId()));
-	// } catch (DAException e)
-	// {
-	// fail(e.getMessage());
-	// }
-	// }
-	//
-	// // @Test
-	// // public void editVineyard() throws DAException
-	// // {
-	// // Vineyard getVineyard;
-	// // Vineyard vineyard =
-	// // createVineyard("If this shows up youre REALLY fucked");
-	// //
-	// // try
-	// // {
-	// // WineDAO.addVineyard(vineyard);
-	// // getVineyard = WineDAO.getVineyard(vineyard.getName());
-	// //
-	// // assertEquals(getVineyard.getName(),
-	// // "If this shows up youre REALLY fucked");
-	// //
-	// // getVineyard.setName("vineyard8");
-	// //
-	// // WineDAO.editVineyard(getVineyard);
-	// // } catch (DAException e)
-	// // {
-	// // fail(e.getMessage());
-	// // }
-	// // }
-	//
-	// @Test
-	// public void addVarietal() throws DAException
-	// {
-	// try
-	// {
-	// VarietalDAO.addVarietal(createVarietal("varietal7"));
-	// } catch (DAException e)
-	// {
-	// fail(e.getMessage());
-	// }
-	// }
-	//
-	// @Test
-	// public void deleteVarietal() throws DAException
-	// {
-	// Varietal varietal =
-	// createVarietal("You should not be able to see this.");
-	//
-	// try
-	// {
-	// VarietalDAO.addVarietal(varietal);
-	// assertTrue(VarietalDAO.deleteVarietal(varietal.getId()));
-	// } catch (DAException e)
-	// {
-	// fail(e.getMessage());
-	// }
-	// }
-
-	// @Test
-	// public void editVarietal() throws DAException
-	// {
-	// Varietal getVarietal;
-	// Varietal varietal =
-	// createVarietal("You should not be able to see this.");
-	//
-	// try
-	// {
-	// WineDAO.addVarietal(varietal);
-	//
-	// getVarietal = WineDAO.getVarietal(varietal.getGrapeType());
-	//
-	// assertEquals(getVarietal.getGrapeType(),
-	// "You should not be able to see this.");
-	//
-	// getVarietal.setGrapeType("varietal8.");
-	//
-	// WineDAO.editVarietal(getVarietal);
-	// } catch (DAException e)
-	// {
-	// fail(e.getMessage());
-	// }
-	// }
-
 	@Test
 	public void testCrazyShit()
 	{
 		try
 		{
-			// String name, String type, long vintage, long varitalId,
-			// String vineyardName, long vineyardId, double rating,
-			// double minPrice, double maxPrice
 			WineDAO.addWine(createWine("ABCD", "red", 1986, "varietal9",
 					"vineyard9", 5, 10, 999));
 			WineDAO.addWine(createWine("CD", "red", 1905, "varietal10",
@@ -288,10 +180,8 @@ public class WineDAOTests
 		}
 
 		assertEquals(retWine.size(), 2);
-
 		assertEquals(retWine.get(0).getYear(), 1986);
 		assertEquals(retWine.get(1).getYear(), 1987);
-
 	}
 
 	@Test
@@ -306,11 +196,9 @@ public class WineDAOTests
 			wines = WineDAO.getWinesFromQuery(query);
 		} catch (DAException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// System.out.println("wine size: " + wines.size());
-		//
+
 		for (int i = 0; i < wines.size(); i++)
 		{
 			System.out.println("wines: " + wines.get(i).getName());
@@ -349,20 +237,5 @@ public class WineDAOTests
 		wine.setPriceMax(maxPrice);
 
 		return wine;
-	}
-
-	private Vineyard createVineyard(String name)
-	{
-		Vineyard vineyard = new Vineyard();
-		vineyard.setName(name);
-
-		return vineyard;
-	}
-
-	private Varietal createVarietal(String grapeType)
-	{
-		Varietal var = new Varietal();
-		var.setGrapeType(grapeType);
-		return var;
 	}
 }
