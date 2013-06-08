@@ -61,4 +61,6 @@
 			</form>
 		</div>
     </section>
+
+    <script type="text/javascript" src="/js/wizard.js"></script>
 </section>
