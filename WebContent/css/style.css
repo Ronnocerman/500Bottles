@@ -420,6 +420,8 @@ form {
     position: relative; }
   form input[type="checkbox"] {
     display: inline; }
+  form input[type="radio"] {
+    display: inline !important; }
   form .person_icon, form .password_icon {
     position: relative; }
   form .person_icon:before, form .password_icon:before {

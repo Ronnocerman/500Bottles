@@ -67,6 +67,16 @@
         <url-pattern>/winebook</url-pattern>
     </servlet-mapping>
 
+    <!-- Cellar Dispatcher -->
+    <servlet>
+        <servlet-name>UploadDispatch</servlet-name>
+        <servlet-class>com._500bottles.dispatch.UploadDispatch</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadDispatch</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+
     <!-- Wine Dispatcher -->
     <servlet>
         <servlet-name>WineDispatch</servlet-name>
