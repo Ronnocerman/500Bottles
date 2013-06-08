@@ -378,7 +378,8 @@ public class SnoothWine
 		Vineyard vineyard = new Vineyard(this.getWinery());
 		w.setVineyard(vineyard);
 
-		// w.setRating(this.getSnoothrank());
+		if (this.getSnoothrank() > 0)
+			w.setRating(this.getSnoothrank());
 
 		return w;
 	}

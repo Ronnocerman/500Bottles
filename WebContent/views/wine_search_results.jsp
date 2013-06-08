@@ -25,6 +25,8 @@
 
         boolean is_favorite = FavoritesManager.isFavorite(wine_id, user_id);
 
+        double rating = w.getRating();
+
         long year = w.getYear();
         String displayYear = "";
         if (year > 0)
@@ -50,6 +52,12 @@
             <div class="back table">
                 <div class="table_row">
                     <div class="wine_info table_cell">
+                        <div class="rating">
+                            <div class="stars"></div>
+                            <div class="your_rating" data-your-rating="0"></div>
+                            <div class="their_rating" data-wine-rating="<%= Double.toString(rating) %>"></div>
+                            <div class="stars_bg"></div>
+                        </div>
                         <div class="favorite_banner"></div>
                         <span class="wine_name"><%= w.getName() %></span>
                         <span class="vineyard_name"><%= w.getVineyard().getName() %></span>

@@ -1540,6 +1540,36 @@ footer {
     left: 7%;
     padding-left: 2%;
     margin-left: 40%; }
+#wizard .light_bg_suggestion {
+  background-color: white; }
+  #wizard .light_bg_suggestion.with_border {
+    width: 45%;
+    margin-left: 5%;
+    padding: 5px; }
+#wizard .wine_grid {
+  list-style: none;
+  position: absolute; }
+  #wizard .wine_grid .wine {
+    width: 340px;
+    height: 110px !important;
+    position: relative;
+    left: 15%;
+    padding: 6px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.9) !important;
+    border: none;
+    font-size: 1.5em;
+    padding-left: 5% !important;
+    padding-top: 5% !important;
+    background-image: url(../img/quote.png);
+    background-repeat: no-repeat;
+    cursor: default !important; }
+  #wizard .wine_grid a {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    color: #797c8b;
+    cursor: pointer; }
 
 @media screen and (min-width: 1200px) {
   .content_container {

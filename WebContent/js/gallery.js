@@ -195,6 +195,46 @@
             });
     }
 
+    function position_your_rating(e)
+    {
+        var your_rating = $(e.target).siblings(".your_rating");
+        var width = $(your_rating).outerWidth(true);
+        $(your_rating).css("left", -(width - e.offsetX));
+    }
+
+    function position_their_rating(wine)
+    {
+        var their_rating_div = $(wine).find(".their_rating");
+        var rating = $(their_rating_div).data("wine-rating");
+        var width = 100;//$(their_rating_div).outerWidth(true);
+
+        console.log("their rating: ", rating);
+        console.log("width: ", width);
+
+        var position = (Number(rating) / 5) * width;
+
+        console.log("position: ", position - width);
+
+        $(their_rating_div).css("left", position - width);
+
+        //console.log("setting rating for ", wine, position);
+    }
+
+    function on_rating_hover(e)
+    {
+        $(e.target).on("mousemove", position_your_rating);
+    }
+
+    function off_rating_hover(e)
+    {
+        $(e.target).off("mousemove", position_your_rating);
+    }
+
+    function bind_rating_events(wine)
+    {
+        $(wine).find(".rating").hover(on_rating_hover, off_rating_hover);
+    }
+
     /* Builds internal representation of gallery. */
     function build_gallery(gallery_parent_selector, randomize) {
         var i, j,               // loop index
@@ -235,6 +275,9 @@
                 Math.random() > .5 ? neg_left = 1 : neg_left = -1;
                 Math.random() > .5 ? neg_top = 1 : neg_top = -1;
 
+                // If the randomize position flag is set, randomize the initial
+                // position of the wines and set a timeout for them to animate
+                // back to the correct positions.
                 if (randomize) {
                     $(images[j]).css("left", Math.random() * 1000 * neg_left);
                     $(images[j]).css("top", Math.random() * 1000 * neg_top);
@@ -243,7 +286,6 @@
                     setTimeout((function(el) {
 
                         return function() {
-                            console.log("putting back...", el);
                             $(el).css("left", 0);
                             $(el).css("top", 0);
                             $(el).css("opacity", 1);
@@ -251,6 +293,9 @@
 
                     })(images[j]), 1000);
                 }
+
+                position_their_rating(images[j]);
+                bind_rating_events(images[j]);
             }
 
             // add this row container to the gallery container

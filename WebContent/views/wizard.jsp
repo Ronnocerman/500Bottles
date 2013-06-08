@@ -1,5 +1,26 @@
 <section class="wrapper clearfix view animated no_display fadeInUp" id="wizard">
     <section class="column_100 clearfix">
+    
+		<div class="light_bg_suggestion with_border shadow" style="min-height: 470px">
+			<h1>Recent Suggestions</h1>
+			<hr style="width: 75%; left: -5px">
+			
+			<ul class="wine_grid">
+				<li class="wine">sangiovese. palumbo family vineyards. 1992-2012. $35-$40. red.
+				
+				<a>use this search &rarr;</a></li>
+			
+			
+				<li class="wine">white zinfandel. elk cove vineyards. 2011-2012. $5-$20. white.
+				
+				<a>use this search &rarr;</a></li>
+			
+			
+				<li class="wine">chianti. lecter winery. 1933-1991. $200-$400. red.
+				
+				<a>use this search &rarr;</a></li>
+			</ul>
+		</div>
 		
 		<div class="light_bg_wizard with_border shadow" style="height: 470px">
 			<form id="wizard_form">

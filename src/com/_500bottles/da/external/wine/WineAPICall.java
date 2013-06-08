@@ -88,8 +88,10 @@ public class WineAPICall
 			Vineyard vineyard = new Vineyard((String) jsonObject2.get("Name"));
 			temp.setVineyard(vineyard);
 
+			// Divide the wine.com rating by 20 to map it to a 0 to
+			// 5 scale for internal use.
 			jsonObject2 = (JSONObject) jsonObject.get("Ratings");
-			temp.setRating(Long.valueOf((long) jsonObject2.get("HighestScore"))
+			temp.setRating(Long.valueOf((long) jsonObject2.get("HighestScore") / 20)
 					.doubleValue());
 
 			wineVector.add(temp);
