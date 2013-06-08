@@ -743,12 +743,15 @@ public class WineDAO extends DAO
 
 		try
 		{
-			nameIds = getWineIdByWineName(fields, offset, size);//
-			varietalIds = VarietalDAO.getWineIdByVarietal(fields, offset, size);
-			vineyardIds = VineyardDAO.getWineIdByVineyard(fields, offset, size);
-			wineTypeIds = WineTypeDAO.getWineIdByWineType(fields, offset, size);
-			descriptionIds = getWineIdByDescription(fields, offset, size);//
-			vintageIds = getWineIdByVintage(fields, offset, size);//
+			nameIds = getWineIdByWineName(fields, offset, size * size);
+			varietalIds = VarietalDAO.getWineIdByVarietal(fields, offset, size
+					* size);
+			vineyardIds = VineyardDAO.getWineIdByVineyard(fields, offset, size
+					* size);
+			wineTypeIds = WineTypeDAO.getWineIdByWineType(fields, offset, size
+					* size);
+			descriptionIds = getWineIdByDescription(fields, offset, size * size);
+			vintageIds = getWineIdByVintage(fields, offset, size * size);
 		} catch (SQLException e)
 		{
 			// TODO Auto-generated catch block

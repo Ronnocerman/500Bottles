@@ -8,7 +8,6 @@ import java.util.Vector;
 
 import com._500bottles.config.Config;
 import com._500bottles.exception.da.DAException;
-import com._500bottles.manager.SessionManager;
 import com._500bottles.object.cellar.CellarItem;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.wine.WineQuery;
@@ -216,18 +215,32 @@ public class CellarDAO extends DAO
 	{
 		Vector<Wine> ret = new Vector<Wine>();
 		Vector<Long> allMatching = WineDAO.getWineIdsFromQuerySearch(q);
-		Vector<Long> allCellar = getAllWineIdsFromCellar(SessionManager
-				.getSessionManager().getLoggedInUser().getUserId());
+
+		// System.out.println("allmatchingsize: " + allMatching.size());
+		// for (int i = 0; i < allMatching.size(); i++)
+		// {
+		// System.out.println("allMatchingIds: " + allMatching.get(i));
+		// }
+
+		Vector<Long> allCellar = getAllWineIdsFromCellar(1);
+
+		// for (int i = 0; i < allCellar.size(); i++)
+		// {
+		// System.out.println("allCellarIds: " + allCellar.get(i));
+		// }
+
 		Vector<Long> retIds = new Vector<Long>();
 
 		for (int i = 0; i < allMatching.size(); i++)
 		{
-			for (int j = 0; i < allCellar.size(); i++)
+			for (int j = 0; j < allCellar.size(); j++)
 			{
 				if (allMatching.get(i) == allCellar.get(j))
 				{
 					retIds.add(allMatching.get(i));
+					// System.out.println("the id: " + allMatching.get(i));
 				}
+				// System.out.println("nope");
 			}
 		}
 

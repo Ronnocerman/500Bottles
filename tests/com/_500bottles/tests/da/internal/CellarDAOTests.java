@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Vector;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -15,6 +17,7 @@ import com._500bottles.object.geolocation.GeoLocation;
 import com._500bottles.object.wine.Varietal;
 import com._500bottles.object.wine.Vineyard;
 import com._500bottles.object.wine.Wine;
+import com._500bottles.object.wine.WineQuery;
 import com._500bottles.object.wine.WineType;
 
 /**
@@ -132,6 +135,29 @@ public class CellarDAOTests
 		{
 			fail(e.getMessage());
 		}
+	}
+
+	// THIS TEST ONLY WORKS WITH A HARDCODED USERID. (IT WORKS!)
+	@Test
+	public void testWinesFromCellarSearch()
+	{
+		Vector<Wine> vec = new Vector<Wine>();
+		WineQuery q = new WineQuery();
+		q.setTextQuery("moscato");
+		try
+		{
+			vec = CellarDAO.getWinesFromCellarSearch(q);
+		} catch (DAException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		for (int i = 0; i < vec.size(); i++)
+		{
+			System.out.println("the ids: " + vec.get(i).getId());
+		}
+
 	}
 
 	// @Test
