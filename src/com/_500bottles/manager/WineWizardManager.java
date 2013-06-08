@@ -9,6 +9,7 @@ import com._500bottles.da.external.snooth.exception.InvalidSort;
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
 import com._500bottles.da.internal.VarietalDAO;
+import com._500bottles.da.internal.VineyardDAO;
 import com._500bottles.da.internal.WineTypeDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.Appellation;
@@ -181,6 +182,8 @@ public class WineWizardManager
 			throws DAException, InvalidCategory, InvalidSort,
 			InvalidOtherParameters, IOException, ParseException
 	{
+		if (query.getType().get(0).equals("undefined"))
+			query.setType(null);
 		// query object is the user settings
 		WineQuery search = new WineQuery();// the query search for the suggested
 											// wine
@@ -211,6 +214,24 @@ public class WineWizardManager
 			WineType bob = WineTypeDAO.getWineTypeById(wineListRated.get(u)
 					.getType().getWineTypeId());
 			wineListRated.get(u).getType().setWineType(bob.getWineType());
+		}
+
+		if (vineyard != null)
+		{
+			int r = 0;
+			Vineyard vv = VineyardDAO.getVineyardById(wineListRated.get(r)
+					.getVineyard().getId());
+			while (r >= wineListRated.size())
+			{
+
+				if (vineyard.get(0).getName().equals(vv.getName()))
+				{
+					r++;
+				} else
+				{
+					wineListRated.remove(r);
+				}
+			}
 		}
 
 		if (!wineListRated.isEmpty())// if wineListRated is empty then don't do
