@@ -85,6 +85,12 @@ public class WineWizardManager
 	private static void setWineType(Vector<WineType> vector)
 	{
 		wineType = vector;
+		/*
+		 * try { wineType.get(0).setWineTypeId(
+		 * WineTypeDAO.getWineType(wineType.get(0).getWineType())
+		 * .getWineTypeId()); } catch (DAException e) { // TODO Auto-generated
+		 * catch block e.printStackTrace(); }
+		 */
 	}
 
 	/**
@@ -106,6 +112,12 @@ public class WineWizardManager
 	private static void setVarietal(Vector<Varietal> bob)
 	{
 		varietal = bob;
+		/*
+		 * try { varietal.get(0).setId(
+		 * VarietalDAO.getVarietal(varietal.get(0).getGrapeType()) .getId()); }
+		 * catch (DAException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
 	}
 
 	/**
@@ -129,6 +141,12 @@ public class WineWizardManager
 	private static void setVineyard(Vector<Vineyard> vector)
 	{
 		vineyard = vector;
+		/*
+		 * try { vineyard.get(0).setId(
+		 * VineyardDAO.getVineyard(vineyard.get(0).getName()).getId()); } catch
+		 * (DAException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
 	}
 
 	/**
@@ -182,8 +200,13 @@ public class WineWizardManager
 			throws DAException, InvalidCategory, InvalidSort,
 			InvalidOtherParameters, IOException, ParseException
 	{
-		if (query.getType().get(0).equals("undefined"))
+		if (query.getType().get(0).getWineType().equals("undefined"))
+		{
 			query.setType(null);
+			System.out.println("does it get here");
+		}
+		// System.out.println("query.getType().size() " +
+		// query.getType().size());
 		// query object is the user settings
 		WineQuery search = new WineQuery();// the query search for the suggested
 											// wine
@@ -205,10 +228,11 @@ public class WineWizardManager
 		// neither
 		WineQuery getRating = new WineQuery();// the query to get all wines with
 												// a rating of 1 to 5
-		getRating.setMinRating(1);// sets the min rating to 1
+		getRating.setMinRating(0);// sets the min rating to 0
 		getRating.setMaxRating(5);// sets the max rating to 5
 		// gets the list of wines that are rated
 		wineListRated = WineManager.searchWine(getRating).getWines();
+		System.out.println("wineListRated.size()" + wineListRated.size());
 		for (int u = 0; u < wineListRated.size(); u++)
 		{
 			WineType bob = WineTypeDAO.getWineTypeById(wineListRated.get(u)
@@ -216,12 +240,12 @@ public class WineWizardManager
 			wineListRated.get(u).getType().setWineType(bob.getWineType());
 		}
 
-		if (vineyard != null)
+		if (vineyard != null && !wineListRated.isEmpty())
 		{
 			int r = 0;
 			Vineyard vv = VineyardDAO.getVineyardById(wineListRated.get(r)
 					.getVineyard().getId());
-			while (r >= wineListRated.size())
+			while (r < wineListRated.size())
 			{
 
 				if (vineyard.get(0).getName().equals(vv.getName()))
@@ -341,19 +365,26 @@ public class WineWizardManager
 			search.setMaxPrice(query.getMaxPrice());
 			search.setMinYear(minYear);
 			search.setMaxYear(maxYear);
-			search.setType(query.getType());
+			search.setType(getWineType());
 		}
 		search.setSize(wineListRated.size());// sets the size of what the user
 												// wants
 		// searchs for the wines with the traits
-
-		// System.out.println("search wine type = "
-		// + search.getType().get(0).getWineType());
+		if (search.getType() != null)
+		{
+			System.out.println("search wine type size = "
+					+ search.getType().size());
+		} else
+			System.out.println("search wine type is null");
 		// System.out.println(" varietalList.size() at this location is"
 		// + varietalList.size());
-		// System.out.println("search varietal = "
-		// + search.getVarietal().get(0).getGrapeType());
-		search.setSize(query.getSize());
+		if (search.getType() != null)
+		{
+			System.out.println("search varietal = "
+					+ search.getVarietal().size());
+			search.setSize(query.getSize());
+		} else
+			System.out.println("search varietal is null");
 		WineQueryResult doug = WineManager.searchWine(search);
 		if (doug == null)
 		{
