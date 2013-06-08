@@ -1,5 +1,5 @@
 <section id="home_subview" class="subview animated" data-anim-out="fadeOutLeftBig" data-anim-in="fadeInLeftBig">
-    <!-- Your Celler Wines -->
+    <!-- Your Cellar Wines -->
     <div id="cellar_preview_wine_grid" class="wine_grid_container" data-rows="1">
         <h2>Your Cellar</h2>
         <ul class="wine_grid">
