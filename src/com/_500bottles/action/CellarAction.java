@@ -1,9 +1,14 @@
 package com._500bottles.action;
 
 import com._500bottles.exception.cellar.CellarException;
+import com._500bottles.exception.user.UserDoesNotExistException;
 import com._500bottles.manager.CellarManager;
 import com._500bottles.manager.SessionManager;
+import com._500bottles.manager.UserManager;
 import com._500bottles.object.cellar.CellarItem;
+import com._500bottles.object.wine.Wine;
+
+import java.util.Vector;
 
 public class CellarAction
 {
@@ -122,5 +127,16 @@ public class CellarAction
 		CellarItem ci = CellarManager.getByWineID(userID, id);
 		ci.setNotes("");
 		CellarManager.editCellarItem(ci);
+	}
+
+	public static Vector<Wine> getAllWinesFromCellar(long user_id) throws CellarException
+	{
+		try {
+			UserManager.getUser(user_id);
+		} catch (UserDoesNotExistException e) {
+			throw new CellarException("User does not exist.");
+		}
+
+		return CellarManager.getAllWinesFromCellar(user_id);
 	}
 }

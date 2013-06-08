@@ -6,6 +6,8 @@ import com._500bottles.exception.da.DAException;
 import com._500bottles.object.cellar.CellarItem;
 import com._500bottles.object.wine.Wine;
 
+import java.util.Vector;
+
 public class CellarManager
 {
 	/**
@@ -104,5 +106,19 @@ public class CellarManager
 			throw new CellarException("No CellarItem in " + userID
 					+ "'s cellar by wineID: " + wineID, e);
 		}
+	}
+
+	public static Vector<Wine> getAllWinesFromCellar(long user_id)
+	{
+		Vector<Wine> wines = null;
+
+		try {
+			wines = CellarDAO.getAllWinesFromCellar(user_id);
+		} catch (DAException e) {
+			e.printStackTrace();
+			wines = new Vector<>();
+		}
+
+		return wines;
 	}
 }
