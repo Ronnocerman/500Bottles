@@ -2,11 +2,11 @@
     <section class="column_100 clearfix">
         <div class="light_bg_wines with_border shadow" style="height: 550px">
 			<form id="wine_form">
-				<input id="name" type="text" placeholder="name" value=""/><center>
+				<input id="name" type="text" placeholder="name" value=""/>
 				<input id="red" type="checkbox" value="red"/>red
 				<input id="white" type="checkbox" value="white"/>white
 				<input id="rose" type="checkbox" value="rose"/>ros&eacute;
-				<input id="other" type="checkbox" value="other"/>other<br><br></center>
+				<input id="other" type="checkbox" value="other"/>other<br><br>
 				<select id="varietalSelect" name="varietal">
 					<option>grape varietal/type</option>
 					<option>Albarino</option>

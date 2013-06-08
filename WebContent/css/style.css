@@ -1493,47 +1493,47 @@ footer {
   left: -20px;
   z-index: 0; }
 
-#wine_form {
+#wine #wine_form {
   width: 75%;
   margin-left: auto;
-  margin-right: auto; }
-  #wine_form select {
+  margin-right: auto;
+  text-align: center; }
+  #wine #wine_form select {
     width: 96.5%; }
-  #wine_form input[type="button"] {
+  #wine #wine_form input[type="button"] {
     width: 50%;
     position: relative;
     left: 25%; }
-  #wine_form input[type="text"] {
+  #wine #wine_form input[type="text"] {
     margin-bottom: 20px; }
-
-.light_bg_wines {
+#wine .light_bg_wines {
   background-color: white; }
-  .light_bg_wines.with_border {
+  #wine .light_bg_wines.with_border {
     position: relative;
     margin: 1em;
     width: 75%;
     left: 10%; }
 
-#wizard_form {
+#wizard #wizard_form {
   width: 75%;
   margin-left: auto;
-  margin-right: auto; }
-  #wizard_form input[type="text"] {
+  margin-right: auto;
+  text-align: center; }
+  #wizard #wizard_form input[type="text"] {
     margin-bottom: 20px; }
-  #wizard_form select {
+  #wizard #wizard_form select {
     width: 96.5%; }
-  #wizard_form .number {
+  #wizard #wizard_form .number {
     width: 25%;
     display: inline;
     margin-right: 10px; }
-  #wizard_form input[type="button"] {
+  #wizard #wizard_form input[type="button"] {
     width: 50%;
     position: relative;
     left: 23%; }
-
-.light_bg_wizard {
+#wizard .light_bg_wizard {
   background-color: white; }
-  .light_bg_wizard.with_border {
+  #wizard .light_bg_wizard.with_border {
     position: relative;
     margin: 1em;
     width: 75%;
