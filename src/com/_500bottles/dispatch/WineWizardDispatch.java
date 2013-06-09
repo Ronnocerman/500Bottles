@@ -1,7 +1,6 @@
 package com._500bottles.dispatch;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Vector;
@@ -29,6 +28,15 @@ import com._500bottles.object.wine.WineType;
 @SuppressWarnings("serial")
 public class WineWizardDispatch extends HttpServlet
 {
+
+	private final String WINE_TYPE = "type";
+	private final String VARIETAL = "varietal";
+	private final String MIN_YEAR = "minYear";
+	private final String MAX_YEAR = "maxYear";
+	private final String MIN_PRICE = "minPrice";
+	private final String MAX_PRICE = "maxPrice";
+	private final String VINEYARD = "vineyard";
+
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException
@@ -49,15 +57,16 @@ public class WineWizardDispatch extends HttpServlet
 		RequestDispatcher dispatcher = context
 				.getRequestDispatcher("/views/wizard/suggestion_results.jsp");
 
-		String wine_type = request.getParameter("type");
-		String varietal = request.getParameter("varietal");
-		String min_year = request.getParameter("minYear");
-		String max_year = request.getParameter("maxYear");
-		String min_price = request.getParameter("minPrice");
-		String max_price = request.getParameter("maxPrice");
-		String vineyard = request.getParameter("vineyard");
+		String wine_type = request.getParameter(WINE_TYPE);
+		String varietal = request.getParameter(VARIETAL);
+		String min_year = request.getParameter(MIN_YEAR);
+		String max_year = request.getParameter(MAX_YEAR);
+		String min_price = request.getParameter(MIN_PRICE);
+		String max_price = request.getParameter(MAX_PRICE);
+		String vineyard = request.getParameter(VINEYARD);
 
-		try {
+		try
+		{
 			wine_type = URLDecoder.decode(wine_type, "UTF-8");
 			varietal = URLDecoder.decode(varietal, "UTF-8");
 			min_year = URLDecoder.decode(min_year, "UTF-8");
@@ -65,14 +74,17 @@ public class WineWizardDispatch extends HttpServlet
 			min_price = URLDecoder.decode(min_price, "UTF-8");
 			max_price = URLDecoder.decode(max_price, "UTF-8");
 			vineyard = URLDecoder.decode(vineyard, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			System.err.println("WineWizardDispatch.getSuggestion(): UnsupportedEncodingException!");
+		} catch (UnsupportedEncodingException e)
+		{
+			System.err
+					.println("WineWizardDispatch.getSuggestion(): UnsupportedEncodingException!");
 		}
 
 		WineQuery query = new WineQuery();
 		query.setSize(36);
 
-		if (vineyard != null) {
+		if (vineyard != null)
+		{
 			Vector<Vineyard> vine = new Vector<Vineyard>();
 			Vineyard yard = new Vineyard();
 			yard.setName(vineyard);
@@ -80,15 +92,18 @@ public class WineWizardDispatch extends HttpServlet
 			query.setVineyard(vine);
 		}
 
-		if (wine_type != null) {
+		if (wine_type != null)
+		{
 			Vector<WineType> typeList = new Vector<WineType>();
 			WineType type = new WineType();
 			type.setWineType(wine_type);
 			typeList.add(type);
 			query.setType(typeList);
+			System.out.println("the wine type is " + wine_type);
 		}
 
-		if (varietal != null) {
+		if (varietal != null)
+		{
 			Vector<Varietal> var = new Vector<Varietal>();
 			Varietal variet = new Varietal();
 			variet.setGrapeType(varietal);
@@ -96,49 +111,56 @@ public class WineWizardDispatch extends HttpServlet
 			query.setVarietal(var);
 		}
 
-		if (	min_year != null &&
-			max_year != null &&
-			min_year != "" &&
-			max_year != "") {
+		if (min_year != null && max_year != null && min_year != ""
+				&& max_year != "")
+		{
 			query.setMinYear(Integer.parseInt(min_year));
 			query.setMaxYear(Integer.parseInt(max_year));
 		}
 
-		if (	max_price != null &&
-			min_price != null &&
-			max_price != "" &&
-			min_price != "") {
+		if (max_price != null && min_price != null && max_price != ""
+				&& min_price != "")
+		{
 			query.setMinPrice(Integer.parseInt(min_price));
 			query.setMaxPrice(Integer.parseInt(max_price));
 		}
 
-		try {
+		try
+		{
 			result = WineWizardAction.getSuggestion(query);
-		} catch (DAException e) {
+		} catch (DAException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvalidCategory e) {
+		} catch (InvalidCategory e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvalidSort e) {
+		} catch (InvalidSort e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvalidOtherParameters e) {
+		} catch (InvalidOtherParameters e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ParseException e) {
+		} catch (ParseException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		request.setAttribute("search_result", result);
 
-		try {
+		try
+		{
 			dispatcher.forward(request, response);
-		} catch (ServletException | IOException e) {
+		} catch (ServletException | IOException e)
+		{
 			// TODO: catch exception or display error.
 		}
 	}

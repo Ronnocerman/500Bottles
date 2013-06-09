@@ -222,6 +222,11 @@ public class WineWizardManager
 											// vector of same type
 		setWineType(query.getType());// sets the wine type to the query vector
 										// of the same type
+		if (query.getType() != null)
+		{
+			System.out.println("wine type set? "
+					+ query.getType().get(0).getWineType());
+		}
 
 		setVineyard(query.getVineyard());// sets the vineyard to the query
 											// vector of the same type
@@ -430,6 +435,7 @@ public class WineWizardManager
 		}
 		System.out.println("result.getWines().size() "
 				+ result.getWines().size());
+
 		return result;
 	}
 
