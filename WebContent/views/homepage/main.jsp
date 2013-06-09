@@ -1,15 +1,21 @@
+<%@ page import="com._500bottles.object.wine.WineQueryResult" %>
+<%@ page import="com._500bottles.action.CellarAction" %>
+<%@ page import="com._500bottles.manager.SessionManager" %>
+
 <section id="home_subview" class="subview animated" data-anim-out="fadeOutLeftBig" data-anim-in="fadeInLeftBig">
     <!-- Your Cellar Wines -->
     <div id="cellar_preview_wine_grid" class="wine_grid_container" data-rows="1">
         <h2>Your Cellar</h2>
 
         <%
+            long user_id = SessionManager.getSessionManager().getLoggedInUser().getUserId();
 
-            //WineQueryResult result = (WineQueryResult) request.getAttribute("search_result");
-            //request.setAttribute("grid_wines", result);
+            WineQueryResult result = CellarAction.getAllWinesFromCellar(user_id);
 
+            request.setAttribute("grid_wines", result);
         %>
 
+        <jsp:include page="wine_grid/wine_grid.jsp" flush="true" />
 
         <%--<%@include file="../wine_grid/wine_grid.jsp" %>--%>
 

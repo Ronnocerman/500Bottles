@@ -12,7 +12,7 @@
         request.setAttribute("grid_wines", result);
     %>
 
-    <%@ include file="wine_grid/wine_grid.jsp" %>
+    <jsp:include page="wine_grid/wine_grid.jsp" flush="true" />
 
     </div>
 

@@ -7,22 +7,18 @@ import com._500bottles.manager.SessionManager;
 import com._500bottles.manager.UserManager;
 import com._500bottles.object.cellar.CellarItem;
 import com._500bottles.object.wine.Wine;
+import com._500bottles.object.wine.WineQueryResult;
 
 import java.util.Vector;
 
 public class CellarAction
 {
+
 	/**
 	 * Method to set the quantity of a particular wine in a user's cellar.
-	 * 
-	 * @param userID
-	 *            The userID of the user whose cellar is being edited.
-	 * @param wine
-	 *            The wine whose quantity to edit.
+	 * @param id
 	 * @param quantity
-	 *            The quantity to which to set the wine in the cellar.
 	 * @throws CellarException
-	 *             if the user does not exist.
 	 */
 	public static void setCellarQuantity(long id, int quantity) throws CellarException
 	{
@@ -35,13 +31,8 @@ public class CellarAction
 
 	/**
 	 * Increments the quantity of a particular wine in a user's cellar.
-	 * 
-	 * @param userID
-	 *            The userID of the user whose cellar is being incremented.
-	 * @param wine
-	 *            The wine whose quantity to increment.
+	 * @param id
 	 * @throws CellarException
-	 *             if the user does not exist.
 	 */
 	public static void incCellarQuantity(long id) throws CellarException
 	{
@@ -54,13 +45,8 @@ public class CellarAction
 
 	/**
 	 * Decrements the quantity of a particular wine in a user's cellar.
-	 * 
-	 * @param userID
-	 *            The userID of the user whose cellar is being incremented
-	 * @param wine
-	 *            The wine whose quantity to increment.
+	 * @param id
 	 * @throws CellarException
-	 *             if the user does not exist.
 	 */
 	public static void decCellarQuantity(long id) throws CellarException
 	{
@@ -73,15 +59,9 @@ public class CellarAction
 
 	/**
 	 * Sets the cellar notes of a user for a particular wine.
-	 * 
-	 * @param userID
-	 *            The userID of the user for whom to add notes for a wine.
-	 * @param wine
-	 *            The wine for which to add notes.
+	 * @param id
 	 * @param notes
-	 *            The notes to add to the wine.
 	 * @throws CellarException
-	 *             if the user does not exist.
 	 */
 	public static void setCellarNotes(long id, String notes) throws CellarException
 	{
@@ -92,16 +72,12 @@ public class CellarAction
 		CellarManager.editCellarItem(ci);
 	}
 
+
 	/**
 	 * Gets the cellar notes of a user for a particular wine.
-	 * 
-	 * @param userID
-	 *            The userID of the user whose wine notes are being retrieved.
-	 * @param wine
-	 *            The wine for which to retrieve notes.
-	 * @return The notes for the wine by the user.
+	 * @param id
+	 * @return
 	 * @throws CellarException
-	 *             if the user does not exist.
 	 */
 	public static String getCellarNotes(long id) throws CellarException
 	{
@@ -112,13 +88,8 @@ public class CellarAction
 
 	/**
 	 * Clears the cellar notes by a user for a particular wine.
-	 * 
-	 * @param userID
-	 *            The userID of the user whose notes to clear
-	 * @param wine
-	 *            The wine whose notes to clear.
+	 * @param id
 	 * @throws CellarException
-	 *             if the user does not exist.
 	 */
 	public static void clearCellarNotes(long id) throws CellarException
 	{
@@ -129,14 +100,21 @@ public class CellarAction
 		CellarManager.editCellarItem(ci);
 	}
 
-	public static Vector<Wine> getAllWinesFromCellar(long user_id) throws CellarException
+	public static WineQueryResult getAllWinesFromCellar(long user_id) throws CellarException
 	{
+		WineQueryResult result;
+		Vector<Wine> wines;
+
 		try {
 			UserManager.getUser(user_id);
 		} catch (UserDoesNotExistException e) {
 			throw new CellarException("User does not exist.");
 		}
 
-		return CellarManager.getAllWinesFromCellar(user_id);
+		wines = CellarManager.getAllWinesFromCellar(user_id);
+
+		result = new WineQueryResult(wines);
+
+		return result;
 	}
 }
