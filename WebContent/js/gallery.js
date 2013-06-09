@@ -293,6 +293,7 @@
             data: data
         }).success(function (data, textStatus, jqXHR) {
             $(cellar_count_indicator).text(cellar_count + 1);
+            $.event.trigger("cellarupdate");
         });
 
         e.stopPropagation();
@@ -325,6 +326,8 @@
                     new_cellar_count = 0;
 
                 $(cellar_count_indicator).text(new_cellar_count);
+                console.log("triggering cellar update...");
+                $.event.trigger("cellarupdate");
         });
 
         e.stopPropagation();
