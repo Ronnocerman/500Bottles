@@ -86,7 +86,8 @@ public class RatingsDAO extends DAO
 		}
 		try
 		{
-			rating = r.getDouble("rating");
+			if (r.next())
+				rating = r.getDouble("rating");
 			Database.disconnect();
 		} catch (SQLException e)
 		{

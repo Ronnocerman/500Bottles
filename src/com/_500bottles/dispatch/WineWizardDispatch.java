@@ -83,16 +83,19 @@ public class WineWizardDispatch extends HttpServlet
 		WineQuery query = new WineQuery();
 		query.setSize(36);
 
-		if (vineyard != null)
+		if (vineyard != "")
 		{
 			Vector<Vineyard> vine = new Vector<Vineyard>();
 			Vineyard yard = new Vineyard();
 			yard.setName(vineyard);
 			vine.add(yard);
 			query.setVineyard(vine);
+		} else
+		{
+
 		}
 
-		if (wine_type != null)
+		if (wine_type != "")
 		{
 			Vector<WineType> typeList = new Vector<WineType>();
 			WineType type = new WineType();
@@ -102,13 +105,14 @@ public class WineWizardDispatch extends HttpServlet
 			System.out.println("the wine type is " + wine_type);
 		}
 
-		if (varietal != null)
+		if (varietal != "")
 		{
 			Vector<Varietal> var = new Vector<Varietal>();
 			Varietal variet = new Varietal();
 			variet.setGrapeType(varietal);
 			var.add(variet);
 			query.setVarietal(var);
+			System.out.println("the varietal is " + varietal);
 		}
 
 		if (min_year != null && max_year != null && min_year != ""

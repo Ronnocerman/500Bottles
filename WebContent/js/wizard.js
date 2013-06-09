@@ -5,7 +5,7 @@
      */
     var wizard = document.getElementById("wizard");
     var wizard_subview = document.getElementById("wizard_subview");
-    var type_radio_selector = "#wizard_form input:radio[name=type]:checked";
+    var type_selector = "#wizard_form #type option:selected";
     var varietal_selector = "#wizard_form #varietalSelect";
     var vineyard_selector = "#wizard_form input[name=vineyard]";
     var max_year_selector = "#wizard_form input[name=max_year]";
@@ -17,7 +17,7 @@
     function get_suggestion_options()
     {
         var data = {};
-        data.type = $(type_radio_selector).val();
+        data.type = $(type_selector).val();
         data.varietal = $(varietal_selector).val();
         data.vineyard = $(vineyard_selector).val();
         data.maxYear = $(max_year_selector).val();

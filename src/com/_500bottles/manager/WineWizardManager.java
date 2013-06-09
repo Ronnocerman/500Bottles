@@ -31,8 +31,6 @@ public class WineWizardManager
 	 * the vineyard list
 	 */
 
-	@SuppressWarnings("unused")
-	private long userID;
 	private static Vector<WineType> wineType = new Vector<WineType>();
 	private static Vector<Appellation> appellation = new Vector<Appellation>();// set
 	// for
@@ -200,15 +198,22 @@ public class WineWizardManager
 			throws DAException, InvalidCategory, InvalidSort,
 			InvalidOtherParameters, IOException, ParseException
 	{
-		if (query.getType().get(0).getWineType().equals("undefined"))
+		if (query.getType().size() > 0)
 		{
-			query.setType(null);
-			System.out.println("does it get here");
+			if (query.getType().get(0).getWineType().equals("undefined"))
+			{
+				query.setType(null);
+				System.out.println("does it get here");
+			}
 		}
-		if (query.getVarietal().get(0).getGrapeType().equals("grape varietal"))
+		if (query.getVarietal().size() > 0)
 		{
-			query.setVarietal(null);
-			System.out.println("dance with me");
+			if (query.getVarietal().get(0).getGrapeType()
+					.equals("grape varietal"))
+			{
+				query.setVarietal(null);
+				System.out.println("dance with me");
+			}
 		}
 
 		// System.out.println("query.getType().size() " +
@@ -222,7 +227,7 @@ public class WineWizardManager
 											// vector of same type
 		setWineType(query.getType());// sets the wine type to the query vector
 										// of the same type
-		if (query.getType() != null)
+		if (query.getType().size() > 0)
 		{
 			System.out.println("wine type set? "
 					+ query.getType().get(0).getWineType());
@@ -252,7 +257,7 @@ public class WineWizardManager
 			wineListRated.get(u).getType().setWineType(bob.getWineType());
 		}
 
-		if (vineyard.isEmpty() && !wineListRated.isEmpty())
+		if (!vineyard.isEmpty() && !wineListRated.isEmpty())
 		{
 			int r = 0;
 			Vineyard vv = VineyardDAO.getVineyardById(wineListRated.get(r)
@@ -276,36 +281,45 @@ public class WineWizardManager
 		if (!wineListRated.isEmpty())// if wineListRated is empty then don't do
 										// this
 		{
+			boolean doLevelOne = true;
 			// If varietal is empty and wineType is empty
-			if (varietal != null && wineType == null)
+			if (varietal.size() >= 1)
 			{
+				doLevelOne = false;
 				System.out.println("gets into corner case");
-				int i = 0;
-				while (i < wineListRated.size())
+				for (int i = 0; i < wineListRated.size(); i++)
 				{
 					int test = 0;
 					for (int d = 0; d < varietal.size(); d++)
 					{
-
-						if (varietal.get(d).getId() == wineListRated.get(i)
-								.getVarietal().getId())
+						String varietalName = VarietalDAO.getVarietalById(
+								wineListRated.get(i).getVarietal().getId())
+								.getGrapeType();
+						if (varietal.get(d).getGrapeType().equals(varietalName))
 						{
 							test++;
 							System.out.println("shouldn't have problems");
 						}
 					}
-					if (test == 0)
-						wineListRated.remove(i);
-					else
-					{
-						i++;
-					}
+					if (test >= 1)
+						levelOne.add(wineListRated.get(i));
+
 				}
 			}
-			getLevelOne();// does level one which in turn does level 2
-			if (varietal == null)// if varietal is empty then it puts the top
+			if (doLevelOne)
+				getLevelOne();// does level one which in turn does level 2
+			else
+			{
+				getLevelTwo();
+				wineType.clear();
+				wineType.add(levelOne.get(0).getType());
+
+				// TODO get it to create the wine type value
+			}
+			if (varietal.size() < 1)// if varietal is empty then it puts the top
 									// rated varietals in its place
 			{
+				System.out.println("does it get into varietal==null?");
 				// vector of varietal to be built
 				Vector<Varietal> app = new Vector<Varietal>();
 				// varietal to be made gets the varietal grape type and sets
@@ -318,6 +332,7 @@ public class WineWizardManager
 								// list
 				if (app.size() >= 1)
 				{
+					System.out.println("******************");
 					search.setVarietal(app);// sets the varietal app vector for
 
 				} else
@@ -328,9 +343,13 @@ public class WineWizardManager
 			} else
 			{
 				// sets the varietal if query's varietal was set
+				Varietal var = VarietalDAO.getVarietal(varietal.get(0)
+						.getGrapeType());
+				varietal.clear();
+				varietal.add(var);
 				search.setVarietal(getVarietal());
 			}
-			if (wineType == null)// if wine type is empty put the suggested
+			if (wineType.size() < 1)// if wine type is empty put the suggested
 									// wine
 			{
 				Vector<WineType> app = new Vector<WineType>();
@@ -379,12 +398,12 @@ public class WineWizardManager
 				search.setMaxPrice(query.getMaxPrice());
 			}
 
-			if (vineyard == null)
+			if (vineyard.size() < 1)
 			{
 				// sets the vineyard if the query vineyard was set
 				search.setVineyard(getVineyard());
 			}
-			if (appellation == null)
+			if (appellation.size() < 1)
 			{
 				// sets the appellation if the query vineyard was set
 				search.setAppellation(getAppellation());
@@ -418,6 +437,7 @@ public class WineWizardManager
 		search.setSize(query.getSize());
 		if (search.getVarietal() != null)
 		{
+			System.out.println("varietlList.size() " + varietalList.size());
 			System.out.println("search varietal = "
 					+ search.getVarietal().size());
 			System.out.println("search varietal name: "
@@ -427,6 +447,22 @@ public class WineWizardManager
 		} else
 			System.out.println("search varietal is null");
 		WineQueryResult result = WineManager.searchWine(search);
+		levelOne.clear();
+		wineListRated.clear();
+		varietal.clear();
+		vineyard.clear();
+		wineType.clear();
+		appellation.clear();
+		typeList.clear();
+		typeRating.clear();
+		typeAmount.clear();
+		varietalList.clear();
+		varietalAmount.clear();
+		varietalID.clear();
+		varietalRating.clear();
+		minYear = 0;
+		maxYear = 0;
+		theID = 0;
 		if (result == null)
 		{
 			Vector<Wine> wines = new Vector<Wine>();
@@ -445,7 +481,7 @@ public class WineWizardManager
 	private static void getLevelOne()
 	{
 
-		if (wineType == null)// checks to see if wine type is empty
+		if (wineType.size() < 1)// checks to see if wine type is empty
 		{
 			System.out.println("First part of getLevelOne");
 			System.out.println("wineListRated inside of getLevelOne"
@@ -562,8 +598,9 @@ public class WineWizardManager
 	private static void getLevelTwo()// checks to make sure
 	{
 		// if varietal is empty then do this
-		if (varietal == null)
+		if (varietal.size() < 1)
 		{
+			System.out.println("levelOne.size() levelOne " + levelOne.size());
 			// gets the highest rated varietal of the list
 			for (int i = 0; i < levelOne.size(); i++)
 			{
