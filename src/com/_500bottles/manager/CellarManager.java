@@ -144,15 +144,26 @@ public class CellarManager
 		int[] q = { 0, 0, 0, 0 };
 		while (i.hasNext())
 		{
-			String type = i.next().getType().getWineType().toLowerCase();
+			Wine w = i.next();
+			String type = w.getType().getWineType().toLowerCase();
 			if (type.contains("red"))
-				q[0] += CellarAction.getCellarQuantity(i.next().getId());
-			else if (type.contains("white"))
-				q[1] += CellarAction.getCellarQuantity(i.next().getId());
+			{
+				q[0] += CellarAction.getCellarQuantity(w.getId());
+			} else if (type.contains("white"))
+			{
+				q[1] += CellarAction.getCellarQuantity(w.getId());
+
+			}
+
 			else if (type.contains("ros"))
-				q[2] += CellarAction.getCellarQuantity(i.next().getId());
-			else
-				q[3] += CellarAction.getCellarQuantity(i.next().getId());
+			{
+				q[2] += CellarAction.getCellarQuantity(w.getId());
+
+			} else
+			{
+				q[3] += CellarAction.getCellarQuantity(w.getId());
+			}
+
 		}
 		return q;
 	}
