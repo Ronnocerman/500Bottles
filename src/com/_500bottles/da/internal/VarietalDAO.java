@@ -247,7 +247,7 @@ public class VarietalDAO extends DAO
 		ResultSet r;
 		String where = "";
 		// TODO: decide if equals or like
-		where += "varietalName='" + escapeXml(grapeType) + "'";
+		where += "varietalName LIKE'" + escapeXml(grapeType) + "'";
 
 		try
 		{

@@ -129,7 +129,8 @@ public class WineTypeDAO extends DAO
 
 		try
 		{
-			r = select(WINETYPE_TABLE, "*", "type='" + escapeXml(type) + "'");
+			r = select(WINETYPE_TABLE, "*", "type LIKE '" + escapeXml(type)
+					+ "'");
 			wineType = createWineType(r);
 			Database.disconnect();
 		} catch (SQLException e)
@@ -138,6 +139,32 @@ public class WineTypeDAO extends DAO
 		}
 
 		return wineType;
+	}
+
+	public static Vector<String> getWineTypes() throws DAException
+	{
+		ResultSet r;
+		Vector<String> ret = new Vector<String>();
+		String temp;
+		try
+		{
+			r = select(WINETYPE_TABLE, "*");
+		} catch (SQLException e)
+		{
+			throw new DAException("SQL select exception");
+		}
+		try
+		{
+			while (r.next())
+			{
+				temp = r.getString("type");
+				ret.add(temp);
+			}
+		} catch (SQLException e)
+		{
+			throw new DAException("Vector<String> addition problem");
+		}
+		return ret;
 	}
 
 	/**
@@ -261,7 +288,6 @@ public class WineTypeDAO extends DAO
 		{
 			throw new DAException(e.getMessage());
 		}
-
 	}
 
 	/**

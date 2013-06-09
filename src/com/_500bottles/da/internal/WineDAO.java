@@ -1185,9 +1185,8 @@ public class WineDAO extends DAO
 
 	/**
 	 * Gets the wines matching the WineQuery object
-	 * 
 	 * @param q
-	 *            WineQuery object to search for
+	 * WineQuery object to search for
 	 * @return Vector of Wine objects matching the search
 	 * @throws DAException
 	 */
