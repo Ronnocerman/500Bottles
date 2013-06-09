@@ -87,6 +87,12 @@ public class UserDAO extends DAO
 		return user;
 	}
 
+	/**
+	 * Deletes the user from the table.
+	 * 
+	 * @param long userId
+	 * @return true if item was deleted, false otherwise.
+	 */
 	public static boolean deleteUser(long userId)
 	{
 		int ret;
@@ -104,6 +110,15 @@ public class UserDAO extends DAO
 		return true;
 	}
 
+	/**
+	 * Edits the user specified
+	 * 
+	 * @param user
+	 *            : the user to edit
+	 * 
+	 * @return void
+	 * @throws DAException
+	 */
 	public static void editUser(ApplicationUser user) throws DAException
 	{
 		long userId = user.getUserId();
@@ -134,6 +149,14 @@ public class UserDAO extends DAO
 		}
 	}
 
+	/**
+	 * Gets the ApplicationUser object based on the userId
+	 * 
+	 * @param userId
+	 * 
+	 * @return the ApplicationUser object of the userId passed in
+	 * @throws DAException
+	 */
 	public static ApplicationUser getUser(long userId) throws DAException
 	{
 		ResultSet r;
@@ -152,6 +175,15 @@ public class UserDAO extends DAO
 		return user;
 	}
 
+	/**
+	 * Gets the ApplicationUser object based on the email
+	 * 
+	 * @param email
+	 *            (String)
+	 * 
+	 * @return the ApplicationUser object of the email string passed in
+	 * @throws DAException
+	 */
 	public static ApplicationUser getUserByEmail(String email)
 			throws DAException
 	{
@@ -177,6 +209,15 @@ public class UserDAO extends DAO
 		return user;
 	}
 
+	/**
+	 * Creates the ApplicationUser object from a result set. This method is
+	 * called from the 2 get methods
+	 * 
+	 * @param r
+	 *            result set to construct the ApplicationUser object from
+	 * @return ApplicationUser object
+	 * @throws SQLException
+	 */
 	private static ApplicationUser createUser(ResultSet r) throws SQLException
 	{
 		User user;
