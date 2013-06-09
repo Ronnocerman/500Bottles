@@ -377,6 +377,8 @@
         var submit = document.getElementById("create_account_submit");
 
         function do_signup() {
+            var invalid = false;
+
             var data = {
                 "action": "createAccount",
                 "firstname": $("#create_account_firstname").val(),
@@ -388,30 +390,58 @@
                 "dobMonth": $("#bday_month").val(),
                 "dobYear": $("#bday_year").val()
             };
-			if(data.firstname == "")
-				alert("Invalid firstname");
-			if(data.lastname== "")
-				alert("Invalid lastname");
-			if(data.email== "" || data.email.indexOf("@") < 1)
-				alert("Invalid email");
-			if(data.password.length < 8)
-				alert("Invalid password");
-			if(!data.confPassword == password)
-				alert("Passwords don't match");
-			if(data.dobDay < 1 || data.dobDay > 31)
-				alert("Invalid DOB");
-			if(data.dobMonth <1 || data.dobMonth > 12)
-				alert("Invalid DOB");
-			if(data.dobYear > 1992)
-				alert("You seem to be under 21 years of age");
+			if(data.firstname == "") {
+                alert("Invalid firstname");
+                invalid = true;
+            }
+
+			if(data.lastname== "") {
+                alert("Invalid lastname");
+                invalid = true;
+            }
+
+			if(data.email== "" || data.email.indexOf("@") < 1) {
+                alert("Invalid email");
+                invalid = true;
+            }
+
+			if(data.password.length < 8) {
+                alert("Invalid password. Passwords must be at least 8 characters.");
+                invalid = true;
+            }
+
+			if(!data.confPassword == password) {
+                alert("Passwords don't match");
+                invalid = true;
+            }
+
+			if(data.dobDay < 1 || data.dobDay > 31) {
+                alert("Invalid DOB");
+                invalid = true;
+            }
+
+			if(data.dobMonth <1 || data.dobMonth > 12) {
+                alert("Invalid DOB");
+                invalid = true;
+            }
+
+			if(data.dobYear > 1992) {
+                alert("You seem to be under 21 years of age");
+                invalid = true;
+            }
+
+            if (invalid)
+                return;
+
+
             $.ajax({
                 url: url,
                 data: data,
                 type: "POST"
             }).success(function (data, textStatus, jqXHR) {
-                    console.log(data);
-                    alert("success!");
-                });
+                alert("Your account has been created!");
+                window.location = "/";
+            });
         }
 
         $(submit).on("click", do_signup);
