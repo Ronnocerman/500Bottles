@@ -175,6 +175,12 @@ public class WinebookManager
 		return ent;
 	}
 
+	/**
+	 * Gets the URI of a photo by id.
+	 * @param photo_id	Photo id of uri.
+	 * @return
+	 * @throws PhotoDoesNotExist
+	 */
 	public static String getPhotoURI(long photo_id) throws PhotoDoesNotExist
 	{
 		String image_uri = null;
