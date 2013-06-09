@@ -15,82 +15,33 @@ import com._500bottles.object.wine.Vineyard;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.wine.WineType;
 
+/**
+ * Coordinates all custom wine related database access for custom wine adding,
+ * deleting, and getting in the database.
+ */
 public class CustomWineDAO extends WineDAO
 {
 	private final static String CUSTOMWINE_TABLE = Config
 			.getProperty("customWineTableName");
 
+	/**
+	 * Adds custom wine to custom wine table and wine table
+	 * 
+	 * @param wine
+	 *            The custom wine to be added to the database
+	 * @return The added custom wine
+	 * @throws DAException
+	 */
 	public static CustomWine addCustomWine(CustomWine wine) throws DAException
 	{
-
-		// if (!customWineExists(wine))
-		// {
-		// Varietal varietal = new Varietal();
-		// Vineyard vineyard = new Vineyard();
-		// WineType wineType = new WineType();
-		//
-		// /*
-		// * if (!varietalExists(wine.getVarietal()))
-		// * addVarietal(wine.getVarietal()); if
-		// * (!vineyardExists(wine.getVineyard()))
-		// * addVineyard(wine.getVineyard()); if
-		// * (!wineTypeExists(wine.getType())) addWineType(wine.getType());
-		// */
-		// try
-		// {
-		// varietal = getVarietal(wine.getVarietal().getGrapeType());
-		//
-		// vineyard = getVineyard(wine.getVineyard().getName());
-		//
-		// wineType = getWineType(wine.getType().getWineType());
-		// } catch (DAException e)
-		// {
-		// }
-		//
-		// // If vineyard, varietal, winetype dont exist, then add a new one
-		// if (varietal == null)
-		// addVarietal(wine.getVarietal());
-		// if (vineyard == null)
-		// addVineyard(wine.getVineyard());
-		// if (wineType == null)
-		// addWineType(wine.getType());
-		//
-		// String columns, values;
-		// long userId;
-		//
-		// userId = SessionManager.getSessionManager().getLoggedInUser()
-		// .getUserId();
-		//
-		// columns = "(`wineId`, `userId`,";
-		// columns += " `varietalId`, `vineyardId`,";
-		// columns += " `wineTypeId`, `wineName`,";
-		// columns += " `vintage`, `description`)";
-		//
-		// values = "("; // TODO: figure out hwo to get wineId
-		// values += "'" + userId + "',";
-		// if (varietal == null)
-		// values += "'" + wine.getVarietal().getId() + "',";
-		// else
-		// values += "'" + varietal.getId() + "',";
-		// if (vineyard == null)
-		// values += "'" + wine.getVineyard().getId() + "',";
-		// else
-		// values += "'" + vineyard.getId() + "',";
-		// if (wineType == null)
-		// values += "'" + wine.getType().getWineTypeId() + "',";
-		// else
-		// values += "'" + wineType.getWineTypeId() + "',";
-		// values += "'" + "',";
-		// }
+		// Check if wine exists in wine table already
 		if (!wineExists(wine))
 		{
 			CustomWine ret = new CustomWine();
 			Wine temp = new Wine();
 			temp = addWine(wine);
 
-			// long wineId, userId, wineTypeId, vineyardId, varietalId, vintage;
-			// String name, description, imageURL;
-
+			// Set the values for the custom wine
 			ret.setId(temp.getId());
 			ret.setVarietal(temp.getVarietal());
 			ret.setVineyard(temp.getVineyard());
@@ -108,6 +59,7 @@ public class CustomWineDAO extends WineDAO
 			Vineyard vineyard = new Vineyard();
 			WineType wineType = new WineType();
 
+			// Construct SQL query
 			columns = "(`wineId`, `userId`,";
 			columns += " `varietalId`, `vineyardId`,";
 			columns += " `wineTypeId`, `wineName`,";
@@ -118,9 +70,11 @@ public class CustomWineDAO extends WineDAO
 				varietal = VarietalDAO.getVarietal(wine.getVarietal()
 						.getGrapeType());
 
-				vineyard = VineyardDAO.getVineyard(wine.getVineyard().getName());
+				vineyard = VineyardDAO
+						.getVineyard(wine.getVineyard().getName());
 
-				wineType = WineTypeDAO.getWineType(wine.getType().getWineType());
+				wineType = WineTypeDAO
+						.getWineType(wine.getType().getWineType());
 			} catch (DAException e)
 			{
 			}
@@ -170,6 +124,13 @@ public class CustomWineDAO extends WineDAO
 		}
 	}
 
+	/**
+	 * Deletes custom wine from wines table and custom wines table
+	 * 
+	 * @param wine
+	 *            The wine to be deleted
+	 * @return true if wine was deleted, false otherwise.
+	 */
 	public static boolean deleteCustomWine(CustomWine wine)
 	{
 		deleteWine(wine);
@@ -181,13 +142,19 @@ public class CustomWineDAO extends WineDAO
 		} catch (SQLException e)
 		{
 			return false;
-			// throw new DAException("Failed Wine deletion", e.getCause());
 		}
 		if (ret == 0)
 			return false;
 		return true;
 	}
 
+	/**
+	 * Edits the custom wine specified
+	 * 
+	 * @param wine
+	 *            The edited wine to be updated in the table
+	 * @throws DAException
+	 */
 	public static void editCustomWine(CustomWine wine) throws DAException
 	{
 		editWine(wine);
@@ -213,19 +180,27 @@ public class CustomWineDAO extends WineDAO
 			throw new DAException("Failed Wine update", e);
 		}
 
+		// Add to vineyard, varietal, winetype tables if they don't exist there
+		// yet
 		if (VineyardDAO.getVineyard(wine.getVineyard().getName()) != null)
 			VineyardDAO.addVineyard(wine.getVineyard());
-		// System.out.println(wine.getVineyard().getName());
-		// System.out.println(wine.getVarietal().getGrapeType());
+
 		if (VarietalDAO.getVarietal(wine.getVarietal().getGrapeType()) != null)
 			VarietalDAO.addVarietal(wine.getVarietal());
 		if (WineTypeDAO.getWineType(wine.getType().getWineType()) != null)
 			WineTypeDAO.addWineType(wine.getType());
 	}
 
+	/**
+	 * Gets the custom wine from the custom wine ID
+	 * 
+	 * @param customId
+	 *            ID of custom wine to get.
+	 * @return the custom wine with the given ID
+	 * @throws DAException
+	 */
 	public static CustomWine getCustomWine(long customId) throws DAException
 	{
-		// System.out.println("getWine wineId: " + wineId);
 		ResultSet r;
 		CustomWine wine;
 
@@ -250,6 +225,14 @@ public class CustomWineDAO extends WineDAO
 		return wine;
 	}
 
+	/**
+	 * Helper method which creates the custom wine to be returned
+	 * 
+	 * @param r
+	 *            ResultSet to construct the custom wine from
+	 * @return custom wine created from the ResultSet
+	 * @throws SQLException
+	 */
 	private static CustomWine createCustomWine(ResultSet r) throws SQLException
 	{
 		CustomWine wine;
@@ -267,7 +250,6 @@ public class CustomWineDAO extends WineDAO
 
 		name = unescapeXml(r.getString("wineName"));
 		wineId = r.getLong("wineId");
-		// System.out.println("wineId: " + wineId);
 
 		description = unescapeXml(r.getString("description"));
 		year = r.getLong("vintage");
@@ -279,14 +261,8 @@ public class CustomWineDAO extends WineDAO
 
 		} catch (DAException e1)
 		{
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		/*
-		 * try { wineType = getWineTypeById(wineTypeId).getWineType(); } catch
-		 * (DAException e) { throw new SQLException(e.getMessage()); } if
-		 * (wineType != null) type.setWineType(wineType);
-		 */
 
 		varId = r.getLong("varietalId");
 
@@ -295,14 +271,9 @@ public class CustomWineDAO extends WineDAO
 			varietal = VarietalDAO.getVarietalById(varId);
 		} catch (DAException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*
-		 * try { grapeType = getVarietalById(varId).getGrapeType(); } catch
-		 * (DAException e) { throw new SQLException(e.getMessage()); } if
-		 * (grapeType != null) varietal.setGrapeType(grapeType);
-		 */
+
 		vineId = r.getLong("vineyardId");
 
 		try
@@ -310,14 +281,8 @@ public class CustomWineDAO extends WineDAO
 			vineyard = VineyardDAO.getVineyardById(vineId);
 		} catch (DAException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*
-		 * try { vineyardName = getVineyardNameById(vineId).getName(); } catch
-		 * (DAException e) { throw new SQLException(e.getMessage()); } if
-		 * (vineyardName != null) vineyard.setName(vineyardName);
-		 */
 
 		description = unescapeXml(r.getString("description"));
 		imageUrl = unescapeXml(r.getString("imageUrl"));
@@ -344,12 +309,6 @@ public class CustomWineDAO extends WineDAO
 
 		wine.setImage(imageUrl);
 
-		// System.out.println("does it go right here");
 		return wine;
 	}
-
-	/*
-	 * private static boolean customWineExists(CustomWine wine) { return true; }
-	 */
-
 }

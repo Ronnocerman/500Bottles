@@ -128,6 +128,16 @@ public class FavoritesDAO extends DAO
 		}
 	}
 
+	/**
+	 * Gets the favorites object of the wine Id and user Id
+	 * 
+	 * @param wine_id
+	 *            The wine Id of the wine to find favorite for
+	 * @param user_id
+	 *            User Id of the user to find favorite for
+	 * @return the favorite object of the associated wine and user
+	 * @throws DAException
+	 */
 	public static Favorites getFavorite(long wine_id, long user_id)
 			throws DAException
 	{
@@ -152,6 +162,14 @@ public class FavoritesDAO extends DAO
 		return favorite;
 	}
 
+	/**
+	 * Gets the favorites from that user specified
+	 * 
+	 * @param user_id
+	 *            The user Id of which to get all the favorites from
+	 * @return Vector of wines of that user's favorites
+	 * @throws DAException
+	 */
 	public static Vector<Wine> getFavorites(long user_id) throws DAException
 	{
 		ResultSet r;
@@ -178,12 +196,20 @@ public class FavoritesDAO extends DAO
 
 		} catch (SQLException e)
 		{
-			System.out.println("Message: " + e.getMessage());
+			// System.out.println("Message: " + e.getMessage());
 			throw new DAException("SQL select exception.", e);
 		}
 
 	}
 
+	/**
+	 * Creates the favorite object from a result set
+	 * 
+	 * @param r
+	 *            result set to construct the favorites object from
+	 * @return Favorites object
+	 * @throws SQLException
+	 */
 	private static Favorites createFavorites(ResultSet r) throws SQLException
 	{
 		Favorites f;
@@ -194,7 +220,6 @@ public class FavoritesDAO extends DAO
 			return null;
 
 		favoritesId = r.getLong("favoritesId");
-		// System.out.println("break");
 		wineId = r.getLong("wineId");
 
 		f = new Favorites();
