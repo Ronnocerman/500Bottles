@@ -597,7 +597,8 @@ footer {
     padding: 6px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) inset;
     border: none;
-    cursor: pointer; }
+    cursor: pointer;
+    float: left; }
     .wine_grid .wine .front, .wine_grid .wine .back, .wine_grid .wine .details {
       border: 1px solid #cccccc;
       background-color: white;
