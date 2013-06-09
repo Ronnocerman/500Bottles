@@ -407,7 +407,7 @@
             $.ajax({
                 url: url,
                 data: data,
-                type: type
+                type: "POST"
             }).success(function (data, textStatus, jqXHR) {
                     console.log(data);
                     alert("success!");
