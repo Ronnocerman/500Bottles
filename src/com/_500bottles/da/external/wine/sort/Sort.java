@@ -6,6 +6,7 @@ import com._500bottles.da.external.snooth.exception.InvalidSort;
  * Created with IntelliJ IDEA. User: administrator Date: 5/22/13 Time: 11:09 AM
  * To change this template use File | Settings | File Templates.
  */
+// abstract class that all the classes in this package need,
 public abstract class Sort
 {
 	protected String sort;

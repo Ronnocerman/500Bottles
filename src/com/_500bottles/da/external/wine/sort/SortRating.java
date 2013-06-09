@@ -2,6 +2,7 @@ package com._500bottles.da.external.wine.sort;
 
 import com._500bottles.da.external.snooth.exception.InvalidSort;
 
+//sort by rating given by wine.com
 public class SortRating extends Sort
 {
 	private final static String _sort = "rating";
