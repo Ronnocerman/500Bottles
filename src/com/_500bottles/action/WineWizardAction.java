@@ -18,6 +18,10 @@ public class WineWizardAction
 			throws DAException, InvalidCategory, InvalidSort,
 			InvalidOtherParameters, IOException, ParseException
 	{
+		if (wine.getType() == null)
+		{
+
+		}
 		return WineWizardManager.selectWine(wine);
 	}
 }

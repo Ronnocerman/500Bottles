@@ -26,14 +26,14 @@
     <section class="column_50">
 		<div class="light_bg_wizard with_border shadow">
 			<form id="wizard_form">
-				<select id="varietalSelect" name="type">
+				<select id="type" name="type">
 					<option>type</option>
-					<option>red</option>
-					<option>white</option>
-					<option>ros&eacute;</option>
-					<option>champagne & sparkling</option>
-					<option>sak&eacute;</option>
-					<option>dessert, sherry, & port</option>
+					<option value="Red Wine">red</option>
+					<option value="White Wine">white</option>
+					<option value="Rosé Wine">ros&eacute;</option>
+					<option value="Champagne &amp; Sparkling">champagne & sparkling</option>
+					<option value="">sak&eacute;</option>
+					<option value="Dessert/Fortified">dessert, sherry, & port</option>
 				</select>
 			
 				<select id="varietalSelect" name="varietal">
@@ -56,10 +56,10 @@
 					<option>Merlot</option>
 					<option>Mourvedre</option>
 					<option>Muscat</option>
-					<option>Nebbiolo</option>
+					<option value="Nebbiolo">Nebbiolo</option>
 					<option>Nero d'Avola</option>
 					<option>Non-vintage</option>
-					<option>Riesling</option>
+					<option value="Riesling">Riesling</option>
 					<option>Rh&ocirc;ne</option>
 					<option>Ros&eacute;</option>
 					<option>Sangiovese</option>

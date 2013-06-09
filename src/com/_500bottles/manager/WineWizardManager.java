@@ -205,7 +205,7 @@ public class WineWizardManager
 			query.setType(null);
 			System.out.println("does it get here");
 		}
-		if (query.getVarietal().get(0).getGrapeType().equals("type"))
+		if (query.getVarietal().get(0).getGrapeType().equals("grape varietal"))
 		{
 			query.setVarietal(null);
 			System.out.println("dance with me");
@@ -236,6 +236,7 @@ public class WineWizardManager
 												// a rating of 1 to 5
 		getRating.setMinRating(0);// sets the min rating to 0
 		getRating.setMaxRating(5);// sets the max rating to 5
+		getRating.setSize(100);
 		// gets the list of wines that are rated
 		wineListRated = WineManager.searchWine(getRating).getWines();
 		System.out.println("wineListRated.size()" + wineListRated.size());
@@ -310,8 +311,15 @@ public class WineWizardManager
 
 				app.add(newApp);// adds it to newApp to the search query
 								// list
-				search.setVarietal(app);// sets the varietal app vector for the
-										// search query
+				if (app.size() >= 1)
+				{
+					search.setVarietal(app);// sets the varietal app vector for
+
+				} else
+				{
+					search.setVarietal(null);
+				}
+				// search query
 			} else
 			{
 				// sets the varietal if query's varietal was set
@@ -323,15 +331,26 @@ public class WineWizardManager
 				Vector<WineType> app = new Vector<WineType>();
 				// vector to put the best wines
 				// the for loop that fills the vector app
+				System.out.println("typeList.size() " + typeList.size());
 				for (int i = 0; i < typeList.size(); i++)
 				{
 					// app filled with the wine types of choice
 					WineType newApp = new WineType();
 					// app fills it with the typelist
 					newApp.setWineType(typeList.get(i));
+					newApp.setWineTypeId(WineTypeDAO.getWineType(
+							typeList.get(i)).getWineTypeId());
 					app.add(newApp);// puts these new wineTypes into the vector
 				}
-				search.setType(app);// sets search query with the wineTypes
+				System.out.println("wineType app.size() " + app.size());
+				if (app.size() >= 1)
+				{
+					search.setType(app);// sets search query with the wineTypes
+					System.out.println("do you get into this if statement");
+				} else
+				{
+					search.setType(null);
+				}
 			} else
 			{
 				// else sets the vector of the query type and puts it into
@@ -396,22 +415,22 @@ public class WineWizardManager
 		{
 			System.out.println("search varietal = "
 					+ search.getVarietal().size());
-
 			System.out.println("search varietal name: "
 					+ search.getVarietal().get(0).getGrapeType());
 			System.out.println("search varietal id: "
 					+ search.getVarietal().get(0).getId());
 		} else
 			System.out.println("search varietal is null");
-		WineQueryResult doug = WineManager.searchWine(search);
-		if (doug == null)
+		WineQueryResult result = WineManager.searchWine(search);
+		if (result == null)
 		{
 			Vector<Wine> wines = new Vector<Wine>();
-			System.out.println("doug is null");
-			doug = new WineQueryResult(wines);
+			System.out.println("result is null");
+			result = new WineQueryResult(wines);
 		}
-		System.out.println("doug.getWines().size() " + doug.getWines().size());
-		return doug;
+		System.out.println("result.getWines().size() "
+				+ result.getWines().size());
+		return result;
 	}
 
 	/**
@@ -422,6 +441,9 @@ public class WineWizardManager
 
 		if (wineType == null)// checks to see if wine type is empty
 		{
+			System.out.println("First part of getLevelOne");
+			System.out.println("wineListRated inside of getLevelOne"
+					+ wineListRated.size());
 			for (int i = 0; i < wineListRated.size(); i++)//
 			{
 				// gets rating time 100 to make sure no numbers were dropped
@@ -492,6 +514,9 @@ public class WineWizardManager
 		{
 			// checks to see if the wines that are rated have a wineType that
 			// was selected
+			System.out.println("gets into getLevelOne part 2");
+			System.out.println("wineType.get(0).getWineType() at^ "
+					+ wineType.get(0).getWineType());
 			for (int r = 0; r < wineListRated.size(); r++)
 			{
 				int test = 0;
@@ -514,11 +539,14 @@ public class WineWizardManager
 				}
 				if (test > 0)
 				{
+
 					levelOne.add((wineListRated.get(r)));
 				}
 			}
 		}// calls level 2
 			// System.out.println("levelOne.size()" + levelOne.size());
+		System.out.println("levelOne.size() at end of getLevelOne "
+				+ levelOne.size());
 		getLevelTwo();
 	}
 
@@ -560,7 +588,7 @@ public class WineWizardManager
 														// average
 			sort(varietalList, varietalRating, varietalID);// sorts the
 															// varietals lists
-															// including the id
+			// including the id
 			// System.out.println("varietallist.get(0) " + varietalID.get(0));
 			// System.out.println("******varieatList.get(0) "
 			// + varietalList.get(0));
