@@ -1518,17 +1518,17 @@ footer {
     color: #fa7085; }
   #chartSide a.other {
     color: #372c2c; }
-  #chartSide .tooltip {
+  #chartSide .tooltip_home {
     position: relative; }
-  #chartSide .tooltip:hover {
+  #chartSide .tooltip_home:hover {
     cursor: pointer; }
-  #chartSide .tooltip > div {
+  #chartSide .tooltip_home > div {
     display: none;
     position: absolute;
     bottom: 100%;
     left: -150%;
     width: 9em; }
-  #chartSide .tooltipContent {
+  #chartSide .tooltip_homeContent {
     border: none;
     padding: 5px;
     background-color: rgba(0, 0, 0, 0.05);
