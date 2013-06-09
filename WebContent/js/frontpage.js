@@ -392,7 +392,7 @@
 				alert("Invalid firstname");
 			if(data.lastname== "")
 				alert("Invalid lastname");
-			if(data.email== "" || data.email.indexOf("@" <1))
+			if(data.email== "" || data.email.indexOf("@") < 1)
 				alert("Invalid email");
 			if(data.password.length < 8)
 				alert("Invalid password");
