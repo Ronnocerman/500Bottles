@@ -100,7 +100,7 @@ public class VineyardDAO extends DAO
 
 		try
 		{
-			r = select(VINEYARDS_TABLE, "*", "vineyardName='"
+			r = select(VINEYARDS_TABLE, "*", "vineyardName LIKE '"
 					+ escapeXml(vineyardName) + "'");
 			vineyard = createVineyard(r);
 			Database.disconnect();

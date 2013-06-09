@@ -98,7 +98,7 @@ public class VarietalDAO extends DAO
 
 		try
 		{
-			r = select(VARIETALS_TABLE, "*", "varietalName='"
+			r = select(VARIETALS_TABLE, "*", "varietalName LIKE '"
 					+ escapeXml(varietalName) + "'");
 			varietal = createVarietal(r);
 			Database.disconnect();

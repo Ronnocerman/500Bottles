@@ -1,6 +1,7 @@
 package com._500bottles.da.internal;
 
 import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -129,6 +130,7 @@ public class WineTypeDAO extends DAO
 
 		try
 		{
+
 			r = select(WINETYPE_TABLE, "*", "type LIKE '" + escapeXml(type)
 					+ "'");
 			wineType = createWineType(r);
@@ -141,6 +143,12 @@ public class WineTypeDAO extends DAO
 		return wineType;
 	}
 
+	/**
+	 * Gets all the wine types
+	 * 
+	 * @return Vector of wine type strings
+	 * @throws DAException
+	 */
 	public static Vector<String> getWineTypes() throws DAException
 	{
 		ResultSet r;
@@ -299,21 +307,22 @@ public class WineTypeDAO extends DAO
 	 */
 	private static WineType createWineType(ResultSet r) throws SQLException
 	{
-		WineType wineType;
-
+		WineType wineType = new WineType();
 		long wineTypeId;
 		String type;
 
 		if (!r.next())
+		{
 			return null;
+		}
 		try
 		{
 			wineTypeId = r.getLong("wineTypeId");
-			type = r.getString("type");
+			type = unescapeXml(r.getString("type"));
 
-			wineType = new WineType();
 			wineType.setWineTypeId(wineTypeId);
 			wineType.setWineType(type);
+
 		} catch (SQLException e)
 		{
 			throw e;
