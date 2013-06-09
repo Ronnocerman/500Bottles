@@ -1,22 +1,15 @@
 package com._500bottles.dispatch;
 
-import com._500bottles.action.FavoritesAction;
-import com._500bottles.action.WineAction;
-import com._500bottles.manager.SessionManager;
-import com._500bottles.object.user.ApplicationUser;
-import com._500bottles.object.wine.WineQuery;
-import com._500bottles.object.wine.WineQueryResult;
+import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+
+import com._500bottles.action.FavoritesAction;
+import com._500bottles.manager.SessionManager;
+import com._500bottles.object.user.ApplicationUser;
 
 @SuppressWarnings("serial")
 public class FavoritesDispatch extends HttpServlet
@@ -25,8 +18,7 @@ public class FavoritesDispatch extends HttpServlet
 
 	@Override
 	protected void doGet(HttpServletRequest request,
-		HttpServletResponse response)
-		throws ServletException, IOException
+			HttpServletResponse response) throws ServletException, IOException
 	{
 		SessionManager.initiateSessionManager(request);
 
@@ -34,22 +26,23 @@ public class FavoritesDispatch extends HttpServlet
 
 		switch (action)
 		{
-			case "setFavorite":
-				setFavorite(request);
-				break;
-			case "clearFavorite":
-				clearFavorite(request);
-				break;
-			case "getFavorite":
+		case "setFavorite":
+			setFavorite(request);
+			break;
+		case "clearFavorite":
+			clearFavorite(request);
+			break;
+		case "getFavorite":
 
-				break;
-			default:
-				System.err.println("Favorites Dispatch Error!");
+			break;
+		default:
+			System.err.println("Favorites Dispatch Error!");
 		}
 	}
 
 	/**
 	 * Sets a wine as a favorite.
+	 * 
 	 * @param request
 	 */
 	private void setFavorite(HttpServletRequest request)
@@ -75,4 +68,5 @@ public class FavoritesDispatch extends HttpServlet
 
 		FavoritesAction.clearFavorite(wine_id_lng, user_id);
 	}
+
 }

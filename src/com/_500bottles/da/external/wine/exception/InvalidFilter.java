@@ -1,5 +1,6 @@
 package com._500bottles.da.external.wine.exception;
 
+//exception if filter is invalid
 public class InvalidFilter extends Exception
 {
 	/**

@@ -15,6 +15,7 @@ public class SnoothDAO extends ExternalDAO
 	public static WineDetailsResponse getWineDetails(WineDetails details)
 	{
 		String res = doGetRequest(details.toString());
+		System.out.println(details.toString());
 		WineDetailsResponse response = new WineDetailsResponse(res);
 
 		return response;

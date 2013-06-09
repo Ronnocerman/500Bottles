@@ -1,5 +1,6 @@
 package com._500bottles.da.external.wine.exception;
 
+//exception for any other parameters, if they are invalid
 public class InvalidOtherParameters extends Exception
 {
 	/**

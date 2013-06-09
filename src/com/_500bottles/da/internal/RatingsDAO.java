@@ -158,7 +158,6 @@ public class RatingsDAO extends DAO
 
 		} catch (SQLException e)
 		{
-			// System.out.println("Message: " + e.getMessage());
 			throw new DAException("SQL select exception.", e);
 		}
 		try

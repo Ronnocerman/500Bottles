@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 
+//check if specified publication is accepted by wine.com api as a vlid category
 public class Publication extends Attribute
 {
 	private static String errormsg = "Invalid Publication";

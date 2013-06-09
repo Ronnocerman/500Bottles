@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 
+//check if specified varietal is accepted by wine.com
 public class VarietalArray extends Attribute
 {
 	private static String errormsg = "Invalid Varietal";

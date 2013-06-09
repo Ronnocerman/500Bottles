@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 
+//check if specified region is a valid region accepted by wine.com API
 public class Region extends Attribute
 {
 	private static String errormsg = "Invalid Region";

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 
+//check if specified product attribute is accepted by wine.com
 public class ProductAttribute extends Attribute
 {
 	private static String errormsg = "Invalid Product Attribute";

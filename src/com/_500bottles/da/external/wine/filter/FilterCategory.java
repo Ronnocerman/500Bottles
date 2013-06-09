@@ -2,6 +2,7 @@ package com._500bottles.da.external.wine.filter;
 
 import com._500bottles.da.external.wine.Attribute;
 
+//builds the filter category part of the url
 public class FilterCategory extends Filter
 {
 	public FilterCategory()

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 
+//this class is to check if a wine style that we are searching for is accepted by wine.com
 public class WineStyle extends Attribute
 {
 	private static String errormsg = "Invalid Wine Style";

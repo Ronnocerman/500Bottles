@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 
+//check is specified appellation is accepted by wine.com
 public class AppellationArray extends Attribute
 {
 	private static String errormsg = "Invalid Appellation";

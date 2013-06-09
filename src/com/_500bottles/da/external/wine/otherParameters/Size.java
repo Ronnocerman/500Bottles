@@ -2,6 +2,7 @@ package com._500bottles.da.external.wine.otherParameters;
 
 import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
 
+//for entering the size of the amount of products you want back from wine.com
 public class Size extends OtherParameter
 {
 	public Size(int i) throws InvalidOtherParameters
