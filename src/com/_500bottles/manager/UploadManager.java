@@ -29,7 +29,7 @@ public class UploadManager
 		try
 		{
 			item.write(uploadedFile);
-			id = UploadDAO.addPhoto("webapps/uploads/" + filename);
+			id = UploadDAO.addPhoto("uploads/" + filename);
 
 		} catch (Exception e)
 		{
