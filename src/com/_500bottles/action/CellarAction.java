@@ -190,4 +190,11 @@ public class CellarAction
 		return ci.getQuantity();
 
 	}
+
+	public static int[] getTypeQuantities()
+	{
+		long userID = SessionManager.getSessionManager().getLoggedInUser()
+				.getUserId();
+		return CellarManager.getTypeQuantities(userID);
+	}
 }

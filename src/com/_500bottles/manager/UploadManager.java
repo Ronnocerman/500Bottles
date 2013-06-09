@@ -25,11 +25,11 @@ public class UploadManager
 		filename += randomNum;
 		filename += extension;
 
-		File uploadedFile = new File("uploads", filename);
+		File uploadedFile = new File("webapps", "uploads/" + filename);
 		try
 		{
 			item.write(uploadedFile);
-			id = UploadDAO.addPhoto("/uploads/" + filename);
+			id = UploadDAO.addPhoto("uploads/" + filename);
 
 		} catch (Exception e)
 		{

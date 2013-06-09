@@ -1,6 +1,9 @@
 package com._500bottles.manager;
 
+import java.util.Vector;
+
 import com._500bottles.da.internal.WineDAO;
+import com._500bottles.da.internal.WineTypeDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.CustomWine;
 import com._500bottles.object.wine.Wine;
@@ -173,5 +176,18 @@ public class WineManager
 		{
 			// TODO Auto-generated catch block
 		}
+	}
+
+	public static Vector<String> getWineTypes()
+	{
+		try
+		{
+			return WineTypeDAO.getWineTypes();
+		} catch (DAException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

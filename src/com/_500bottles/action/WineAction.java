@@ -1,6 +1,7 @@
 package com._500bottles.action;
 
-import com._500bottles.exception.da.DAException;
+import java.util.Vector;
+
 import com._500bottles.manager.WineManager;
 import com._500bottles.object.wine.CustomWine;
 import com._500bottles.object.wine.Wine;
@@ -63,5 +64,10 @@ public class WineAction
 	public static void setRating(long id, int rating)
 	{
 		WineManager.setRating(id, rating);
+	}
+
+	public static Vector<String> getWineTypes()
+	{
+		return WineManager.getWineTypes();
 	}
 }
