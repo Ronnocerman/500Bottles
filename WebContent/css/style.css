@@ -597,7 +597,8 @@ footer {
     padding: 6px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) inset;
     border: none;
-    cursor: pointer; }
+    cursor: pointer;
+    float: left; }
     .wine_grid .wine .front, .wine_grid .wine .back, .wine_grid .wine .details {
       border: 1px solid #cccccc;
       background-color: white;
@@ -904,7 +905,7 @@ footer {
   -o-transition-timing-function: default;
   transition-timing-function: default; }
   .side_nav:hover {
-    background: red; }
+    background: rgba(255, 255, 255, 0.9); }
   .side_nav .nav_item {
     font-family: LeagueGothicRegular;
     font-size: 2em;
@@ -1276,6 +1277,15 @@ footer {
   opacity: 1;
   bottom: -45px;
   box-shadow: 0px 0px 18px rgba(0, 0, 0, 0.8); }
+
+#front_headings h1 {
+  opacity: 1;
+  text-shadow: 0 0 20px black;
+  font-family: "Raleway";
+  font-size: 7em;
+  font-weight: 100;
+  margin-left: 1em;
+  margin-top: 0.5em; }
 
 #view_login {
   position: fixed;

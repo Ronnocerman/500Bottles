@@ -110,5 +110,5 @@
     $(wine_search_submit).on("click", execute_wine_search);
     $(wine_search_text).on("focus", bind_quick_search_enter_key);
     $(wine_search_text).on("blur", unbind_quick_search_enter_key);
-    $(document).bind("cellarupdate", function() { refresh_your_cellar(); cellarupdated = true; });
+    //$(document).bind("cellarupdate", function() { refresh_your_cellar(); cellarupdated = true; });
 })();

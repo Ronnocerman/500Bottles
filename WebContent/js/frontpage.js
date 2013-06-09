@@ -388,13 +388,26 @@
                 "dobMonth": $("#bday_month").val(),
                 "dobYear": $("#bday_year").val()
             };
-
-            var type = "POST";
-
+			if(data.firstname == "")
+				alert("Invalid firstname");
+			if(data.lastname== "")
+				alert("Invalid lastname");
+			if(data.email== "" || data.email.indexOf("@") < 1)
+				alert("Invalid email");
+			if(data.password.length < 8)
+				alert("Invalid password");
+			if(!data.confPassword == password)
+				alert("Passwords don't match");
+			if(data.dobDay < 1 || data.dobDay > 31)
+				alert("Go fuck yourself");
+			if(data.dobMonth <1 || data.dobMonth > 12)
+				alert("No seriously, go fuck yourself");
+			if(data.dobYear > 1992)
+				alert("Sorry, jailbait");
             $.ajax({
                 url: url,
                 data: data,
-                type: type
+                type: "POST"
             }).success(function (data, textStatus, jqXHR) {
                     console.log(data);
                     alert("success!");
@@ -420,6 +433,7 @@
         var url = "/user";
         var submit = document.getElementById("login_submit");
 
+		
         function do_login() {
             var data = {
                 "action": "login",
