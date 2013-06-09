@@ -11,7 +11,7 @@
     </nav>
 
     <div id="account_links">
-        <a id="account">Account</a>
+        <%--<a id="account">Account</a>--%>
         <a id="logout">Logout</a>
     </div>
 </header>
