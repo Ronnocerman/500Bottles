@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Date;
+import java.util.Vector;
 
 import org.junit.After;
 import org.junit.Test;
@@ -59,10 +60,12 @@ public class WinebookDAOTests
 		entry2 = new Entry();
 
 		entry1.setTitle("Test Title");
+		entry1.setUserId(2);
 		entry1.setContent("Test entry content.");
 		entry1.setDateCreated(new Date());
 
 		entry2.setTitle("Temecula");
+		entry2.setUserId(2);
 		entry2.setContent("CSE 110 Wine Tasting.");
 		entry2.setDateCreated(new Date());
 		try
@@ -315,6 +318,26 @@ public class WinebookDAOTests
 			{
 				fail(e.getMessage());
 			}
+		}
+	}
+
+	@Test
+	public void getAllEntries()
+	{
+		Vector<Entry> temp = new Vector<Entry>();
+		try
+		{
+			temp = WinebookDAO.getAllEntries(2);
+		} catch (DAException e)
+		{
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+		for (int i = 0; i < temp.size(); i++)
+		{
+			System.out.println(temp.get(i).getTitle());
 		}
 	}
 }
