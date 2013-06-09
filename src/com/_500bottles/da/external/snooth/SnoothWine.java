@@ -9,6 +9,9 @@ import com._500bottles.object.wine.WineType;
  * Created with IntelliJ IDEA. User: administrator Date: 5/24/13 Time: 5:35 PM
  * To change this template use File | Settings | File Templates.
  */
+// this is the snooth wine objects, that will hold the data for the wines
+// obtained from snoooth.com
+// api, it will eventually be converted to a wine object
 public class SnoothWine
 {
 	private String name;
@@ -103,13 +106,15 @@ public class SnoothWine
 
 	public void setSugar(String sugar)
 	{
-		try {
+		try
+		{
 			if (sugar.length() == 0)
 				this.sugar = -1;
 			else
 				this.sugar = Double.parseDouble(sugar);
 
-		} catch (NumberFormatException | NullPointerException e) {
+		} catch (NumberFormatException | NullPointerException e)
+		{
 			this.sugar = -1;
 		}
 	}
@@ -126,13 +131,15 @@ public class SnoothWine
 
 	public void setAlcohol(String alcohol)
 	{
-		try {
+		try
+		{
 			if (alcohol.length() == 0)
 				this.alcohol = -1;
 			else
 				this.alcohol = Double.parseDouble(alcohol);
 
-		} catch (NumberFormatException | NullPointerException e) {
+		} catch (NumberFormatException | NullPointerException e)
+		{
 			this.alcohol = -1;
 		}
 
@@ -145,13 +152,15 @@ public class SnoothWine
 
 	public void setPh(String ph)
 	{
-		try {
+		try
+		{
 			if (ph.length() == 0)
 				this.ph = -1;
 			else
 				this.ph = Double.parseDouble(ph);
 
-		} catch (NumberFormatException | NullPointerException e) {
+		} catch (NumberFormatException | NullPointerException e)
+		{
 			this.ph = -1;
 		}
 	}
@@ -163,13 +172,15 @@ public class SnoothWine
 
 	public void setAcidity(String acidity)
 	{
-		try {
+		try
+		{
 			if (acidity.length() == 0)
 				this.acidity = -1;
 			else
 				this.acidity = Double.parseDouble(acidity);
 
-		} catch (NumberFormatException | NullPointerException e) {
+		} catch (NumberFormatException | NullPointerException e)
+		{
 			this.acidity = -1;
 		}
 
@@ -297,13 +308,16 @@ public class SnoothWine
 
 	public void setSnoothrank(Object snoothrank)
 	{
-		if (snoothrank instanceof String) {
+		if (snoothrank instanceof String)
+		{
 			this.snoothrank = -1;
 
-		} else if (snoothrank instanceof Long) {
+		} else if (snoothrank instanceof Long)
+		{
 			this.snoothrank = (new Long((Long) snoothrank)).doubleValue();
 
-		} else {
+		} else
+		{
 			this.snoothrank = (Double) snoothrank;
 		}
 	}
@@ -373,7 +387,6 @@ public class SnoothWine
 		// w.setAppellation();
 		Varietal varietal = new Varietal(this.getVarietal());
 		w.setVarietal(varietal);
-
 
 		Vineyard vineyard = new Vineyard(this.getWinery());
 		w.setVineyard(vineyard);
