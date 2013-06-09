@@ -1,6 +1,7 @@
 package com._500bottles.dispatch;
 
 import com._500bottles.action.WineAction;
+import com._500bottles.manager.SessionManager;
 import com._500bottles.manager.WineManager;
 import com._500bottles.object.wine.WineQuery;
 import com._500bottles.object.wine.WineQueryResult;
@@ -27,6 +28,8 @@ public class WineDispatch extends HttpServlet
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException
 	{
+		SessionManager.initiateSessionManager(request);
+
 		String action = request.getParameter("action");
 
 		PrintWriter out = response.getWriter();
@@ -57,13 +60,6 @@ public class WineDispatch extends HttpServlet
 			default:
 				out.println("error");
 		}
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException
-	{
-		// TODO Auto-generated method stub
 	}
 
 	/**

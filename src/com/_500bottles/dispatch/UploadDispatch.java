@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com._500bottles.manager.SessionManager;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -29,6 +30,8 @@ public class UploadDispatch extends HttpServlet
 			HttpServletResponse response)
 			throws ServletException, IOException
 	{
+		SessionManager.initiateSessionManager(request);
+
 		try {
 			process_upload(request, response);
 
