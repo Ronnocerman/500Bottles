@@ -15,6 +15,7 @@ import com._500bottles.exception.da.DAException;
 import com._500bottles.exception.winebook.EntryDoesExistException;
 import com._500bottles.exception.winebook.EntryDoesNotExistException;
 import com._500bottles.object.winebook.Entry;
+import com._500bottles.object.winebook.Photo;
 
 @SuppressWarnings("serial")
 public class WinebookDispatch extends HttpServlet
@@ -80,31 +81,28 @@ public class WinebookDispatch extends HttpServlet
 	private void addEntry(HttpServletRequest request,
 			HttpServletResponse response)
 	{
-		ServletContext context = getServletContext();
-
-		RequestDispatcher dispatcher = context
-				.getRequestDispatcher("/messages/js_callback.jsp");
-
 		String title = request.getParameter(TITLE_FIELD);
 		String content = request.getParameter(CONTENT_FIELD);
+		String photo_id = request.getParameter(PHOTOID_FIELD);
 
 		Entry ent = new Entry();
 		ent.setTitle(title);
 		ent.setContent(content);
 
-		try
-		{
-			WinebookAction.addEntry(ent);
-		} catch (EntryDoesExistException e)
-		{
+		if (photo_id != "") {
 
+			long photo_id_lng = Long.parseLong(photo_id);
+
+			Photo p = new Photo();
+			p.setId(photo_id_lng);
+			p.setFilename(WinebookAction.getPhotoURI(photo_id_lng));
+
+			ent.addPhoto(p);
 		}
 
-		try
-		{
-			dispatcher.forward(request, response);
-		} catch (ServletException | IOException e)
-		{
+		try {
+			WinebookAction.addEntry(ent);
+		} catch (EntryDoesExistException e) {
 
 		}
 	}

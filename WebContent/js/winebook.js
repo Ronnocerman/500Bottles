@@ -1,6 +1,9 @@
 (function() {
 
     var add_winebook_entry = document.getElementById("add_winebook_entry");
+    var title_selector = "#winebook_entry_form #winebook_title";
+    var content_selector = "#winebook_entry_form #winebook_content";
+    var save_button_selector = "#winebook_entry_form #entry_save";
     var entry_form = null;
 
     function get_entry_form()
@@ -41,6 +44,7 @@
         }
 
         setup_droppable();
+        $(save_button_selector).on("click", save_entry);
         _500bottles.views.show_floating_view(entry_form);
     }
 
@@ -48,7 +52,6 @@
     {
         _500bottles.views.hide_floating_view(entry_form);
     }
-
 
     function setup_droppable()
     {
@@ -59,6 +62,7 @@
             dataType: 'json',
             done: function (e, data) {
                 var imageId = data.result;
+                $("#winebook_entry_form").data("photo-id", imageId);
                 get_image_url(imageId);
             },
             progressall: function (e, data) {
@@ -91,6 +95,31 @@
     function bind_events()
     {
         $(add_winebook_entry).on("click", open_entry_form);
+    }
+
+    function save_entry()
+    {
+        console.log("saving entry...");
+
+        var title = $(title_selector).val();
+        var content = $(content_selector).val();
+        var photo_id = $("#winebook_entry_form").data("photo-id");
+
+        var url = "/winebook";
+
+        var data = {
+            "action": "addEntry",
+            "title": title,
+            "photoId": photo_id,
+            "content": content
+        };
+
+        $.ajax({
+            url: url,
+            data: data
+        }).success(function (data, textStatus, jqXHR) {
+            console.log("success!");
+        });
     }
 
     bind_events();
