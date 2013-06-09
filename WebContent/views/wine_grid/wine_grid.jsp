@@ -3,6 +3,8 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="com._500bottles.manager.SessionManager" %>
 <%@ page import="com._500bottles.manager.FavoritesManager" %>
+<%@ page import="com._500bottles.action.RatingsAction" %>
+<%@ page import="com._500bottles.action.CellarAction" %>
 
 <ul class="wine_grid">
 
@@ -27,6 +29,10 @@
         long year = wine.getYear();
         String displayYear = "";
         String description = wine.getDescription();
+        //long cellar_quantity = CellarAction.
+
+        //double user_rating = Rating
+        double user_rating = RatingsAction.getRating(wine_id);
 
         if (year > 0)
             displayYear = Long.toString(year);
@@ -49,7 +55,7 @@
             <div class="wine_info table_cell">
                 <div class="rating">
                     <div class="stars"></div>
-                    <div class="your_rating" data-your-rating="0"></div>
+                    <div class="your_rating" data-your-rating="<%= Double.toString(user_rating) %>"></div>
                     <div class="their_rating" data-wine-rating="<%= Double.toString(rating) %>"></div>
                     <div class="stars_bg"></div>
                 </div>

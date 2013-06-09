@@ -195,44 +195,79 @@
         });
     }
 
-    function position_your_rating(e)
+    function position_your_rating_on_hover(e)
     {
         var your_rating = $(e.target).siblings(".your_rating");
         var width = $(your_rating).outerWidth(true);
         $(your_rating).css("left", -(width - e.offsetX));
     }
 
+    function position_your_rating(wine)
+    {
+        var user_rating_div = $(wine).find(".your_rating");
+        var user_rating = $(user_rating_div).attr("data-your-rating");
+        var width = 100;
+
+        var user_rating_position = (Number(user_rating) / 5) * width;
+
+        $(user_rating_div).css("left", user_rating_position - width);
+    }
+
     function position_their_rating(wine)
     {
         var their_rating_div = $(wine).find(".their_rating");
         var rating = $(their_rating_div).data("wine-rating");
-        var width = 100;//$(their_rating_div).outerWidth(true);
-
-        console.log("their rating: ", rating);
-        console.log("width: ", width);
+        var width = 100;
 
         var position = (Number(rating) / 5) * width;
 
-        console.log("position: ", position - width);
-
         $(their_rating_div).css("left", position - width);
-
-        //console.log("setting rating for ", wine, position);
     }
 
     function on_rating_hover(e)
     {
-        $(e.target).on("mousemove", position_your_rating);
+        $(e.target).on("mousemove", position_your_rating_on_hover);
     }
 
     function off_rating_hover(e)
     {
-        $(e.target).off("mousemove", position_your_rating);
+        var wine = $(e.target).parents(".wine");
+        $(e.target).off("mousemove", position_your_rating_on_hover);
+        position_your_rating(wine);
+    }
+
+    function on_rating_click(e)
+    {
+        var user_rating = $(e.target).siblings(".your_rating");
+        var width = $(user_rating).outerWidth(true);
+        var wine_id = $(e.target).parents(".wine").data("wine-id");
+        var wine = $(e.target).parents(".wine");
+
+        var new_rating = e.offsetX / width * 5;
+
+        var url = "/ratings"
+
+        var data = {
+            "action": "addRating",
+            "wineId": wine_id,
+            "rating": new_rating
+        };
+
+        $.ajax({
+            url: url,
+            data: data
+        }).success(function (data, textStatus, jqXHR) {
+            $(user_rating).attr("data-your-rating", new_rating);
+            position_your_rating(wine);
+        });
+
+        e.stopPropagation();
     }
 
     function bind_rating_events(wine)
     {
         $(wine).find(".rating").hover(on_rating_hover, off_rating_hover);
+        $(wine).find(".rating").on("click", on_rating_click);
     }
 
 
@@ -245,6 +280,9 @@
 
         var url = "/cellar"
 
+        var cellar_count_indicator = $(e.target).parents(".wine").find(".cellar_indicator");
+        var cellar_count = Number($(cellar_count_indicator).text());
+
         var data = {
             "action": "incCellarQuantity",
             "wineId": wine_id
@@ -254,7 +292,7 @@
             url: url,
             data: data
         }).success(function (data, textStatus, jqXHR) {
-            console.log("favorites success!");
+            $(cellar_count_indicator).text(cellar_count + 1);
         });
 
         e.stopPropagation();
@@ -269,6 +307,9 @@
 
         var url = "/cellar"
 
+        var cellar_count_indicator = $(e.target).parents(".wine").find(".cellar_indicator");
+        var cellar_count = Number($(cellar_count_indicator).text());
+
         var data = {
             "action": "decCellarQuantity",
             "wineId": wine_id
@@ -278,7 +319,7 @@
             url: url,
             data: data
         }).success(function (data, textStatus, jqXHR) {
-            console.log("favorites success!");
+                $(cellar_count_indicator).text(cellar_count - 1);
         });
 
         e.stopPropagation();
@@ -359,6 +400,7 @@
                 position_their_rating(images[j]);
                 bind_rating_events(images[j]);
                 bind_cellar_events(images[j]);
+                position_your_rating(images[j]);
             }
 
             // add this row container to the gallery container

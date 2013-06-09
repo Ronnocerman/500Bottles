@@ -18,13 +18,13 @@ public class RatingsDispatch extends HttpServlet
 		String wineId = request.getParameter("wineId");
 		String rating = request.getParameter("rating");
 
-		if (action == "addRating")
+		if (action.equals("addRating"))
 		{
 			setRating(Long.parseLong(wineId), Double.parseDouble(rating));
-		} else if (action == "removeRating")
+		} else if (action.equals("removeRating"))
 		{
 			removeRating(Long.parseLong(wineId));
-		} else if (action == "getRating")
+		} else if (action.equals("getRating"))
 		{
 			getRating(Long.parseLong(wineId));
 		}
