@@ -6,14 +6,29 @@ import java.util.Vector;
 
 import com._500bottles.config.Config;
 import com._500bottles.exception.da.DAException;
+import com._500bottles.manager.SessionManager;
 import com._500bottles.object.wine.Favorites;
 import com._500bottles.object.wine.Wine;
 
+/**
+ * Coordinates all favorites related database access for favorite adding,
+ * deleting, and getting in the database.
+ */
 public class FavoritesDAO extends DAO
 {
 	private static final String FAVORITES_TABLE = Config
 			.getProperty("favoritesTableName");
 
+	/**
+	 * Adds the Favorite to the favorites table
+	 * 
+	 * @param userId
+	 *            The userId to associate the user with
+	 * @param favorite
+	 *            The favorites object to add to the table
+	 * @return the Favorites object added
+	 * @throws DAException
+	 */
 	public static Favorites addFavorite(long userId, Favorites favorite)
 			throws DAException
 	{
@@ -25,10 +40,8 @@ public class FavoritesDAO extends DAO
 		values += "'" + favorite.getWineId() + "')";
 		try
 		{
-			// int i =
 			insert(FAVORITES_TABLE, columns, values);
 			Database.disconnect();
-			// System.out.print("This is what we got: " + i);
 		} catch (SQLException e)
 		{
 			throw new DAException("Failed Favorites insertion", e);
@@ -39,7 +52,15 @@ public class FavoritesDAO extends DAO
 		return favorite;
 	}
 
-	// Might not use one of the deletes
+	/**
+	 * Deletes the favorite of the wine and userId
+	 * 
+	 * @param userId
+	 *            The userId associated with the favorite to delete
+	 * @param wine
+	 *            The wine to delete from the favorites table
+	 * @return true if favorite was deleted, false otherwise.
+	 */
 	public static boolean deleteFavorite(long userId, Wine wine)
 	{
 		try
@@ -55,6 +76,13 @@ public class FavoritesDAO extends DAO
 		return true;
 	}
 
+	/**
+	 * Deletes the favorite specified
+	 * 
+	 * @param favorite
+	 *            The favorites object to be deleted
+	 * @return true if favorite was deleted, false otherwise.
+	 */
 	public static boolean deleteFavorite(Favorites favorite)
 	{
 		int ret;
@@ -66,19 +94,28 @@ public class FavoritesDAO extends DAO
 		} catch (SQLException e)
 		{
 			return false;
-			// throw new DAException("Failed Favorites deletion", e);
 		}
 		if (ret == 0)
 			return false;
 		return true;
 	}
 
+	/**
+	 * Edits the favorite object
+	 * 
+	 * @param favorite
+	 *            The final favorite object after edited
+	 * @throws DAException
+	 */
 	public static void editFavorite(Favorites favorite) throws DAException
 	{
 		long favoritesId = favorite.getfavoritesId();
 		String sql = "";
 
 		// Get userID from session manager
+		sql += "userId="
+				+ SessionManager.getSessionManager().getLoggedInUser()
+						.getUserId() + " ,";
 		sql += "wineID=" + favorite.getWineId();
 
 		try
@@ -115,24 +152,10 @@ public class FavoritesDAO extends DAO
 		return favorite;
 	}
 
-	// public static Favorites getFavorite(Favorites favorite) throws
-	// DAException,
-	// NullPointerException
-	// {
-	// if (favorite == null)
-	// throw new NullPointerException("Null Favorite.");
-	// if (favorite.getWineId() == 0)
-	// throw new DAException("Favorite not set.");
-	//
-	// long wineId = favorite.getWineId();
-	// // System.out.println("favoritesId in getFavorite: "
-	// // + favorite.getfavoritesId());
-	// return getFavorite(wineId);
-	// }
-
 	public static Vector<Wine> getFavorites(long user_id) throws DAException
 	{
 		ResultSet r;
+		Vector<Long> wineIdVector = new Vector<Long>();
 		Vector<Wine> output = new Vector<Wine>();
 
 		try
@@ -141,9 +164,17 @@ public class FavoritesDAO extends DAO
 			r = select(FAVORITES_TABLE, "*", where);
 			while (r.next())
 			{
-				output.add(WineDAO.getWine(r.getLong("wineId")));
+				wineIdVector.add(r.getLong("wineId"));
 			}
 			Database.disconnect();
+			for (int i = 0; i < wineIdVector.size(); i++)
+			{
+				Wine temp = new Wine();
+				temp = WineDAO.getWine(wineIdVector.get(i).longValue());
+				output.add(temp);
+			}
+
+			return output;
 
 		} catch (SQLException e)
 		{
@@ -151,7 +182,6 @@ public class FavoritesDAO extends DAO
 			throw new DAException("SQL select exception.", e);
 		}
 
-		return output;
 	}
 
 	private static Favorites createFavorites(ResultSet r) throws SQLException
