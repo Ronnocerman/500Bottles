@@ -10,6 +10,9 @@ import com._500bottles.da.internal.UploadDAO;
 public class UploadManager
 {
 
+	// this creates a name for the photo to be saved from the current time and
+	// also a few
+	// randomly generated numbers at the end and saves it to the uploads folder
 	static public long addPhoto(FileItem item, String extension)
 	{
 		long id = -1;
@@ -22,11 +25,11 @@ public class UploadManager
 		filename += randomNum;
 		filename += extension;
 
-		File uploadedFile = new File("uploads", filename);
+		File uploadedFile = new File("webapps", "uploads/" + filename);
 		try
 		{
 			item.write(uploadedFile);
-			id = UploadDAO.addPhoto("/uploads/" + filename);
+			id = UploadDAO.addPhoto("webapps/uploads/" + filename);
 
 		} catch (Exception e)
 		{
@@ -36,6 +39,7 @@ public class UploadManager
 		return id;
 	}
 
+	// delete photo
 	static public boolean deletePhoto(String filename)
 	{
 		boolean bool = UploadDAO.deletePhoto(filename);

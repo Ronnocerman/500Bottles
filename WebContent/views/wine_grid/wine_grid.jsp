@@ -29,7 +29,7 @@
         long year = wine.getYear();
         String displayYear = "";
         String description = wine.getDescription();
-        //long cellar_quantity = CellarAction.
+        long cellar_quantity = CellarAction.getCellarQuantity(wine_id);
 
         //double user_rating = Rating
         double user_rating = RatingsAction.getRating(wine_id);
@@ -100,7 +100,7 @@
                 <div class="table_cell">
                     <div class="align_left cellar_indicator_container">
                         <span class="tooltip" data-tip="Quantity in your cellar.">
-                            <a class="cellar_indicator">0</a>
+                            <a class="cellar_indicator"><%= cellar_quantity %></a>
                         </span>
                         <div class="cellar_quantity_buttons">
                             <span class="tooltip" data-tip="Increment cellar quantity.">

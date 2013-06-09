@@ -116,9 +116,11 @@ public class WineQueryManager
 			// Do the Snooth query and get the response object.
 			res = SnoothDAO.doSearch(s);
 
-		} catch (InvalidWineSearch e) {
+		} catch (InvalidWineSearch e)
+		{
 			// TODO
-		} catch (NullPointerException e) {
+		} catch (NullPointerException e)
+		{
 			System.err.println("Caught NPE in searchSnooth...");
 		}
 
@@ -294,37 +296,6 @@ public class WineQueryManager
 	 * @return Returns the wines added to the database as a result of the merge.
 	 * @throws DAException
 	 */
-	private static Vector<Wine> mergeExternalResults(
-			WineSearchResponse response, Vector<Wine> wineComWines)
-	{
-		// Vector of wines to populate and return.
-		Vector<Wine> wines = new Vector<Wine>();
-
-		// Vector of resultant snooth wines.
-		Vector<SnoothWine> snoothWines = response.getWines();
-
-		// Getting the details for each Snooth Wine.
-		WineDetails d;
-		try
-		{
-			for (int i = 0; i < snoothWines.size(); i++)
-			{
-				d = new WineDetails(snoothWines.elementAt(i).getCode());
-				wines.add(SnoothDAO.getWineDetails(d).getWines().elementAt(0)
-						.toWineObject());
-			}
-		} catch (InvalidWineDetails e)
-		{
-			System.err
-					.println("WineQueryManager: InvalidWineDetails Exception");
-		}
-
-		// Adding all wine.com results to the return.
-		for (int j = 0; j < wineComWines.size(); j++)
-			wines.add(wineComWines.elementAt(j));
-
-		return wines;
-	}
 
 	/**
 	 * Processes query results from Snooth API.
@@ -336,7 +307,8 @@ public class WineQueryManager
 		Iterator<SnoothWine> it = response.getWinesIterator();
 		SnoothWine w;
 
-		while (it.hasNext()) {
+		while (it.hasNext())
+		{
 			w = it.next();
 			addWineToDatabase(w);
 		}
@@ -374,19 +346,6 @@ public class WineQueryManager
 			System.err
 					.println("Winequerymanager: addWinetoDatabase: Failed to insert winecom wine, might already exist");
 		}
-
-		/*
-		 * try { WineDetails details = new WineDetails(snoothWine.getCode());
-		 * WineDetailsResponse r = SnoothDAO.getWineDetails(details);
-		 * 
-		 * Iterator<SnoothWine> it = r.getWinesIterator();
-		 * 
-		 * while (it.hasNext()) { wine = it.next().toWineObject();
-		 * WineDAO.addWine(wine); }
-		 * 
-		 * } catch (InvalidWineDetails e) { // TODO; } catch (Exception e) { //
-		 * TODO: }
-		 */
 
 		return wine;
 	}

@@ -319,7 +319,12 @@
             url: url,
             data: data
         }).success(function (data, textStatus, jqXHR) {
-                $(cellar_count_indicator).text(cellar_count - 1);
+                var new_cellar_count = cellar_count - 1;
+
+                if (new_cellar_count < 0)
+                    new_cellar_count = 0;
+
+                $(cellar_count_indicator).text(new_cellar_count);
         });
 
         e.stopPropagation();

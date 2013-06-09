@@ -3,20 +3,20 @@ package com._500bottles.manager;
 import com._500bottles.da.internal.RatingsDAO;
 import com._500bottles.exception.da.DAException;
 
+//manager class for ratings, invokes the ratings DAO to add, edit, and remove ratings assigned
+//to a wine
 public class RatingsManager
 {
+	// add rating to the database
 	public static void addRating(long userId, long wineId, double rating)
 			throws DAException
 	{
-		SessionManager sess = SessionManager.getSessionManager();
-
 		RatingsDAO.addRating(userId, wineId, rating);
-
 	}
 
+	// edit the rating in the database
 	public static void editRating(long userId, long wineId, double rating)
 	{
-		SessionManager sess = SessionManager.getSessionManager();
 		try
 		{
 			RatingsDAO.editRating(userId, wineId, rating);
@@ -27,15 +27,16 @@ public class RatingsManager
 		}
 	}
 
+	// remove rating from the database
 	public static void removeRating(long userId, long wineId)
 	{
-		SessionManager sess = SessionManager.getSessionManager();
 		RatingsDAO.deleteRating(userId, wineId);
 	}
 
+	// get the rating from the DAO, return -1 if there is no rating
 	public static double getRating(long userId, long wineId)
 	{
-		SessionManager sess = SessionManager.getSessionManager();
+
 		try
 		{
 			return RatingsDAO.getRating(userId, wineId);
