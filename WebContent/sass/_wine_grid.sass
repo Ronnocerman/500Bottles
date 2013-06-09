@@ -233,3 +233,27 @@
 
     &:not(.favorite) .front .favorite_banner
       height: 0px
+
+    .description
+      min-height: 100px
+
+    .cellar_indicator
+      color: black
+      display: inline-block
+      position: relative
+      text-align: left
+      margin-left: 23px
+      margin-top: 14px
+      padding-bottom: 5px
+      cursor: pointer
+      &:before
+        content: ""
+        background-image: url("../img/icons/bottle_small.png")
+        background-size: auto 100%
+        background-repeat: no-repeat
+        position: absolute
+        left: -30px
+        top: -9px
+        width: 30px
+        height: 30px
+        display: block

@@ -17,8 +17,6 @@
 
         <jsp:include page="wine_grid/wine_grid.jsp" flush="true" />
 
-        <%--<%@include file="../wine_grid/wine_grid.jsp" %>--%>
-
     </div>
 
     <div class="column_66">

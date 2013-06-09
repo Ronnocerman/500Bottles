@@ -20,10 +20,6 @@
         while(it.hasNext()) {
             wine = it.next();
 
-
-            %>
-    <%
-
         String image = wine.getImage();
         long wine_id = wine.getId();
         boolean is_favorite = FavoritesManager.isFavorite(wine_id, user_id);
@@ -91,7 +87,16 @@
             </div>
             <div class="table_row">
                 <div class="table_cell">
-                    <p><%= description %></p>
+                    <p class="description"><%= description %></p>
+                </div>
+            </div>
+            <div class="table_row">
+                <div class="table_cell">
+                    <div class="align_left">
+                        <span class="tooltip" data-tip="Quantity in your cellar.">
+                            <a class="cellar_indicator">0</a>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
