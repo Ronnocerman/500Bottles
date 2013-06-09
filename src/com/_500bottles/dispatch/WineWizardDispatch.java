@@ -102,7 +102,7 @@ public class WineWizardDispatch extends HttpServlet
 			type.setWineType(wine_type);
 			typeList.add(type);
 			query.setType(typeList);
-			// System.out.println("the wine type is " + wine_type);
+			System.out.println("the wine type is " + wine_type);
 		}
 
 		if (varietal != "")
