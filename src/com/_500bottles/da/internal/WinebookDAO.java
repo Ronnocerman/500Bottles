@@ -83,15 +83,8 @@ public class WinebookDAO extends DAO
 	 * @throws NullPointerException
 	 */
 	public static boolean deleteEntry(long entryId)
-	// NullPointerException
 	{
-		/*
-		 * if (entry == null) throw new
-		 * NullPointerException("Entry object null.");
-		 * 
-		 * if (entry.getEntryId() == 0) throw new
-		 * DAException("Entry ID not set.");
-		 */
+
 		int ret;
 		try
 		{
@@ -100,8 +93,7 @@ public class WinebookDAO extends DAO
 		} catch (SQLException e)
 		{
 			return false;
-			// throw new DAException("Failed Winebook entry deletion.",
-			// e.getCause());
+
 		}
 		if (ret == 0)
 			return false;
@@ -151,28 +143,6 @@ public class WinebookDAO extends DAO
 			throw new DAException("Failed Winebook entry update.", e);
 		}
 	}
-
-	/**
-	 * Gets and returns an entry object from the database. The entry object must
-	 * have entry ID set to retrieve an entry. Throws DAException if an SQL
-	 * error occurs or if the entry ID was not set. Throws NullPointerException
-	 * if the entry is null.
-	 * 
-	 * @param entry
-	 *            An entry object with entry ID set to retrieve from the
-	 *            database.
-	 * @return Entry object.
-	 * @throws DAException
-	 */
-	/*
-	 * public static Entry getEntry(Entry entry) throws DAException,
-	 * NullPointerException { if (entry == null) throw new
-	 * NullPointerException("Null Winebook entry.");
-	 * 
-	 * if (entry.getEntryId() == 0) throw new DAException("Entry ID not set.");
-	 * 
-	 * long entryId = entry.getEntryId(); return getEntry(entryId); }
-	 */
 
 	/**
 	 * Gets and returns an entry object from the database. Throws DAException if
