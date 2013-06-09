@@ -45,6 +45,9 @@ public class RatingsDAO extends DAO
 			{
 				throw new DAException("Failed Rating insertion", e);
 			}
+		} else
+		{
+			throw new DAException("Rating already exists");
 		}
 		return getLastInsertId();
 	}
