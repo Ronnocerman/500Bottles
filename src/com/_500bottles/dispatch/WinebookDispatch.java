@@ -14,6 +14,7 @@ import com._500bottles.action.WinebookAction;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.exception.winebook.EntryDoesExistException;
 import com._500bottles.exception.winebook.EntryDoesNotExistException;
+import com._500bottles.manager.SessionManager;
 import com._500bottles.object.winebook.Entry;
 import com._500bottles.object.winebook.Photo;
 
@@ -81,15 +82,18 @@ public class WinebookDispatch extends HttpServlet
 	private void addEntry(HttpServletRequest request,
 			HttpServletResponse response)
 	{
+		long user_id = SessionManager.getSessionManager().getLoggedInUser().getUserId();
+
 		String title = request.getParameter(TITLE_FIELD);
 		String content = request.getParameter(CONTENT_FIELD);
 		String photo_id = request.getParameter(PHOTOID_FIELD);
 
 		Entry ent = new Entry();
+		ent.setUserId(user_id);
 		ent.setTitle(title);
 		ent.setContent(content);
 
-		if (photo_id != "") {
+		if (photo_id != null) {
 
 			long photo_id_lng = Long.parseLong(photo_id);
 

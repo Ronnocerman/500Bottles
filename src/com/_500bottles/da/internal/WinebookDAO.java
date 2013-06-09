@@ -157,6 +157,8 @@ public class WinebookDAO extends DAO
 	 */
 	public static Entry getEntry(long entryId) throws DAException
 	{
+		long user_id = SessionManager.getSessionManager().getLoggedInUser().getUserId();
+
 		ResultSet r;
 		Entry entry = null;
 
@@ -166,7 +168,7 @@ public class WinebookDAO extends DAO
 		try
 		{
 			r = select(WINEBOOK_TABLE, "*", "entryId=" + entryId);
-			entry = createEntry(r);
+			entry = createEntry(r, user_id);
 			Database.disconnect();
 		} catch (SQLException e)
 		{
@@ -228,11 +230,11 @@ public class WinebookDAO extends DAO
 	 * @throws SQLException
 	 */
 	@SuppressWarnings("unchecked")
-	private static Entry createEntry(ResultSet res) throws SQLException
+	private static Entry createEntry(ResultSet res, long userId) throws SQLException
 	{
 		Entry entry;
 
-		long entryId, userId;
+		long entryId;
 
 		String title, textContent, winesJSON, photosJSON;
 
@@ -245,8 +247,7 @@ public class WinebookDAO extends DAO
 		// Return null if there was no entry in the ResultSet.
 		if (!res.next())
 			return null;
-		userId = SessionManager.getSessionManager().getLoggedInUser()
-				.getUserId();
+
 		entryId = res.getLong("entryId");
 		title = unescapeXml(res.getString("title"));
 		textContent = unescapeXml(res.getString("textContent"));
