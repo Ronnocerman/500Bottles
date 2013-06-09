@@ -9,9 +9,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com._500bottles.action.CellarAction;
 import com._500bottles.exception.cellar.CellarException;
+import com._500bottles.manager.SessionManager;
+import com._500bottles.object.wine.WineQueryResult;
 
 @SuppressWarnings("serial")
 public class CellarDispatch extends HttpServlet
@@ -48,6 +51,9 @@ public class CellarDispatch extends HttpServlet
 			break;
 		case "clearCellarNotes":
 			clearCellarNotes(request, response);
+			break;
+		case "getUpdatedCellarGrid":
+			getUpdatedCellarGrid(request, response);
 			break;
 		default:
 			out.println("error");
@@ -188,6 +194,25 @@ public class CellarDispatch extends HttpServlet
 			{
 
 			}
+		}
+	}
+
+	private void getUpdatedCellarGrid(HttpServletRequest request,
+		HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		long user_id = SessionManager.getSessionManager().getLoggedInUser().getUserId();
+
+		try {
+			WineQueryResult result = CellarAction.getAllWinesFromCellar(user_id);
+
+			request.setAttribute("grid_wines", result);
+
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/wine_grid/wine_grid.jsp");
+			dispatcher.forward(request, response);
+
+		} catch (CellarException e) {
+			e.printStackTrace();
 		}
 	}
 

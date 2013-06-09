@@ -87,14 +87,10 @@
     
     function refresh_your_cellar()
     {
-    	
-    	console.log("in ref cellar");
-    	
-        var url = "/";
+        var url = "/cellar";
 
         var data = {
-            "action": "getView",
-            "view": "wine_grid/wine_grid"
+            "action": "getUpdatedCellarGrid"
         };
         
         var type = "GET";
@@ -105,17 +101,14 @@
             type:type,
             crossDomain: true
         }).success(function(data, textStatus, jqXHR){
-        	console.log("refreshed");
+            $(wine_grid).children().remove();
         	$(wine_grid).append(data);
-        	
-        
+            _500bottles.gallery.buildGallery("#cellar_preview_wine_grid");
         });
-
-        
     }
 
     $(wine_search_submit).on("click", execute_wine_search);
     $(wine_search_text).on("focus", bind_quick_search_enter_key);
     $(wine_search_text).on("blur", unbind_quick_search_enter_key);
-    $(document).bind("cellarupdate", function() { refresh_your_cellar(); cellarupdated = true; console.log("refresh cellar now");});
+    $(document).bind("cellarupdate", function() { refresh_your_cellar(); cellarupdated = true; });
 })();

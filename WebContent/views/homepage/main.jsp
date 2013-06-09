@@ -4,8 +4,9 @@
 
 <section id="home_subview" class="subview animated" data-anim-out="fadeOutLeftBig" data-anim-in="fadeInLeftBig">
     <!-- Your Cellar Wines -->
+    <h2>Your Cellar</h2>
+
     <div id="cellar_preview_wine_grid" class="wine_grid_container" data-rows="1">
-        <h2>Your Cellar</h2>
 
         <%
             long user_id = SessionManager.getSessionManager().getLoggedInUser().getUserId();
