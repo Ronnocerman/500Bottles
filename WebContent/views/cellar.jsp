@@ -1,3 +1,7 @@
+<%@ page import="com._500bottles.object.wine.WineQueryResult" %>
+<%@ page import="com._500bottles.action.CellarAction" %>
+<%@ page import="com._500bottles.manager.SessionManager" %>
+
 <section class="wrapper clearfix view animated no_display fadeInUp" id="cellar">
 
     <%--<section class="column_100 clearfix">--%>
@@ -7,158 +11,15 @@
     <%--</section>--%>
 
     <div id="cellar_wine_grid" class="wine_grid_container" data-rows="3">
-        <ul class="wine_grid">
-            <li class="wine">
+        <%
+            long user_id = SessionManager.getSessionManager().getLoggedInUser().getUserId();
 
-                <div class="front"><img src="img/mockup/label_1.jpeg" /></div>
-                <div class="back">back test</div>
+            WineQueryResult result = CellarAction.getAllWinesFromCellar(user_id);
 
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_2.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_3.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_4.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_5.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_6.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_1.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
+            request.setAttribute("grid_wines", result);
+        %>
 
-                <div class="front"><img src="img/mockup/label_1.jpeg" /></div>
-                <div class="back">back test</div>
-
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_2.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_3.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_4.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_5.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_6.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_1.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-
-                <div class="front"><img src="img/mockup/label_1.jpeg" /></div>
-                <div class="back">back test</div>
-
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_2.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_3.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_4.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_5.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_6.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_1.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-
-                <div class="front"><img src="img/mockup/label_1.jpeg" /></div>
-                <div class="back">back test</div>
-
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_2.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_3.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_4.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_5.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_6.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_1.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-
-                <div class="front"><img src="img/mockup/label_1.jpeg" /></div>
-                <div class="back">back test</div>
-
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_2.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_3.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_4.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_5.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_6.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-            <li class="wine">
-                <div class="front"><img src="img/mockup/label_1.jpeg" /></div>
-                <div class="back">back test</div>
-            </li>
-        </ul>
+        <jsp:include page="/views/wine_grid/wine_grid.jsp" flush="true" />
         <div class="next"></div>
         <div class="prev"></div>
     </div>
