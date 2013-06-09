@@ -15,7 +15,7 @@
             request.setAttribute("grid_wines", result);
         %>
 
-        <jsp:include page="wine_grid/wine_grid.jsp" flush="true" />
+        <jsp:include page="/views/wine_grid/wine_grid.jsp" flush="true" />
 
     </div>
 
