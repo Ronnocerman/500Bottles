@@ -1,6 +1,7 @@
 package com._500bottles.da.internal;
 
 import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,12 +52,12 @@ public class WinebookDAO extends DAO
 		winesJSON = entry.getWineIdsAsJSONArray().toJSONString();
 
 		values = "('" + entry.getUserId() + "',";
-		values += "'" + entry.getTitle() + "',";
+		values += "'" + escapeXml(entry.getTitle()) + "',";
 		values += "'" + dateCreated + "',";
 		values += "'" + dateLastEdited + "',";
-		values += "'" + entry.getContent() + "',";
-		values += "'" + winesJSON + "',";
-		values += "'" + photosJSON + "')";
+		values += "'" + escapeXml(entry.getContent()) + "',";
+		values += "'" + escapeXml(winesJSON) + "',";
+		values += "'" + escapeXml(photosJSON) + "')";
 
 		try
 		{
@@ -198,16 +199,17 @@ public class WinebookDAO extends DAO
 			while (r.next())
 			{
 				Long entryId;
-				entryId = new Long(r.getInt("wineId"));
+				entryId = new Long(r.getInt("entryId"));
 				entryIdVector.add(entryId);
 			}
+			Database.disconnect();
+
 			for (int i = 0; i < entryIdVector.size(); i++)
 			{
 				Entry temp = new Entry();
 				temp = getEntry(entryIdVector.elementAt(i).longValue());
 				entriesVector.add(temp);
 			}
-			Database.disconnect();
 		} catch (SQLException e)
 		{
 			throw new DAException("SQL select exception", e.getCause());
@@ -240,18 +242,16 @@ public class WinebookDAO extends DAO
 
 		Vector<Wine> wines;
 		Vector<Photo> photos;
-
 		// Return null if there was no entry in the ResultSet.
 		if (!res.next())
 			return null;
 		userId = SessionManager.getSessionManager().getLoggedInUser()
 				.getUserId();
 		entryId = res.getLong("entryId");
-		title = res.getString("title");
-		textContent = res.getString("textContent");
-		winesJSON = res.getString("winesJSON");
-		photosJSON = res.getString("photosJSON");
-
+		title = unescapeXml(res.getString("title"));
+		textContent = unescapeXml(res.getString("textContent"));
+		winesJSON = unescapeXml(res.getString("winesJSON"));
+		photosJSON = unescapeXml(res.getString("photosJSON"));
 		wineIds = (JSONArray) JSONValue.parse(winesJSON);
 		photosIds = (JSONArray) JSONValue.parse(photosJSON);
 
