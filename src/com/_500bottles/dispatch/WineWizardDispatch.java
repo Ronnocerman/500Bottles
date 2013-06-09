@@ -102,7 +102,7 @@ public class WineWizardDispatch extends HttpServlet
 			type.setWineType(wine_type);
 			typeList.add(type);
 			query.setType(typeList);
-			System.out.println("the wine type is " + wine_type);
+			// System.out.println("the wine type is " + wine_type);
 		}
 
 		if (varietal != "")
@@ -112,7 +112,7 @@ public class WineWizardDispatch extends HttpServlet
 			variet.setGrapeType(varietal);
 			var.add(variet);
 			query.setVarietal(var);
-			System.out.println("the varietal is " + varietal);
+			// System.out.println("the varietal is " + varietal);
 		}
 
 		if (min_year != null && max_year != null && min_year != ""
