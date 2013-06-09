@@ -1,5 +1,6 @@
 package com._500bottles.manager;
 
+import java.util.Iterator;
 import java.util.Vector;
 
 import com._500bottles.da.internal.CellarDAO;
@@ -133,5 +134,25 @@ public class CellarManager
 		{
 			return null;
 		}
+	}
+
+	public static int[] getTypeQuantities(long userID)
+	{
+		Vector<Wine> v = getAllWinesFromCellar(userID);
+		Iterator<Wine> i = v.iterator();
+		int[] q = { 0, 0, 0, 0 };
+		while (i.hasNext())
+		{
+			String type = i.next().getType().getWineType().toLowerCase();
+			if (type.contains("red"))
+				q[0]++;
+			else if (type.contains("white"))
+				q[1]++;
+			else if (type.contains("rose"))
+				q[2]++;
+			else
+				q[3]++;
+		}
+		return q;
 	}
 }
