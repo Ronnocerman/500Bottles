@@ -43,10 +43,10 @@
                 <h4>What's in your cellar</h4>
                 <canvas id="canvas" height="190" width="200"></canvas>
                 <div id="chartSide">
-                    <span class="tooltip"><a class="red">red</a><div class="tooltipContent"><%=arr[0]%> bottles (<%=(int)(100*((float)arr[0]/(arr[0]+arr[1]+arr[2]+arr[3])))%>%)</div></span> |
-                    <span class="tooltip"><a class="white">white</a><div class="tooltipContent"><%=arr[1]%> bottles (<%=(int)(100*((float)arr[1]/(arr[0]+arr[1]+arr[2]+arr[3])))%>%)</div></span> |
-                    <span class="tooltip"><a class="rose">ros&eacute;</a><div class="tooltipContent"><%=arr[2]%> bottles (<%=(int)(100*((float)arr[2]/(arr[0]+arr[1]+arr[2]+arr[3])))%>%)</div></span> |
-                    <span class="tooltip"><a class="other">other</a><div class="tooltipContent"><%=arr[3]%> bottles (<%=(int)(100*((float)arr[3]/(arr[0]+arr[1]+arr[2]+arr[3])))%>%)</div></span>
+                    <span class="tooltip_home"><a class="red">red</a><div class="tooltip_homeContent"><%=arr[0]%> bottles (<%=(int)(100*((float)arr[0]/(arr[0]+arr[1]+arr[2]+arr[3])))%>%)</div></span> |
+                    <span class="tooltip_home"><a class="white">white</a><div class="tooltip_homeContent"><%=arr[1]%> bottles (<%=(int)(100*((float)arr[1]/(arr[0]+arr[1]+arr[2]+arr[3])))%>%)</div></span> |
+                    <span class="tooltip_home"><a class="rose">ros&eacute;</a><div class="tooltip_homeContent"><%=arr[2]%> bottles (<%=(int)(100*((float)arr[2]/(arr[0]+arr[1]+arr[2]+arr[3])))%>%)</div></span> |
+                    <span class="tooltip_home"><a class="other">other</a><div class="tooltip_homeContent"><%=arr[3]%> bottles (<%=(int)(100*((float)arr[3]/(arr[0]+arr[1]+arr[2]+arr[3])))%>%)</div></span>
                 </div>
 
             </div>
