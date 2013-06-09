@@ -29,6 +29,15 @@ public class FavoritesManager
 		FavoritesDAO.addFavorite(user_id, fave);
 	}
 
+	/**
+	 * Clears a favorites given the wine ID and user ID.
+	 * 
+	 * @param wine_id
+	 *            The wine id to clear as favorite.
+	 * @param user_id
+	 *            The user id.
+	 * @throws DAException
+	 */
 	public static void clearFavorite(long wine_id, long user_id)
 			throws DAException
 	{
@@ -42,7 +51,7 @@ public class FavoritesManager
 	 * @param wine_id
 	 *            - the wine Id
 	 * @return boolean, if this wine id is in the favorites
-	 * @throws com._500bottles.exception.da.DAException
+	 * @throws DAException
 	 */
 	public static boolean isFavorite(long wine_id, long user_id)
 			throws DAException
@@ -53,9 +62,14 @@ public class FavoritesManager
 		return true;
 	}
 
+	/**
+	 * Gets a favorites given the wine ID.
+	 * 
+	 * @param id
+	 *            The wine id to get as favorite.
+	 */
 	public static WineQueryResult getFavorite(long id)
 	{
-		// TODO Auto-generated method stub
 		Vector<Wine> wines = new Vector<Wine>();
 		try
 		{
