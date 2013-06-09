@@ -59,6 +59,7 @@
             dataType: 'json',
             done: function (e, data) {
                 var imageId = data.result;
+                get_image_url(imageId);
             },
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -72,30 +73,20 @@
 
     function get_image_url(image_id)
     {
-        var url = "/";
+        var url = "/winebook";
 
         var data = {
-            "action": "getView",
-            "view": "winebook/entry_form"
+            "action": "getPhotoURI",
+            "photoId": image_id
         };
 
         $.ajax({
             url: url,
             data: data
         }).success(function (data, textStatus, jqXHR) {
-                _500bottles.views.add_floating_view({
-                    contents: data,
-                    id: "winebook_entry_form"
-                });
-
-                entry_form = document.getElementById("winebook_entry_form");
-
-                $(entry_form).children(".close_icon").on("click", close_entry_form);
-
-                open_entry_form();
-            });
+            console.log("image uri: ", data);
+        });
     }
-
 
     function bind_events()
     {

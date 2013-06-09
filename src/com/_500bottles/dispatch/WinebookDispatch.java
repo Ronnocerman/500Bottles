@@ -23,6 +23,7 @@ public class WinebookDispatch extends HttpServlet
 	private final String CONTENT_FIELD = "content";
 	private final String ID_FIELD = "id";
 	private final String WINEID_FIELD = "wineid";
+	private final String PHOTOID_FIELD = "photoId";
 
 	@Override
 	protected void doGet(HttpServletRequest request,
@@ -60,6 +61,9 @@ public class WinebookDispatch extends HttpServlet
 			break;
 		case "uploadPhoto":
 			out.println("uploadPhoto clicked");
+			break;
+		case "getPhotoURI":
+			getPhotoURI(request, response);
 			break;
 		default:
 			out.println("error");
@@ -207,5 +211,22 @@ public class WinebookDispatch extends HttpServlet
 		{
 
 		}
+	}
+
+	private void getPhotoURI(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException
+	{
+		ServletContext context = getServletContext();
+
+		RequestDispatcher dispatcher = context
+			.getRequestDispatcher("/messages/message.jsp");
+
+		long photo_id = Long.parseLong(request.getParameter(PHOTOID_FIELD));
+
+		String photo_uri = WinebookAction.getPhotoURI(photo_id);
+
+		request.setAttribute("msg", photo_uri);
+
+		dispatcher.forward(request, response);
 	}
 }

@@ -86,6 +86,9 @@ public class UploadDAO extends DAO
 		}
 		try
 		{
+			if (!r.next())
+				throw new DAException("Photo not found in DB.");
+
 			ret = unescapeXml(r.getString("photoURI"));
 		} catch (SQLException e)
 		{

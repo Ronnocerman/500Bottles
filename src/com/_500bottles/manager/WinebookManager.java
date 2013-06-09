@@ -1,9 +1,11 @@
 package com._500bottles.manager;
 
+import com._500bottles.da.internal.UploadDAO;
 import com._500bottles.da.internal.WinebookDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.exception.winebook.EntryDoesExistException;
 import com._500bottles.exception.winebook.EntryDoesNotExistException;
+import com._500bottles.exception.winebook.PhotoDoesNotExist;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.winebook.Entry;
 import com._500bottles.object.winebook.Photo;
@@ -171,5 +173,18 @@ public class WinebookManager
 		}
 
 		return ent;
+	}
+
+	public static String getPhotoURI(long photo_id) throws PhotoDoesNotExist
+	{
+		String image_uri = null;
+
+		try {
+			image_uri = UploadDAO.getPhoto(photo_id);
+		} catch (DAException e) {
+			throw new PhotoDoesNotExist();
+		}
+
+		return image_uri;
 	}
 }
