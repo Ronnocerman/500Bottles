@@ -102,6 +102,10 @@ public class CellarAction
 			ci.setQuantity(ci.getQuantity() - 1);
 			CellarManager.editCellarItem(ci);
 		}
+		if (ci.getQuantity() <= 0)
+		{
+			CellarManager.removeCellarItem(ci);
+		}
 	}
 
 	/**
