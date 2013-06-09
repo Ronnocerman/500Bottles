@@ -4,7 +4,7 @@
 <%@ page import="com._500bottles.manager.SessionManager" %>
 <%@ page import="com._500bottles.manager.FavoritesManager" %>
 
-<section class="wrapper clearfix subview animated" id="quick_search_results" data-anim-out="fadeOutRightBig" data-anim-in="fadeInRightBig">
+<section class="wrapper clearfix subview animated" id="suggestion_results" data-anim-out="fadeOutRightBig" data-anim-in="fadeInRightBig">
     <div id="quick_search_results_wine_container" class="wine_grid_container" data-rows="3">
 
         <%
@@ -12,7 +12,7 @@
             request.setAttribute("grid_wines", result);
         %>
 
-        <jsp:include page="wine_grid/wine_grid.jsp" flush="true" />
+        <jsp:include page="../wine_grid/wine_grid.jsp" flush="true" />
 
     </div>
 

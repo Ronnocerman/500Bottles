@@ -47,7 +47,7 @@ public class WineWizardDispatch extends HttpServlet
 		ServletContext context = getServletContext();
 
 		RequestDispatcher dispatcher = context
-				.getRequestDispatcher("/views/wizard.jsp");
+				.getRequestDispatcher("/views/wizard/suggestion_results.jsp");
 
 		String wine_type = request.getParameter("type");
 		String varietal = request.getParameter("varietal");
