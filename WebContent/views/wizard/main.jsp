@@ -27,7 +27,7 @@
         <div class="light_bg_wizard with_border shadow">
             <form id="wizard_form">
                 <select id="type" name="type">
-                    <option>type</option>
+                    <option value="">type</option>
                     <option value="Red Wine">red</option>
                     <option value="White Wine">white</option>
                     <option value="Ros� Wine">ros&eacute;</option>
@@ -37,7 +37,7 @@
                 </select>
 
                 <select id="varietalSelect" name="varietal">
-                    <option>grape varietal</option>
+                    <option value="">grape varietal</option>
                     <option>Albarino</option>
                     <option>Barbera</option>
                     <option>Bordeaux</option>
