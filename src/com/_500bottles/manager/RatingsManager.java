@@ -5,26 +5,24 @@ import com._500bottles.exception.da.DAException;
 
 public class RatingsManager
 {
-	public static void addRating(long wineId, double rating)
+	public static void addRating(long userId, long wineId, double rating)
 	{
 		SessionManager sess = SessionManager.getSessionManager();
 		try
 		{
-			RatingsDAO.addRating(/* sess.getLoggedInUser().getUserId() */1,
-					wineId, rating);
+			RatingsDAO.addRating(userId, wineId, rating);
 		} catch (DAException e)
 		{
 			e.printStackTrace();
 		}
 	}
 
-	public static void editRating(long wineId, double rating)
+	public static void editRating(long userId, long wineId, double rating)
 	{
 		SessionManager sess = SessionManager.getSessionManager();
 		try
 		{
-			RatingsDAO.editRating(/* sess.getLoggedInUser().getUserId() */1,
-					wineId, rating);
+			RatingsDAO.editRating(userId, wineId, rating);
 		} catch (DAException e)
 		{
 			// TODO Auto-generated catch block
@@ -32,20 +30,18 @@ public class RatingsManager
 		}
 	}
 
-	public static void removeRating(long wineId)
+	public static void removeRating(long userId, long wineId)
 	{
 		SessionManager sess = SessionManager.getSessionManager();
-		RatingsDAO.deleteRating(/* sess.getLoggedInUser().getUserId() */1,
-				wineId);
+		RatingsDAO.deleteRating(userId, wineId);
 	}
 
-	public static double getRating(long wineId)
+	public static double getRating(long userId, long wineId)
 	{
 		SessionManager sess = SessionManager.getSessionManager();
 		try
 		{
-			return RatingsDAO.getRating(
-			/* sess.getLoggedInUser().getUserId() */1, wineId);
+			return RatingsDAO.getRating(userId, wineId);
 
 		} catch (DAException e)
 		{
