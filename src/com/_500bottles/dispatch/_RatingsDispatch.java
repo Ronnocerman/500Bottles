@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com._500bottles.action.ratingsAction;
+import com._500bottles.action._RatingsAction;
 
-public class ratingsDispatch extends HttpServlet
+public class _RatingsDispatch extends HttpServlet
 {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException
@@ -36,21 +36,21 @@ public class ratingsDispatch extends HttpServlet
 
 	private void addRating(long wineId, double rating)
 	{
-		ratingsAction.addRating(wineId, rating);
+		_RatingsAction.addRating(wineId, rating);
 	}
 
 	private void removeRating(long wineId)
 	{
-		ratingsAction.removeRating(wineId);
+		_RatingsAction.removeRating(wineId);
 	}
 
 	private void editRating(long wineId, double rating)
 	{
-		ratingsAction.editRating(wineId, rating);
+		_RatingsAction.editRating(wineId, rating);
 	}
 
 	private double getRating(long wineId)
 	{
-		return ratingsAction.getRating(wineId);
+		return _RatingsAction.getRating(wineId);
 	}
 }
