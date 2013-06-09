@@ -170,4 +170,20 @@ public class CellarAction
 
 		return result;
 	}
+
+	public static int getCellarQuantity(long id)
+	{
+		long userID = SessionManager.getSessionManager().getLoggedInUser()
+				.getUserId();
+		CellarItem ci;
+		try
+		{
+			ci = CellarManager.getByWineID(userID, id);
+		} catch (CellarException e)
+		{
+			return 0;
+		}
+		return ci.getQuantity();
+
+	}
 }
