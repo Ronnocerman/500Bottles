@@ -76,6 +76,8 @@
         </div>
     </section>
 
+    <script type="text/javascript" src="/js/jquery.fileupload.js"></script>
+    <script type="text/javascript" src="/js/jquery.iframe-transport.js"></script>
     <script type="text/javascript" src="/js/winebook.js"></script>
 </section>
 
