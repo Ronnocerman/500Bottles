@@ -1,6 +1,7 @@
 package com._500bottles.da.internal;
 
 import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -283,7 +284,7 @@ public class VineyardDAO extends DAO
 			return null;
 
 		vineyardId = r.getLong("vineyardId");
-		vineyardName = r.getString("vineyardName");
+		vineyardName = unescapeXml(r.getString("vineyardName"));
 
 		vineyard = new Vineyard();
 		vineyard.setId(vineyardId);

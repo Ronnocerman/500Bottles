@@ -1,6 +1,7 @@
 package com._500bottles.da.internal;
 
 import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -285,7 +286,7 @@ public class VarietalDAO extends DAO
 			return null;
 
 		varietalId = r.getLong("varietalId");
-		grapeType = r.getString("varietalName");
+		grapeType = unescapeXml(r.getString("varietalName"));
 
 		varietal = new Varietal();
 		varietal.setId(varietalId);
