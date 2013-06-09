@@ -13,11 +13,23 @@ import com._500bottles.object.user.ApplicationUser;
 import com._500bottles.object.user.Sex;
 import com._500bottles.object.user.User;
 
+/**
+ * Coordinates all User related database access for user adding, deleting, and
+ * getting in the database.
+ */
 public class UserDAO extends DAO
 {
 	private final static String USER_TABLE = Config
 			.getProperty("userAccountTableName");
 
+	/**
+	 * Adds the user to the table
+	 * 
+	 * @param user
+	 *            The user to be added to the user table
+	 * @return the user which was added
+	 * @throws DAException
+	 */
 	public static ApplicationUser addUser(ApplicationUser user)
 			throws DAException
 	{
@@ -32,7 +44,7 @@ public class UserDAO extends DAO
 		dateOfBirth = formatDate(user.getDOB());
 
 		values = "('" + escapeXml(user.getEmail()) + "',";
-		values += "'" + escapeXml( user.getPasswordHash() ) + "',";
+		values += "'" + escapeXml(user.getPasswordHash()) + "',";
 		values += "'" + registrationDate + "',";
 		values += "'" + lastLogin + "',";
 		values += "'" + escapeXml(user.getFirstName()) + "',";
@@ -43,19 +55,12 @@ public class UserDAO extends DAO
 		values += "'" + user.getWeight() + "',";
 		values += "'" + user.isAdmin() + "')";
 
-		// String where = "";
-		// where += "userEmail=" + user.getEmail();
-
 		// Check if useremail exists
 		try
 		{
-			// System.out.println("same email: " + user.getEmail());
 			ResultSet s = select(USER_TABLE, "*", "`userEmail`='"
 					+ escapeXml(user.getEmail()) + "'");
-			// System.out.println("after the select");
-			// String b = r.getString("userEmail");
-			// System.out.println("email received is " + b);
-			// System.out.println("after the select");
+
 			if (s.next())
 			{
 				throw new DAException("User with email:"
@@ -67,7 +72,6 @@ public class UserDAO extends DAO
 		} catch (SQLException e1)
 		{
 			// e1.printStackTrace();
-			// System.out.println("USER DOESN'T EXIST YET, RIGHT BEFORE INSERT");
 			try
 			{
 				// System.out.println("does it go in here");
@@ -80,10 +84,15 @@ public class UserDAO extends DAO
 			return user;
 		}
 		user.setUserId(Database.getLastInsertId());
-		// System.out.println("userIdinAdd: " + user.getUserId());
 		return user;
 	}
 
+	/**
+	 * Deletes the user from the table.
+	 * 
+	 * @param long userId
+	 * @return true if item was deleted, false otherwise.
+	 */
 	public static boolean deleteUser(long userId)
 	{
 		int ret;
@@ -101,14 +110,15 @@ public class UserDAO extends DAO
 		return true;
 	}
 
-	/*
-	 * public static void deleteUser(ApplicationUser user) throws DAException {
-	 * // System.out.println("user: " + user.getUserId());
-	 * deleteUser(user.getUserId());
+	/**
+	 * Edits the user specified
 	 * 
-	 * }
+	 * @param user
+	 *            : the user to edit
+	 * 
+	 * @return void
+	 * @throws DAException
 	 */
-
 	public static void editUser(ApplicationUser user) throws DAException
 	{
 		long userId = user.getUserId();
@@ -139,6 +149,14 @@ public class UserDAO extends DAO
 		}
 	}
 
+	/**
+	 * Gets the ApplicationUser object based on the userId
+	 * 
+	 * @param userId
+	 * 
+	 * @return the ApplicationUser object of the userId passed in
+	 * @throws DAException
+	 */
 	public static ApplicationUser getUser(long userId) throws DAException
 	{
 		ResultSet r;
@@ -157,6 +175,15 @@ public class UserDAO extends DAO
 		return user;
 	}
 
+	/**
+	 * Gets the ApplicationUser object based on the email
+	 * 
+	 * @param email
+	 *            (String)
+	 * 
+	 * @return the ApplicationUser object of the email string passed in
+	 * @throws DAException
+	 */
 	public static ApplicationUser getUserByEmail(String email)
 			throws DAException
 	{
@@ -182,6 +209,15 @@ public class UserDAO extends DAO
 		return user;
 	}
 
+	/**
+	 * Creates the ApplicationUser object from a result set. This method is
+	 * called from the 2 get methods
+	 * 
+	 * @param r
+	 *            result set to construct the ApplicationUser object from
+	 * @return ApplicationUser object
+	 * @throws SQLException
+	 */
 	private static ApplicationUser createUser(ResultSet r) throws SQLException
 	{
 		User user;

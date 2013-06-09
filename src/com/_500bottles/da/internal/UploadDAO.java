@@ -14,6 +14,14 @@ public class UploadDAO extends DAO
 	private final static String PHOTOS_TABLE = Config
 			.getProperty("photosTableName");
 
+	/**
+	 * Adds filename of photo to photos table
+	 * 
+	 * @param photo
+	 *            photo name to be added
+	 * @return photoId of photo
+	 * @throws DAException
+	 */
 	public static long addPhoto(String photo) throws DAException
 	{
 		String columns, values;
@@ -33,6 +41,13 @@ public class UploadDAO extends DAO
 		return DAO.getLastInsertId();
 	}
 
+	/**
+	 * Deletes the location/filename of the photo
+	 * 
+	 * @param photo
+	 *            The string of the photo to be added
+	 * @return true if the filename was deleted, false otherwise
+	 */
 	public static boolean deletePhoto(String photo)
 	{
 		int r;
@@ -49,15 +64,21 @@ public class UploadDAO extends DAO
 		return true;
 	}
 
+	/**
+	 * Gets the filename of the photo
+	 * 
+	 * @param uploadId
+	 *            The Id of the uploaded photo
+	 * @return filename of the photo
+	 * @throws DAException
+	 */
 	public static String getPhoto(long uploadId) throws DAException
 	{
 		ResultSet r;
 		String ret;
 		try
 		{
-			// System.out.println(wineId);
 			r = select(PHOTOS_TABLE, "*", "uploadId=" + uploadId);
-			// System.out.println("after the select in getWine");
 
 		} catch (SQLException e)
 		{
@@ -73,6 +94,13 @@ public class UploadDAO extends DAO
 		return ret;
 	}
 
+	/**
+	 * Checks if the photo exists
+	 * 
+	 * @param photo
+	 *            The name of the photo to check
+	 * @return true if the photo exists, false otherwise
+	 */
 	public static boolean photoExists(String photo)
 	{
 		ResultSet r;
@@ -86,7 +114,6 @@ public class UploadDAO extends DAO
 		{
 			return false;
 		}
-
 		return true;
 	}
 
