@@ -25,17 +25,28 @@ public class SessionManager
 	{
 		ApplicationUser user = null;
 
-		if (logged_in_user_id == -1)
-			return null;
+		long user_id = -1;
 
-		try
-		{
-			user = UserDAO.getUser(logged_in_user_id);
+		try {
+			Object n = session.getAttribute("userId");
 
-		} catch (DAException e)
-		{
+			if (n == null)
+				return null;
+
+			user_id = (Long) n;
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			user = UserDAO.getUser(user_id);
+
+		} catch (DAException e) {
 			// TODO: error handling...
 		}
+
+		System.err.println("Current User " + user.getName());
 
 		return user;
 	}
@@ -67,7 +78,9 @@ public class SessionManager
 			// Set the userId session variable to indicate that
 			// the user is logged in.
 			try {
-				session.setAttribute("userId", user.getUserId());
+				if (passwordHash.equals(user.getPasswordHash()))
+					session.setAttribute("userId", user.getUserId());
+
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			}
@@ -123,6 +136,11 @@ public class SessionManager
 		return sessionManager;
 	}
 
+	private void setSession(HttpSession session)
+	{
+		this.session = session;
+	}
+
 	/**
 	 * 
 	 * @param request
@@ -134,6 +152,7 @@ public class SessionManager
 		if (sessionManager == null)
 			sessionManager = new SessionManager(request);
 
+		sessionManager.setSession(request.getSession());
 		sessionManager.checkForLoggedInUser();
 
 		return sessionManager;

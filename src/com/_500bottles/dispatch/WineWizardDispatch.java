@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com._500bottles.manager.SessionManager;
 import org.json.simple.parser.ParseException;
 
 import com._500bottles.action.WineWizardAction;
@@ -41,6 +42,8 @@ public class WineWizardDispatch extends HttpServlet
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException
 	{
+		SessionManager.initiateSessionManager(request);
+
 		String action = request.getParameter("action");
 
 		if (action.equals("getSuggestion"))
@@ -102,7 +105,7 @@ public class WineWizardDispatch extends HttpServlet
 			type.setWineType(wine_type);
 			typeList.add(type);
 			query.setType(typeList);
-			// System.out.println("the wine type is " + wine_type);
+			System.out.println("the wine type is " + wine_type);
 		}
 
 		if (varietal != "")
@@ -168,12 +171,4 @@ public class WineWizardDispatch extends HttpServlet
 			// TODO: catch exception or display error.
 		}
 	}
-
-	@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException
-	{
-		// TODO Auto-generated method stub
-	}
-
 }

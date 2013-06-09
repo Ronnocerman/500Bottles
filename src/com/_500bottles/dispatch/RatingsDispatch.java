@@ -8,12 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com._500bottles.action.RatingsAction;
+import com._500bottles.manager.SessionManager;
 
 public class RatingsDispatch extends HttpServlet
 {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException
 	{
+		SessionManager.initiateSessionManager(request);
+
 		String action = request.getParameter("action");
 		String wineId = request.getParameter("wineId");
 		String rating = request.getParameter("rating");
@@ -28,7 +31,6 @@ public class RatingsDispatch extends HttpServlet
 		{
 			getRating(Long.parseLong(wineId));
 		}
-
 	}
 
 	private void setRating(long wineId, double rating)

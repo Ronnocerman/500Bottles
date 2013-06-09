@@ -30,9 +30,8 @@
                     <option>type</option>
                     <option value="Red Wine">red</option>
                     <option value="White Wine">white</option>
-                    <option value="Rosï¿½ Wine">ros&eacute;</option>
+                    <option value="Rosé Wine">ros&eacute;</option>
                     <option value="Champagne &amp; Sparkling">champagne & sparkling</option>
-                    <option value="">sak&eacute;</option>
                     <option value="Dessert/Fortified">dessert, sherry, & port</option>
                 </select>
 
