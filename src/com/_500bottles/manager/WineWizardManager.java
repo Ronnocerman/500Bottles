@@ -42,6 +42,7 @@ public class WineWizardManager
 	private static Vector<Vineyard> vineyard = new Vector<Vineyard>();// set for
 	// advanced
 	// level four
+	private static long wineTypeID;
 	private static long theID;
 	// the list of Rated wines from database
 	private static Vector<Wine> wineListRated = new Vector<Wine>();
@@ -52,6 +53,7 @@ public class WineWizardManager
 	private static Vector<Integer> typeRating = new Vector<Integer>();
 	// the amount of that type
 	private static Vector<Integer> typeAmount = new Vector<Integer>();
+	private static Vector<Integer> typeID = new Vector<Integer>();
 	// the list of the appellation that have been rated
 
 	// the list of the amount of that appellation that have been rated
@@ -200,9 +202,11 @@ public class WineWizardManager
 	{
 		if (query.getType().size() > 0)
 		{
-			if (query.getType().get(0).getWineType().equals("undefined"))
+			if (query.getType().get(0).getWineType().equals("undefined")
+					|| query.getType().get(0).getWineType().equals("type"))
 			{
-				query.setType(null);
+				Vector<WineType> blank = new Vector<WineType>();
+				query.setType(blank);
 				System.out.println("does it get here");
 			}
 		}
@@ -211,7 +215,8 @@ public class WineWizardManager
 			if (query.getVarietal().get(0).getGrapeType()
 					.equals("grape varietal"))
 			{
-				query.setVarietal(null);
+				Vector<Varietal> blank = new Vector<Varietal>();
+				query.setVarietal(blank);
 				System.out.println("dance with me");
 			}
 		}
@@ -246,7 +251,7 @@ public class WineWizardManager
 												// a rating of 1 to 5
 		getRating.setMinRating(0);// sets the min rating to 0
 		getRating.setMaxRating(5);// sets the max rating to 5
-		getRating.setSize(100);
+		getRating.setSize(250);
 		// gets the list of wines that are rated
 		wineListRated = WineManager.searchWine(getRating).getWines();
 		System.out.println("wineListRated.size()" + wineListRated.size());
@@ -295,6 +300,9 @@ public class WineWizardManager
 						String varietalName = VarietalDAO.getVarietalById(
 								wineListRated.get(i).getVarietal().getId())
 								.getGrapeType();
+						System.out
+								.println("string varietalName in corner case "
+										+ varietalName);
 						if (varietal.get(d).getGrapeType().equals(varietalName))
 						{
 							test++;
@@ -312,8 +320,14 @@ public class WineWizardManager
 			{
 				getLevelTwo();
 				wineType.clear();
-				wineType.add(levelOne.get(0).getType());
-
+				if (levelOne.size() >= 1)
+					wineType.add(levelOne.get(0).getType());
+				else
+				{
+					Vector<Wine> wi = new Vector<Wine>();
+					WineQueryResult returnResult = new WineQueryResult(wi);
+					return returnResult;
+				}
 				// TODO get it to create the wine type value
 			}
 			if (varietal.size() < 1)// if varietal is empty then it puts the top
@@ -361,9 +375,13 @@ public class WineWizardManager
 					// app filled with the wine types of choice
 					WineType newApp = new WineType();
 					// app fills it with the typelist
+					System.out.println("typeList.get(i) " + typeList.get(i));
+					String type = typeList.get(i);
+					newApp.setWineTypeId(wineTypeID);
+					if (newApp == null)
+						System.out.println("newApp is null wtf barque");
 					newApp.setWineType(typeList.get(i));
-					newApp.setWineTypeId(WineTypeDAO.getWineType(
-							typeList.get(i)).getWineTypeId());
+
 					app.add(newApp);// puts these new wineTypes into the vector
 				}
 				System.out.println("wineType app.size() " + app.size());
@@ -456,6 +474,7 @@ public class WineWizardManager
 		typeList.clear();
 		typeRating.clear();
 		typeAmount.clear();
+		typeID.clear();
 		varietalList.clear();
 		varietalAmount.clear();
 		varietalID.clear();
@@ -480,7 +499,8 @@ public class WineWizardManager
 	 */
 	private static void getLevelOne()
 	{
-
+		System.out.println("wineType.size() at entry levelOne.size() "
+				+ wineType.size());
 		if (wineType.size() < 1)// checks to see if wine type is empty
 		{
 			System.out.println("First part of getLevelOne");
@@ -494,13 +514,15 @@ public class WineWizardManager
 				// System.out.println("the number it fails at is " + i);
 				Integer k = (int) ((int) 100 * wineListRated.get(i).getRating());
 				// gets the wineType
+				WineType wineT = new WineType();
 				String s = "frog dddddddd";
 				try
 				{
-					s = WineTypeDAO.getWineTypeById(
-							wineListRated.get(i).getType().getWineTypeId())
-							.getWineType();
-					System.out.println("string s: " + s);
+					wineT = WineTypeDAO.getWineTypeById(wineListRated.get(i)
+							.getType().getWineTypeId());
+					s = wineT.getWineType();
+					theID = wineT.getWineTypeId();
+					// System.out.println("string s: " + s);
 				} catch (DAException e)
 				{
 					// TODO Auto-generated catch block
@@ -514,8 +536,8 @@ public class WineWizardManager
 			}
 			getAverage(typeRating, typeAmount);// gets the average of typeRating
 												// by using typeAmount
-			sort(typeList, typeRating, typeAmount);// sorts the typeList based
-													// on rating
+			sort(typeList, typeRating, typeID);// sorts the typeList based
+												// on rating
 			while (1 < typeList.size())// while the type list is bigger then 3
 										// it decreases it
 			{
@@ -564,7 +586,6 @@ public class WineWizardManager
 				int test = 0;
 				for (int y = 0; y < wineType.size(); y++)
 				{
-
 					try
 					{
 						if (WineTypeDAO
@@ -597,6 +618,11 @@ public class WineWizardManager
 	 */
 	private static void getLevelTwo()// checks to make sure
 	{
+		if (!levelOne.isEmpty())
+		{
+			wineTypeID = levelOne.get(0).getType().getWineTypeId();
+		}
+
 		// if varietal is empty then do this
 		if (varietal.size() < 1)
 		{
@@ -753,6 +779,14 @@ public class WineWizardManager
 			if (att.equals(varietalList))
 			{
 				varietalID.add((int) theID);
+			}
+			if (att.equals(typeList))
+			{
+				typeID.add((int) theID);
+				if (theID == 12)
+				{
+					System.out.println("********theID****** " + theID);
+				}
 			}
 		} else
 		{
