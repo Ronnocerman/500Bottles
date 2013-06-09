@@ -92,10 +92,18 @@
             </div>
             <div class="table_row">
                 <div class="table_cell">
-                    <div class="align_left">
+                    <div class="align_left cellar_indicator_container">
                         <span class="tooltip" data-tip="Quantity in your cellar.">
                             <a class="cellar_indicator">0</a>
                         </span>
+                        <div class="cellar_quantity_buttons">
+                            <span class="tooltip" data-tip="Increment cellar quantity.">
+                                <a class="cellar_inc"></a>
+                            </span>
+                            <span class="tooltip" data-tip="Decrement cellar quantity.">
+                                <a class="cellar_dec"></a>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

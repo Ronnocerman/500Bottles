@@ -311,6 +311,8 @@ public class Wine
 		str += "Rating: " + this.getRating() + "\n";
 		str += "Description: " + this.getDescription() + "\n";
 		str += "Imageurl: " + this.getImage() + "\n";
+		str += "Lat: " + this.geoLocation.getLat();
+		str += "Long: " + this.geoLocation.getLon();
 
 		return str;
 	}

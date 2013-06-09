@@ -191,8 +191,8 @@
             url: url,
             data: data
         }).success(function (data, textStatus, jqXHR) {
-                console.log("favorites success!");
-            });
+            console.log("favorites success!");
+        });
     }
 
     function position_your_rating(e)
@@ -233,6 +233,68 @@
     function bind_rating_events(wine)
     {
         $(wine).find(".rating").hover(on_rating_hover, off_rating_hover);
+    }
+
+
+    /**
+     * Increments the cellar quantity of the specified wine.
+     */
+    function inc_cellar_quantity_click(e)
+    {
+        var wine_id = $(e.target).parents(".wine").data("wine-id");
+
+        var url = "/cellar"
+
+        var data = {
+            "action": "incCellarQuantity",
+            "wineId": wine_id
+        };
+
+        $.ajax({
+            url: url,
+            data: data
+        }).success(function (data, textStatus, jqXHR) {
+            console.log("favorites success!");
+        });
+
+        e.stopPropagation();
+    }
+
+    /**
+     * Decrements the cellar quantity of the specified wine.
+     */
+    function dec_cellar_quantity_click(e)
+    {
+        var wine_id = $(e.target).parents(".wine").data("wine-id");
+
+        var url = "/cellar"
+
+        var data = {
+            "action": "decCellarQuantity",
+            "wineId": wine_id
+        };
+
+        $.ajax({
+            url: url,
+            data: data
+        }).success(function (data, textStatus, jqXHR) {
+            console.log("favorites success!");
+        });
+
+        e.stopPropagation();
+    }
+
+    /**
+     * Binds the specified wine cellar events.
+     * @param wine
+     */
+    function bind_cellar_events(wine)
+    {
+        var cellar_inc = $(wine).find(".cellar_inc");
+        var cellar_dec = $(wine).find(".cellar_dec");
+
+        $(cellar_inc).on("click", inc_cellar_quantity_click);
+        $(cellar_dec).on("click", dec_cellar_quantity_click);
     }
 
     /* Builds internal representation of gallery. */
@@ -296,6 +358,7 @@
 
                 position_their_rating(images[j]);
                 bind_rating_events(images[j]);
+                bind_cellar_events(images[j]);
             }
 
             // add this row container to the gallery container

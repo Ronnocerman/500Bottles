@@ -25,6 +25,9 @@ public class WineAPICall
 	{
 	}
 
+	// this takes the url and gets a list of products from wine.com api, then
+	// parses the json string that
+	// we get back and package it into our wine object
 	public Vector<Wine> getProducts(String url) throws IOException,
 			ParseException
 	{
@@ -91,8 +94,8 @@ public class WineAPICall
 			// Divide the wine.com rating by 20 to map it to a 0 to
 			// 5 scale for internal use.
 			jsonObject2 = (JSONObject) jsonObject.get("Ratings");
-			temp.setRating(Long.valueOf((long) jsonObject2.get("HighestScore") / 20)
-					.doubleValue());
+			temp.setRating(Long.valueOf(
+					(long) jsonObject2.get("HighestScore") / 20).doubleValue());
 
 			wineVector.add(temp);
 

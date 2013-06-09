@@ -237,9 +237,12 @@
     .description
       min-height: 100px
 
+    .cellar_indicator_container
+      position: relative
+
     .cellar_indicator
       color: black
-      display: inline-block
+      @include inline_block
       position: relative
       text-align: left
       margin-left: 23px
@@ -257,3 +260,33 @@
         width: 30px
         height: 30px
         display: block
+
+    .cellar_quantity_buttons
+      display: inline-block
+      position: absolute
+      top: 12px
+      left: 45px
+
+    .cellar_indicator_container:hover .cellar_inc,
+    .cellar_indicator_container:hover .cellar_dec
+      opacity: 0.3
+
+    .cellar_indicator_container .cellar_inc:hover,
+    .cellar_indicator_container .cellar_dec:hover
+      opacity: 1
+
+    .cellar_inc, .cellar_dec
+      @include inline_block
+      width: 20px
+      height: 20px
+      background-size: 100% 100%
+      opacity: 0
+      @include transition(opacity, 0.35s)
+      cursor: pointer
+
+    .cellar_inc
+      background-image: url("../img/icons/plus-black-white-bg.png")
+
+    .cellar_dec
+      background-image: url("../img/icons/minus-black-white-bg.png")
+

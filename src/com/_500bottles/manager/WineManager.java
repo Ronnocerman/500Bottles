@@ -1,10 +1,8 @@
 package com._500bottles.manager;
 
-import com._500bottles.da.internal.FavoritesDAO;
 import com._500bottles.da.internal.WineDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.wine.CustomWine;
-import com._500bottles.object.wine.Favorites;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.wine.WineQuery;
 import com._500bottles.object.wine.WineQueryResult;
@@ -16,7 +14,7 @@ public class WineManager
 	 * 
 	 * @param wineId
 	 *            ID of wine to be returned
-	 * @return Wine object of specifed Wine ID
+	 * @return Wine object of specified Wine ID
 	 */
 	public static Wine getWine(long wineId)
 	{
@@ -94,17 +92,26 @@ public class WineManager
 		try
 		{
 			result = WineQueryManager.search(query);
-		} catch (NullPointerException e) {
+		} catch (NullPointerException e)
+		{
 			System.err.println("NullPointerException caught!");
 			e.printStackTrace();
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			System.err.println(e.getMessage());
 		}
-
 
 		return result;
 	}
 
+	/**
+	 * Adds custom wine to database
+	 * 
+	 * @param w
+	 *            CustomWine object to be added to database
+	 * @throws DAException
+	 * 
+	 */
 	public static void addCustomWine(CustomWine w)
 	{
 		try
@@ -116,6 +123,14 @@ public class WineManager
 		}
 	}
 
+	/**
+	 * Edits the custom wine of the specified CUatomWine object
+	 * 
+	 * @param w
+	 *            The CustomWine object of the wine to be edited
+	 * @throws DAException
+	 * 
+	 */
 	public static void editCustomWine(CustomWine w)
 	{
 		try
@@ -127,6 +142,12 @@ public class WineManager
 		}
 	}
 
+	/**
+	 * Delete custom wine with specified Id
+	 * 
+	 * @param id
+	 *            The Id of the custom wine to be deleted
+	 */
 	public static boolean deleteCustomWine(long id)
 	{
 		Wine w = getWine(id);

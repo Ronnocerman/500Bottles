@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 
+//this is the abstract class is extended by all the classes that checks for format of 
+//the url building class for wine.com
 public abstract class Attribute
 {
 	private final static String DEFAULT_CATEGORY = "";

@@ -2,6 +2,7 @@ package com._500bottles.da.external.wine.filter;
 
 import com._500bottles.da.external.wine.exception.InvalidFilter;
 
+//builds the filter rating part of the url for wine.com
 public class FilterRating extends Filter
 {
 	public FilterRating(int min, int max) throws InvalidFilter

@@ -2,6 +2,7 @@ package com._500bottles.da.external.wine.filter;
 
 import com._500bottles.da.external.wine.exception.InvalidFilter;
 
+//builds the filter price part of the url
 public class FilterPrice extends Filter
 {
 	public FilterPrice(double min, double max) throws InvalidFilter

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com._500bottles.da.external.wine.exception.InvalidCategory;
 
+//checks to see if specified year is accepted by wine.com
 public class VintageArray extends Attribute
 {
 	private static String errormsg = "Invalid Attribute";

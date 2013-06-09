@@ -1,5 +1,6 @@
 package com._500bottles.da.external.wine.exception;
 
+//check exception for invalid settings
 public class InvalidSetting extends Exception
 {
 	/**

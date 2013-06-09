@@ -1,5 +1,6 @@
 package com._500bottles.da.external.wine.filter;
 
+//builds the filter product part of the url
 public class FilterProduct extends Filter
 {
 	public FilterProduct(int productId)

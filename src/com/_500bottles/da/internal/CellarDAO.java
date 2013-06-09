@@ -300,6 +300,10 @@ public class CellarDAO extends DAO
 		{
 			item = createCellarItem(r);
 			Database.disconnect();
+			if (item == null)
+			{
+				throw new DAException("Null item");
+			}
 
 		} catch (SQLException e)
 		{

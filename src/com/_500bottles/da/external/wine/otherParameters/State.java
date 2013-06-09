@@ -2,6 +2,7 @@ package com._500bottles.da.external.wine.otherParameters;
 
 import com._500bottles.da.external.wine.exception.InvalidOtherParameters;
 
+//just a class for entering a state
 public class State extends OtherParameter
 {
 	String[] stateArray = { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE",

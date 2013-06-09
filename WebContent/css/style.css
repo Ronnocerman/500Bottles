@@ -813,9 +813,14 @@ footer {
       height: 0px; }
     .wine_grid .wine .description {
       min-height: 100px; }
+    .wine_grid .wine .cellar_indicator_container {
+      position: relative; }
     .wine_grid .wine .cellar_indicator {
       color: black;
+      display: -moz-inline-stack;
       display: inline-block;
+      zoom: 1;
+      *display: inline;
       position: relative;
       text-align: left;
       margin-left: 23px;
@@ -833,6 +838,41 @@ footer {
         width: 30px;
         height: 30px;
         display: block; }
+    .wine_grid .wine .cellar_quantity_buttons {
+      display: inline-block;
+      position: absolute;
+      top: 12px;
+      left: 45px; }
+    .wine_grid .wine .cellar_indicator_container:hover .cellar_inc,
+    .wine_grid .wine .cellar_indicator_container:hover .cellar_dec {
+      opacity: 0.3; }
+    .wine_grid .wine .cellar_indicator_container .cellar_inc:hover,
+    .wine_grid .wine .cellar_indicator_container .cellar_dec:hover {
+      opacity: 1; }
+    .wine_grid .wine .cellar_inc, .wine_grid .wine .cellar_dec {
+      display: -moz-inline-stack;
+      display: inline-block;
+      zoom: 1;
+      *display: inline;
+      width: 20px;
+      height: 20px;
+      background-size: 100% 100%;
+      opacity: 0;
+      -webkit-transition: opacity 0.35s 0s;
+      -moz-transition: opacity 0.35s 0s;
+      -ms-transition: opacity 0.35s 0s;
+      -o-transition: opacity 0.35s 0s;
+      transition: opacity 0.35s 0s;
+      -webkit-transition-timing-function: default;
+      -moz-transition-timing-function: default;
+      -ms-transition-timing-function: default;
+      -o-transition-timing-function: default;
+      transition-timing-function: default;
+      cursor: pointer; }
+    .wine_grid .wine .cellar_inc {
+      background-image: url("../img/icons/plus-black-white-bg.png"); }
+    .wine_grid .wine .cellar_dec {
+      background-image: url("../img/icons/minus-black-white-bg.png"); }
 
 .side_nav.left {
   left: -180px; }

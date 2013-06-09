@@ -3,6 +3,7 @@ package com._500bottles.da.external.wine.otherParameters;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+//this is a very important class for entering a keyword search
 public class Search extends OtherParameter
 {
 	public Search(String s)

@@ -17,7 +17,7 @@ import com._500bottles.exception.cellar.CellarException;
 public class CellarDispatch extends HttpServlet
 {
 
-	private final String WINEID_FIELD = "wineid";
+	private final String WINEID_FIELD = "wineId";
 	private final String QUANTITY_FIELD = "quantity";
 	private final String NOTES_FIELD = "notes";
 
@@ -95,58 +95,42 @@ public class CellarDispatch extends HttpServlet
 	private void incCellarQuantity(HttpServletRequest request,
 			HttpServletResponse response)
 	{
-		{
-			ServletContext context = getServletContext();
+		ServletContext context = getServletContext();
 
-			RequestDispatcher dispatcher = context
-					.getRequestDispatcher("/messages/js_callback.jsp");
+		RequestDispatcher dispatcher = context
+			.getRequestDispatcher("/messages/js_callback.jsp");
 
-			String id = request.getParameter(WINEID_FIELD);
+		String id = request.getParameter(WINEID_FIELD);
 
-			try
-			{
-				CellarAction.incCellarQuantity(Long.parseLong(id));
-			} catch (CellarException e)
-			{
-				// TODO
-			}
+		CellarAction.incCellarQuantity(Long.parseLong(id));
 
-			try
-			{
-				dispatcher.forward(request, response);
-			} catch (ServletException | IOException e)
-			{
+		try {
+			dispatcher.forward(request, response);
+		} catch (ServletException | IOException e) {
 
-			}
 		}
 	}
 
 	private void decCellarQuantity(HttpServletRequest request,
 			HttpServletResponse response)
 	{
-		{
-			ServletContext context = getServletContext();
+		ServletContext context = getServletContext();
 
-			RequestDispatcher dispatcher = context
-					.getRequestDispatcher("/messages/js_callback.jsp");
+		RequestDispatcher dispatcher = context
+			.getRequestDispatcher("/messages/js_callback.jsp");
 
-			String id = request.getParameter(WINEID_FIELD);
+		String id = request.getParameter(WINEID_FIELD);
 
-			try
-			{
-				CellarAction.decCellarQuantity(Long.parseLong(id));
-			} catch (CellarException e)
-			{
-				// TODO
-			}
+		try {
+			CellarAction.decCellarQuantity(Long.parseLong(id));
+		} catch (CellarException e) {
+			// TODO
+		}
 
-			try
-			{
-				dispatcher.forward(request, response);
-			} catch (ServletException | IOException e)
-			{
+		try {
+			dispatcher.forward(request, response);
+		} catch (ServletException | IOException e) {
 
-			}
 		}
 	}
 

@@ -3,15 +3,17 @@ package com._500bottles.action;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.manager.FavoritesManager;
 import com._500bottles.manager.WineManager;
-import com._500bottles.object.wine.Wine;
+import com._500bottles.object.wine.WineQueryResult;
 
 public class FavoritesAction
 {
 	/**
 	 * Set a specified wine to be a favorite
-	 *
-	 * @param wine_id	The id of the wine to set as a favorite.
-	 * @param user_id	The user id.
+	 * 
+	 * @param wine_id
+	 *            The id of the wine to set as a favorite.
+	 * @param user_id
+	 *            The user id.
 	 */
 	public static void setFavorite(long wine_id, long user_id)
 	{
@@ -20,18 +22,22 @@ public class FavoritesAction
 		// favorite failed?
 		if (WineManager.getWine(wine_id) == null)
 			return;
- 		try {
+		try
+		{
 			FavoritesManager.setFavorite(wine_id, user_id);
-		} catch (DAException e) {
+		} catch (DAException e)
+		{
 			// TODO: throw generic exception here to notify the user the
 		}
 	}
 
 	public static void clearFavorite(long wine_id, long user_id)
 	{
-		try {
+		try
+		{
 			FavoritesManager.clearFavorite(wine_id, user_id);
-		} catch (DAException e) {
+		} catch (DAException e)
+		{
 			// TODO: throw generic exception here to notify the user the
 		}
 	}
@@ -39,15 +45,11 @@ public class FavoritesAction
 	/**
 	 * Gets whether the specified wine is a favorited wine
 	 * 
-	 * @param id 	ID of the wine that will be checked whether is a
-	 *              favorite.
+	 * @param id
+	 *            ID of the wine that will be checked whether is a favorite.
 	 */
-	public static void getFavorite(long id)
+	public static WineQueryResult getFavorite(long id)
 	{
-//		try {
-//			WineManager.isFavorite(id);
-//		} catch (DAException e) {
-//			e.printStackTrace();
-//		}
+		return FavoritesManager.getFavorite(id);
 	}
 }

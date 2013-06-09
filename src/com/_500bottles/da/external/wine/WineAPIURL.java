@@ -12,8 +12,10 @@ import com._500bottles.da.external.wine.otherParameters.Size;
 import com._500bottles.da.external.wine.otherParameters.State;
 import com._500bottles.da.external.wine.sort.Sort;
 
+//this class builds a URL to access Wine.com API
 public class WineAPIURL
 {
+	// set defaults
 	private final static String DEFAULT_APIFORMAT = "json";
 	private final static String DEFAULT_RESOURCE = "catalog?";
 	private final static String DEFAULT_FILTER = "filter=categories(490)";
@@ -26,7 +28,6 @@ public class WineAPIURL
 	private static String filterCategory = "";
 	private static String filterRating = "";
 	private static String filterPrice = "";
-	// private static String filterProductId = "";
 
 	private static String otherInStock = "";
 	private static String otherOffset = "";
@@ -40,6 +41,7 @@ public class WineAPIURL
 	{
 	}
 
+	// sets the base options that are required
 	public WineAPIURL(String xmlOrJson, String categoryOrCatalog)
 			throws InvalidSetting
 	{
@@ -59,6 +61,7 @@ public class WineAPIURL
 
 	}
 
+	// additional parameters can be added to narrow down search
 	public void addToURL(Sort s)
 	{
 		sort = s.getString();
@@ -104,6 +107,7 @@ public class WineAPIURL
 		filterPrice = f.getString();
 	}
 
+	// get the url string
 	public String getString()
 	{
 		String temp = url;
