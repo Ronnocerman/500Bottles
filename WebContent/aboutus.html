@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple styled maps</title>
+    <title>500bottles test file</title>
     <link href="http://code.google.com//apis/maps/documentation/javascript/examples/default.css" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
     <script>
 		var map;
 		var infowindow;
+		var geocoder;
 		var MY_MAPTYPE_ID = 'custom_style';
 
 		function initialize() {
-		  var ucsd = new google.maps.LatLng(32.875598, -117.227149);
-		  var chateau = new google.maps.LatLng(47.73276,-122.150899);
+		  var loc = new google.maps.LatLng(47.73276,-122.150899); //Change this to geolocation
 			
 		  var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			zoom: 13,
-			center: ucsd,
+			center: loc,
 			mapTypeControlOptions: {
 			  mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
 			},
 			mapTypeId: MY_MAPTYPE_ID
 		  };
 
+		  //God help you if you touch these.
 		  var featureOpts = [
 			{
 			  stylers: [
@@ -64,9 +65,9 @@
 									mapOptions);
 									
 		  var request = {
-			location: ucsd,
+			location: loc,
 			radius: 500,
-			name: "Rady"
+			name: "Chateau" //Change this to the string of the winery name
 		  };
 		  
 		  var styledMapOptions = {
@@ -82,23 +83,24 @@
 		  service.nearbySearch(request, callback);
 		}
 
-		function callback(results, status) {
-		  if (status == google.maps.places.PlacesServiceStatus.OK) {
-			for (var i = 0; i < results.length; i++) {
+		function callback(results, status){
+		  if (status == google.maps.places.PlacesServiceStatus.OK){
+			for (var i = 0; i < results.length; i++){
 			  createMarker(results[i]);
 			}
 		  }
 		}
 
-		function createMarker(place) {
+		function createMarker(place){
 		  var placeLoc = place.geometry.location;
+		  
 		  var marker = new google.maps.Marker({
 			map: map,
 			position: place.geometry.location
 		  });
 
-		  google.maps.event.addListener(marker, 'click', function() {
-			infowindow.setContent('<div><strong>' + place.name + '</strong></div><br>' + "kill me.");
+		  google.maps.event.addListener(marker, 'click', function(){
+			infowindow.setContent('<div><strong>' + place.name + '</strong></div><br>' + place.vicinity);
 			infowindow.open(map, this);
 		  });
 		}
