@@ -98,19 +98,19 @@ public class CellarDispatch extends HttpServlet
 		ServletContext context = getServletContext();
 
 		RequestDispatcher dispatcher = context
-			.getRequestDispatcher("/messages/js_callback.jsp");
+				.getRequestDispatcher("/messages/js_callback.jsp");
 
 		String id = request.getParameter(WINEID_FIELD);
 
-		try {
-			CellarAction.incCellarQuantity(Long.parseLong(id));
-		} catch (CellarException e) {
-			// TODO
-		}
+		CellarAction.incCellarQuantity(Long.parseLong(id));
 
-		try {
+		CellarAction.incCellarQuantity(Long.parseLong(id));
+
+		try
+		{
 			dispatcher.forward(request, response);
-		} catch (ServletException | IOException e) {
+		} catch (ServletException | IOException e)
+		{
 
 		}
 	}
@@ -121,19 +121,23 @@ public class CellarDispatch extends HttpServlet
 		ServletContext context = getServletContext();
 
 		RequestDispatcher dispatcher = context
-			.getRequestDispatcher("/messages/js_callback.jsp");
+				.getRequestDispatcher("/messages/js_callback.jsp");
 
 		String id = request.getParameter(WINEID_FIELD);
 
-		try {
+		try
+		{
 			CellarAction.decCellarQuantity(Long.parseLong(id));
-		} catch (CellarException e) {
+		} catch (CellarException e)
+		{
 			// TODO
 		}
 
-		try {
+		try
+		{
 			dispatcher.forward(request, response);
-		} catch (ServletException | IOException e) {
+		} catch (ServletException | IOException e)
+		{
 
 		}
 	}

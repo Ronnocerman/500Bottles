@@ -1,12 +1,12 @@
 package com._500bottles.manager;
 
+import java.util.Vector;
+
 import com._500bottles.da.internal.CellarDAO;
 import com._500bottles.exception.cellar.CellarException;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.object.cellar.CellarItem;
 import com._500bottles.object.wine.Wine;
-
-import java.util.Vector;
 
 public class CellarManager
 {
@@ -112,13 +112,26 @@ public class CellarManager
 	{
 		Vector<Wine> wines = null;
 
-		try {
+		try
+		{
 			wines = CellarDAO.getAllWinesFromCellar(user_id);
-		} catch (DAException e) {
+		} catch (DAException e)
+		{
 			e.printStackTrace();
 			wines = new Vector<>();
 		}
 
 		return wines;
+	}
+
+	public static CellarItem addCellarItem(long userID, CellarItem item)
+	{
+		try
+		{
+			return CellarDAO.addCellarItem(userID, item);
+		} catch (DAException e)
+		{
+			return null;
+		}
 	}
 }

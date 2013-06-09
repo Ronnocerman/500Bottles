@@ -15,6 +15,11 @@ public class CellarItem
 		wineId = w.getId();
 	}
 
+	public CellarItem()
+	{
+
+	}
+
 	public long getId()
 	{
 		return cellarItemId;
