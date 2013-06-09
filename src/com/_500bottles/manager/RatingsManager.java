@@ -3,7 +3,7 @@ package com._500bottles.manager;
 import com._500bottles.da.internal.RatingsDAO;
 import com._500bottles.exception.da.DAException;
 
-public class _RatingsManager
+public class RatingsManager
 {
 	public static void addRating(long wineId, double rating)
 	{

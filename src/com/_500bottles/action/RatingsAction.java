@@ -2,7 +2,7 @@ package com._500bottles.action;
 
 import com._500bottles.manager._RatingsManager;
 
-public class _RatingsAction
+public class RatingsAction
 {
 	public static void addRating(long wineId, double rating)
 	{
