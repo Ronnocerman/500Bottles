@@ -399,11 +399,11 @@
 			if(!data.confPassword == password)
 				alert("Passwords don't match");
 			if(data.dobDay < 1 || data.dobDay > 31)
-				alert("Go fuck yourself");
+				alert("Invalid DOB");
 			if(data.dobMonth <1 || data.dobMonth > 12)
-				alert("No seriously, go fuck yourself");
+				alert("Invalid DOB");
 			if(data.dobYear > 1992)
-				alert("Sorry, jailbait");
+				alert("You seem to be under 21 years of age");
             $.ajax({
                 url: url,
                 data: data,
