@@ -35,9 +35,12 @@ User Index:
   
   [E00]   Cellar
   
-  [F00]   Logging Out
+  [F00]   Winebook
+  [F01]   Adding an Entry
   
-  [G00]   Miscellaneous Notes
+  [G00]   Logging Out
+  
+  [H00]   Miscellaneous Notes
   
    ------------------
    
@@ -145,13 +148,26 @@ user can peruse their inventory for wines, being able to add, remove, and favour
 them at will.
 
 
-  F00. Logging Out
+  F00. Winebook
+
+Once a user is logged in, they can click on the WINEBOOK tab from the header.
+They will be redirected to the Winebook page.
+
+
+  F01. Adding an Entry
+  
+From the Winebook page, the user can click the ADD AN ENTRY tab on the side of the
+screen and enter a title, body, and a photograph for uploading. The user will have to
+refresh the browser window in order to see the entry after it is added.
+
+
+  G00. Logging Out
   
 In order to log out, all the user has to do is click LOG OUT at the top of the
 screen. They will then be redirected to the front page.
 
 
-  G00. Miscellaneous Notes
+  H00. Miscellaneous Notes
   
 Whenever a wine is displayed, the user will be able to hover over that
 particular wine and view more details about it. By clicking on the wine,
