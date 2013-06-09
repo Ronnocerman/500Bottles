@@ -1,10 +1,13 @@
 package com._500bottles.action;
 
+import java.util.Vector;
+
 import com._500bottles.da.internal.WineDAO;
 import com._500bottles.exception.da.DAException;
 import com._500bottles.exception.winebook.EntryDoesExistException;
 import com._500bottles.exception.winebook.EntryDoesNotExistException;
 import com._500bottles.exception.winebook.PhotoDoesNotExist;
+import com._500bottles.manager.SessionManager;
 import com._500bottles.manager.WinebookManager;
 import com._500bottles.object.wine.Wine;
 import com._500bottles.object.winebook.Entry;
@@ -126,18 +129,28 @@ public class WinebookAction
 	 *            Photo to be uploaded
 	 */
 	public static void uploadPhoto(long id, Photo p)
-	{}
+	{
+	}
 
 	public static String getPhotoURI(long photo_id)
 	{
 		String photo_uri;
 
-		try {
+		try
+		{
 			photo_uri = WinebookManager.getPhotoURI(photo_id);
-		} catch (PhotoDoesNotExist e) {
+		} catch (PhotoDoesNotExist e)
+		{
 			photo_uri = "";
 		}
 
 		return photo_uri;
+	}
+
+	public static Vector<Entry> getAllEntries()
+	{
+		long userID = SessionManager.getSessionManager().getLoggedInUser()
+				.getUserId();
+		return WinebookManager.getAllEntries(userID);
 	}
 }

@@ -1,5 +1,7 @@
 package com._500bottles.manager;
 
+import java.util.Vector;
+
 import com._500bottles.da.internal.UploadDAO;
 import com._500bottles.da.internal.WinebookDAO;
 import com._500bottles.exception.da.DAException;
@@ -177,7 +179,9 @@ public class WinebookManager
 
 	/**
 	 * Gets the URI of a photo by id.
-	 * @param photo_id	Photo id of uri.
+	 * 
+	 * @param photo_id
+	 *            Photo id of uri.
 	 * @return
 	 * @throws PhotoDoesNotExist
 	 */
@@ -185,12 +189,26 @@ public class WinebookManager
 	{
 		String image_uri = null;
 
-		try {
+		try
+		{
 			image_uri = UploadDAO.getPhoto(photo_id);
-		} catch (DAException e) {
+		} catch (DAException e)
+		{
 			throw new PhotoDoesNotExist();
 		}
 
 		return image_uri;
+	}
+
+	public static Vector<Entry> getAllEntries(long userID)
+	{
+		try
+		{
+			return WinebookDAO.getAllEntries(userID);
+		} catch (DAException e)
+		{
+			// TODO
+			return new Vector<Entry>();
+		}
 	}
 }
