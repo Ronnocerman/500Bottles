@@ -230,9 +230,12 @@ public class WineQueryManager
 		{
 			long min_year = query.getMinYear();
 			long max_year = query.getMaxYear();
+			System.out.println("Min year " + query.getMinYear());
+			System.out.println("Max year " + query.getMaxYear());
 			if (min_year != -1 && max_year != -1)
-				for (int i = (int) min_year; i < max_year - min_year; i++)
+				for (int i = 0; i < max_year - min_year + 1; i++)
 				{
+					System.out.println("I have entered the loop");
 					VintageArray temp = new VintageArray("" + i);
 					filtercategory.addAttribute(temp);
 				}
