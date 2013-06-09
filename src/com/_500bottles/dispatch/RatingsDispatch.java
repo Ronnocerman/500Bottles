@@ -20,13 +20,10 @@ public class RatingsDispatch extends HttpServlet
 
 		if (action == "addRating")
 		{
-			addRating(Long.parseLong(wineId), Double.parseDouble(rating));
+			setRating(Long.parseLong(wineId), Double.parseDouble(rating));
 		} else if (action == "removeRating")
 		{
 			removeRating(Long.parseLong(wineId));
-		} else if (action == "editRating")
-		{
-			editRating(Long.parseLong(wineId), Double.parseDouble(rating));
 		} else if (action == "getRating")
 		{
 			getRating(Long.parseLong(wineId));
@@ -34,19 +31,14 @@ public class RatingsDispatch extends HttpServlet
 
 	}
 
-	private void addRating(long wineId, double rating)
+	private void setRating(long wineId, double rating)
 	{
-		RatingsAction.addRating(wineId, rating);
+		RatingsAction.setRating(wineId, rating);
 	}
 
 	private void removeRating(long wineId)
 	{
 		RatingsAction.removeRating(wineId);
-	}
-
-	private void editRating(long wineId, double rating)
-	{
-		RatingsAction.editRating(wineId, rating);
 	}
 
 	private double getRating(long wineId)

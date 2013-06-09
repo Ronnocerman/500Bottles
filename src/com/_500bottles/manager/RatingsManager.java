@@ -6,15 +6,12 @@ import com._500bottles.exception.da.DAException;
 public class RatingsManager
 {
 	public static void addRating(long userId, long wineId, double rating)
+			throws DAException
 	{
 		SessionManager sess = SessionManager.getSessionManager();
-		try
-		{
-			RatingsDAO.addRating(userId, wineId, rating);
-		} catch (DAException e)
-		{
-			e.printStackTrace();
-		}
+
+		RatingsDAO.addRating(userId, wineId, rating);
+
 	}
 
 	public static void editRating(long userId, long wineId, double rating)
