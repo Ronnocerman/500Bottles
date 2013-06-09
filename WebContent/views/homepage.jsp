@@ -11,39 +11,42 @@
 <script src="js/gallery.js" type="text/javascript"></script>
 <script src="js/chart.js" type="text/javascript"></script>
 
+
+<% int[] array = CellarAction.getTypeQuantities(); %>
 <script>
+
 	var doughnutData = [{
-						 value: 130,
-						 color:"#A60000"},
+						 value: <%=array[0]%>,
+						 color:"#A60000"}, //red 
 					
 						{
-						 value : 80,
-						 color : "#DEDEDE"},
+						 value : <%=array[1]%>,
+						 color : "#DEDEDE"}, //white 
 					
 						{
-						 value : 100,
-						 color : "#FFB6C1"},
+						 value : <%=array[2]%>,
+						 color : "#FFB6C1"}, //rosé 
 					
 						{
-						 value : 40,
-						 color : "#372C2C"}];
+						 value : <%=array[3]%>,
+						 color : "#372C2C"}]; //other 
 
 	var myDoughnut = new Chart(document.getElementById("canvas").getContext("2d")).Doughnut(doughnutData);
 	
 	$(function() {
-		$(".tooltip").hover(function() {
-			var tooltip = $("> div", this).show();
-			var pos = tooltip.offset();
-			tooltip.hide();
-			var right = pos.left + tooltip.width();
+		$(".tooltip_home").hover(function() {
+			var tooltip_home = $("> div", this).show();
+			var pos = tooltip_home.offset();
+			tooltip_home.hide();
+			var right = pos.left + tooltip_home.width();
 			var pageWidth = $(document).width();
 			if (pos.left < 0) {
-				tooltip.css("marginLeft", "+=" + (-pos.left) + "px");
+				tooltip_home.css("marginLeft", "+=" + (-pos.left) + "px");
 			}
 			else if (right > pageWidth) {
-				tooltip.css("marginLeft", "-=" + (right - pageWidth));
+				tooltip_home.css("marginLeft", "-=" + (right - pageWidth));
 			}
-			tooltip.fadeIn();
+			tooltip_home.fadeIn();
 		}, function() {
 			$("> div", this).fadeOut(function() {$(this).css("marginLeft", "");});
 		});
