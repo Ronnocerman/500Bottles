@@ -44,6 +44,13 @@
 
 .column_100,
 .column_50,
+.column_66,
+.column_33,
+.column_25 {
+  min-height: 10px; }
+
+.column_100,
+.column_50,
 .column_33,
 .column_25 {
   position: relative; }
@@ -117,6 +124,18 @@ body {
   top: 0px;
   background: rgba(0, 0, 0, 0.3);
   z-index: 12000; }
+
+.smaller {
+  font-size: 0.7em;
+  display: inline-block;
+  line-height: 1em;
+  margin-top: 0.5em; }
+
+.roboto {
+  font-family: Roboto; }
+
+.regular_case {
+  text-transform: none; }
 
 .view, .subview {
   position: absolute;
@@ -1406,6 +1425,14 @@ footer {
   #view_login #bday_year {
     width: 29%;
     text-align: center; }
+
+#front_headings {
+  height: 600px;
+  top: 60px; }
+
+#front_headings h1 {
+  position: absolute;
+  top: 100px; }
 
 #front {
   height: 100%;

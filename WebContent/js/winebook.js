@@ -118,7 +118,7 @@
             url: url,
             data: data
         }).success(function (data, textStatus, jqXHR) {
-            console.log("success!");
+            close_entry_form();
         });
     }
 

@@ -6,14 +6,14 @@
     <h2 id="winebook_entry_form_title">New Winebook Entry</h2>
 
     <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="text" id="winebook_title" value="title" />
-        <textarea id="winebook_content">today I made some liver and fava beans, so I decided to crack open a nice chianti to go with it...</textarea>
+        <input type="text" id="winebook_title" placeholder="title" />
+        <textarea id="winebook_content" placeholder="entry"></textarea>
         <input id="entry_save" type="button" value="save"/>
     </form>
 
-    <input id="fileupload" type="file" name="files[]" multiple>
+    <input id="fileupload" class="no_display" type="file" name="files[]" multiple>
 
-    <div id="progress" class="progress progress-success progress-striped">
+    <div id="progress" class="progress progress-success progress-striped no_display">
         <div class="bar"></div>
     </div>
 

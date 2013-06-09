@@ -5,10 +5,12 @@
     <section class="content_container clearfix">
 
         <div class="column_66 animated" id="front_headings">
-            <h1 class="animated rotateInDownRight delay_1s no_display" data-anim-in="roat">The best wine app<br/> period</h1>
-            <h1 class="animated rotateInDownRight delay_1s no_display">The best wine app<br/> period</h1>
-            <h1 class="animated rotateInDownRight delay_1s no_display">The best wine app<br/> period</h1>
-            <h1 class="animated rotateInDownRight delay_1s no_display">The best wine app<br/> period</h1>
+            <h1 class="animated no_display" data-anim-in="rotateInDownRight" data-anim-out="rotateOutDownRight">500 Bottles,<br/> <span class="smaller roboto regular_case">because you always have room for one more</span></h1>
+            <h1 class="animated no_display" data-anim-in="rotateInDownRight" data-anim-out="rotateOutDownRight">For the collecting connoisseur</h1>
+            <h1 class="animated no_display" data-anim-in="rotateInDownRight" data-anim-out="rotateOutDownRight"><span class="roboto regular_case">&Agrave; votre sant&eacute;!</span></h1>
+            <h1 class="animated no_display" data-anim-in="rotateInDownRight" data-anim-out="rotateOutDownRight"><span class="smaller">Goes better with chianti<br/>than liver and fava beans.</span></h1>
+            <h1 class="animated no_display" data-anim-in="rotateInDownRight" data-anim-out="rotateOutDownRight">Better than a unicorn riding a unicycle.</h1>
+            <h1 class="animated no_display" data-anim-in="rotateInDownRight" data-anim-out="rotateOutDownRight"><span class="smaller">If you enjoy wine, then you'll LOVE 500bottles of wine...</span></h1>
         </div>
 
         <div class="column_33">

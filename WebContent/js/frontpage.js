@@ -508,6 +508,41 @@
         create_account_init();
     }
 
+    function rotate_banners()
+    {
+        var banners = $("#front_headings").children();
+
+        var total_items = banners.length;
+        var first_item = Math.round(Math.random() * total_items);
+
+        var next_item = first_item;
+        var prev_item = null;
+
+        function next_banner(next, prev)
+        {
+            _500bottles.anim.animate_in({
+                element: banners[next]
+            });
+
+            _500bottles.anim.animate_out({
+                element: banners[prev]
+            });
+
+            prev_item = next_item;
+            next_item = next_item + 1;
+
+            if (next_item > total_items)
+                next_item = 0;
+        }
+
+        setInterval(function() {
+            next_banner(next_item, prev_item);
+        }, 3500);
+
+        next_banner(next_item, prev_item);
+    }
+
     // Call away!
     on_load();
+    rotate_banners();
 })();

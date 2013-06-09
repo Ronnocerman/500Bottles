@@ -46,8 +46,6 @@ public class SessionManager
 			// TODO: error handling...
 		}
 
-		System.err.println("Current User " + user.getName());
-
 		return user;
 	}
 
