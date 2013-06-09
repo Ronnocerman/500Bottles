@@ -3,6 +3,7 @@ package com._500bottles.manager;
 import java.util.Iterator;
 import java.util.Vector;
 
+import com._500bottles.action.CellarAction;
 import com._500bottles.da.internal.CellarDAO;
 import com._500bottles.exception.cellar.CellarException;
 import com._500bottles.exception.da.DAException;
@@ -145,13 +146,13 @@ public class CellarManager
 		{
 			String type = i.next().getType().getWineType().toLowerCase();
 			if (type.contains("red"))
-				q[0]++;
+				q[0] += CellarAction.getCellarQuantity(i.next().getId());
 			else if (type.contains("white"))
-				q[1]++;
-			else if (type.contains("rose"))
-				q[2]++;
+				q[1] += CellarAction.getCellarQuantity(i.next().getId());
+			else if (type.contains("ros"))
+				q[2] += CellarAction.getCellarQuantity(i.next().getId());
 			else
-				q[3]++;
+				q[3] += CellarAction.getCellarQuantity(i.next().getId());
 		}
 		return q;
 	}
