@@ -97,8 +97,11 @@ public class CellarAction
 		long userID = SessionManager.getSessionManager().getLoggedInUser()
 				.getUserId();
 		CellarItem ci = CellarManager.getByWineID(userID, id);
-		ci.setQuantity(ci.getQuantity() - 1);
-		CellarManager.editCellarItem(ci);
+		if (ci.getQuantity() > 0)
+		{
+			ci.setQuantity(ci.getQuantity() - 1);
+			CellarManager.editCellarItem(ci);
+		}
 	}
 
 	/**
