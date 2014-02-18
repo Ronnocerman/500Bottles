@@ -5,12 +5,6 @@
 
 Launch Requirements:
   For best results, use Google Chrome.
-
-===========================
-
-Technical Support:
-  Joshua Toenyes -- (619) 756-1954
-  Connor Nicholson -- (818) 517-3771 [Alternate]
   
 ===========================
   
